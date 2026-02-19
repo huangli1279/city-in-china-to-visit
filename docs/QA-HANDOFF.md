@@ -319,7 +319,7 @@ Phase 5 在当前代码状态下已可验收通过，阻断性问题已修复；
 
 执行环境：
 
-- 优先尝试：`https://city-in-china-to-visit.pages.dev`
+- 优先尝试：`https://bestcityinchina.site`
 - 实际执行：`http://127.0.0.1:4173`（线上版本未同步 Header/Footer 增量，页面无 `header/footer` 节点）
 - 工具：`npx agent-browser`
 
@@ -370,7 +370,7 @@ Phase 5 在当前代码状态下已可验收通过，阻断性问题已修复；
 ### 10.3 缺陷与风险
 
 - 本轮未发现 Blocker/Critical 缺陷。
-- 风险提示：线上 `pages.dev` 版本当前未同步 Header/Footer 增量，建议开发同学完成部署后按本用例在生产域名再做一轮快速回归（重点 HF2/HF4）。
+- 风险提示：线上 `https://bestcityinchina.site` 版本当前未同步 Header/Footer 增量，建议开发同学完成部署后按本用例再做一轮快速回归（重点 HF2/HF4）。
 
 ### 10.4 结论
 

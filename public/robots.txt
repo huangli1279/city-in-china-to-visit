@@ -10,4 +10,4 @@ Disallow: /zh/result
 Disallow: /ja/result
 Disallow: /ko/result
 
-Sitemap: https://city-in-china-to-visit.pages.dev/sitemap.xml
+Sitemap: https://bestcityinchina.site/sitemap.xml

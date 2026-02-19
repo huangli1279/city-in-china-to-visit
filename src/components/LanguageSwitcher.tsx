@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { I18N_TO_URL } from './LangLayout'
 
-const LANGUAGE_CODES = ['en', 'zh-CN', 'ja', 'ko'] as const
+const LANGUAGE_CODES = ['en', 'ja', 'ko', 'zh-CN'] as const
 type LanguageCode = typeof LANGUAGE_CODES[number]
 
 export default function LanguageSwitcher() {

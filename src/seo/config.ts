@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = 'https://city-in-china-to-visit.pages.dev'
+const DEFAULT_SITE_URL = 'https://bestcityinchina.site'
 
 export const SEO_LANGS = ['en', 'zh', 'ja', 'ko'] as const
 export type SeoLang = (typeof SEO_LANGS)[number]

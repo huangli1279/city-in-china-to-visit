@@ -97,7 +97,7 @@ npm test
 ### Phase 5 — 测试与上线 ✅
 - 生产构建修复：`ResultPage` state 类型收窄，`npm run build` 通过
 - 已部署到 Cloudflare Pages 生产环境
-- 生产域名可访问：`https://city-in-china-to-visit.pages.dev`
+- 生产域名可访问：`https://bestcityinchina.site`
 
 ### Phase 6 — 桌面端重设计（完成并回归通过）✅
 - **全局布局基线**：

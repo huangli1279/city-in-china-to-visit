@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const ROOT_DIR = path.resolve(__dirname, '..')
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public')
-const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://city-in-china-to-visit.pages.dev').replace(/\/+$/, '')
+const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://bestcityinchina.site').replace(/\/+$/, '')
 const CTR_TITLE_VARIANT = process.env.CTR_TITLE_VARIANT === 'B' ? 'B' : 'A'
 
 const LANGUAGES = [
@@ -644,7 +644,6 @@ function renderGuideDetail(guide) {
 
 function buildCtrTitleVariantsManifest() {
   const payload = {
-    generatedAt: new Date().toISOString(),
     activeVariant: CTR_TITLE_VARIANT,
     guides: GUIDE_PAGES.map((guide) => ({
       slug: guide.slug,

@@ -169,7 +169,7 @@
 
 - [x] **6A-H1** 测试执行顺序
   - 建议顺序：`6A-Q1 -> 6A-Q2 -> 6A-Q3 -> 6A-Q4 -> 6A-Q5 -> 6A-Q6 -> 6A-Q7`
-  - 执行环境：优先 `https://city-in-china-to-visit.pages.dev`，如需调试埋点可用本地 `npm run dev`
+  - 执行环境：优先 `https://bestcityinchina.site`，如需调试埋点可用本地 `npm run dev`
   - 2026-02-19 执行记录：本轮已按建议顺序在本地 `http://127.0.0.1:4173` 完成
 
 - [x] **6A-H2** 缺陷提报格式
@@ -264,8 +264,8 @@
 
 - [x] **6A-HF-H1** 测试执行顺序
   - 建议顺序：`6A-HF1 -> 6A-HF2 -> 6A-HF3 -> 6A-HF4 -> 6A-HF5 -> 6A-HF6`
-  - 执行环境：优先 `https://city-in-china-to-visit.pages.dev`（若埋点调试受限，可补充本地 `npm run dev`）
-  - 2026-02-19 执行记录：线上 `https://city-in-china-to-visit.pages.dev` 未同步 Header/Footer 增量（无 `header/footer` 节点），本轮在本地 `http://127.0.0.1:4173` 完成全量验收
+  - 执行环境：优先 `https://bestcityinchina.site`（若埋点调试受限，可补充本地 `npm run dev`）
+  - 2026-02-19 执行记录：线上 `https://bestcityinchina.site` 未同步 Header/Footer 增量（无 `header/footer` 节点），本轮在本地 `http://127.0.0.1:4173` 完成全量验收
 
 - [x] **6A-HF-H2** 缺陷提报格式
   - 必填字段：页面路径、语言、设备/分辨率、浏览器、复现步骤、预期、实际、截图/录屏

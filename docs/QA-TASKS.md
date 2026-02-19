@@ -69,10 +69,12 @@
 
 ## Phase 6｜桌面端重设计（Desktop First-Class）
 
-- [ ] **6-6** 响应式回归测试
+- [x] **6-6** 响应式回归测试
   - Mobile（375/390/430）验证现有流程与截图表现不退化
   - Desktop（1024/1280/1440）验证分栏布局与信息层级生效
   - 覆盖 4 语言路径：`/en` `/zh` `/ja` `/ko`
+  - 2026-02-19 补测结论：四语全链路（首页→问卷→结果）通过；移动端 `390x844` 结果页首屏核心信息通过
+  - 截图：`/tmp/phase6-mobile-result-en.png`、`/tmp/phase6-mobile-result-zh.png`、`/tmp/phase6-mobile-result-ja.png`、`/tmp/phase6-mobile-result-ko.png`
 
 ---
 

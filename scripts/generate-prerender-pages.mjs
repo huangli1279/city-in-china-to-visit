@@ -694,10 +694,9 @@ async function main() {
     localeMap[lang.i18nCode] = await readJson(LOCALE_FILES[lang.i18nCode])
   }
 
-  for (const lang of LANGUAGES) {
-    const html = renderLandingPage(lang, localeMap[lang.i18nCode])
-    await writeText(path.join(PUBLIC_DIR, lang.urlCode, 'index.html'), html)
-  }
+  // Keep locale data loading for sitemap/schema consistency, but avoid
+  // generating static language landing pages. This lets /en, /zh, /ja, /ko
+  // resolve to the SPA entry so production matches local dev UI.
 
   await writeText(path.join(PUBLIC_DIR, 'en/guides/index.html'), renderGuideHub())
   for (const guide of GUIDE_PAGES) {

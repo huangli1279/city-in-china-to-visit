@@ -91,8 +91,8 @@ export default function QuizPage() {
         </div>
       </div>
 
-      {/* Footer: navigation buttons */}
-      <footer className="flex-shrink-0 px-6 pt-2 pb-6 bg-slate-50">
+      {/* Footer: navigation buttons — pb accounts for iOS home indicator (3-3) */}
+      <footer className="flex-shrink-0 px-6 pt-2 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-slate-50">
         <div className="flex gap-3">
           {!isFirstQuestion && (
             <button

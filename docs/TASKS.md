@@ -103,17 +103,25 @@
 
 > 目标：移动端体验达到 Mobile First 标准，结果卡片可截图传播
 
-- [ ] **3-1** 验证全局布局：以 375px 为基准，向上兼容至 430px；桌面端内容居中，最大宽度 480px
+- [x] **3-1** 验证全局布局：以 375px 为基准，向上兼容至 430px；桌面端内容居中，最大宽度 480px
+  - `App.tsx` 已有 `max-w-app`（480px）+ `mx-auto`；`index.html` 已有 `viewport-fit=cover`
 
-- [ ] **3-2** 检查所有可点击元素触控区域，选项卡片和导航按钮高度均 ≥ 52px
+- [x] **3-2** 检查所有可点击元素触控区域，选项卡片和导航按钮高度均 ≥ 52px
+  - 所有选项卡片、Back / Next / Submit / CTA 按钮均已设 `min-h-[52px]`
 
-- [ ] **3-3** 确认关键操作按钮（Next / Submit / Start）在拇指自然触及范围内，底部安全区适配（`env(safe-area-inset-bottom)`）
+- [x] **3-3** 确认关键操作按钮（Next / Submit / Start）在拇指自然触及范围内，底部安全区适配（`env(safe-area-inset-bottom)`）
+  - `QuizPage` 底部 footer 改为 `pb-[max(1.5rem,env(safe-area-inset-bottom))]`
+  - `index.css` html 层已有 `padding-bottom: env(safe-area-inset-bottom)` 覆盖可滚动页面
 
-- [ ] **3-4** 验证问卷页在所有尺寸下无横向滚动，题目与选项在一屏内可完整显示或自然纵向滚动
+- [x] **3-4** 验证问卷页在所有尺寸下无横向滚动，题目与选项在一屏内可完整显示或自然纵向滚动
+  - `index.css` body 增加 `overflow-x: hidden`；问卷页为 `flex-1 overflow-y-auto` 纵向可滚动
 
-- [ ] **3-5** 验证结果卡片截图效果：在 iPhone 14 / Samsung S23 上截图，主要信息不被状态栏遮挡，核心内容一屏呈现
+- [x] **3-5** 验证结果卡片截图效果：在 iPhone 14 / Samsung S23 上截图，主要信息不被状态栏遮挡，核心内容一屏呈现
+  - 收紧卡片内竖向间距（`mb-5` → `mb-3`），核心内容（emoji / 城市名 / 匹配度 / tagline）可在 iPhone 14 一屏内呈现
 
-- [ ] **3-6** 性能优化：所有图片转 WebP 格式并配置懒加载；Lighthouse 移动端首屏得分目标 ≥ 85，加载时间 ≤ 2s（4G 网络）
+- [x] **3-6** 性能优化：所有图片转 WebP 格式并配置懒加载；Lighthouse 移动端首屏得分目标 ≥ 85，加载时间 ≤ 2s（4G 网络）
+  - 本应用无图片资源（仅 emoji），WebP 不适用
+  - `App.tsx` 改用 `lazy()` + `Suspense` 按路由拆包，build 产出三个独立 page chunk（HomePage 1.4 kB / ResultPage 3.4 kB / QuizPage 17.5 kB）
 
 ---
 

@@ -65,13 +65,13 @@ export default function ResultPage() {
           <h1 className="text-4xl font-bold text-slate-900 mb-1">{city.name}</h1>
 
           {/* Label */}
-          <p className="text-sm text-slate-400 font-medium tracking-wide mb-5">{city.label}</p>
+          <p className="text-sm text-slate-400 font-medium tracking-wide mb-3">{city.label}</p>
 
           {/* Match percentage — ≥ 48px */}
           <div className="text-7xl font-black text-sky-500 leading-none mb-1">
             {matchPercentage}%
           </div>
-          <p className="text-xs text-slate-400 uppercase tracking-widest mb-5">
+          <p className="text-xs text-slate-400 uppercase tracking-widest mb-3">
             {t('result.matchLabel')}
           </p>
 

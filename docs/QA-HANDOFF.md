@@ -1,8 +1,8 @@
-# QA HANDOFF — Phase 5 / Phase 6 测试复盘
+# QA HANDOFF — Phase 5 / Phase 6 / Phase 6A 测试复盘
 
-> 文档用途：交付开发/测试同事，复盘本轮 Phase 5 自动化验收与 Phase 6 回归过程  
+> 文档用途：交付开发/测试同事，复盘本轮 Phase 5 自动化验收、Phase 6 回归与 Phase 6A Landing 验收过程  
 > 执行日期：2026-02-19  
-> 执行环境：本地开发服 `http://localhost:5173`（Vite）  
+> 执行环境：本地开发服 `http://127.0.0.1:4173`（Vite）  
 > 执行工具：`npx agent-browser`（自动化浏览器）
 
 ---
@@ -17,6 +17,7 @@
 - 5-4 URL 路由与刷新验证
 - 5-5 冒烟流程（入口→答题→结果→切语言→重测）
 - 6-6 响应式回归测试（桌面断点 / 移动断点 / 多语言路径）
+- 6A-Q1 ~ 6A-Q7 Landing Page（PRD 对齐）专项验收
 
 ---
 
@@ -225,3 +226,78 @@ Phase 5 在当前代码状态下已可验收通过，阻断性问题已修复；
 - 已完成并通过：桌面端核心结构、宽屏可读性、问卷右栏移除、键盘焦点样式、移动端无横向溢出与按钮高度。  
 - 已补完并通过：四语全路径回归（`/en` `/zh` `/ja` `/ko`）与移动端结果页首屏截图完整性。  
 - 当前结论：`Phase 6-6` 可闭环，通过验收；`docs/QA-TASKS.md` 对应项可标记完成。
+
+---
+
+## 9. Phase 6A Landing 验收复盘（依据 `docs/QA-TASKS.md`）
+
+### 9.1 覆盖范围
+
+本轮执行 `6A-Q1 ~ 6A-Q7` 全量测试，覆盖：
+
+- 路由与入口策略（含无效路径回退）
+- Landing 信息架构完整性（PRD 模块对齐）
+- 双 CTA 跨语言跳转链路
+- 6 个断点响应式与移动端可用性
+- 四语文案完整性与语言切换稳定性
+- 最小埋点事件与字段完整性（`view_landing` / `click_start_quiz` / `view_quiz`）
+- Landing 改动后的主链路回归（含 result guard）
+
+### 9.2 执行结果
+
+#### A. 6A-Q1 路由与入口
+
+- 通过：`/` 自动跳转 `/en`；`/en /zh /ja /ko` 均可进入对应 Landing。
+- 通过：`/en/landing /zh/landing /ja/landing /ko/landing` 均回退到有效首页路径（本地实测统一回退 `/en`），未出现空白页/404。
+- 证据：`/tmp/phase6a/q1-routes.txt` + `q1-*.png`。
+
+#### B. 6A-Q2 信息架构
+
+- 通过：Hero、指标区（18/6/15）、痛点区、匹配机制区、城市预览+分享钩子、底部二次 CTA 均渲染。
+- 自动校验：`hero/metrics/pain/model/preview/finalCta = true`。
+- 证据：`/tmp/phase6a/q2-desktop-full-en.png`、`/tmp/phase6a/q2-mobile-top-en.png`、`/tmp/phase6a/q2-mobile-bottom-en.png`。
+
+#### C. 6A-Q3 CTA 交互链路
+
+- 通过：四语下 Hero CTA 与底部 CTA 均跳转到对应 `/:lang/quiz`。
+- 通过：未发现白屏与 page error（`agent-browser errors` 为空）。
+- 证据：`/tmp/phase6a/q3-cta-results.txt`、`/tmp/phase6a/q3-errors.txt`、`/tmp/phase6a/q3-*-cta.png`。
+
+#### D. 6A-Q4 响应式与可用性
+
+- 通过：`375x812`、`390x844`、`430x932`、`1024x768`、`1280x800`、`1440x900` 六断点均无横向滚动（`noOverflow=true`）。
+- 通过：`>=1280` 首屏双栏并列可见（主叙事 + 辅助信息）。
+- 通过：移动端顶部/底部 CTA 可达可点；主 CTA（`button.bg-sky-500`）高度实测 `60px`（满足 `>=52px`）。
+- 证据：`/tmp/phase6a/q4-metrics.jsonl`、`/tmp/phase6a/q4-mobile-cta-results.txt`、`/tmp/phase6a/q4-*.png`。
+
+#### E. 6A-Q5 多语言完整性
+
+- 通过：四语均无 `{{key}}`、`home.xxx` 占位符残留。
+- 通过：城市拼音名保持英文（`Xi'an`、`Chengdu`）。
+- 通过：语言切换 `EN -> ZH -> JA -> KO` 实时生效，结构未丢失。
+- 证据：`/tmp/phase6a/q5-lang-checks.txt`、`/tmp/phase6a/q5-*-hero.png`、`/tmp/phase6a/q5-lang-switch.webm`。
+
+#### F. 6A-Q6 埋点事件
+
+- 通过：`view_landing`、`click_start_quiz`（`section=hero/final`）、`view_quiz` 均已入列。
+- 通过：事件字段满足 `lang`、`utm_source`、`path`（`click_start_quiz` 含 `section`）。
+- 说明：本地 dev 模式下存在重复 `view_landing/view_quiz`，符合 React `StrictMode` 双调用现象，不构成生产阻断。
+- 证据：`/tmp/phase6a/q6-datalayer-clean.json`、`/tmp/phase6a/q6-datalayer.png`。
+
+#### G. 6A-Q7 主链路回归
+
+- 通过：四语均可完成 `Landing -> Quiz（答 1 题）`，题目渲染与交互正常。
+- 通过：直接访问 `/:lang/result`（无 state）均正确回跳 `/:lang/quiz`。
+- 证据：`/tmp/phase6a/q7-results.txt`、`/tmp/phase6a/q7-*-quiz-answered.png`、`/tmp/phase6a/q7-*-result-guard.png`。
+
+### 9.3 缺陷与风险
+
+- 本轮未发现 Blocker/Critical 缺陷。
+- 观察项 1：无效语言子路径（如 `/zh/landing`）当前统一回退 `/en`，符合“回退有效首页”最低要求；若后续要求“按语言前缀回退”，需单独立项调整路由策略。
+- 观察项 2：埋点重复仅出现在本地 dev（StrictMode），建议上线后在生产环境抽样确认单次触发行为。
+
+### 9.4 结论（Phase 6A）
+
+- `6A-Q1 ~ 6A-Q7` 已全部执行并通过。
+- `docs/QA-TASKS.md` Phase 6A 条目已回填为完成状态。
+- 当前状态：Phase 6A 可验收通过，可进入下一阶段开发/联调。

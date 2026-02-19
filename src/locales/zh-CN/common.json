@@ -1,14 +1,57 @@
 {
   "home": {
+    "badge": "为来华旅行决策而设计",
     "title": "哪座中国城市最适合你？",
-    "subtitle": "回答 18 道问题，找到最符合你旅行个性的中国城市。",
-    "cta": "开始测试",
-    "howItWorksTitle": "如何运作",
-    "step1": "回答 18 道关于你旅行风格的问题",
-    "step2": "算法为你匹配 15 座中国城市",
-    "step3": "发现最适合你的中国城市",
-    "desktopPreviewTitle": "城市预览",
-    "desktopPreviewSubtitle": "不同城市，不同旅行氛围。先看几种路线，再找到最合拍的目的地。"
+    "subtitle": "你已经决定去中国旅行，现在只差选定第一站。回答 18 道快速问题，找到最符合你旅行个性的城市。",
+    "cta": "开始 18 题测试",
+    "metrics": {
+      "questions": "围绕旅行风格的快速问题",
+      "dimensions": "匹配模型使用的 6 个核心维度",
+      "cities": "推荐池中的 15 座差异化城市"
+    },
+    "desktopPreviewTitle": "城市氛围预览",
+    "desktopPreviewSubtitle": "从未来感天际线到茶馆慢生活，先看城市气质再决定路线。",
+    "shareTitle": "为分享而生",
+    "shareSubtitle": "结果卡片按 TikTok / Instagram 截图传播场景设计。",
+    "sharePoints": [
+      "高对比主卡，城市身份信息一眼可见",
+      "同一张图展示最佳匹配 + 2 个备选",
+      "附带最佳时间与预算提示，便于快速决策"
+    ],
+    "painEyebrow": "为什么做这个测试",
+    "painTitle": "最难的一步，往往是先选哪座城市",
+    "painPoints": [
+      {
+        "title": "城市选择太多",
+        "description": "中国城市差异很大，第一次来往往不知道该从哪座城市开始。"
+      },
+      {
+        "title": "攻略信息过载",
+        "description": "信息越多不一定越容易决策，反而会拉高选择成本。"
+      },
+      {
+        "title": "需要个性化匹配",
+        "description": "热门榜单只讲大众偏好，不一定适合你的旅行节奏和兴趣。"
+      }
+    ],
+    "modelEyebrow": "匹配机制",
+    "modelTitle": "不是随机推荐，而是可解释的匹配系统",
+    "modelSubtitle": "我们先将你的回答转为六维画像，再与 15 座城市画像逐一对比，输出最接近的结果。",
+    "modelDimensions": [
+      "历史文化兴趣",
+      "自然 vs 都市偏好",
+      "文化冒险度",
+      "行程节奏",
+      "社交氛围",
+      "探险欲"
+    ],
+    "howItWorksTitle": "匹配流程",
+    "modelStep1": "用约 2-3 分钟完成 18 道场景题",
+    "modelStep2": "系统计算你的 6 维旅行画像",
+    "modelStep3": "返回 1 个最佳匹配城市和 2 个备选城市",
+    "finalCtaTitle": "准备好找到你的中国城市了吗？",
+    "finalCtaSubtitle": "现在开始测试，把“想去中国”变成明确的城市计划。",
+    "finalCta": "开始测试"
   },
   "quiz": {
     "progress": "第 {{current}} 题 / 共 {{total}} 题",

@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { questions } from '../data/questions'
 import { calcUserScores, getRankedCities, type Answers } from '../utils/match'
+import { trackEvent } from '../utils/analytics'
 import ProgressBar from '../components/ProgressBar'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 
@@ -33,6 +34,10 @@ export default function QuizPage() {
     returnObjects: true,
   }) as TranslatedQuestion[]
   const tq = translatedQuestions[currentIdx]
+
+  useEffect(() => {
+    trackEvent('view_quiz', { lang })
+  }, [lang])
 
   function handleSelectOption(optionIdx: number) {
     setAnswers((prev) => ({ ...prev, [currentIdx]: optionIdx }))

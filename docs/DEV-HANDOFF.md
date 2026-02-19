@@ -1,8 +1,8 @@
 # DEV HANDOFF — Which Chinese City Matches Your Vibe?
 
-> **文档用途**：交付开发/测试同事，用于 Phase 5 上线结果同步与 Phase 6 桌面重设计交接
+> **文档用途**：交付开发/测试同事，用于 Phase 5–6A 结果同步与 Landing Page（PRD 对齐）交接
 > **文档日期**：2026-02-19
-> **当前状态**：Phase 0–5 已完成，Phase 6 开发完成（6-1~6-5），6-6 待回归测试
+> **当前状态**：Phase 0–6A 开发完成；Phase 6-6 已回归通过；Phase 6A QA 待执行；Phase 7 未开始
 
 ---
 
@@ -55,7 +55,7 @@ npm test
 
 ---
 
-## 四、已完成功能（Phase 0–6）
+## 四、已完成功能（Phase 0–6A）
 
 ### Phase 0 — 项目初始化 ✅
 - React + Vite + Tailwind CSS + React Router + react-i18next 全部配置完成
@@ -99,7 +99,7 @@ npm test
 - 已部署到 Cloudflare Pages 生产环境
 - 生产域名可访问：`https://city-in-china-to-visit.pages.dev`
 
-### Phase 6 — 桌面端重设计（已实现，待回归）✅
+### Phase 6 — 桌面端重设计（完成并回归通过）✅
 - **全局布局基线**：
   - `App.tsx` 外层容器升级为桌面宽度（`max-w-shell`）
   - `tailwind.config.js` 新增桌面宽度与阴影 token
@@ -108,11 +108,26 @@ npm test
 - **问卷页（`QuizPage`）**：桌面采用双栏（左题号导航 + 中主内容），支持题号跳转
 - **结果页（`ResultPage`）**：改为主结果区 + 右侧信息区（备选城市、预算/时间、操作）
 - **交互与可访问性**：按钮与卡片补齐 `hover` / `focus-visible`；语言切换器支持 `Escape` 关闭
-- **说明**：按需求暂未执行 Phase 6-6 回归测试
+- **回归状态**：`docs/QA-TASKS.md` 中 `6-6` 已标记通过（多语言 + 多断点）
+
+### Phase 6A — Landing Page（PRD 对齐）✅
+- **入口策略（6A-1）**：采用 `/:lang` 作为唯一 Landing 入口，未新增 `/:lang/landing`，避免入口分流
+- **首页重构（6A-2~6A-5）**：`src/pages/HomePage.tsx` 升级为 PRD 导向转化页
+  - Hero：价值主张 + 主 CTA（直达 `/:lang/quiz`）
+  - 痛点区：城市选择困难 / 信息过载 / 个性化需求（3 卡片）
+  - 机制区：`18 questions + 6 dimensions + 15 cities` + 三步匹配流程
+  - 城市预览 + 分享钩子：强调 TikTok / Instagram 截图传播场景
+  - 底部二次 CTA：缩短兴趣到答题路径
+- **多语言扩展（6A-6）**：四语 `common.json` 补齐 Landing 专属文案 key（EN / ZH / JA / KO）
+- **最小埋点（6A-7）**：
+  - 新增 `src/utils/analytics.ts`
+  - 接入事件：`view_landing`、`click_start_quiz`、`view_quiz`
+  - 事件维度：`lang`、`utm_source`、`path`（支持 `gtag` 或 `dataLayer`）
+- **文档联动（6A-8）**：`docs/DEV-TASKS.md` 已将 6A 条目更新为完成；`docs/QA-TASKS.md` 已新增 6A 验收项
 
 ---
 
-## 五、测试范围（Phase 5 + Phase 6-6）
+## 五、测试范围（Phase 5 + Phase 6 + Phase 6A）
 
 以下为需要测试同事重点覆盖的场景。
 
@@ -212,7 +227,7 @@ npm test
 
 ---
 
-### 5-6 桌面重设计回归测试（新增，当前待执行）
+### 5-6 桌面重设计回归测试（已完成）
 
 **目标**：验证桌面端不再是“移动端放大版”，并确保移动端体验不回退。
 
@@ -228,6 +243,23 @@ npm test
 
 ---
 
+### 5-7 Landing Page（Phase 6A）验收测试（待执行）
+
+**目标**：验证 Landing PRD 对齐内容、四语完整性与最小埋点可用。
+
+| 检查项 | 验收标准 |
+|--------|---------|
+| 信息架构 | 首屏价值主张 + 主 CTA + 痛点区 + 机制区 + 城市预览/分享钩子 + 二次 CTA 全部可见 |
+| 路由策略 | `/:lang` 为唯一 Landing 入口，CTA 均跳转 `/:lang/quiz` |
+| 四语文案 | `/en` `/zh` `/ja` `/ko` 新增 Landing 文案无占位符、无漏翻 |
+| 响应式 | `>=1280px` 首屏可见主叙事 + 辅助信息；移动端 CTA 可达且无横向滚动 |
+| 埋点事件 | 访问 Landing 触发 `view_landing`；点击 CTA 触发 `click_start_quiz`；进入问卷触发 `view_quiz` |
+| 埋点字段 | 事件参数包含 `lang`、`utm_source`、`path` |
+
+> 详细验收条目见 `docs/QA-TASKS.md` 的 Phase 6A（`6A-Q1 ~ 6A-Q4`）。
+
+---
+
 ## 六、测试注意事项
 
 ### 已知限制（不计入 Bug）
@@ -236,6 +268,8 @@ npm test
 |------|------|
 | 结果页刷新 | 刷新 `/result` 会跳转到 `/quiz`，属于设计行为（结果通过 Router state 传递，无持久化）|
 | 默认语言 | 固定为英语（en），不自动检测浏览器语言，属于设计决策 |
+| 埋点数据上报 | 仅接入最小事件发送能力（`gtag`/`dataLayer`），具体分析平台脚本注入不在本次范围 |
+| ESLint 校验 | 当前仓库缺少 ESLint 配置文件，`npm run lint` 无法执行（非本次代码改动引入） |
 | Affiliate 链接 | Phase 7 未开始，结果页暂无「订机票/订酒店」跳转链接 |
 | AdSense 广告 | Phase 7 未开始，结果页暂无广告位 |
 
@@ -244,6 +278,7 @@ npm test
 - Phase 7 相关功能（Affiliate 链接、AdSense）
 - 后台数据统计
 - 分享图生成功能
+- Phase 6A 的完整人工 QA（执行任务已列入 `docs/QA-TASKS.md`）
 
 ---
 
@@ -255,43 +290,50 @@ npm test
 | `src/data/questions.ts` | 18 道题目与选项分值 |
 | `src/utils/match.ts` | 匹配算法（三步）|
 | `src/utils/match.test.ts` | 算法单元测试 |
+| `src/utils/analytics.ts` | Landing/Quiz 最小埋点工具（`view_landing` / `click_start_quiz` / `view_quiz`）|
 | `src/App.tsx` | 路由配置（含语言前缀路由）|
 | `src/components/LangLayout.tsx` | URL lang 参数 → i18n 同步 |
 | `src/components/LanguageSwitcher.tsx` | 语言切换下拉组件 |
-| `src/pages/HomePage.tsx` | 首页 |
+| `src/pages/HomePage.tsx` | Landing 首页（PRD 对齐） |
 | `src/pages/QuizPage.tsx` | 问卷页（含答题状态管理）|
 | `src/pages/ResultPage.tsx` | 结果页 |
 | `src/locales/{en,zh-CN,ja,ko}/` | 各语言翻译文件 |
 | `public/_redirects` | Cloudflare Pages SPA 路由规则 |
-| `docs/TASKS.md` | 完整任务状态记录 |
+| `docs/DEV-TASKS.md` | 开发任务状态记录（含 Phase 6A） |
+| `docs/QA-TASKS.md` | QA 验收任务记录（含 6A-Q1 ~ 6A-Q4） |
 
 ---
 
-## 八、本次开发复盘（Phase 6）
+## 八、本次开发复盘（Phase 6A Landing）
 
 ### 8-1 背景与目标
-- 触发原因：PC 端视觉效果过于接近移动端，存在“放大手机界面”的观感问题
-- 目标：形成桌面端独立信息架构与交互节奏，同时不破坏既有移动端流程
+- 背景：`docs/DEV-TASKS.md` 新增了 Phase 6A，要求首页升级为 PRD 导向 Landing，并补齐四语文案与最小埋点。
+- 目标：在不破坏既有路由与双端基线的前提下，完成 Landing 页面重构、埋点接入和文档同步。
 
-### 8-2 实施过程（按实际迭代顺序）
-1. 先建立全局桌面基线（容器宽度、卡片层级、焦点样式）
-2. 完成三页桌面布局改造：首页双栏、问卷双栏、结果页主次分区
-3. 同步新增多语言文案键，保证 4 语言无缺失
-4. 根据产品反馈两次收敛问卷右侧信息：
-   - 第一次：移除「当前匹配领先」
-   - 第二次：移除「当前选择」
-   - 最终：问卷桌面仅保留左导航 + 中主区，降低视觉噪音
-5. 最后同步更新 `docs/PRD.md` 与 `docs/TASKS.md`，确保规范与实现一致
+### 8-2 实施过程（按实际顺序）
+1. 先阅读 `docs/DEV-HANDOFF.md`、`docs/DEV-TASKS.md`、`docs/PRD.md`，确认本轮约束和交付范围。
+2. 路由策略采用 6A-1 推荐方案：保留 `/:lang` 作为唯一 Landing 入口，避免新增 `/:lang/landing` 造成分流。
+3. 重构 `src/pages/HomePage.tsx`，按 PRD 结构补齐模块：Hero、痛点区、机制区（18/6/15 + 三步流程）、城市预览与分享钩子、底部二次 CTA。
+4. 扩展四语 Landing 文案：更新 `src/locales/en|zh-CN|ja|ko/common.json`，保证新模块在四语下完整可渲染。
+5. 新增 `src/utils/analytics.ts` 并接入最小埋点：`view_landing`、`click_start_quiz`、`view_quiz`，同步采集 `lang`、`utm_source`、`path`。
+6. 文档同步：将 `docs/DEV-TASKS.md` 的 6A 条目标记为已完成，`docs/QA-TASKS.md` 新增 6A 验收任务（6A-Q1 ~ 6A-Q4）。
+7. 执行技术验证：`npm run build` 通过、`npm test` 通过、四语 locale JSON 解析通过。
 
 ### 8-3 关键取舍
-- 取舍 1：从三栏降为双栏，减少信息分散，提升答题聚焦度
-- 取舍 2：保留桌面题号导航（可跳题），保障桌面效率优势
-- 取舍 3：移动端不做结构性改动，优先控制回归风险
+- 取舍 1：不新增 Landing 独立路由，优先保持单入口和低回归风险。
+- 取舍 2：视觉层在现有 `surface-card / focus-ring` 体系内迭代，避免脱离既有设计语言导致 QA 面积扩大。
+- 取舍 3：埋点仅做最小可用能力（`gtag`/`dataLayer` 兼容），不在本轮绑定具体分析平台 SDK。
 
-### 8-4 当前风险与待办
-- 本轮按需求未执行测试；`Phase 6-6` 仍待回归
-- 需重点验证：桌面断点（1024/1280/1440）与 4 语言路径布局一致性
-- 回归通过后再进入 Phase 7（变现接入）
+### 8-4 验证结果
+- `npm run build`：通过。
+- `npm test`：通过（`src/utils/match.test.ts` 共 12 项）。
+- locale JSON 校验：通过（EN / ZH / JA / KO）。
+- `npm run lint`：未通过，原因是仓库缺失 ESLint 配置文件（非本轮改动引入）。
+
+### 8-5 当前风险与待办
+- Phase 6A 的人工 QA 尚未执行，需按 `docs/QA-TASKS.md` 的 `6A-Q1 ~ 6A-Q4` 完成验收。
+- 埋点上报链路已具备事件发送能力，但仍需在部署环境确认分析脚本注入与看板映射。
+- 6A QA 通过后，再推进 Phase 7（Affiliate + AdSense）。
 
 ---
 
@@ -308,4 +350,4 @@ npm test
 
 ---
 
-*Based on PRD.md v1.0 · TASKS.md Phase 0–6（6-6 待测）*
+*Based on PRD.md v1.0 · DEV-TASKS.md / QA-TASKS.md（Phase 0–6A）*

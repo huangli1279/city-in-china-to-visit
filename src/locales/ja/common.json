@@ -1,14 +1,57 @@
 {
   "home": {
+    "badge": "中国旅行の最初の都市選びに",
     "title": "あなたにぴったりの中国の都市は？",
-    "subtitle": "18の質問に答えて、あなたの旅スタイルに合った中国の都市を見つけよう。",
-    "cta": "クイズを始める",
-    "howItWorksTitle": "使い方",
-    "step1": "旅のスタイルについて18の質問に答える",
-    "step2": "アルゴリズムが15の中国都市とマッチング",
-    "step3": "あなたにぴったりの中国の都市を発見",
-    "desktopPreviewTitle": "都市プレビュー",
-    "desktopPreviewSubtitle": "都市ごとに旅の空気は大きく変わります。先に雰囲気を比べて、相性の良い行き先を選びましょう。"
+    "subtitle": "中国に行くことは決めた。あとは最初の都市を決めるだけ。18の質問に答えて、あなたの旅スタイルに合う都市を見つけましょう。",
+    "cta": "18問クイズを始める",
+    "metrics": {
+      "questions": "旅の好みに関するクイック質問",
+      "dimensions": "マッチングに使う6つのコア指標",
+      "cities": "推薦候補に入る15都市"
+    },
+    "desktopPreviewTitle": "都市ムードのプレビュー",
+    "desktopPreviewSubtitle": "近未来的な夜景から茶館のスローな時間まで。先に雰囲気を比較してからルートを決められます。",
+    "shareTitle": "シェア前提の設計",
+    "shareSubtitle": "結果カードは TikTok / Instagram でのスクリーンショット投稿に最適化しています。",
+    "sharePoints": [
+      "都市の個性が一目で伝わる高コントラストカード",
+      "ベスト1件 + 代替2件を1枚で表示",
+      "ベストシーズンと予算目安も同時に確認可能"
+    ],
+    "painEyebrow": "この診断が必要な理由",
+    "painTitle": "最初の都市選びこそ、いちばん迷いやすい",
+    "painPoints": [
+      {
+        "title": "選択肢が多すぎる",
+        "description": "中国は都市ごとの個性差が大きく、初訪問では最初の行き先を決めにくいです。"
+      },
+      {
+        "title": "情報が多すぎる",
+        "description": "ガイドが多いほど判断が難しくなり、決断までの時間が延びがちです。"
+      },
+      {
+        "title": "自分向けの提案が必要",
+        "description": "人気ランキングは万人向け。実際には自分のペースや興味に合う都市が重要です。"
+      }
+    ],
+    "modelEyebrow": "マッチングモデル",
+    "modelTitle": "ランダムではなく、説明できる推薦",
+    "modelSubtitle": "回答を6軸のプロフィールに変換し、15都市のプロフィールと比較して近い順に提示します。",
+    "modelDimensions": [
+      "History Appetite",
+      "Nature vs Urban",
+      "Cultural Comfort",
+      "Activity Level",
+      "Social Vibe",
+      "Adventure Appetite"
+    ],
+    "howItWorksTitle": "マッチングの流れ",
+    "modelStep1": "約2-3分で18問のシナリオ質問に回答",
+    "modelStep2": "6つの指標であなたの旅行プロフィールを算出",
+    "modelStep3": "最適な1都市と候補2都市を表示",
+    "finalCtaTitle": "あなたの中国旅行の都市を見つけますか？",
+    "finalCtaSubtitle": "今すぐ診断して「中国に行きたい」を具体的な都市プランに変えましょう。",
+    "finalCta": "クイズを始める"
   },
   "quiz": {
     "progress": "質問 {{current}} / {{total}}",

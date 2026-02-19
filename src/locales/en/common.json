@@ -1,14 +1,57 @@
 {
   "home": {
+    "badge": "Made for China trip planners",
     "title": "Which Chinese City Matches Your Vibe?",
-    "subtitle": "Answer 18 quick questions and find the Chinese city that matches your travel personality.",
-    "cta": "Start the Quiz",
-    "howItWorksTitle": "How it works",
-    "step1": "Answer 18 quick questions about your travel style",
-    "step2": "Our algorithm matches you against 15 Chinese cities",
-    "step3": "Discover your perfect Chinese city match",
-    "desktopPreviewTitle": "City preview",
-    "desktopPreviewSubtitle": "Different routes, different moods. Find the city energy that fits you before you commit."
+    "subtitle": "You already decided to visit China. Now pick where to begin. Answer 18 quick questions and get the city that fits your travel personality.",
+    "cta": "Start the 18-question quiz",
+    "metrics": {
+      "questions": "Quick questions about your travel style",
+      "dimensions": "Core dimensions behind the matching model",
+      "cities": "Distinctive cities in the recommendation pool"
+    },
+    "desktopPreviewTitle": "City mood preview",
+    "desktopPreviewSubtitle": "From futuristic skylines to tea-house slow life. Compare the vibe before you commit to a route.",
+    "shareTitle": "Built for sharing",
+    "shareSubtitle": "Your result card is optimized for screenshot posts on TikTok and Instagram.",
+    "sharePoints": [
+      "High-contrast hero card with city identity front and center",
+      "Best match plus 2 alternatives in one frame",
+      "Best time and budget hints included for quick planning"
+    ],
+    "painEyebrow": "Why this quiz exists",
+    "painTitle": "The first city choice is the hardest part",
+    "painPoints": [
+      {
+        "title": "Too many city options",
+        "description": "China has huge regional variety, which makes first-time city selection overwhelming."
+      },
+      {
+        "title": "Information overload",
+        "description": "Guides are useful, but too much information makes it harder to decide where to start."
+      },
+      {
+        "title": "Need a personal fit",
+        "description": "Most lists rank popularity. Travelers need a city that fits their own pace and interests."
+      }
+    ],
+    "modelEyebrow": "Matching model",
+    "modelTitle": "A clear system, not a random city list",
+    "modelSubtitle": "We map your answers to a six-dimension profile, then compare it against 15 city profiles and rank the closest matches.",
+    "modelDimensions": [
+      "History Appetite",
+      "Nature vs Urban",
+      "Cultural Comfort",
+      "Activity Level",
+      "Social Vibe",
+      "Adventure Appetite"
+    ],
+    "howItWorksTitle": "How matching works",
+    "modelStep1": "Answer 18 scenario-based questions in about 2-3 minutes",
+    "modelStep2": "We calculate your traveler profile across 6 dimensions",
+    "modelStep3": "You get 1 best-match city and 2 runner-up options",
+    "finalCtaTitle": "Ready to find your Chinese city?",
+    "finalCtaSubtitle": "Take the quiz now and turn your China travel idea into a concrete city plan.",
+    "finalCta": "Start the Quiz"
   },
   "quiz": {
     "progress": "Question {{current}} / {{total}}",

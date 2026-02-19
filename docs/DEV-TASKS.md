@@ -162,10 +162,65 @@
 
 ---
 
+## Phase 6A｜Landing Page（PRD 对齐）
+
+> 目标：将首页升级为 PRD 导向的转化型 Landing Page，服务 TikTok 导流与问卷完成率
+> 前置条件：Phase 6 完成，现有首页/问卷/结果路由稳定
+
+- [x] **6A-1** 确认 Landing 路由接入策略（基于现有 `/:lang` 架构）
+  - 方案 A：`/:lang` 直接作为 Landing（推荐，减少入口分流）
+  - 方案 B：新增 `/:lang/landing`，并在稳定后切换 `index` 到 Landing
+  - 输出：确定唯一入口，避免首页与 Landing 重复维护
+  - 已实现：采用方案 A，保留 `/:lang` 为唯一 Landing 入口，避免重复维护
+
+- [x] **6A-2** 按 PRD 价值主张重构首屏 Hero（`docs/PRD.md` 第一章）
+  - 主标题聚焦「18 道题找到匹配中国城市」
+  - 副标题强调「降低选城决策成本 + 个性化推荐」
+  - 主 CTA 固定跳转 `/:lang/quiz`，首屏仅保留一个主操作
+  - 已实现：`HomePage` 首屏改为 PRD 价值主张叙事，主 CTA 直达 `/:lang/quiz`
+
+- [x] **6A-3** 新增“用户痛点”区块（`docs/PRD.md` 第二章）
+  - 城市太多、信息过载、缺少个性化建议
+  - 采用 3 卡片结构，桌面同屏可见，移动端单列阅读
+  - 已实现：新增三卡片痛点区块并完成响应式布局
+
+- [x] **6A-4** 新增“匹配机制可信度”区块（`docs/PRD.md` 第四、六章）
+  - 明确展示 `18 questions + 6 dimensions + 15 cities`
+  - 以简化文案解释匹配流程：答题 → 计算画像 → 城市排序
+  - 避免公式堆砌，保持用户可理解与可感知的专业性
+  - 已实现：新增指标卡（18/6/15）与三步模型流程说明
+
+- [x] **6A-5** 新增“城市预览 + 传播钩子”区块（`docs/PRD.md` 第三、七、十章）
+  - 城市预览卡展示差异化城市风格（emoji + tagline）
+  - 强调结果页可截图分享（TikTok / Instagram 场景）
+  - 在区块结尾放置二次 CTA，缩短从兴趣到答题的路径
+  - 已实现：城市预览卡保留并新增分享钩子区与底部二次 CTA
+
+- [x] **6A-6** 完成 Landing 文案 i18n 扩展（`en / zh-CN / ja / ko`）
+  - 新增 Landing 专属 key（hero / pain points / model / share / CTA）
+  - 确保四语语气一致，避免仅英文完整、其他语言缺段
+  - 城市名称继续统一使用拼音英文（如 Xi'an, Chengdu）
+  - 已实现：4 语言 `common.json` 全量补齐 Landing 新 key
+
+- [x] **6A-7** 接入最小可用埋点（与 MVP 指标对齐，`docs/PRD.md` 第十二章）
+  - 事件建议：`view_landing`、`click_start_quiz`、`view_quiz`
+  - 统计维度：语言、来源参数（如 `utm_source`）
+  - 为后续评估“开始率/完成率”提供基础数据
+  - 已实现：新增 `src/utils/analytics.ts` 并接入三类事件与 `lang/utm_source/path` 维度
+
+- [x] **6A-8** 交付 PRD 对齐验收清单并联动 QA
+  - 桌面端 `>=1280px` 首屏同时看到主叙事与辅助信息区块
+  - 移动端首屏 CTA 明确、可达，按钮高度满足触控要求
+  - Landing 到 Quiz 路径在四语下均可用，且无路由跳转异常
+  - 相关验证项同步补充到 `docs/QA-TASKS.md`
+  - 已实现：`docs/QA-TASKS.md` 已补充 Phase 6A 验收项
+
+---
+
 ## Phase 7｜变现接入
 
 > 目标：Affiliate 链接和 AdSense 广告位上线，开始产生收益
-> 前置条件：Phase 6 完成，产品已上线且桌面/移动双端体验稳定
+> 前置条件：Phase 6A 完成，产品已上线且桌面/移动双端体验稳定
 
 - [ ] **7-1** 注册各 Affiliate 平台账号并获取追踪链接
   - GetYourGuide Partner Program
@@ -197,7 +252,8 @@ Phase 0
             └─► Phase 2（页面开发，依赖数据结构）
                      └─► Phase 4（多语言，依赖英文 locale 完成）
                               └─► Phase 6（桌面端重设计，依赖 i18n 路由稳定）
-                                       └─► Phase 7（变现接入，依赖双端稳定）
+                                       └─► Phase 6A（Landing PRD 对齐，依赖桌面布局基线）
+                                                └─► Phase 7（变现接入，依赖双端稳定）
 ```
 
 > 测试、回归、验收链路见 `docs/QA-TASKS.md`

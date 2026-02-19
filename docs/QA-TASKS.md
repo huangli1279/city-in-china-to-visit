@@ -1,6 +1,6 @@
-# QA-TASKS — 从 TASKS.md 抽取的测试相关内容
+# QA-TASKS — 从 DEV-TASKS.md 抽取的测试相关内容
 
-> 来源：`docs/TASKS.md`
+> 来源：`docs/DEV-TASKS.md`
 > 状态标记：`[ ]` 待开始 · `[→]` 进行中 · `[x]` 已完成
 
 ---
@@ -75,6 +75,113 @@
   - 覆盖 4 语言路径：`/en` `/zh` `/ja` `/ko`
   - 2026-02-19 补测结论：四语全链路（首页→问卷→结果）通过；移动端 `390x844` 结果页首屏核心信息通过
   - 截图：`/tmp/phase6-mobile-result-en.png`、`/tmp/phase6-mobile-result-zh.png`、`/tmp/phase6-mobile-result-ja.png`、`/tmp/phase6-mobile-result-ko.png`
+
+---
+
+## Phase 6A｜Landing Page（PRD 对齐）
+
+- [x] **6A-Q1** 路由与入口策略验收（唯一 Landing 入口）
+  - 测试路径：`/`、`/en`、`/zh`、`/ja`、`/ko`
+  - 预期结果：均可进入对应语言 Landing；`/` 自动跳转 `/en`
+  - 补充校验：访问 `/en/landing`、`/zh/landing` 等非支持路径，应回退到有效首页路径（不出现空白页/404）
+  - 证据要求：每种语言首页截图 + 无效路径回退截图
+  - 2026-02-19 实测：通过
+  - 路由结果：`/tmp/phase6a/q1-routes.txt`
+  - 截图：`/tmp/phase6a/q1-root.png`、`/tmp/phase6a/q1-en.png`、`/tmp/phase6a/q1-zh.png`、`/tmp/phase6a/q1-ja.png`、`/tmp/phase6a/q1-ko.png`、`/tmp/phase6a/q1-en-landing.png`、`/tmp/phase6a/q1-zh-landing.png`、`/tmp/phase6a/q1-ja-landing.png`、`/tmp/phase6a/q1-ko-landing.png`
+
+- [x] **6A-Q2** Landing 信息架构验收（PRD 对齐）
+  - 步骤：打开任一语言 Landing，按从上到下检查模块完整性
+  - 预期模块：
+    - Hero（价值主张 + 主 CTA）
+    - 指标区（18 / 6 / 15）
+    - 痛点区（3 张卡片）
+    - 匹配机制区（模型说明 + 三步流程）
+    - 城市预览 + 分享钩子
+    - 底部二次 CTA
+  - 证据要求：桌面整页截图 1 张 + 移动端分段截图 2 张
+  - 2026-02-19 实测：通过（模块完整性脚本校验 `hero/metrics/pain/model/preview/finalCta = true`）
+  - 截图：`/tmp/phase6a/q2-desktop-full-en.png`、`/tmp/phase6a/q2-mobile-top-en.png`、`/tmp/phase6a/q2-mobile-bottom-en.png`
+
+- [x] **6A-Q3** CTA 交互链路验收
+  - 步骤：
+    - 点击 Hero 主 CTA
+    - 回退后点击底部二次 CTA
+  - 预期结果：
+    - 两个 CTA 均跳转到当前语言的 `/:lang/quiz`
+    - 不出现跳错语言、白屏或控制台报错
+  - 覆盖语言：`/en` `/zh` `/ja` `/ko`
+  - 证据要求：4 语言各提供 1 条跳转录屏或连续截图
+  - 2026-02-19 实测：通过（8 条跳转均命中对应 `/:lang/quiz`）
+  - 跳转结果：`/tmp/phase6a/q3-cta-results.txt`
+  - 错误日志：`/tmp/phase6a/q3-errors.txt`（四语均空）
+  - 连续截图：`/tmp/phase6a/q3-en-hero-cta.png`、`/tmp/phase6a/q3-en-final-cta.png`、`/tmp/phase6a/q3-zh-hero-cta.png`、`/tmp/phase6a/q3-zh-final-cta.png`、`/tmp/phase6a/q3-ja-hero-cta.png`、`/tmp/phase6a/q3-ja-final-cta.png`、`/tmp/phase6a/q3-ko-hero-cta.png`、`/tmp/phase6a/q3-ko-final-cta.png`
+
+- [x] **6A-Q4** 响应式与可用性验收
+  - 断点覆盖：`375x812`、`390x844`、`430x932`、`1024x768`、`1280x800`、`1440x900`
+  - 预期结果：
+    - `>=1280px` 首屏可同时看到主叙事和辅助信息（非窄列放大）
+    - 移动端 CTA 可达、可点击，按钮高度符合触控要求（>=52px）
+    - 页面无横向滚动，文本无裁切和重叠
+  - 证据要求：每个断点至少 1 张截图
+  - 2026-02-19 实测：通过（6 断点 `noOverflow=true`；`1280/1440` 首屏双栏并列）
+  - CTA 校验：移动端 `375/390/430` 顶部 CTA 与底部 CTA 均可达且可点击跳转；主 CTA（`button.bg-sky-500`）高度 `60px`
+  - 指标与结果：`/tmp/phase6a/q4-metrics.jsonl`、`/tmp/phase6a/q4-mobile-cta-results.txt`
+  - 截图：`/tmp/phase6a/q4-375x812.png`、`/tmp/phase6a/q4-390x844.png`、`/tmp/phase6a/q4-430x932.png`、`/tmp/phase6a/q4-1024x768.png`、`/tmp/phase6a/q4-1280x800.png`、`/tmp/phase6a/q4-1440x900.png`
+
+- [x] **6A-Q5** 多语言文案与内容完整性验收
+  - 覆盖路径：`/en` `/zh` `/ja` `/ko`
+  - 预期结果：
+    - Landing 新增文案完整渲染，无 `{{key}}`、`home.xxx` 等占位符
+    - 城市名称保持拼音英文（如 `Xi'an`、`Chengdu`）
+    - 语言切换后页面内容即时刷新且结构不丢失
+  - 证据要求：四语各 1 张首屏截图 + 1 条语言切换录屏
+  - 2026-02-19 实测：通过（四语 `hasPlaceholder=false`、`hasHomeKey=false`、`hasXian=true`、`hasChengdu=true`）
+  - 文案校验：`/tmp/phase6a/q5-lang-checks.txt`
+  - 截图：`/tmp/phase6a/q5-en-hero.png`、`/tmp/phase6a/q5-zh-hero.png`、`/tmp/phase6a/q5-ja-hero.png`、`/tmp/phase6a/q5-ko-hero.png`
+  - 录屏：`/tmp/phase6a/q5-lang-switch.webm`（EN→ZH→JA→KO）
+
+- [x] **6A-Q6** 埋点事件验收（最小可用）
+  - 前置：在浏览器控制台执行 `window.dataLayer = []`
+  - 步骤：
+    - 打开 `/en?utm_source=tiktok`（验证 `view_landing`）
+    - 点击 Hero CTA（验证 `click_start_quiz`，`section=hero`）
+    - 返回 Landing 后点击底部 CTA（验证 `click_start_quiz`，`section=final`）
+    - 进入问卷页（验证 `view_quiz`）
+  - 预期事件：`view_landing`、`click_start_quiz`、`view_quiz`
+  - 预期字段：`lang`、`utm_source`、`path`（`click_start_quiz` 额外含 `section`）
+  - 证据要求：`window.dataLayer` 截图（包含完整事件对象）
+  - 2026-02-19 实测：通过（事件与字段齐全，`click_start_quiz` 同时覆盖 `section=hero/final`）
+  - 数据证据：`/tmp/phase6a/q6-datalayer-clean.json`
+  - 截图证据：`/tmp/phase6a/q6-datalayer.png`
+  - 说明：本地 dev 环境出现重复 `view_landing/view_quiz`，与 React `StrictMode` 双调用行为一致，不影响事件字段校验
+
+- [x] **6A-Q7** 回归影响面验收（Landing 改动后的主链路）
+  - 步骤：每种语言执行 `Landing -> Quiz（答 1 题）-> Result guard`
+  - 预期结果：
+    - 进入 Quiz 后题目正常渲染，交互可用
+    - 直接访问 `/:lang/result`（无 state）仍正确回跳 `/:lang/quiz`
+  - 证据要求：4 语言各 1 组关键截图
+  - 2026-02-19 实测：通过（四语均完成“答 1 题 + guard 回跳”）
+  - 结果：`/tmp/phase6a/q7-results.txt`
+  - 截图：`/tmp/phase6a/q7-en-quiz-answered.png`、`/tmp/phase6a/q7-en-result-guard.png`、`/tmp/phase6a/q7-zh-quiz-answered.png`、`/tmp/phase6a/q7-zh-result-guard.png`、`/tmp/phase6a/q7-ja-quiz-answered.png`、`/tmp/phase6a/q7-ja-result-guard.png`、`/tmp/phase6a/q7-ko-quiz-answered.png`、`/tmp/phase6a/q7-ko-result-guard.png`
+
+### Phase 6A｜交接给测试同事（执行说明）
+
+- [x] **6A-H1** 测试执行顺序
+  - 建议顺序：`6A-Q1 -> 6A-Q2 -> 6A-Q3 -> 6A-Q4 -> 6A-Q5 -> 6A-Q6 -> 6A-Q7`
+  - 执行环境：优先 `https://city-in-china-to-visit.pages.dev`，如需调试埋点可用本地 `npm run dev`
+  - 2026-02-19 执行记录：本轮已按建议顺序在本地 `http://127.0.0.1:4173` 完成
+
+- [x] **6A-H2** 缺陷提报格式
+  - 必填字段：页面路径、语言、设备/分辨率、浏览器、复现步骤、预期、实际、截图/录屏
+  - 埋点问题请附：`dataLayer` 事件对象截图（至少包含事件名和字段）
+  - 2026-02-19 执行记录：本轮无 Blocker/Critical 缺陷；埋点证据已按要求附截图与 JSON
+
+- [x] **6A-H3** 完成标准
+  - `6A-Q1 ~ 6A-Q7` 全部执行并回填结果
+  - 无阻塞级问题（Blocker/Critical）
+  - 如有中低优先级问题，需附修复建议和复测入口
+  - 2026-02-19 结论：达到完成标准，可交由测试同事复核与开发同事进入下一阶段
 
 ---
 

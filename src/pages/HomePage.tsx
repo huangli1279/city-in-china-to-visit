@@ -24,6 +24,28 @@ interface FaqItemTranslation {
 const CITY_BY_ID = new Map(cities.map((city) => [city.id, city]))
 const PREVIEW_CITY_IDS = ['shanghai', 'xian', 'chengdu', 'guilin', 'chongqing', 'sanya'] as const
 const HOME_ALTERNATES = buildAlternates()
+const GUIDE_INTERNAL_LINKS = [
+  {
+    href: '/en/guides/best-city-to-visit-in-china-first-time/',
+    title: 'Best City to Visit in China for First-Time Travelers',
+    desc: 'A practical way to pick your first stop based on travel style and comfort level.',
+  },
+  {
+    href: '/en/guides/beijing-vs-shanghai-for-first-trip/',
+    title: 'Beijing vs Shanghai for Your First China Trip',
+    desc: 'Compare history depth, city pace, convenience, and itinerary style.',
+  },
+  {
+    href: '/en/guides/best-china-cities-by-travel-style/',
+    title: 'Best China Cities by Travel Style',
+    desc: 'Match city types to personality: history-first, foodie, nature, or nightlife.',
+  },
+  {
+    href: '/en/guides/how-many-days-in-first-china-city/',
+    title: 'How Many Days in Your First China City?',
+    desc: 'Use a 3-to-5 day framework to avoid overpacking your first itinerary.',
+  },
+]
 const PREVIEW_CITIES = PREVIEW_CITY_IDS.map((id) => CITY_BY_ID.get(id)).filter(
   (city): city is (typeof cities)[number] => city !== undefined
 )
@@ -278,6 +300,34 @@ export default function HomePage() {
         </div>
         <p className="mt-5 text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{t('home.seoGuide.conclusion')}</p>
       </section>
+
+      {lang === 'en' && (
+        <section className="surface-card mt-5 p-6 sm:p-8 lg:p-10">
+          <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">Topic cluster</p>
+          <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">China city planning guides</h2>
+          <p className="mt-3 max-w-4xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
+            These focused guides support the quiz and help you compare destinations, trip pace, and planning depth.
+          </p>
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
+            {GUIDE_INTERNAL_LINKS.map((guide) => (
+              <a
+                key={guide.href}
+                href={guide.href}
+                className="focus-ring surface-muted block p-5 transition-colors hover:border-[#b43c2f]/35"
+              >
+                <h3 className="font-display text-lg font-semibold leading-snug text-[color:var(--ink-950)]">{guide.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-600)]">{guide.desc}</p>
+              </a>
+            ))}
+          </div>
+          <a
+            href="/en/guides/"
+            className="focus-ring mt-5 inline-flex rounded-xl border border-[#8a6447]/28 bg-white/70 px-4 py-2 text-sm font-semibold text-cinnabar transition-colors hover:border-[#b43c2f]/45"
+          >
+            Explore all city guides
+          </a>
+        </section>
+      )}
 
       <section className="surface-card mt-5 p-6 sm:p-8 lg:p-10">
         <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.faq.eyebrow')}</p>

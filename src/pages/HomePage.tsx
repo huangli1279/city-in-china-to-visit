@@ -63,14 +63,12 @@ export default function HomePage() {
   return (
     <main className="min-h-dvh py-4 sm:py-6 lg:py-8">
       <header className="sticky top-3 z-20 mb-5">
-        <div className="surface-card relative overflow-visible border-slate-200/90 bg-white/85 px-4 py-3 shadow-lg backdrop-blur-sm supports-[backdrop-filter]:bg-white/70 sm:px-5 lg:px-6">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
+        <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
+          <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
           <div className="flex flex-wrap items-center gap-3">
             <Link to={`/${lang}`} className="mr-auto min-w-0">
-              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-sky-600">
-                {t('home.header.brandEyebrow')}
-              </p>
-              <p className="truncate text-base font-bold text-slate-900 sm:text-lg">{t('home.header.brandName')}</p>
+              <p className="brand-stamp">{t('home.header.brandEyebrow')}</p>
+              <p className="ink-title mt-2 truncate text-lg font-bold sm:text-xl">{t('home.header.brandName')}</p>
             </Link>
 
             <nav className="hidden items-center gap-2 lg:flex">
@@ -78,17 +76,14 @@ export default function HomePage() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="focus-ring rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:border-sky-300 hover:text-sky-700"
+                  className="focus-ring rounded-full border border-[#83582e]/25 bg-white/70 px-3 py-1.5 text-xs font-semibold text-[color:var(--ink-600)] transition-colors hover:border-[#b43c2f]/40 hover:text-[color:var(--cinnabar-600)]"
                 >
                   {link.label}
                 </a>
               ))}
             </nav>
 
-            <button
-              onClick={() => goToQuiz('header')}
-              className="focus-ring hidden min-h-[44px] rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800 active:bg-slate-950 md:inline-flex"
-            >
+            <button onClick={() => goToQuiz('header')} className="btn-ink hidden px-4 py-2 text-sm md:inline-flex">
               {t('home.header.cta')}
             </button>
             <LanguageSwitcher />
@@ -96,73 +91,71 @@ export default function HomePage() {
         </div>
       </header>
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-7">
-        <section className="surface-card relative overflow-hidden p-6 sm:p-8 lg:p-10">
-          <div className="pointer-events-none absolute -right-24 -top-20 h-56 w-56 rounded-full bg-sky-200/60 blur-3xl" />
-          <p className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-sky-700">
-            {t('home.badge')}
-          </p>
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-7">
+        <section className="surface-card grid-lattice animate-rise relative overflow-hidden p-6 sm:p-8 lg:p-10">
+          <div className="pointer-events-none absolute -left-24 -top-20 h-64 w-64 rounded-full bg-[rgba(180,60,47,0.16)] blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-16 right-8 h-44 w-44 rounded-full bg-[rgba(184,140,53,0.22)] blur-3xl" />
 
-          <h1 className="mt-4 text-4xl font-bold leading-tight text-slate-900 sm:text-5xl lg:text-[3.2rem] lg:leading-[1.04]">
+          <p className="brand-stamp">{t('home.badge')}</p>
+
+          <h1 className="ink-title mt-4 text-4xl leading-tight sm:text-5xl lg:text-[3.1rem] lg:leading-[1.05]">
             {t('home.title')}
           </h1>
 
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-            {t('home.subtitle')}
-          </p>
+          <p className="ink-subtitle mt-4 max-w-2xl text-base leading-relaxed sm:text-lg">{t('home.subtitle')}</p>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             <article className="surface-muted p-4">
-              <p className="text-2xl font-bold text-slate-900">18</p>
-              <p className="mt-1 text-sm leading-relaxed text-slate-600">{t('home.metrics.questions')}</p>
+              <p className="font-display text-3xl font-bold text-[color:var(--ink-950)]">18</p>
+              <p className="mt-1 text-sm leading-relaxed text-[color:var(--ink-600)]">{t('home.metrics.questions')}</p>
             </article>
             <article className="surface-muted p-4">
-              <p className="text-2xl font-bold text-slate-900">6</p>
-              <p className="mt-1 text-sm leading-relaxed text-slate-600">{t('home.metrics.dimensions')}</p>
+              <p className="font-display text-3xl font-bold text-[color:var(--ink-950)]">6</p>
+              <p className="mt-1 text-sm leading-relaxed text-[color:var(--ink-600)]">{t('home.metrics.dimensions')}</p>
             </article>
             <article className="surface-muted p-4">
-              <p className="text-2xl font-bold text-slate-900">15</p>
-              <p className="mt-1 text-sm leading-relaxed text-slate-600">{t('home.metrics.cities')}</p>
+              <p className="font-display text-3xl font-bold text-[color:var(--ink-950)]">15</p>
+              <p className="mt-1 text-sm leading-relaxed text-[color:var(--ink-600)]">{t('home.metrics.cities')}</p>
             </article>
           </div>
 
-          <button
-            onClick={() => goToQuiz('hero')}
-            className="focus-ring mt-7 min-h-[52px] w-full rounded-2xl bg-sky-500 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-sky-600 active:bg-sky-700 sm:w-auto"
-          >
+          <button onClick={() => goToQuiz('hero')} className="btn-cinnabar mt-7 w-full px-8 py-4 text-lg sm:w-auto">
             {t('home.cta')}
           </button>
         </section>
 
-        <aside id="landing-preview" className="surface-card scroll-mt-28 p-5 sm:p-6 lg:p-7">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+        <aside id="landing-preview" className="surface-card animate-rise-delay scroll-mt-28 p-5 sm:p-6 lg:p-7">
+          <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">
             {t('home.desktopPreviewTitle')}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">{t('home.desktopPreviewSubtitle')}</p>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-600)]">{t('home.desktopPreviewSubtitle')}</p>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             {PREVIEW_CITIES.map((city) => (
               <article
                 key={city.id}
-                className="rounded-2xl border border-slate-200/80 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-sky-200"
+                className="surface-muted rounded-2xl border-[#826043]/20 p-4 transition-all hover:-translate-y-0.5 hover:border-[#b43c2f]/35"
               >
                 <div className="mb-2 flex items-center gap-2">
                   <span className="text-2xl">{city.emoji}</span>
-                  <p className="font-semibold text-slate-900">{city.name}</p>
+                  <div>
+                    <p className="font-display text-lg font-semibold text-[color:var(--ink-950)]">{city.name}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-cinnabar">city vibe</p>
+                  </div>
                 </div>
-                <p className="text-xs leading-relaxed text-slate-500">
+                <p className="text-xs leading-relaxed text-[color:var(--ink-600)]">
                   {cityTranslations[city.id]?.tagline ?? city.label}
                 </p>
               </article>
             ))}
           </div>
 
-          <article className="mt-5 rounded-2xl border border-slate-800/90 bg-slate-900 p-4 text-slate-100">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">{t('home.shareTitle')}</p>
+          <article className="mt-5 rounded-2xl border border-[#28344d] bg-[linear-gradient(145deg,#202a3d,#2d3b55)] p-4 text-slate-100">
+            <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-[#e8c37a]">{t('home.shareTitle')}</p>
             <p className="mt-2 text-sm leading-relaxed text-slate-100">{t('home.shareSubtitle')}</p>
             <ul className="mt-3 grid gap-2">
               {sharePoints.map((point, i) => (
-                <li key={i} className="text-xs leading-relaxed text-slate-300">
+                <li key={i} className="text-xs leading-relaxed text-slate-200">
                   {point}
                 </li>
               ))}
@@ -172,13 +165,13 @@ export default function HomePage() {
       </div>
 
       <section id="landing-pain" className="surface-card scroll-mt-28 mt-5 p-6 sm:p-8 lg:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('home.painEyebrow')}</p>
-        <h2 className="mt-3 text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">{t('home.painTitle')}</h2>
+        <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.painEyebrow')}</p>
+        <h2 className="ink-title mt-3 text-2xl leading-tight sm:text-3xl">{t('home.painTitle')}</h2>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {painPoints.map((painPoint, i) => (
             <article key={i} className="surface-muted p-5">
-              <p className="text-base font-semibold leading-snug text-slate-900">{painPoint.title}</p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">{painPoint.description}</p>
+              <p className="font-display text-lg font-semibold leading-snug text-[color:var(--ink-950)]">{painPoint.title}</p>
+              <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-600)]">{painPoint.description}</p>
             </article>
           ))}
         </div>
@@ -189,12 +182,17 @@ export default function HomePage() {
         className="scroll-mt-28 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-7"
       >
         <article className="surface-card p-6 sm:p-8 lg:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('home.modelEyebrow')}</p>
-          <h2 className="mt-3 text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">{t('home.modelTitle')}</h2>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600 sm:text-base">{t('home.modelSubtitle')}</p>
+          <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.modelEyebrow')}</p>
+          <h2 className="ink-title mt-3 text-2xl leading-tight sm:text-3xl">{t('home.modelTitle')}</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
+            {t('home.modelSubtitle')}
+          </p>
           <div className="mt-5 grid gap-2 sm:grid-cols-2">
             {modelDimensions.map((dimension, i) => (
-              <p key={i} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+              <p
+                key={i}
+                className="rounded-xl border border-[#866949]/25 bg-[rgba(253,248,238,0.84)] px-3 py-2 text-sm text-[color:var(--ink-800)]"
+              >
                 {dimension}
               </p>
             ))}
@@ -202,12 +200,12 @@ export default function HomePage() {
         </article>
 
         <article className="surface-card p-6 sm:p-8 lg:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('home.howItWorksTitle')}</p>
+          <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.howItWorksTitle')}</p>
           <ol className="mt-4 grid gap-3">
             {modelSteps.map((step, i) => (
               <li key={i} className="surface-muted p-4">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-sky-600">0{i + 1}</p>
-                <p className="text-sm leading-relaxed text-slate-700">{step}</p>
+                <p className="mb-2 font-accent text-xs font-semibold uppercase tracking-[0.18em] text-cinnabar">0{i + 1}</p>
+                <p className="text-sm leading-relaxed text-[color:var(--ink-800)]">{step}</p>
               </li>
             ))}
           </ol>
@@ -215,34 +213,35 @@ export default function HomePage() {
       </section>
 
       <section className="surface-card mt-5 p-6 text-center sm:p-8 lg:p-10">
-        <h2 className="text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">{t('home.finalCtaTitle')}</h2>
-        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">{t('home.finalCtaSubtitle')}</p>
-        <button
-          onClick={() => goToQuiz('final')}
-          className="focus-ring mt-6 min-h-[52px] w-full rounded-2xl bg-sky-500 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-sky-600 active:bg-sky-700 sm:w-auto"
-        >
+        <h2 className="ink-title text-2xl leading-tight sm:text-3xl">{t('home.finalCtaTitle')}</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
+          {t('home.finalCtaSubtitle')}
+        </p>
+        <button onClick={() => goToQuiz('final')} className="btn-cinnabar mt-6 w-full px-8 py-4 text-lg sm:w-auto">
           {t('home.finalCta')}
         </button>
       </section>
 
-      <footer className="surface-card mt-5 overflow-hidden border-slate-900/90 bg-slate-900 text-slate-200">
-        <div className="pointer-events-none h-px w-full bg-gradient-to-r from-transparent via-sky-300/70 to-transparent" />
+      <footer className="surface-card mt-5 overflow-hidden bg-[linear-gradient(145deg,#1b2434,#2a364d)] text-slate-200">
+        <div className="motif-divider" />
         <div className="grid gap-5 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:p-10">
           <section>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">{t('home.footer.eyebrow')}</p>
-            <h2 className="mt-3 text-2xl font-bold leading-tight text-white sm:text-3xl">{t('home.footer.title')}</h2>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">{t('home.footer.subtitle')}</p>
+            <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-[#e9c57d]">
+              {t('home.footer.eyebrow')}
+            </p>
+            <h2 className="font-display mt-3 text-2xl font-bold leading-tight text-white sm:text-3xl">{t('home.footer.title')}</h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-200 sm:text-base">{t('home.footer.subtitle')}</p>
           </section>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <section className="rounded-2xl border border-slate-700/80 bg-slate-800/60 p-4">
+            <section className="rounded-2xl border border-[#56627a] bg-[#202a3d]/70 p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">{t('home.footer.jumpTitle')}</p>
               <div className="mt-3 grid gap-2">
                 {headerLinks.map((link) => (
                   <a
                     key={`footer-${link.href}`}
                     href={link.href}
-                    className="focus-ring rounded-xl border border-slate-700/80 bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-sky-300/70 hover:text-sky-100"
+                    className="focus-ring rounded-xl border border-[#5f6b81] bg-[#27344c] px-3 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-[#e2b35f]/70 hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -250,19 +249,16 @@ export default function HomePage() {
               </div>
             </section>
 
-            <section className="rounded-2xl border border-slate-700/80 bg-slate-800/60 p-4">
+            <section className="rounded-2xl border border-[#56627a] bg-[#202a3d]/70 p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">{t('home.footer.nextTitle')}</p>
-              <button
-                onClick={() => goToQuiz('footer')}
-                className="focus-ring mt-3 min-h-[48px] w-full rounded-xl bg-sky-500 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-sky-400 active:bg-sky-600"
-              >
+              <button onClick={() => goToQuiz('footer')} className="btn-cinnabar mt-3 w-full px-4 py-3 text-sm">
                 {t('home.footer.cta')}
               </button>
-              <p className="mt-3 text-xs leading-relaxed text-slate-400">{t('home.footer.disclaimer')}</p>
+              <p className="mt-3 text-xs leading-relaxed text-slate-300">{t('home.footer.disclaimer')}</p>
             </section>
           </div>
         </div>
-        <div className="border-t border-slate-700/80 px-6 py-4 text-xs text-slate-400 sm:px-8 lg:px-10">
+        <div className="border-t border-[#4f5e78] px-6 py-4 text-xs text-slate-300 sm:px-8 lg:px-10">
           © {currentYear} {t('home.footer.copyright')}
         </div>
       </footer>

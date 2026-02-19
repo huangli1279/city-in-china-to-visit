@@ -1,5 +1,5 @@
-/* Google Fonts — Noto Sans family for multilingual support */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+/* Google Fonts - refined serif display + multilingual sans support */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif:wght@500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=Noto+Serif+JP:wght@500;600;700&family=Noto+Serif+KR:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,37 +7,147 @@
 
 @layer base {
   :root {
-    --page-bg-start: #eef4fb;
-    --page-bg-end: #f8fafc;
-    --surface-card: #ffffff;
-    --surface-muted: #f8fafc;
+    --page-bg-base: #efe8db;
+    --page-bg-soft: #f7f2e8;
+    --page-bg-deep: #e5dbc8;
+
+    --surface-card: rgba(252, 248, 240, 0.9);
+    --surface-muted: rgba(241, 233, 219, 0.92);
+
+    --ink-950: #171b25;
+    --ink-800: #253146;
+    --ink-600: #3f4f69;
+
+    --cinnabar-600: #b43c2f;
+    --cinnabar-500: #cc4e3f;
+    --gold-500: #b88c35;
+    --jade-500: #2f8a73;
+
+    --font-display: 'Noto Serif', 'Noto Serif SC', 'Noto Serif JP', 'Noto Serif KR', serif;
+    --font-accent: 'Cinzel', 'Noto Serif', 'Noto Serif SC', serif;
   }
 
   html {
-    /* Respect iOS safe area insets */
     padding-bottom: env(safe-area-inset-bottom);
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply text-slate-900 font-sans antialiased;
-    background-color: var(--page-bg-end);
-    background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.12), transparent 38%);
+    @apply font-sans antialiased;
+    color: var(--ink-950);
+    background-color: var(--page-bg-base);
+    background-image:
+      radial-gradient(circle at 11% 7%, rgba(204, 78, 63, 0.18), transparent 30%),
+      radial-gradient(circle at 90% 13%, rgba(184, 140, 53, 0.2), transparent 34%),
+      linear-gradient(180deg, var(--page-bg-soft) 0%, var(--page-bg-base) 36%, var(--page-bg-deep) 100%);
     min-height: 100dvh;
     overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.2;
+    z-index: -1;
+    background-image:
+      linear-gradient(90deg, rgba(134, 106, 60, 0.07) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(134, 106, 60, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at 30% 18%, black, transparent 78%);
   }
 }
 
 @layer components {
   .surface-card {
-    @apply rounded-3xl border border-slate-200/80 bg-white shadow-panel;
+    @apply rounded-[2rem] border;
+    border-color: rgba(96, 68, 45, 0.25);
+    background: linear-gradient(150deg, rgba(255, 252, 246, 0.94), rgba(247, 238, 224, 0.92));
+    box-shadow:
+      0 26px 48px -36px rgba(74, 42, 29, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.65);
   }
 
   .surface-muted {
-    @apply rounded-2xl border border-slate-200/80 bg-slate-50;
+    @apply rounded-2xl border;
+    border-color: rgba(124, 96, 68, 0.2);
+    background: linear-gradient(160deg, rgba(244, 236, 224, 0.88), rgba(238, 229, 215, 0.82));
   }
 
   .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    --tw-ring-color: rgba(180, 60, 47, 0.6);
+    --tw-ring-offset-color: #f4ecdf;
+  }
+
+  .brand-stamp {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em];
+    border-color: rgba(180, 60, 47, 0.38);
+    color: var(--cinnabar-600);
+    background: linear-gradient(120deg, rgba(253, 233, 224, 0.95), rgba(250, 240, 222, 0.85));
+  }
+
+  .ink-title {
+    @apply font-bold;
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+    color: var(--ink-950);
+  }
+
+  .ink-subtitle {
+    color: var(--ink-600);
+  }
+
+  .btn-cinnabar {
+    @apply focus-ring inline-flex items-center justify-center rounded-2xl px-6 py-3 font-semibold text-white transition-all;
+    min-height: 52px;
+    background: linear-gradient(135deg, var(--cinnabar-600), var(--cinnabar-500));
+    box-shadow: 0 14px 24px -18px rgba(180, 60, 47, 0.9);
+  }
+
+  .btn-cinnabar:hover {
+    transform: translateY(-1px);
+    filter: saturate(1.03) brightness(1.02);
+  }
+
+  .btn-cinnabar:active {
+    transform: translateY(0);
+    filter: saturate(0.98) brightness(0.96);
+  }
+
+  .btn-ink {
+    @apply focus-ring inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold text-white transition-colors;
+    min-height: 48px;
+    background: linear-gradient(135deg, #1d2432, #2f3b53);
+  }
+
+  .btn-ink:hover {
+    background: linear-gradient(135deg, #161b28, #253146);
+  }
+
+  .motif-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(184, 60, 47, 0.52) 36%, rgba(184, 140, 53, 0.55) 62%, transparent 100%);
+  }
+
+  .grid-lattice {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .grid-lattice::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.15;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(66, 46, 30, 0.14) 0.7px, transparent 0.8px),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+    background-size: 11px 11px, auto;
   }
 }
 
@@ -45,5 +155,46 @@
   .no-scroll-x {
     overflow-x: hidden;
     max-width: 100%;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-accent {
+    font-family: var(--font-accent);
+  }
+
+  .animate-rise {
+    animation: riseIn 0.72s cubic-bezier(0.2, 0.78, 0.2, 1) both;
+  }
+
+  .animate-rise-delay {
+    animation: riseIn 0.92s cubic-bezier(0.2, 0.78, 0.2, 1) both;
+    animation-delay: 0.12s;
+  }
+
+  .text-cinnabar {
+    color: var(--cinnabar-600);
+  }
+
+  .text-ink-soft {
+    color: var(--ink-600);
+  }
+
+  .bg-ink-soft {
+    background-color: rgba(32, 44, 64, 0.92);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.992);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

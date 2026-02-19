@@ -55,7 +55,7 @@ export default function LanguageSwitcher() {
     <div ref={ref} className="relative flex-shrink-0">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="focus-ring flex min-h-[44px] items-center gap-1 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+        className="focus-ring flex min-h-[44px] items-center gap-1 whitespace-nowrap rounded-xl border border-[#8a6447]/20 bg-white/65 px-3 py-2 text-sm font-medium text-[color:var(--ink-800)] transition-colors hover:border-[#b43c2f]/35 hover:bg-white/85"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t('language.switcher')}
@@ -67,7 +67,7 @@ export default function LanguageSwitcher() {
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 top-full z-50 mt-1 min-w-[156px] rounded-xl border border-slate-200 bg-white py-1 shadow-lg"
+          className="absolute right-0 top-[calc(100%+0.55rem)] z-[80] min-w-[188px] overflow-hidden rounded-2xl border border-[#8a6447]/25 bg-[rgba(253,248,240,0.97)] py-1 shadow-[0_24px_40px_-28px_rgba(58,35,23,0.62)] backdrop-blur"
         >
           {LANGUAGE_CODES.map((code) => (
             <button
@@ -77,8 +77,8 @@ export default function LanguageSwitcher() {
               onClick={() => handleSelect(code)}
               className={`focus-ring w-full whitespace-nowrap px-4 py-2.5 text-left text-sm transition-colors ${
                 code === normalizedLang
-                  ? 'font-semibold text-sky-600 bg-sky-50'
-                  : 'text-slate-700 hover:bg-slate-50'
+                  ? 'bg-[rgba(180,60,47,0.12)] font-semibold text-[color:var(--cinnabar-600)]'
+                  : 'text-[color:var(--ink-800)] hover:bg-[rgba(47,138,115,0.09)]'
               }`}
             >
               {t(`language.${code}`)}

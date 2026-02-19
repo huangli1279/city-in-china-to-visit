@@ -1,0 +1,27 @@
+{
+  "home": {
+    "title": "Which Chinese City Matches Your Vibe?",
+    "subtitle": "Answer 18 quick questions and find the Chinese city that matches your travel personality.",
+    "cta": "Start the Quiz"
+  },
+  "quiz": {
+    "progress": "Question {{current}} / {{total}}",
+    "back": "Back",
+    "next": "Next",
+    "submit": "See My City"
+  },
+  "result": {
+    "heading": "Your Chinese soulmate city is...",
+    "matchLabel": "Match",
+    "runnerUps": "Also worth considering",
+    "bestTime": "Best time to visit",
+    "budget": "Budget",
+    "retake": "Retake the Quiz"
+  },
+  "language": {
+    "en": "🇬🇧 EN",
+    "zh-CN": "🇨🇳 ZH",
+    "ja": "🇯🇵 JA",
+    "ko": "🇰🇷 KO"
+  }
+}

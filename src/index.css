@@ -1,0 +1,27 @@
+/* Google Fonts — Noto Sans family for multilingual support */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Respect iOS safe area insets */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    /* Mobile-first: single-column, centered layout */
+    min-height: 100dvh;
+  }
+}
+
+@layer utilities {
+  /* Prevent horizontal overflow on quiz page */
+  .no-scroll-x {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+}

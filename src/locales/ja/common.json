@@ -1,0 +1,27 @@
+{
+  "home": {
+    "title": "あなたにぴったりの中国の都市は？",
+    "subtitle": "18の質問に答えて、あなたの旅スタイルに合った中国の都市を見つけよう。",
+    "cta": "クイズを始める"
+  },
+  "quiz": {
+    "progress": "質問 {{current}} / {{total}}",
+    "back": "前へ",
+    "next": "次へ",
+    "submit": "私の都市を見る"
+  },
+  "result": {
+    "heading": "あなたの運命の中国の都市は...",
+    "matchLabel": "マッチ度",
+    "runnerUps": "こちらもおすすめ",
+    "bestTime": "おすすめの時期",
+    "budget": "予算の目安",
+    "retake": "もう一度やり直す"
+  },
+  "language": {
+    "en": "🇬🇧 EN",
+    "zh-CN": "🇨🇳 ZH",
+    "ja": "🇯🇵 JA",
+    "ko": "🇰🇷 KO"
+  }
+}

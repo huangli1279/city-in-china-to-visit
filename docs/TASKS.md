@@ -129,27 +129,31 @@
 
 > 目标：英语之外 3 种语言全流程可用，自动检测语言生效
 
-- [ ] **4-1** 中文（zh-CN）翻译
-  - `common.json`：UI 固定文案
+- [x] **4-1** 中文（zh-CN）翻译
+  - `common.json`：UI 固定文案（含 howItWorksTitle / step1-3）
   - `questions.json`：18 道题目 + 选项
   - `cities.json`：15 座城市 tagline + 描述
 
-- [ ] **4-2** 日语（ja）翻译
+- [x] **4-2** 日语（ja）翻译
   - `common.json` / `questions.json` / `cities.json`
-  - 确认城市英文标签（The Ancient 等）的本地化策略（保留英文 or 翻译）
+  - 城市英文标签（The Ancient 等）保留英文，tagline / 描述均日语本地化
 
-- [ ] **4-3** 韩语（ko）翻译
+- [x] **4-3** 韩语（ko）翻译
   - `common.json` / `questions.json` / `cities.json`
-  - 确认城市英文标签的本地化策略
+  - 城市英文标签保留英文，tagline / 描述均韩语本地化
 
 - [x] **4-4** ~~实现浏览器语言自动检测~~ 已调整为默认英语，用户手动切换
   - 移除 `i18next-browser-languagedetector`，`i18n.ts` 固定 `lng: 'en'`
 
-- [ ] **4-5** 实现 URL 路径前缀路由（`/en/` `/zh/` `/ja/` `/ko/`）
-  - 根路径 `/` 自动检测并重定向至对应语言前缀
+- [x] **4-5** 实现 URL 路径前缀路由（`/en/` `/zh/` `/ja/` `/ko/`）
+  - 根路径 `/` 自动重定向至 `/en`
+  - `LangLayout` 组件读取 `:lang` 参数并同步 i18n
+  - `LanguageSwitcher` 切换时替换 URL 首段，保留当前页路径
+  - `public/_redirects` 配置 Cloudflare Pages SPA 路由
 
-- [ ] **4-6** 验证问卷进行中切换语言
-  - 语言切换后答题进度保留（当前题目、已选答案不丢失）
+- [x] **4-6** 验证问卷进行中切换语言
+  - LanguageSwitcher 从 `/en/quiz` 导航至 `/zh/quiz`，路由组件相同不卸载
+  - `QuizPage` 的 `useState` 保留，答题进度和已选答案完整保留
   - 题目文本即时切换至目标语言
 
 ---

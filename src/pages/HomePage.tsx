@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 
 export default function HomePage() {
   const navigate = useNavigate()
+  const { lang = 'en' } = useParams<{ lang: string }>()
   const { t } = useTranslation('common')
 
   const steps = [t('home.step1'), t('home.step2'), t('home.step3')]
@@ -39,7 +40,7 @@ export default function HomePage() {
         </div>
 
         <button
-          onClick={() => navigate('/quiz')}
+          onClick={() => navigate(`/${lang}/quiz`)}
           className="w-full max-w-sm bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white font-semibold text-lg py-4 px-8 rounded-2xl transition-colors min-h-[52px]"
         >
           {t('home.cta')}

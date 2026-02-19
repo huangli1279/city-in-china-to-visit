@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { I18N_TO_URL } from './LangLayout'
 
 const LANGUAGES = [
   { code: 'en', label: '🇬🇧 EN' },
@@ -10,6 +12,8 @@ const LANGUAGES = [
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -24,6 +28,16 @@ export default function LanguageSwitcher() {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  function handleSelect(i18nCode: string) {
+    const urlCode = I18N_TO_URL[i18nCode] ?? 'en'
+    // Replace the first path segment (language prefix) with the new language
+    const segments = location.pathname.split('/').filter(Boolean)
+    segments[0] = urlCode
+    navigate('/' + segments.join('/'), { replace: true })
+    i18n.changeLanguage(i18nCode)
+    setOpen(false)
+  }
 
   return (
     <div ref={ref} className="relative flex-shrink-0">
@@ -47,10 +61,7 @@ export default function LanguageSwitcher() {
               key={lang.code}
               role="option"
               aria-selected={lang.code === i18n.language}
-              onClick={() => {
-                i18n.changeLanguage(lang.code)
-                setOpen(false)
-              }}
+              onClick={() => handleSelect(lang.code)}
               className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
                 lang.code === i18n.language
                   ? 'font-semibold text-sky-600 bg-sky-50'

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { questions } from '../data/questions'
 import { calcUserScores, getRankedCities, type Answers } from '../utils/match'
@@ -14,6 +14,7 @@ interface TranslatedQuestion {
 
 export default function QuizPage() {
   const navigate = useNavigate()
+  const { lang = 'en' } = useParams<{ lang: string }>()
   const { t } = useTranslation('common')
 
   const [currentIdx, setCurrentIdx] = useState(0)
@@ -45,7 +46,7 @@ export default function QuizPage() {
   function handleSubmit() {
     const userScores = calcUserScores(answers)
     const ranked = getRankedCities(userScores)
-    navigate('/result', {
+    navigate(`/${lang}/result`, {
       state: {
         bestMatch: ranked[0],
         runnerUps: ranked.slice(1, 3),

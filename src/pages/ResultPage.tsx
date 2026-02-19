@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { RankedCity } from '../utils/match'
 import LanguageSwitcher from '../components/LanguageSwitcher'
@@ -16,6 +16,7 @@ interface CityTranslation {
 export default function ResultPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { lang = 'en' } = useParams<{ lang: string }>()
   const { t } = useTranslation('common')
 
   const state = location.state as ResultState | null
@@ -26,7 +27,7 @@ export default function ResultPage() {
       <main className="flex flex-col items-center justify-center min-h-dvh px-6 text-center gap-4">
         <p className="text-slate-500">No results yet. Take the quiz first!</p>
         <button
-          onClick={() => navigate('/quiz')}
+          onClick={() => navigate(`/${lang}/quiz`)}
           className="bg-sky-500 text-white font-semibold px-6 py-3 rounded-2xl hover:bg-sky-600 transition-colors min-h-[52px]"
         >
           Take the Quiz
@@ -132,7 +133,7 @@ export default function ResultPage() {
 
       {/* Retake button */}
       <button
-        onClick={() => navigate('/quiz')}
+        onClick={() => navigate(`/${lang}/quiz`)}
         className="w-full py-4 rounded-2xl border-2 border-slate-200 text-slate-600 font-semibold text-base hover:bg-slate-100 transition-colors min-h-[52px]"
       >
         {t('result.retake')}

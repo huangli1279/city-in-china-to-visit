@@ -14,7 +14,7 @@
 - [x] **0-2** 配置 React Router，建立三条路由：`/` 首页、`/quiz` 问卷页、`/result` 结果页
 - [x] **0-3** 安装并初始化 `react-i18next`，建立 `src/locales/` 目录结构（`en / zh-CN / ja / ko`，每个语言下 `common.json` / `questions.json` / `cities.json`）
 - [x] **0-4** 引入 Google Fonts Noto Sans 字体族（`Noto Sans SC` / `Noto Sans JP` / `Noto Sans KR`），配置 Tailwind 字体变量
-- [ ] **0-5** 初始化 Git 仓库，连接 Cloudflare Pages，配置自动部署（main 分支 push 即触发），验证部署流程可用
+- [x] **0-5** 初始化 Git 仓库，连接 Cloudflare Pages，配置自动部署（main 分支 push 即触发），验证部署流程可用
 
 ---
 

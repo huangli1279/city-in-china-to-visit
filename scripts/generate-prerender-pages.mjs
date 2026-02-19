@@ -8,6 +8,7 @@ const ROOT_DIR = path.resolve(__dirname, '..')
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public')
 const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://bestcityinchina.site').replace(/\/+$/, '')
 const CTR_TITLE_VARIANT = process.env.CTR_TITLE_VARIANT === 'B' ? 'B' : 'A'
+const GA_MEASUREMENT_ID = 'G-ZTZTZ5TQMR'
 
 const LANGUAGES = [
   { urlCode: 'en', i18nCode: 'en', htmlLang: 'en', label: 'English' },
@@ -257,6 +258,17 @@ ${JSON.stringify(item, null, 2)}
     .join('\n    ')
 }
 
+function renderGoogleTag() {
+  return `<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${GA_MEASUREMENT_ID}');
+    </script>`
+}
+
 function renderDocument({
   htmlLang,
   title,
@@ -287,6 +299,7 @@ function renderDocument({
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     ${headExtras}
+    ${renderGoogleTag()}
     <link rel="stylesheet" href="/styles/prerender.css" />
     ${renderJsonLd(jsonLd)}
   </head>

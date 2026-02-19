@@ -17,7 +17,8 @@ export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
-  const current = LANGUAGES.find((l) => l.code === i18n.language) ?? LANGUAGES[0]
+  const normalizedLang = i18n.resolvedLanguage === 'zh' ? 'zh-CN' : i18n.resolvedLanguage ?? i18n.language
+  const current = LANGUAGES.find((l) => l.code === normalizedLang) ?? LANGUAGES[0]
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -34,7 +35,7 @@ export default function LanguageSwitcher() {
     // Replace the first path segment (language prefix) with the new language
     const segments = location.pathname.split('/').filter(Boolean)
     segments[0] = urlCode
-    navigate('/' + segments.join('/'), { replace: true })
+    navigate('/' + segments.join('/'), { replace: true, state: location.state })
     i18n.changeLanguage(i18nCode)
     setOpen(false)
   }
@@ -60,10 +61,10 @@ export default function LanguageSwitcher() {
             <button
               key={lang.code}
               role="option"
-              aria-selected={lang.code === i18n.language}
+              aria-selected={lang.code === normalizedLang}
               onClick={() => handleSelect(lang.code)}
               className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                lang.code === i18n.language
+                lang.code === normalizedLang
                   ? 'font-semibold text-sky-600 bg-sky-50'
                   : 'text-slate-700 hover:bg-slate-50'
               }`}

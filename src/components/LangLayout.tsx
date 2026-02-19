@@ -24,17 +24,23 @@ export default function LangLayout() {
   const { i18n } = useTranslation()
 
   const isValid = lang !== undefined && (VALID_LANGS as readonly string[]).includes(lang)
+  const targetI18nLang = isValid && lang ? URL_TO_I18N[lang as UrlLang] : 'en'
+  const normalizedResolvedLang =
+    i18n.resolvedLanguage === 'zh' ? 'zh-CN' : i18n.resolvedLanguage ?? i18n.language
 
   useEffect(() => {
-    if (!isValid || !lang) return
-    const i18nLang = URL_TO_I18N[lang as UrlLang]
-    if (i18n.language !== i18nLang) {
-      i18n.changeLanguage(i18nLang)
+    if (!isValid) return
+    if (normalizedResolvedLang !== targetI18nLang) {
+      void i18n.changeLanguage(targetI18nLang)
     }
-  }, [lang, i18n, isValid])
+  }, [i18n, isValid, normalizedResolvedLang, targetI18nLang])
 
   if (!isValid) {
     return <Navigate to="/en" replace />
+  }
+
+  if (normalizedResolvedLang !== targetI18nLang) {
+    return null
   }
 
   return <Outlet />

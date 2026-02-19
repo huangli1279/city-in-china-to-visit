@@ -134,8 +134,8 @@
   - `common.json` / `questions.json` / `cities.json`
   - 确认城市英文标签的本地化策略
 
-- [ ] **4-4** 实现浏览器语言自动检测
-  - 读取 `navigator.language`，匹配最近语言（en / zh / ja / ko），未匹配默认 en
+- [x] **4-4** ~~实现浏览器语言自动检测~~ 已调整为默认英语，用户手动切换
+  - 移除 `i18next-browser-languagedetector`，`i18n.ts` 固定 `lng: 'en'`
 
 - [ ] **4-5** 实现 URL 路径前缀路由（`/en/` `/zh/` `/ja/` `/ko/`）
   - 根路径 `/` 自动检测并重定向至对应语言前缀

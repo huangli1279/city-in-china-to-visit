@@ -1,6 +1,5 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
 
 // English
 import enCommon from './locales/en/common.json'
@@ -23,9 +22,9 @@ import koQuestions from './locales/ko/questions.json'
 import koCities from './locales/ko/cities.json'
 
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    lng: 'en',
     resources: {
       en: {
         common: enCommon,
@@ -50,10 +49,6 @@ i18n
     },
     fallbackLng: 'en',
     supportedLngs: ['en', 'zh-CN', 'ja', 'ko'],
-    detection: {
-      order: ['querystring', 'navigator'],
-      lookupQuerystring: 'lang',
-    },
     interpolation: {
       escapeValue: false,
     },

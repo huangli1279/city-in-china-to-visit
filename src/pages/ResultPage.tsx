@@ -32,7 +32,7 @@ export default function ResultPage() {
 
   if (!hasResult) return null
 
-  const { bestMatch, runnerUps } = state
+  const { bestMatch, runnerUps } = state as ResultState
   const { city, matchPercentage } = bestMatch
 
   const cityTranslations = t('cities', {

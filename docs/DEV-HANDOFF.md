@@ -2,7 +2,7 @@
 
 > **文档用途**：交付开发/测试同事，用于 Phase 5–6A 结果同步与 Landing Page（PRD 对齐）交接
 > **文档日期**：2026-02-19
-> **当前状态**：Phase 0–6A 开发完成；Phase 6-6 已回归通过；Phase 6A QA 待执行；Phase 7 未开始
+> **当前状态**：Phase 0–6A（含 Landing Header/Footer 增量）开发完成；Phase 6-6 已回归通过；Phase 6A 增量 QA 待执行；Phase 7 未开始
 
 ---
 
@@ -118,6 +118,10 @@ npm test
   - 机制区：`18 questions + 6 dimensions + 15 cities` + 三步匹配流程
   - 城市预览 + 分享钩子：强调 TikTok / Instagram 截图传播场景
   - 底部二次 CTA：缩短兴趣到答题路径
+- **Landing Header/Footer 增量（同属 6A）**：
+  - Header：新增粘性顶栏（品牌信息、区块锚点导航、顶部 CTA、语言切换器整合）
+  - Footer：新增信息型页脚（价值总结、页内跳转、二次 CTA、版权信息）
+  - 埋点细化：`click_start_quiz` 的 `section` 维度扩展为 `header / hero / final / footer`
 - **多语言扩展（6A-6）**：四语 `common.json` 补齐 Landing 专属文案 key（EN / ZH / JA / KO）
 - **最小埋点（6A-7）**：
   - 新增 `src/utils/analytics.ts`
@@ -253,6 +257,8 @@ npm test
 | 路由策略 | `/:lang` 为唯一 Landing 入口，CTA 均跳转 `/:lang/quiz` |
 | 四语文案 | `/en` `/zh` `/ja` `/ko` 新增 Landing 文案无占位符、无漏翻 |
 | 响应式 | `>=1280px` 首屏可见主叙事 + 辅助信息；移动端 CTA 可达且无横向滚动 |
+| Header/Footer | Header 显示品牌、语言切换器、顶部 CTA；Footer 显示页内跳转、二次 CTA 与版权信息 |
+| 锚点导航 | 点击 Header/Footer 区块导航可跳转到目标模块，且目标标题不被 sticky 顶栏遮挡 |
 | 埋点事件 | 访问 Landing 触发 `view_landing`；点击 CTA 触发 `click_start_quiz`；进入问卷触发 `view_quiz` |
 | 埋点字段 | 事件参数包含 `lang`、`utm_source`、`path` |
 
@@ -337,7 +343,34 @@ npm test
 
 ---
 
-## 九、问题反馈
+## 九、本次增量开发复盘（Landing Header/Footer）
+
+### 9-1 背景与目标
+- 背景：在 Phase 6A 已完成 PRD 对齐的基础上，Landing 缺少完整站点级头尾结构，导航效率与品牌承载不足。
+- 目标：为 `HomePage` 增加可转化的 Header/Footer，同时不破坏现有多语言、路由与埋点能力。
+
+### 9-2 实施过程（按实际顺序）
+1. 阅读 `frontend-design` 技能文档与 `docs/PRD.md`，确认视觉方向和信息架构约束。
+2. 审查 `src/pages/HomePage.tsx` 当前结构，确定 header 锚点目标区块（preview / pain / model）。
+3. 在 `HomePage` 新增 sticky Header，整合品牌信息、区块导航、顶部 CTA 与 `LanguageSwitcher`。
+4. 在 `HomePage` 新增 Footer，补充价值总结、页内跳转、二次 CTA 与版权区。
+5. 扩展四语文案文件 `src/locales/en|zh-CN|ja|ko/common.json`，新增 `home.header.*` 和 `home.footer.*` key。
+6. 细化 CTA 埋点来源：`goToQuiz` 的 `section` 参数扩展到 `header / hero / final / footer`，便于分析首屏与页脚转化差异。
+7. 执行验证：`npm run build` 通过、`npm test` 通过；`npm run lint` 仍受仓库缺失 ESLint 配置影响。
+
+### 9-3 关键取舍
+- 取舍 1：不新增全局 Layout 组件，先在 Landing 页面内落地 Header/Footer，降低对 Quiz/Result 页回归影响。
+- 取舍 2：视觉继续复用 `surface-card / focus-ring` 设计 token，避免跨页面风格割裂。
+- 取舍 3：锚点跳转采用原生 `#id` + `scroll-mt-*`，优先稳定性与可维护性，不额外引入滚动库。
+
+### 9-4 本轮风险与待办
+- 需在人工 QA 中重点验证 sticky Header 与锚点跳转在 iOS Safari/Android Chrome 下行为一致。
+- 需在分析平台确认 `click_start_quiz` 的 `section` 字段已正确入库。
+- 如后续需要在 Quiz/Result 复用头尾，再评估提取共享 Layout 组件。
+
+---
+
+## 十、问题反馈
 
 发现问题请记录：
 

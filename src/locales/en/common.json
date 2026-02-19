@@ -51,7 +51,25 @@
     "modelStep3": "You get 1 best-match city and 2 runner-up options",
     "finalCtaTitle": "Ready to find your Chinese city?",
     "finalCtaSubtitle": "Take the quiz now and turn your China travel idea into a concrete city plan.",
-    "finalCta": "Start the Quiz"
+    "finalCta": "Start the Quiz",
+    "header": {
+      "brandEyebrow": "China Trip Planner",
+      "brandName": "City Vibe Matcher",
+      "navPreview": "City Preview",
+      "navPain": "Why This Quiz",
+      "navModel": "How Matching Works",
+      "cta": "Start Quiz"
+    },
+    "footer": {
+      "eyebrow": "Plan less. Experience more.",
+      "title": "Your first China city should fit who you are.",
+      "subtitle": "Take the quiz, lock your first stop, and move from endless research to a real itinerary.",
+      "jumpTitle": "Explore this page",
+      "nextTitle": "Ready when you are",
+      "cta": "Start the 18-question quiz",
+      "disclaimer": "No signup required. Results in about 2-3 minutes.",
+      "copyright": "Which Chinese City Matches Your Vibe"
+    }
   },
   "quiz": {
     "progress": "Question {{current}} / {{total}}",
@@ -76,10 +94,10 @@
     "quickFacts": "Trip snapshot"
   },
   "language": {
-    "en": "🇬🇧 EN",
-    "zh-CN": "🇨🇳 ZH",
-    "ja": "🇯🇵 JA",
-    "ko": "🇰🇷 KO",
+    "en": "🇬🇧 English",
+    "zh-CN": "🇨🇳 中文",
+    "ja": "🇯🇵 日本語",
+    "ko": "🇰🇷 한국어",
     "switcher": "Switch language"
   }
 }

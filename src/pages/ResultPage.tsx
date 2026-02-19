@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { RankedCity } from '../utils/match'
 import LanguageSwitcher from '../components/LanguageSwitcher'
@@ -44,11 +44,26 @@ export default function ResultPage() {
 
   return (
     <main className="min-h-dvh py-6 sm:py-8 lg:py-10">
-      <div className="mb-4 flex justify-end lg:mb-6">
-        <LanguageSwitcher />
-      </div>
+      <header className="sticky top-3 z-20 mb-4 lg:mb-6">
+        <div className="surface-card relative overflow-visible border-slate-200/90 bg-white/85 px-4 py-3 shadow-lg backdrop-blur-sm supports-[backdrop-filter]:bg-white/70 sm:px-5 lg:px-6">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to={`/${lang}`} className="mr-auto min-w-0">
+              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-sky-600">
+                {t('home.header.brandEyebrow')}
+              </p>
+              <p className="truncate text-base font-bold text-slate-900 sm:text-lg">{t('home.header.brandName')}</p>
+            </Link>
 
-      <p className="mb-4 text-base text-slate-500 lg:mb-6">{t('result.heading')}</p>
+            <p className="hidden rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 md:inline-flex">
+              {t('result.heading')}
+            </p>
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </header>
+
+      <p className="mb-4 text-base text-slate-500 md:hidden">{t('result.heading')}</p>
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start xl:grid-cols-[minmax(0,1fr)_360px]">
         <section className="surface-card p-6 sm:p-7 lg:p-8">

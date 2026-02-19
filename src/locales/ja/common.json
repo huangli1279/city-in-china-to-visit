@@ -51,7 +51,25 @@
     "modelStep3": "最適な1都市と候補2都市を表示",
     "finalCtaTitle": "あなたの中国旅行の都市を見つけますか？",
     "finalCtaSubtitle": "今すぐ診断して「中国に行きたい」を具体的な都市プランに変えましょう。",
-    "finalCta": "クイズを始める"
+    "finalCta": "クイズを始める",
+    "header": {
+      "brandEyebrow": "中国旅行プランナー",
+      "brandName": "City Vibe Matcher",
+      "navPreview": "都市プレビュー",
+      "navPain": "この診断が必要な理由",
+      "navModel": "マッチングの仕組み",
+      "cta": "クイズ開始"
+    },
+    "footer": {
+      "eyebrow": "迷う時間を減らし、旅を増やす。",
+      "title": "最初の中国の都市は、あなたに合う場所を選ぶべきです。",
+      "subtitle": "診断で最初の行き先を決めて、情報収集だけの状態から実際の旅程へ進みましょう。",
+      "jumpTitle": "このページを見る",
+      "nextTitle": "準備ができたら",
+      "cta": "18問クイズを始める",
+      "disclaimer": "登録不要。約2-3分で結果が出ます。",
+      "copyright": "あなたにぴったりの中国の都市は？"
+    }
   },
   "quiz": {
     "progress": "質問 {{current}} / {{total}}",
@@ -76,10 +94,10 @@
     "quickFacts": "旅の要点"
   },
   "language": {
-    "en": "🇬🇧 EN",
-    "zh-CN": "🇨🇳 ZH",
-    "ja": "🇯🇵 JA",
-    "ko": "🇰🇷 KO",
+    "en": "🇬🇧 English",
+    "zh-CN": "🇨🇳 中文",
+    "ja": "🇯🇵 日本語",
+    "ko": "🇰🇷 한국어",
     "switcher": "言語を切り替える"
   }
 }

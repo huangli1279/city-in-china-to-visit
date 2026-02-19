@@ -55,7 +55,7 @@ export default function LanguageSwitcher() {
     <div ref={ref} className="relative flex-shrink-0">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="focus-ring flex min-h-[44px] items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+        className="focus-ring flex min-h-[44px] items-center gap-1 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t('language.switcher')}
@@ -67,7 +67,7 @@ export default function LanguageSwitcher() {
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 top-full z-50 mt-1 min-w-[108px] rounded-xl border border-slate-200 bg-white py-1 shadow-lg"
+          className="absolute right-0 top-full z-50 mt-1 min-w-[156px] rounded-xl border border-slate-200 bg-white py-1 shadow-lg"
         >
           {LANGUAGE_CODES.map((code) => (
             <button
@@ -75,7 +75,7 @@ export default function LanguageSwitcher() {
               role="option"
               aria-selected={code === normalizedLang}
               onClick={() => handleSelect(code)}
-              className={`focus-ring w-full px-4 py-2.5 text-left text-sm transition-colors ${
+              className={`focus-ring w-full whitespace-nowrap px-4 py-2.5 text-left text-sm transition-colors ${
                 code === normalizedLang
                   ? 'font-semibold text-sky-600 bg-sky-50'
                   : 'text-slate-700 hover:bg-slate-50'

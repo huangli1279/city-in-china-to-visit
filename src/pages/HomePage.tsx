@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import { cities } from '../data/cities'
@@ -39,6 +39,12 @@ export default function HomePage() {
   const painPoints = Array.isArray(painPointsRaw) ? painPointsRaw : []
   const modelDimensions = Array.isArray(modelDimensionsRaw) ? modelDimensionsRaw : []
   const sharePoints = Array.isArray(sharePointsRaw) ? sharePointsRaw : []
+  const currentYear = new Date().getFullYear()
+  const headerLinks = [
+    { href: '#landing-preview', label: t('home.header.navPreview') },
+    { href: '#landing-pain', label: t('home.header.navPain') },
+    { href: '#landing-model', label: t('home.header.navModel') },
+  ]
 
   const cityTranslations = t('cities', {
     ns: 'cities',
@@ -49,16 +55,46 @@ export default function HomePage() {
     trackEvent('view_landing', { lang })
   }, [lang])
 
-  function goToQuiz(section: 'hero' | 'final') {
+  function goToQuiz(section: 'header' | 'hero' | 'final' | 'footer') {
     trackEvent('click_start_quiz', { lang, section })
     navigate(`/${lang}/quiz`)
   }
 
   return (
-    <main className="min-h-dvh py-6 sm:py-8 lg:py-10">
-      <div className="mb-4 flex justify-end lg:mb-6">
-        <LanguageSwitcher />
-      </div>
+    <main className="min-h-dvh py-4 sm:py-6 lg:py-8">
+      <header className="sticky top-3 z-20 mb-5">
+        <div className="surface-card relative overflow-visible border-slate-200/90 bg-white/85 px-4 py-3 shadow-lg backdrop-blur-sm supports-[backdrop-filter]:bg-white/70 sm:px-5 lg:px-6">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to={`/${lang}`} className="mr-auto min-w-0">
+              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-sky-600">
+                {t('home.header.brandEyebrow')}
+              </p>
+              <p className="truncate text-base font-bold text-slate-900 sm:text-lg">{t('home.header.brandName')}</p>
+            </Link>
+
+            <nav className="hidden items-center gap-2 lg:flex">
+              {headerLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="focus-ring rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:border-sky-300 hover:text-sky-700"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            <button
+              onClick={() => goToQuiz('header')}
+              className="focus-ring hidden min-h-[44px] rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800 active:bg-slate-950 md:inline-flex"
+            >
+              {t('home.header.cta')}
+            </button>
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </header>
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-7">
         <section className="surface-card relative overflow-hidden p-6 sm:p-8 lg:p-10">
@@ -98,7 +134,7 @@ export default function HomePage() {
           </button>
         </section>
 
-        <aside className="surface-card p-5 sm:p-6 lg:p-7">
+        <aside id="landing-preview" className="surface-card scroll-mt-28 p-5 sm:p-6 lg:p-7">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
             {t('home.desktopPreviewTitle')}
           </p>
@@ -135,7 +171,7 @@ export default function HomePage() {
         </aside>
       </div>
 
-      <section className="surface-card mt-5 p-6 sm:p-8 lg:p-10">
+      <section id="landing-pain" className="surface-card scroll-mt-28 mt-5 p-6 sm:p-8 lg:p-10">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('home.painEyebrow')}</p>
         <h2 className="mt-3 text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">{t('home.painTitle')}</h2>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
@@ -148,7 +184,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-7">
+      <section
+        id="landing-model"
+        className="scroll-mt-28 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-7"
+      >
         <article className="surface-card p-6 sm:p-8 lg:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('home.modelEyebrow')}</p>
           <h2 className="mt-3 text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">{t('home.modelTitle')}</h2>
@@ -185,6 +224,48 @@ export default function HomePage() {
           {t('home.finalCta')}
         </button>
       </section>
+
+      <footer className="surface-card mt-5 overflow-hidden border-slate-900/90 bg-slate-900 text-slate-200">
+        <div className="pointer-events-none h-px w-full bg-gradient-to-r from-transparent via-sky-300/70 to-transparent" />
+        <div className="grid gap-5 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:p-10">
+          <section>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">{t('home.footer.eyebrow')}</p>
+            <h2 className="mt-3 text-2xl font-bold leading-tight text-white sm:text-3xl">{t('home.footer.title')}</h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">{t('home.footer.subtitle')}</p>
+          </section>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <section className="rounded-2xl border border-slate-700/80 bg-slate-800/60 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">{t('home.footer.jumpTitle')}</p>
+              <div className="mt-3 grid gap-2">
+                {headerLinks.map((link) => (
+                  <a
+                    key={`footer-${link.href}`}
+                    href={link.href}
+                    className="focus-ring rounded-xl border border-slate-700/80 bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-sky-300/70 hover:text-sky-100"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </section>
+
+            <section className="rounded-2xl border border-slate-700/80 bg-slate-800/60 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">{t('home.footer.nextTitle')}</p>
+              <button
+                onClick={() => goToQuiz('footer')}
+                className="focus-ring mt-3 min-h-[48px] w-full rounded-xl bg-sky-500 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-sky-400 active:bg-sky-600"
+              >
+                {t('home.footer.cta')}
+              </button>
+              <p className="mt-3 text-xs leading-relaxed text-slate-400">{t('home.footer.disclaimer')}</p>
+            </section>
+          </div>
+        </div>
+        <div className="border-t border-slate-700/80 px-6 py-4 text-xs text-slate-400 sm:px-8 lg:px-10">
+          © {currentYear} {t('home.footer.copyright')}
+        </div>
+      </footer>
     </main>
   )
 }

@@ -51,7 +51,25 @@
     "modelStep3": "返回 1 个最佳匹配城市和 2 个备选城市",
     "finalCtaTitle": "准备好找到你的中国城市了吗？",
     "finalCtaSubtitle": "现在开始测试，把“想去中国”变成明确的城市计划。",
-    "finalCta": "开始测试"
+    "finalCta": "开始测试",
+    "header": {
+      "brandEyebrow": "中国旅行决策工具",
+      "brandName": "City Vibe Matcher",
+      "navPreview": "城市预览",
+      "navPain": "为什么做这份测试",
+      "navModel": "匹配机制",
+      "cta": "开始测试"
+    },
+    "footer": {
+      "eyebrow": "少做功课，更快出发。",
+      "title": "你的第一座中国城市，应该和你的旅行性格匹配。",
+      "subtitle": "完成测试，锁定第一站，把反复纠结变成可执行的行程计划。",
+      "jumpTitle": "继续浏览本页",
+      "nextTitle": "准备好了就开始",
+      "cta": "开始 18 题测试",
+      "disclaimer": "无需注册，约 2-3 分钟即可得到结果。",
+      "copyright": "哪座中国城市最适合你"
+    }
   },
   "quiz": {
     "progress": "第 {{current}} 题 / 共 {{total}} 题",
@@ -76,10 +94,10 @@
     "quickFacts": "行程速览"
   },
   "language": {
-    "en": "🇬🇧 EN",
-    "zh-CN": "🇨🇳 ZH",
-    "ja": "🇯🇵 JA",
-    "ko": "🇰🇷 KO",
+    "en": "🇬🇧 English",
+    "zh-CN": "🇨🇳 中文",
+    "ja": "🇯🇵 日本語",
+    "ko": "🇰🇷 한국어",
     "switcher": "切换语言"
   }
 }

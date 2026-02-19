@@ -301,3 +301,79 @@ Phase 5 在当前代码状态下已可验收通过，阻断性问题已修复；
 - `6A-Q1 ~ 6A-Q7` 已全部执行并通过。
 - `docs/QA-TASKS.md` Phase 6A 条目已回填为完成状态。
 - 当前状态：Phase 6A 可验收通过，可进入下一阶段开发/联调。
+
+---
+
+## 10. Phase 6A Header/Footer 增量测试复盘（依据 `docs/QA-TASKS.md`）
+
+### 10.1 覆盖范围
+
+本轮执行 `6A-HF1 ~ 6A-HF6` 全量测试，覆盖：
+
+- Header 结构、sticky 可见性与移动端布局稳定性
+- Footer 结构、CTA 跳转与年份/占位符校验
+- Header/Footer 双入口锚点跳转与遮挡校验
+- 埋点扩展字段（`section=header/footer`）与既有来源回归（`hero/final`）
+- 四语 Header/Footer 文案完整性与语言切换即时刷新
+- Landing 双入口到 Quiz 主链路回归（含答题交互）
+
+执行环境：
+
+- 优先尝试：`https://city-in-china-to-visit.pages.dev`
+- 实际执行：`http://127.0.0.1:4173`（线上版本未同步 Header/Footer 增量，页面无 `header/footer` 节点）
+- 工具：`npx agent-browser`
+
+### 10.2 执行结果
+
+#### A. 6A-HF1 Header 结构与可见性
+
+- 通过：四语桌面/移动均存在 Header，`position=sticky`，滚动后持续可见。
+- 通过：Header 包含品牌区、语言切换器、顶部 CTA；桌面端区块导航入口完整。
+- 通过：移动端无横向溢出（`noHorizontalOverflow=true`）。
+- 证据：`/tmp/phase6a-hf/hf1-header-checks.jsonl`、`/tmp/phase6a-hf/hf1-*-top.png`。
+
+#### B. 6A-HF2 Footer 结构与交互
+
+- 通过：四语 Footer 均含价值文案、页内跳转入口、二次 CTA、版权信息。
+- 通过：Footer CTA 均跳转到对应 `/:lang/quiz`。
+- 通过：版权年份为 `2026`，未发现占位符残留。
+- 证据：`/tmp/phase6a-hf/hf2-footer-checks.jsonl`、`/tmp/phase6a-hf/hf2-footer-cta-results.txt`、`/tmp/phase6a-hf/hf2-*-footer.png`。
+
+#### C. 6A-HF3 锚点导航
+
+- 通过：Header/Footer 的 3 个锚点入口均可命中 `#landing-preview/#landing-pain/#landing-model`。
+- 通过：目标区块标题未被 sticky Header 遮挡（`notCovered=true`）。
+- 通过：多次往返未出现白屏与 page error。
+- 证据：`/tmp/phase6a-hf/hf3-anchor-results.jsonl`、`/tmp/phase6a-hf/hf3-anchor-desktop.webm`、`/tmp/phase6a-hf/hf3-anchor-mobile.webm`、`/tmp/phase6a-hf/hf3-errors.txt`。
+
+#### D. 6A-HF4 埋点扩展
+
+- 通过：`click_start_quiz` 事件覆盖 `section=header/footer`。
+- 通过：既有 `section=hero/final` 未回退，四种来源齐全。
+- 通过：事件对象字段包含 `event_name/lang/utm_source/path/section`。
+- 说明：本地 dev 仍有 `view_landing/view_quiz` 双触发，符合 React `StrictMode` 行为，不构成阻断。
+- 证据：`/tmp/phase6a-hf/hf4-datalayer.json`、`/tmp/phase6a-hf/hf4-sections.txt`、`/tmp/phase6a-hf/hf4-datalayer.png`。
+
+#### E. 6A-HF5 多语言文案完整性
+
+- 通过：四语 Header/Footer 新增文案均可渲染，无 `{{key}}`、`home.header.xxx`、`home.footer.xxx` 占位符。
+- 通过：语言切换 `EN -> ZH -> JA -> KO` 后 Header/Footer 文案即时刷新。
+- 证据：`/tmp/phase6a-hf/hf5-lang-checks.txt`、`/tmp/phase6a-hf/hf5-*-top.png`、`/tmp/phase6a-hf/hf5-*-footer.png`、`/tmp/phase6a-hf/hf5-language-switch.webm`。
+
+#### F. 6A-HF6 主链路增量回归
+
+- 通过：四语均完成 `Landing（Header CTA） -> Quiz（答 1 题） -> Landing（Footer CTA） -> Quiz`。
+- 通过：Quiz 题目渲染与交互正常，无 page error。
+- 补充：答题后 `Next` 按钮启用在延时校验中通过（`nextDisabled=false`）。
+- 证据：`/tmp/phase6a-hf/hf6-regression-results.txt`、`/tmp/phase6a-hf/hf6-answer-next-checks.txt`、`/tmp/phase6a-hf/hf6-*-landing.png`、`/tmp/phase6a-hf/hf6-*-quiz-after-header.png`、`/tmp/phase6a-hf/hf6-*-quiz-after-footer.png`。
+
+### 10.3 缺陷与风险
+
+- 本轮未发现 Blocker/Critical 缺陷。
+- 风险提示：线上 `pages.dev` 版本当前未同步 Header/Footer 增量，建议开发同学完成部署后按本用例在生产域名再做一轮快速回归（重点 HF2/HF4）。
+
+### 10.4 结论
+
+- `6A-HF1 ~ 6A-HF6` 已全部执行并通过。
+- `docs/QA-TASKS.md` 对应条目已回填为完成状态。
+- 当前状态：Phase 6A Header/Footer 增量测试可验收通过，可交由测试同事复核。

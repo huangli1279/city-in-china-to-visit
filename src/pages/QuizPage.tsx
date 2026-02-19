@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { questions } from '../data/questions'
 import { calcUserScores, getRankedCities, type Answers } from '../utils/match'
@@ -64,9 +64,24 @@ export default function QuizPage() {
 
   return (
     <main className="no-scroll-x min-h-dvh py-4 sm:py-6 lg:py-8">
-      <div className="mb-4 flex justify-end lg:mb-5">
-        <LanguageSwitcher />
-      </div>
+      <header className="sticky top-3 z-20 mb-4 lg:mb-5">
+        <div className="surface-card relative overflow-visible border-slate-200/90 bg-white/85 px-4 py-3 shadow-lg backdrop-blur-sm supports-[backdrop-filter]:bg-white/70 sm:px-5 lg:px-6">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to={`/${lang}`} className="mr-auto min-w-0">
+              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-sky-600">
+                {t('home.header.brandEyebrow')}
+              </p>
+              <p className="truncate text-base font-bold text-slate-900 sm:text-lg">{t('home.header.brandName')}</p>
+            </Link>
+
+            <p className="hidden rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 md:inline-flex">
+              {t('quiz.progress', { current: currentIdx + 1, total })}
+            </p>
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </header>
 
       <div className="grid gap-4 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
         <aside className="surface-card p-4 sm:p-5 lg:sticky lg:top-6 lg:h-fit">

@@ -1,3 +1,184 @@
 {
-  "questions": []
+  "questions": [
+    {
+      "id": 1,
+      "text": "When you walk into an old city, what's your instinct?",
+      "options": [
+        "Head straight for the oldest temple or ruin I can find",
+        "I'll check out the highlights, but I don't need to read every sign",
+        "I'd rather find a cool local café nearby",
+        "Old buildings kind of all look the same to me"
+      ]
+    },
+    {
+      "id": 2,
+      "text": "How do you feel about museums?",
+      "options": [
+        "I could spend a whole day in one — history is fascinating",
+        "A couple of hours is enough for me",
+        "I only go if it's world-famous or very visual",
+        "I'd rather be outside than in a museum"
+      ]
+    },
+    {
+      "id": 3,
+      "text": "If a city has ancient ruins but is a bit hard to get around, would you still go?",
+      "options": [
+        "Absolutely — that's exactly the kind of place I want",
+        "Yes, if the ruins are truly significant",
+        "Maybe, depends on how hard it really is",
+        "Probably not — I'd pick somewhere easier"
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Your perfect travel photo is…",
+      "options": [
+        "Misty mountains, rice terraces, or a river winding through karst peaks",
+        "A dense forest trail or dramatic cliff viewpoint",
+        "A lively night market or colorful alley",
+        "A glittering skyline from a rooftop bar"
+      ]
+    },
+    {
+      "id": 5,
+      "text": "On a free afternoon, you'd rather…",
+      "options": [
+        "Find a scenic hiking trail or lake to sit by",
+        "Wander through a village or countryside",
+        "Explore neighborhoods, shops, and street food",
+        "Hit a mall, art gallery, or trendy urban spot"
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Which sounds more exhausting to you?",
+      "options": [
+        "Two hours on a crowded subway",
+        "A long uphill hike with a heavy bag",
+        "Both sound fine honestly",
+        "Both sound terrible"
+      ]
+    },
+    {
+      "id": 7,
+      "text": "You're at a local restaurant with no English menu and no pictures. You…",
+      "options": [
+        "Pull out Google Translate and point at random — this is the fun part",
+        "Try to figure it out, maybe ask a local for help",
+        "Look for something recognizable, play it safe",
+        "Quietly look for another restaurant with photos"
+      ]
+    },
+    {
+      "id": 8,
+      "text": "How important is it that a place has good English signage and English-speaking staff?",
+      "options": [
+        "Not important at all — I like figuring things out",
+        "Nice to have, but I can manage without it",
+        "Fairly important — it reduces stress a lot",
+        "Very important — I need it to feel comfortable"
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Which accommodation sounds most appealing?",
+      "options": [
+        "A family-run guesthouse where you eat breakfast with the owners",
+        "A local boutique hotel with some character",
+        "A reliable international chain hotel",
+        "A well-known international brand — I know exactly what I'm getting"
+      ]
+    },
+    {
+      "id": 10,
+      "text": "How do you typically plan a trip?",
+      "options": [
+        "A loose idea of where I'm going — I'll figure it out as I go",
+        "A rough framework, but lots of flexibility",
+        "A solid itinerary with key sites planned in advance",
+        "Every day mapped out — I don't want to waste a minute"
+      ]
+    },
+    {
+      "id": 11,
+      "text": "By day 3 of a trip, you're usually…",
+      "options": [
+        "Still on day 1's vibe — I found a spot I love and I'm staying",
+        "Taking it easy, letting the city come to me",
+        "Moving through my list but taking breaks",
+        "Already thinking about what I might have missed and how to fit more in"
+      ]
+    },
+    {
+      "id": 12,
+      "text": "A long hike with stunning views at the top — are you in?",
+      "options": [
+        "Yes, 100% — that's what travel is about",
+        "Yes if it's not too intense",
+        "Maybe — depends on how long and how hot",
+        "I'll look at photos from the bottom, thanks"
+      ]
+    },
+    {
+      "id": 13,
+      "text": "What's your ideal evening on a trip?",
+      "options": [
+        "A rooftop bar, meeting other travelers, staying out late",
+        "A lively local restaurant with good food and buzz around me",
+        "A quiet dinner at a place with great atmosphere",
+        "In my room, decompressing with a book or show"
+      ]
+    },
+    {
+      "id": 14,
+      "text": "When you travel, how do you feel about interacting with locals?",
+      "options": [
+        "It's one of my favorite parts — I love the connections",
+        "I enjoy it when it happens naturally",
+        "I'm a bit shy but open to it",
+        "I prefer to observe from a comfortable distance"
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Your dream city has…",
+      "options": [
+        "A wild nightlife scene and always something going on",
+        "A social but not overwhelming energy",
+        "A calm, pleasant atmosphere",
+        "Peaceful streets where I can hear myself think"
+      ]
+    },
+    {
+      "id": 16,
+      "text": "How do you feel about going somewhere most tourists skip?",
+      "options": [
+        "That's exactly why I'd go there",
+        "Exciting, if I know there's something worth seeing",
+        "A bit nervous, but I'd consider it",
+        "I prefer places with a clear tourist trail — it's easier and safer"
+      ]
+    },
+    {
+      "id": 17,
+      "text": "You show up and your original plan falls through. Your reaction?",
+      "options": [
+        "Great — now I'll discover something I never would have planned",
+        "Annoyed at first, but I'd adapt quickly",
+        "Pretty stressed — I'd work hard to fix the plan",
+        "This is why I over-plan everything"
+      ]
+    },
+    {
+      "id": 18,
+      "text": "Which experience sounds most exciting?",
+      "options": [
+        "A village accessible only by a 3-hour boat ride",
+        "A hidden local neighborhood most tourists never find",
+        "A famous landmark, done properly with good context",
+        "A well-organized tour that covers all the highlights efficiently"
+      ]
+    }
+  ]
 }

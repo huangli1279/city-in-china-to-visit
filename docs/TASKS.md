@@ -22,22 +22,22 @@
 
 > 目标：所有静态数据和核心算法就绪，可独立跑通匹配逻辑
 
-- [ ] **1-1** 编写 15 座城市完整数据文件（`src/data/cities.ts`）
+- [x] **1-1** 编写 15 座城市完整数据文件（`src/data/cities.ts`）
   - 每座城市包含：`id` / `name` / `label` / `emoji` / `tagline` / `description` / `bestTime` / `budgetRange` / 六维得分 `scores`
   - 数据来源：PRD 三、四、七章
 
-- [ ] **1-2** 编写 18 道题目数据文件（`src/data/questions.ts`）
+- [x] **1-2** 编写 18 道题目数据文件（`src/data/questions.ts`）
   - 每题包含：`id` / `dimension` / `text` / `options[]`（每个选项含 `text` 和 `score`）
   - 数据来源：PRD 五章
 
-- [ ] **1-3** 实现匹配算法（`src/utils/match.ts`）
+- [x] **1-3** 实现匹配算法（`src/utils/match.ts`）
   - Step 1：`calcUserScores(answers)` — 按维度取选项分值均值，返回六维得分
   - Step 2：`calcMatchPercentage(userScores, cityScores)` — L1 距离，公式 `(1 - Σ|u-c| / 600) × 100`
   - Step 3：`getRankedCities(userScores)` — 对 15 座城市排序，返回完整排名数组
 
-- [ ] **1-4** 编写算法单元测试，验证边界情况（全0分、全100分、混合答案）输出结果正确
+- [x] **1-4** 编写算法单元测试，验证边界情况（全0分、全100分、混合答案）输出结果正确
 
-- [ ] **1-5** 填写英文 locale 文件（`en/common.json` / `en/questions.json` / `en/cities.json`）
+- [x] **1-5** 填写英文 locale 文件（`en/common.json` / `en/questions.json` / `en/cities.json`）
   - `common.json`：所有 UI 固定文案（按钮、进度提示、标题、说明文字等）
   - `questions.json`：18 道题目文本 + 4 个选项文本
   - `cities.json`：15 座城市的 tagline 和详细描述文案

@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-02-19T17:34:38.322Z",
+  "activeVariant": "A",
+  "guides": [
+    {
+      "slug": "best-city-to-visit-in-china-first-time",
+      "path": "/en/guides/best-city-to-visit-in-china-first-time/",
+      "activeTitle": "Best City to Visit in China for First-Time Travelers",
+      "titleA": "Best City to Visit in China for First-Time Travelers",
+      "titleB": "Best City to Visit in China (First Trip): A Simple Decision Framework"
+    },
+    {
+      "slug": "beijing-vs-shanghai-for-first-trip",
+      "path": "/en/guides/beijing-vs-shanghai-for-first-trip/",
+      "activeTitle": "Beijing vs Shanghai: Which City Is Better for Your First China Trip?",
+      "titleA": "Beijing vs Shanghai: Which City Is Better for Your First China Trip?",
+      "titleB": "Beijing or Shanghai for First-Time China Travelers: What to Choose"
+    },
+    {
+      "slug": "best-china-cities-by-travel-style",
+      "path": "/en/guides/best-china-cities-by-travel-style/",
+      "activeTitle": "Best China Cities by Travel Style",
+      "titleA": "Best China Cities by Travel Style",
+      "titleB": "Best Cities to Visit in China by Travel Personality"
+    },
+    {
+      "slug": "how-many-days-in-first-china-city",
+      "path": "/en/guides/how-many-days-in-first-china-city/",
+      "activeTitle": "How Many Days Should You Spend in Your First China City?",
+      "titleA": "How Many Days Should You Spend in Your First China City?",
+      "titleB": "How Many Days in China for a First City? 3, 4, or 5-Day Planning Guide"
+    }
+  ]
+}

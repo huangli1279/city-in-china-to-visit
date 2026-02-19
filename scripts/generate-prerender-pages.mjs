@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename)
 const ROOT_DIR = path.resolve(__dirname, '..')
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public')
 const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://city-in-china-to-visit.pages.dev').replace(/\/+$/, '')
+const CTR_TITLE_VARIANT = process.env.CTR_TITLE_VARIANT === 'B' ? 'B' : 'A'
 
 const LANGUAGES = [
   { urlCode: 'en', i18nCode: 'en', htmlLang: 'en', label: 'English' },
@@ -26,6 +27,10 @@ const GUIDE_PAGES = [
   {
     slug: 'best-city-to-visit-in-china-first-time',
     title: 'Best City to Visit in China for First-Time Travelers',
+    titleVariants: {
+      A: 'Best City to Visit in China for First-Time Travelers',
+      B: 'Best City to Visit in China (First Trip): A Simple Decision Framework',
+    },
     description:
       'A practical framework to pick your first China city based on travel style, language comfort, and pace.',
     intro:
@@ -60,6 +65,10 @@ const GUIDE_PAGES = [
   {
     slug: 'beijing-vs-shanghai-for-first-trip',
     title: 'Beijing vs Shanghai: Which City Is Better for Your First China Trip?',
+    titleVariants: {
+      A: 'Beijing vs Shanghai: Which City Is Better for Your First China Trip?',
+      B: 'Beijing or Shanghai for First-Time China Travelers: What to Choose',
+    },
     description: 'Compare Beijing and Shanghai by attractions, pace, budget, and travel comfort.',
     intro:
       'Beijing and Shanghai are the two most common first stops in China. Each offers a very different first-trip experience.',
@@ -93,6 +102,10 @@ const GUIDE_PAGES = [
   {
     slug: 'best-china-cities-by-travel-style',
     title: 'Best China Cities by Travel Style',
+    titleVariants: {
+      A: 'Best China Cities by Travel Style',
+      B: 'Best Cities to Visit in China by Travel Personality',
+    },
     description: 'Match city choices to travel styles such as history-focused, food-focused, nature-first, and nightlife.',
     intro:
       'The fastest way to choose where to go in China is to match city type with your travel style instead of searching city-by-city.',
@@ -133,6 +146,10 @@ const GUIDE_PAGES = [
   {
     slug: 'how-many-days-in-first-china-city',
     title: 'How Many Days Should You Spend in Your First China City?',
+    titleVariants: {
+      A: 'How Many Days Should You Spend in Your First China City?',
+      B: 'How Many Days in China for a First City? 3, 4, or 5-Day Planning Guide',
+    },
     description: 'A practical day-planning framework for first-time visitors to China.',
     intro:
       'Most first-time travelers underestimate city time in China. The right day count depends on your travel pace and sightseeing depth.',
@@ -178,6 +195,42 @@ function absUrl(pathname) {
   return `${SITE_URL}${pathname.startsWith('/') ? pathname : `/${pathname}`}`
 }
 
+function guidePath(guideOrSlug) {
+  const slug = typeof guideOrSlug === 'string' ? guideOrSlug : guideOrSlug.slug
+  return `/en/guides/${slug}/`
+}
+
+function guideTitle(guide) {
+  return guide?.titleVariants?.[CTR_TITLE_VARIANT] ?? guide.title
+}
+
+function createItemList(name, items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: absUrl(item.path),
+    })),
+  }
+}
+
+function createBreadcrumbList(items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: absUrl(item.path),
+    })),
+  }
+}
+
 async function readJson(filePath) {
   const raw = await readFile(filePath, 'utf8')
   return JSON.parse(raw)
@@ -212,6 +265,7 @@ function renderDocument({
   alternates,
   mainHtml,
   jsonLd,
+  headExtras = '',
   noindex = false,
 }) {
   const canonical = absUrl(canonicalPath)
@@ -232,6 +286,7 @@ function renderDocument({
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
+    ${headExtras}
     <link rel="stylesheet" href="/styles/prerender.css" />
     ${renderJsonLd(jsonLd)}
   </head>
@@ -262,7 +317,7 @@ function renderLanguageSwitcher(currentLang) {
 function renderGuideCardList() {
   return GUIDE_PAGES.map(
     (guide) => `<article class="guide-card">
-  <h3><a href="/en/guides/${guide.slug}/">${escapeHtml(guide.title)}</a></h3>
+  <h3><a href="${guidePath(guide)}">${escapeHtml(guideTitle(guide))}</a></h3>
   <p>${escapeHtml(guide.description)}</p>
 </article>`
   ).join('\n')
@@ -303,6 +358,18 @@ function renderLandingPage(lang, locale) {
         },
       })),
     })
+  }
+
+  if (lang.urlCode === 'en') {
+    jsonLd.push(
+      createItemList(
+        'China city planning guides',
+        GUIDE_PAGES.map((guide) => ({
+          name: guideTitle(guide),
+          path: guidePath(guide),
+        }))
+      )
+    )
   }
 
   const seoPointHtml =
@@ -433,6 +500,17 @@ function renderGuideHub() {
       description,
       url: absUrl(canonicalPath),
     },
+    createBreadcrumbList([
+      { name: 'Home', path: '/en' },
+      { name: 'Guides', path: '/en/guides/' },
+    ]),
+    createItemList(
+      'China city planning guides',
+      GUIDE_PAGES.map((guide) => ({
+        name: guideTitle(guide),
+        path: guidePath(guide),
+      }))
+    ),
   ]
 
   return renderDocument({
@@ -447,14 +525,20 @@ function renderGuideHub() {
 }
 
 function renderGuideDetail(guide) {
-  const canonicalPath = `/en/guides/${guide.slug}/`
+  const resolvedTitle = guideTitle(guide)
+  const canonicalPath = guidePath(guide)
   const alternates = [
     { hreflang: 'en', href: absUrl(canonicalPath) },
     { hreflang: 'x-default', href: absUrl(canonicalPath) },
   ]
 
+  const relatedGuideItems = GUIDE_PAGES.filter((page) => page.slug !== guide.slug).map((page) => ({
+    name: guideTitle(page),
+    path: guidePath(page),
+  }))
+
   const relatedLinks = GUIDE_PAGES.filter((page) => page.slug !== guide.slug)
-    .map((page) => `<li><a href="/en/guides/${page.slug}/">${escapeHtml(page.title)}</a></li>`)
+    .map((page) => `<li><a href="${guidePath(page)}">${escapeHtml(guideTitle(page))}</a></li>`)
     .join('\n')
 
   const sectionHtml = guide.sections
@@ -484,12 +568,12 @@ function renderGuideDetail(guide) {
     <span>/</span>
     <a href="/en/guides/">Guides</a>
     <span>/</span>
-    <span>${escapeHtml(guide.title)}</span>
+    <span>${escapeHtml(resolvedTitle)}</span>
   </nav>
 
   <article class="article-page block">
     <p class="eyebrow">Guide</p>
-    <h1>${escapeHtml(guide.title)}</h1>
+    <h1>${escapeHtml(resolvedTitle)}</h1>
     <p class="article-intro">${escapeHtml(guide.intro)}</p>
     <ul class="list-cards">
       ${keyPointHtml}
@@ -519,7 +603,7 @@ function renderGuideDetail(guide) {
     {
       '@context': 'https://schema.org',
       '@type': 'Article',
-      headline: guide.title,
+      headline: resolvedTitle,
       description: guide.description,
       url: absUrl(canonicalPath),
       inLanguage: 'en',
@@ -532,17 +616,46 @@ function renderGuideDetail(guide) {
         name: 'City Vibe Matcher',
       },
     },
+    createBreadcrumbList([
+      { name: 'Home', path: '/en' },
+      { name: 'Guides', path: '/en/guides/' },
+      { name: resolvedTitle, path: canonicalPath },
+    ]),
+    createItemList('Related China city guides', relatedGuideItems),
   ]
+
+  const headExtras = [
+    `<meta name="seo-title-variant" content="${CTR_TITLE_VARIANT}" />`,
+    `<meta name="seo-title-a" content="${escapeHtml(guide?.titleVariants?.A ?? guide.title)}" />`,
+    `<meta name="seo-title-b" content="${escapeHtml(guide?.titleVariants?.B ?? guide.title)}" />`,
+  ].join('\n    ')
 
   return renderDocument({
     htmlLang: 'en',
-    title: guide.title,
+    title: resolvedTitle,
     description: guide.description,
     canonicalPath,
     alternates,
     mainHtml,
     jsonLd,
+    headExtras,
   })
+}
+
+function buildCtrTitleVariantsManifest() {
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    activeVariant: CTR_TITLE_VARIANT,
+    guides: GUIDE_PAGES.map((guide) => ({
+      slug: guide.slug,
+      path: guidePath(guide),
+      activeTitle: guideTitle(guide),
+      titleA: guide?.titleVariants?.A ?? guide.title,
+      titleB: guide?.titleVariants?.B ?? guide.title,
+    })),
+  }
+
+  return `${JSON.stringify(payload, null, 2)}\n`
 }
 
 function buildSitemap() {
@@ -592,6 +705,7 @@ async function main() {
     await writeText(path.join(PUBLIC_DIR, `en/guides/${guide.slug}/index.html`), html)
   }
 
+  await writeText(path.join(PUBLIC_DIR, 'en/guides/ctr-title-variants.json'), buildCtrTitleVariantsManifest())
   await writeText(path.join(PUBLIC_DIR, 'sitemap.xml'), buildSitemap())
 }
 

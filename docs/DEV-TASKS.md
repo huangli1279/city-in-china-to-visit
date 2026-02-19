@@ -3,6 +3,7 @@
 
 > 依据 `PRD.md` 拆解，按阶段顺序执行
 > 状态标记：`[ ]` 待开始 · `[→]` 进行中 · `[x]` 已完成
+> 测试/验证/验收相关任务已迁移至 `docs/QA-TASKS.md`
 
 ---
 
@@ -14,7 +15,6 @@
 - [x] **0-2** 配置 React Router，建立三条路由：`/` 首页、`/quiz` 问卷页、`/result` 结果页
 - [x] **0-3** 安装并初始化 `react-i18next`，建立 `src/locales/` 目录结构（`en / zh-CN / ja / ko`，每个语言下 `common.json` / `questions.json` / `cities.json`）
 - [x] **0-4** 引入 Google Fonts Noto Sans 字体族（`Noto Sans SC` / `Noto Sans JP` / `Noto Sans KR`），配置 Tailwind 字体变量
-- [x] **0-5** 初始化 Git 仓库，连接 Cloudflare Pages，配置自动部署（main 分支 push 即触发），验证部署流程可用
 
 ---
 
@@ -34,8 +34,6 @@
   - Step 1：`calcUserScores(answers)` — 按维度取选项分值均值，返回六维得分
   - Step 2：`calcMatchPercentage(userScores, cityScores)` — L1 距离，公式 `(1 - Σ|u-c| / 600) × 100`
   - Step 3：`getRankedCities(userScores)` — 对 15 座城市排序，返回完整排名数组
-
-- [x] **1-4** 编写算法单元测试，验证边界情况（全0分、全100分、混合答案）输出结果正确
 
 - [x] **1-5** 填写英文 locale 文件（`en/common.json` / `en/questions.json` / `en/cities.json`）
   - `common.json`：所有 UI 固定文案（按钮、进度提示、标题、说明文字等）
@@ -99,32 +97,6 @@
 
 ---
 
-## Phase 3｜移动端适配
-
-> 目标：移动端体验达到 Mobile First 标准，结果卡片可截图传播
-
-- [x] **3-1** 验证全局布局：以 375px 为基准，向上兼容至 430px；桌面端内容居中，最大宽度 480px
-  - `App.tsx` 已有 `max-w-app`（480px）+ `mx-auto`；`index.html` 已有 `viewport-fit=cover`
-
-- [x] **3-2** 检查所有可点击元素触控区域，选项卡片和导航按钮高度均 ≥ 52px
-  - 所有选项卡片、Back / Next / Submit / CTA 按钮均已设 `min-h-[52px]`
-
-- [x] **3-3** 确认关键操作按钮（Next / Submit / Start）在拇指自然触及范围内，底部安全区适配（`env(safe-area-inset-bottom)`）
-  - `QuizPage` 底部 footer 改为 `pb-[max(1.5rem,env(safe-area-inset-bottom))]`
-  - `index.css` html 层已有 `padding-bottom: env(safe-area-inset-bottom)` 覆盖可滚动页面
-
-- [x] **3-4** 验证问卷页在所有尺寸下无横向滚动，题目与选项在一屏内可完整显示或自然纵向滚动
-  - `index.css` body 增加 `overflow-x: hidden`；问卷页为 `flex-1 overflow-y-auto` 纵向可滚动
-
-- [x] **3-5** 验证结果卡片截图效果：在 iPhone 14 / Samsung S23 上截图，主要信息不被状态栏遮挡，核心内容一屏呈现
-  - 收紧卡片内竖向间距（`mb-5` → `mb-3`），核心内容（emoji / 城市名 / 匹配度 / tagline）可在 iPhone 14 一屏内呈现
-
-- [x] **3-6** 性能优化：所有图片转 WebP 格式并配置懒加载；Lighthouse 移动端首屏得分目标 ≥ 85，加载时间 ≤ 2s（4G 网络）
-  - 本应用无图片资源（仅 emoji），WebP 不适用
-  - `App.tsx` 改用 `lazy()` + `Suspense` 按路由拆包，build 产出三个独立 page chunk（HomePage 1.4 kB / ResultPage 3.4 kB / QuizPage 17.5 kB）
-
----
-
 ## Phase 4｜多语言（i18n）
 
 > 目标：英语之外 3 种语言全流程可用，自动检测语言生效
@@ -151,60 +123,69 @@
   - `LanguageSwitcher` 切换时替换 URL 首段，保留当前页路径
   - `public/_redirects` 配置 Cloudflare Pages SPA 路由
 
-- [x] **4-6** 验证问卷进行中切换语言
-  - LanguageSwitcher 从 `/en/quiz` 导航至 `/zh/quiz`，路由组件相同不卸载
-  - `QuizPage` 的 `useState` 保留，答题进度和已选答案完整保留
-  - 题目文本即时切换至目标语言
+---
+
+## Phase 6｜桌面端重设计（Desktop First-Class）
+
+> 目标：桌面端形成独立视觉语言与交互节奏，不再是移动端放大版
+> 前置条件：`docs/QA-TASKS.md` 的 Phase 5 完成
+
+- [x] **6-1** 建立桌面端布局基线与设计 token
+  - 断点规范：`<768` / `768-1023` / `>=1024` / `>=1280`
+  - 内容宽度：桌面主内容区 `1120–1280px`
+  - 新增桌面 spacing、card 层级、hover/focus-visible 规范
+  - 已实现：`App.tsx` 容器改为 `max-w-shell(1280px)` + 响应式内边距；`index.css` 新增 `surface-card / surface-muted / focus-ring` 设计基线；`tailwind.config.js` 新增 `max-w-desktop / max-w-shell` 与 `shadow-panel`
+
+- [x] **6-2** 首页（`HomePage`）桌面双栏重设计
+  - 左栏：标题、副文案、CTA、How it works
+  - 右栏：城市预览/说明模块（非移动端单卡放大）
+  - 保留移动端单列体验
+  - 已实现：`HomePage` 改为桌面双栏；右侧新增 6 城市预览卡网格；移动端继续单列堆叠
+
+- [x] **6-3** 问卷页（`QuizPage`）桌面双栏改造
+  - 左栏：进度、已答状态、题号导航（可跳题）
+  - 中栏：当前题目与选项（支持桌面信息密度）
+  - 取消右栏摘要组件，降低桌面端视觉噪音
+  - 保证键盘可达与清晰焦点态
+  - 已实现：`QuizPage` 桌面双栏（左导航 / 中题目）；题号可跳题；移除“当前选择/当前匹配领先”侧栏；关键控件加入 `focus-visible`
+
+- [x] **6-4** 结果页（`ResultPage`）主次分区改造
+  - 主区：最佳匹配大卡（城市名/匹配度/tagline/描述）
+  - 侧栏：Runner-ups、预算与最佳时间、操作按钮
+  - `>=1280px` 首屏可同时看到主结果与辅助信息区
+  - 已实现：`ResultPage` 改为主结果 + 侧栏结构，Runner-ups 与行程信息移入侧栏，保留移动端纵向阅读
+
+- [x] **6-5** 交互与可访问性完善（桌面）
+  - 所有关键交互组件补齐 `hover` / `focus-visible` / 键盘 Tab 顺序
+  - 校验按钮、选项、切换器在鼠标与键盘下反馈一致
+  - 已实现：按钮与卡片统一补齐 hover/focus 样式；`LanguageSwitcher` 增加 `Escape` 关闭与键盘焦点反馈
 
 ---
 
-## Phase 5｜测试与上线
-
-> 目标：生产环境稳定可访问，核心流程无阻断性问题
-
-- [x] **5-1** 功能测试：完整跑通 18 题 → 算法计算 → 结果输出，验证 15 座城市各自能被正确匹配推荐（构造极端答案验证边界城市如敦煌/丽江）
-
-- [x] **5-2** 多语言测试：4 种语言各自完整走一遍答题 + 结果流程，无乱码、无漏翻译占位符
-
-- [x] **5-3** 移动端设备测试
-  - iOS：Safari（iPhone 14 / iPhone SE）
-  - Android：Chrome（Samsung / Pixel）
-  - 重点验证：触控交互、截图区域、字体渲染
-
-- [x] **5-4** 在 Cloudflare Pages 配置生产域名，验证 4 种语言 URL 路径（`/en/` `/zh/` `/ja/` `/ko/`）均可正常访问
-
-- [x] **5-5** 生产环境冒烟测试：从分享链接进入 → 完成答题 → 查看结果 → 切换语言，全程无报错
-
----
-
-## Phase 6｜变现接入
+## Phase 7｜变现接入
 
 > 目标：Affiliate 链接和 AdSense 广告位上线，开始产生收益
-> 前置条件：Phase 5 完成，产品已上线且可正常访问
+> 前置条件：Phase 6 完成，产品已上线且桌面/移动双端体验稳定
 
-- [ ] **6-1** 注册各 Affiliate 平台账号并获取追踪链接
+- [ ] **7-1** 注册各 Affiliate 平台账号并获取追踪链接
   - GetYourGuide Partner Program
   - Viator Affiliate Program
   - Klook Affiliate Program
   - Booking.com Affiliate Partner
   - Trip.com Affiliate
 
-- [ ] **6-2** 为 15 座城市逐一生成对应的 Affiliate 链接，录入城市数据文件（`src/data/cities.ts`）
+- [ ] **7-2** 为 15 座城市逐一生成对应的 Affiliate 链接，录入城市数据文件（`src/data/cities.ts`）
   - 每座城市：1 条 tours 链接（GetYourGuide 或 Klook）+ 1 条酒店链接（Booking.com）
   - 链接跳转至该城市的筛选结果页，而非平台首页
 
-- [ ] **6-3** 实现结果页 Affiliate 链接区块
+- [ ] **7-3** 实现结果页 Affiliate 链接区块
   - 位置：主结果卡片下方、备选城市上方
   - 样式：不进入截图区域，不影响主视觉
   - 内容：「🎟 Top-rated [City] tours」+ 「🏨 Best hotels in [City]」两行链接
 
-- [ ] **6-4** 接入 Google AdSense，在结果页底部放置 1 个广告位
+- [ ] **7-4** 接入 Google AdSense，在结果页底部放置 1 个广告位
   - 位置：备选城市卡片下方，页面最底部
-  - 确认广告位不出现在结果卡片截图区域内
-
-- [ ] **6-5** 验收：检查 15 座城市的 Affiliate 链接全部可正常跳转，城市与链接一一对应无误
-
-- [ ] **6-6** 验收：在移动端截图结果卡片，确认 Affiliate 区块和广告位均不出现在截图范围内
+  - 广告位不出现在结果卡片截图主视觉区域
 
 ---
 
@@ -214,11 +195,12 @@
 Phase 0
    └─► Phase 1（数据 + 算法）
             └─► Phase 2（页面开发，依赖数据结构）
-                     ├─► Phase 3（移动端，依赖页面完成）
                      └─► Phase 4（多语言，依赖英文 locale 完成）
-                              └─► Phase 5（测试 + 上线，依赖所有 Phase 完成）
-                                       └─► Phase 6（变现接入，依赖产品上线）
+                              └─► Phase 6（桌面端重设计，依赖 i18n 路由稳定）
+                                       └─► Phase 7（变现接入，依赖双端稳定）
 ```
+
+> 测试、回归、验收链路见 `docs/QA-TASKS.md`
 
 ---
 

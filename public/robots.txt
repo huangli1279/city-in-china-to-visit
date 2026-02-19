@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+Disallow: /en/quiz
+Disallow: /zh/quiz
+Disallow: /ja/quiz
+Disallow: /ko/quiz
+Disallow: /en/result
+Disallow: /zh/result
+Disallow: /ja/result
+Disallow: /ko/result
+
+Sitemap: https://city-in-china-to-visit.pages.dev/sitemap.xml

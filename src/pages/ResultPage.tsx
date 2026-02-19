@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import Seo from '../components/Seo'
+import { buildAlternates, buildLangPath } from '../seo/config'
 import type { RankedCity } from '../utils/match'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 
@@ -14,6 +16,8 @@ interface CityTranslation {
   description: string
 }
 
+const RESULT_ALTERNATES = buildAlternates('/result')
+
 export default function ResultPage() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -22,6 +26,7 @@ export default function ResultPage() {
 
   const state = location.state as ResultState | null
   const hasResult = Boolean(state?.bestMatch)
+  const canonicalPath = buildLangPath(lang, 'result')
 
   // Guard: redirect immediately if accessed directly without quiz state
   useEffect(() => {
@@ -30,7 +35,17 @@ export default function ResultPage() {
     }
   }, [hasResult, lang, navigate])
 
-  if (!hasResult) return null
+  if (!hasResult) {
+    return (
+      <Seo
+        title={t('result.seo.title')}
+        description={t('result.seo.description')}
+        canonicalPath={canonicalPath}
+        alternates={RESULT_ALTERNATES}
+        robots="noindex,follow"
+      />
+    )
+  }
 
   const { bestMatch, runnerUps } = state as ResultState
   const { city, matchPercentage } = bestMatch
@@ -43,7 +58,15 @@ export default function ResultPage() {
   const cityT = cityTranslations[city.id]
 
   return (
-    <main id="main-content" className="min-h-dvh py-5 sm:py-7 lg:py-9">
+    <>
+      <Seo
+        title={t('result.seo.title')}
+        description={t('result.seo.description')}
+        canonicalPath={canonicalPath}
+        alternates={RESULT_ALTERNATES}
+        robots="noindex,follow"
+      />
+      <main id="main-content" className="min-h-dvh py-5 sm:py-7 lg:py-9">
       <header className="sticky top-3 z-20 mb-4 lg:mb-6">
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
@@ -139,6 +162,7 @@ export default function ResultPage() {
           {t('result.retake')}
         </button>
       </div>
-    </main>
+      </main>
+    </>
   )
 }

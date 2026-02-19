@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import Seo from '../components/Seo'
 import { questions } from '../data/questions'
+import { buildAlternates, buildLangPath } from '../seo/config'
 import { calcUserScores, getRankedCities, type Answers } from '../utils/match'
 import { trackEvent } from '../utils/analytics'
 import ProgressBar from '../components/ProgressBar'
@@ -12,6 +14,8 @@ interface TranslatedQuestion {
   text: string
   options: string[]
 }
+
+const QUIZ_ALTERNATES = buildAlternates('/quiz')
 
 export default function QuizPage() {
   const navigate = useNavigate()
@@ -33,6 +37,7 @@ export default function QuizPage() {
     ns: 'questions',
     returnObjects: true,
   }) as TranslatedQuestion[]
+  const canonicalPath = buildLangPath(lang, 'quiz')
   const tq = translatedQuestions[currentIdx]
   const selectedLabel = selectedOption !== undefined ? tq?.options[selectedOption] ?? '' : ''
   const liveStatus = canAdvance
@@ -67,7 +72,15 @@ export default function QuizPage() {
   }
 
   return (
-    <main id="main-content" className="no-scroll-x min-h-dvh py-4 sm:py-6 lg:py-8">
+    <>
+      <Seo
+        title={t('quiz.seo.title')}
+        description={t('quiz.seo.description')}
+        canonicalPath={canonicalPath}
+        alternates={QUIZ_ALTERNATES}
+        robots="noindex,follow"
+      />
+      <main id="main-content" className="no-scroll-x min-h-dvh py-4 sm:py-6 lg:py-8">
       <p className="sr-only" aria-live="polite">
         {liveStatus}
       </p>
@@ -173,6 +186,7 @@ export default function QuizPage() {
           </div>
         </div>
       </footer>
-    </main>
+      </main>
+    </>
   )
 }

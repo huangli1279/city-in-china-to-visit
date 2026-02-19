@@ -1,8 +1,8 @@
 {
   "home": {
     "badge": "Made for China trip planners",
-    "title": "Which Chinese City Matches Your Vibe?",
-    "subtitle": "You already decided to visit China. Now pick where to begin. Answer 18 quick questions and get the city that fits your travel personality.",
+    "title": "Best City to Visit in China: Find Your Match",
+    "subtitle": "You already decided to visit China. Use 18 quick questions to find the best city to visit in China for your travel style.",
     "cta": "Start the 18-question quiz",
     "metrics": {
       "questions": "Quick questions about your travel style",
@@ -69,6 +69,40 @@
       "cta": "Start the 18-question quiz",
       "disclaimer": "No signup required. Results in about 2-3 minutes.",
       "copyright": "Which Chinese City Matches Your Vibe"
+    },
+    "seo": {
+      "title": "Best City to Visit in China | Find Your Match in 18 Questions",
+      "description": "Looking for the best city to visit in China? Take this 18-question travel quiz and get a personalized recommendation from 15 Chinese cities.",
+      "appName": "China City Vibe Matcher"
+    },
+    "seoGuide": {
+      "eyebrow": "Travel planning guide",
+      "title": "How to choose the best city to visit in China",
+      "intro": "There is no single best city for everyone. The right first stop depends on your travel style, language comfort, and pace. This quiz narrows that decision with structured matching instead of generic rankings.",
+      "points": [
+        "If you want big-city energy, nightlife, and modern convenience, start with Shanghai or Shenzhen.",
+        "If history and culture are your priority, Beijing and Xi'an usually match better.",
+        "If landscapes and slower travel matter more, Guilin, Dali, and Sanya are often better first choices."
+      ],
+      "conclusion": "Use your quiz result as a starting point, then plan flights, season, and budget around your top 3 city matches."
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Best city to visit in China: quick answers",
+      "items": [
+        {
+          "question": "What is the best city to visit in China for first-time travelers?",
+          "answer": "For first-time travelers, Shanghai and Beijing are common starting points because transportation and key attractions are easy to access. This quiz gives a personalized answer based on your travel style."
+        },
+        {
+          "question": "Is Beijing or Shanghai better for tourists?",
+          "answer": "Beijing is usually better for imperial history and landmarks, while Shanghai is better for modern city life and international convenience. Your ideal choice depends on what kind of trip you want."
+        },
+        {
+          "question": "How many days should I stay in my first China city?",
+          "answer": "Most travelers should plan 3 to 5 days for their first city. That gives enough time for major sights, food, and at least one flexible day."
+        }
+      ]
     }
   },
   "quiz": {
@@ -82,7 +116,11 @@
     "currentSelection": "Current choice",
     "noSelection": "Choose an option to continue.",
     "currentTrends": "Current top matches",
-    "noTrend": "Your top matches appear after your first answer."
+    "noTrend": "Your top matches appear after your first answer.",
+    "seo": {
+      "title": "China City Quiz | 18 Questions to Find Your Match",
+      "description": "Answer 18 questions and find your best city to visit in China based on your travel personality."
+    }
   },
   "result": {
     "heading": "Your Chinese soulmate city is…",
@@ -91,7 +129,11 @@
     "bestTime": "Best time to visit",
     "budget": "Budget",
     "retake": "Retake the Quiz",
-    "quickFacts": "Trip snapshot"
+    "quickFacts": "Trip snapshot",
+    "seo": {
+      "title": "Your China City Match Result",
+      "description": "Your personalized city recommendation is ready. Review your best match and two alternative cities."
+    }
   },
   "language": {
     "en": "🇬🇧 English",

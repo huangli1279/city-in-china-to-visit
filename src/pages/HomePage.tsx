@@ -2,7 +2,9 @@ import { useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import Seo from '../components/Seo'
 import { cities } from '../data/cities'
+import { buildAlternates, buildLangPath, toAbsoluteUrl } from '../seo/config'
 import { trackEvent } from '../utils/analytics'
 
 interface CityTranslation {
@@ -14,8 +16,14 @@ interface PainPointTranslation {
   description: string
 }
 
+interface FaqItemTranslation {
+  question: string
+  answer: string
+}
+
 const CITY_BY_ID = new Map(cities.map((city) => [city.id, city]))
 const PREVIEW_CITY_IDS = ['shanghai', 'xian', 'chengdu', 'guilin', 'chongqing', 'sanya'] as const
+const HOME_ALTERNATES = buildAlternates()
 const PREVIEW_CITIES = PREVIEW_CITY_IDS.map((id) => CITY_BY_ID.get(id)).filter(
   (city): city is (typeof cities)[number] => city !== undefined
 )
@@ -35,10 +43,18 @@ export default function HomePage() {
   const sharePointsRaw = t('home.sharePoints', {
     returnObjects: true,
   }) as string[] | string
+  const seoGuidePointsRaw = t('home.seoGuide.points', {
+    returnObjects: true,
+  }) as string[] | string
+  const faqItemsRaw = t('home.faq.items', {
+    returnObjects: true,
+  }) as FaqItemTranslation[] | string
 
   const painPoints = Array.isArray(painPointsRaw) ? painPointsRaw : []
   const modelDimensions = Array.isArray(modelDimensionsRaw) ? modelDimensionsRaw : []
   const sharePoints = Array.isArray(sharePointsRaw) ? sharePointsRaw : []
+  const seoGuidePoints = Array.isArray(seoGuidePointsRaw) ? seoGuidePointsRaw : []
+  const faqItems = Array.isArray(faqItemsRaw) ? faqItemsRaw : []
   const currentYear = new Date().getFullYear()
   const headerLinks = [
     { href: '#landing-preview', label: t('home.header.navPreview') },
@@ -50,6 +66,34 @@ export default function HomePage() {
     ns: 'cities',
     returnObjects: true,
   }) as Record<string, CityTranslation>
+  const canonicalPath = buildLangPath(lang)
+  const faqSchema = faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  }))
+  const jsonLd: Record<string, unknown>[] = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: t('home.seo.appName'),
+      applicationCategory: 'TravelApplication',
+      operatingSystem: 'Any',
+      inLanguage: lang === 'zh' ? 'zh-CN' : lang,
+      url: toAbsoluteUrl(canonicalPath),
+      description: t('home.seo.description'),
+    },
+  ]
+  if (faqSchema.length > 0) {
+    jsonLd.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqSchema,
+    })
+  }
 
   useEffect(() => {
     trackEvent('view_landing', { lang })
@@ -61,7 +105,16 @@ export default function HomePage() {
   }
 
   return (
-    <main id="main-content" className="min-h-dvh py-4 sm:py-6 lg:py-8">
+    <>
+      <Seo
+        title={t('home.seo.title')}
+        description={t('home.seo.description')}
+        canonicalPath={canonicalPath}
+        alternates={HOME_ALTERNATES}
+        robots="index,follow"
+        jsonLd={jsonLd}
+      />
+      <main id="main-content" className="min-h-dvh py-4 sm:py-6 lg:py-8">
       <header className="sticky top-3 z-20 mb-5">
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
@@ -212,6 +265,33 @@ export default function HomePage() {
         </article>
       </section>
 
+      <section className="surface-card mt-5 p-6 sm:p-8 lg:p-10">
+        <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.seoGuide.eyebrow')}</p>
+        <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">{t('home.seoGuide.title')}</h2>
+        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{t('home.seoGuide.intro')}</p>
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          {seoGuidePoints.map((point, i) => (
+            <article key={i} className="surface-muted p-5">
+              <p className="text-sm leading-relaxed text-[color:var(--ink-800)]">{point}</p>
+            </article>
+          ))}
+        </div>
+        <p className="mt-5 text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{t('home.seoGuide.conclusion')}</p>
+      </section>
+
+      <section className="surface-card mt-5 p-6 sm:p-8 lg:p-10">
+        <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.faq.eyebrow')}</p>
+        <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">{t('home.faq.title')}</h2>
+        <div className="mt-5 grid gap-3">
+          {faqItems.map((faq, i) => (
+            <article key={i} className="surface-muted p-5">
+              <h3 className="font-display text-lg font-semibold leading-snug text-[color:var(--ink-950)]">{faq.question}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-600)]">{faq.answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="surface-card mt-5 p-6 text-center sm:p-8 lg:p-10">
         <h2 className="ink-title text-balance text-2xl leading-tight sm:text-3xl">{t('home.finalCtaTitle')}</h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
@@ -262,6 +342,7 @@ export default function HomePage() {
           © {currentYear} {t('home.footer.copyright')}
         </div>
       </footer>
-    </main>
+      </main>
+    </>
   )
 }

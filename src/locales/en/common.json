@@ -2,7 +2,11 @@
   "home": {
     "title": "Which Chinese City Matches Your Vibe?",
     "subtitle": "Answer 18 quick questions and find the Chinese city that matches your travel personality.",
-    "cta": "Start the Quiz"
+    "cta": "Start the Quiz",
+    "howItWorksTitle": "How it works",
+    "step1": "Answer 18 quick questions about your travel style",
+    "step2": "Our algorithm matches you against 15 Chinese cities",
+    "step3": "Discover your perfect Chinese city match"
   },
   "quiz": {
     "progress": "Question {{current}} / {{total}}",

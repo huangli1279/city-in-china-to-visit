@@ -18,6 +18,11 @@ export default {
       },
       maxWidth: {
         'app': '480px',
+        'desktop': '1120px',
+        'shell': '1280px',
+      },
+      boxShadow: {
+        'panel': '0 20px 45px -26px rgba(15, 23, 42, 0.32)',
       },
     },
   },

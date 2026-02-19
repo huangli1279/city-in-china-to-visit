@@ -6,13 +6,22 @@
     "howItWorksTitle": "How it works",
     "step1": "Answer 18 quick questions about your travel style",
     "step2": "Our algorithm matches you against 15 Chinese cities",
-    "step3": "Discover your perfect Chinese city match"
+    "step3": "Discover your perfect Chinese city match",
+    "desktopPreviewTitle": "City preview",
+    "desktopPreviewSubtitle": "Different routes, different moods. Find the city energy that fits you before you commit."
   },
   "quiz": {
     "progress": "Question {{current}} / {{total}}",
     "back": "Back",
     "next": "Next",
-    "submit": "See My City"
+    "submit": "See My City",
+    "questionMap": "Question map",
+    "answered": "{{answered}} of {{total}} answered",
+    "goToQuestion": "Go to question {{number}}",
+    "currentSelection": "Current choice",
+    "noSelection": "Choose an option to continue.",
+    "currentTrends": "Current top matches",
+    "noTrend": "Your top matches appear after your first answer."
   },
   "result": {
     "heading": "Your Chinese soulmate city is...",
@@ -20,12 +29,14 @@
     "runnerUps": "Also worth considering",
     "bestTime": "Best time to visit",
     "budget": "Budget",
-    "retake": "Retake the Quiz"
+    "retake": "Retake the Quiz",
+    "quickFacts": "Trip snapshot"
   },
   "language": {
     "en": "🇬🇧 EN",
     "zh-CN": "🇨🇳 ZH",
     "ja": "🇯🇵 JA",
-    "ko": "🇰🇷 KO"
+    "ko": "🇰🇷 KO",
+    "switcher": "Switch language"
   }
 }

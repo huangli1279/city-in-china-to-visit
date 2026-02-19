@@ -6,22 +6,42 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --page-bg-start: #eef4fb;
+    --page-bg-end: #f8fafc;
+    --surface-card: #ffffff;
+    --surface-muted: #f8fafc;
+  }
+
   html {
     /* Respect iOS safe area insets */
     padding-bottom: env(safe-area-inset-bottom);
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
-    /* Mobile-first: single-column, centered layout */
+    @apply text-slate-900 font-sans antialiased;
+    background-color: var(--page-bg-end);
+    background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.12), transparent 38%);
     min-height: 100dvh;
-    /* 3-4: prevent horizontal overflow on all pages */
     overflow-x: hidden;
   }
 }
 
+@layer components {
+  .surface-card {
+    @apply rounded-3xl border border-slate-200/80 bg-white shadow-panel;
+  }
+
+  .surface-muted {
+    @apply rounded-2xl border border-slate-200/80 bg-slate-50;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50;
+  }
+}
+
 @layer utilities {
-  /* Prevent horizontal overflow on quiz page */
   .no-scroll-x {
     overflow-x: hidden;
     max-width: 100%;

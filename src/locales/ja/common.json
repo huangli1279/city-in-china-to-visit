@@ -6,13 +6,22 @@
     "howItWorksTitle": "使い方",
     "step1": "旅のスタイルについて18の質問に答える",
     "step2": "アルゴリズムが15の中国都市とマッチング",
-    "step3": "あなたにぴったりの中国の都市を発見"
+    "step3": "あなたにぴったりの中国の都市を発見",
+    "desktopPreviewTitle": "都市プレビュー",
+    "desktopPreviewSubtitle": "都市ごとに旅の空気は大きく変わります。先に雰囲気を比べて、相性の良い行き先を選びましょう。"
   },
   "quiz": {
     "progress": "質問 {{current}} / {{total}}",
     "back": "前へ",
     "next": "次へ",
-    "submit": "私の都市を見る"
+    "submit": "私の都市を見る",
+    "questionMap": "質問マップ",
+    "answered": "{{total}}問中 {{answered}}問回答済み",
+    "goToQuestion": "質問 {{number}} へ移動",
+    "currentSelection": "現在の選択",
+    "noSelection": "続行するには選択肢を選んでください。",
+    "currentTrends": "現在の上位マッチ",
+    "noTrend": "最初の回答後に上位マッチが表示されます。"
   },
   "result": {
     "heading": "あなたの運命の中国の都市は...",
@@ -20,12 +29,14 @@
     "runnerUps": "こちらもおすすめ",
     "bestTime": "おすすめの時期",
     "budget": "予算の目安",
-    "retake": "もう一度やり直す"
+    "retake": "もう一度やり直す",
+    "quickFacts": "旅の要点"
   },
   "language": {
     "en": "🇬🇧 EN",
     "zh-CN": "🇨🇳 ZH",
     "ja": "🇯🇵 JA",
-    "ko": "🇰🇷 KO"
+    "ko": "🇰🇷 KO",
+    "switcher": "言語を切り替える"
   }
 }

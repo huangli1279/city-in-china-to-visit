@@ -10,8 +10,8 @@ const ResultPage = lazy(() => import('./pages/ResultPage'))
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-dvh flex flex-col items-center bg-slate-50">
-        <div className="w-full max-w-app">
+      <div className="min-h-dvh bg-gradient-to-b from-[var(--page-bg-start)] to-[var(--page-bg-end)]">
+        <div className="mx-auto w-full max-w-shell px-4 sm:px-6 lg:px-10 xl:px-12">
           <Suspense fallback={null}>
             <Routes>
               {/* 4-5: root redirects to /en */}

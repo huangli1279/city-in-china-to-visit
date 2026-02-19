@@ -85,7 +85,7 @@
     "noTrend": "Your top matches appear after your first answer."
   },
   "result": {
-    "heading": "Your Chinese soulmate city is...",
+    "heading": "Your Chinese soulmate city is…",
     "matchLabel": "Match",
     "runnerUps": "Also worth considering",
     "bestTime": "Best time to visit",
@@ -99,5 +99,8 @@
     "ja": "🇯🇵 日本語",
     "ko": "🇰🇷 한국어",
     "switcher": "Switch language"
+  },
+  "a11y": {
+    "skipToMainContent": "Skip to main content"
   }
 }

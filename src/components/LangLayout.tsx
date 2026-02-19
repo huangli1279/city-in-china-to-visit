@@ -35,6 +35,11 @@ export default function LangLayout() {
     }
   }, [i18n, isValid, normalizedResolvedLang, targetI18nLang])
 
+  useEffect(() => {
+    if (!isValid) return
+    document.documentElement.lang = targetI18nLang
+  }, [isValid, targetI18nLang])
+
   if (!isValid) {
     return <Navigate to="/en" replace />
   }

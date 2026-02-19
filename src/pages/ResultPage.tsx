@@ -43,7 +43,7 @@ export default function ResultPage() {
   const cityT = cityTranslations[city.id]
 
   return (
-    <main className="min-h-dvh py-5 sm:py-7 lg:py-9">
+    <main id="main-content" className="min-h-dvh py-5 sm:py-7 lg:py-9">
       <header className="sticky top-3 z-20 mb-4 lg:mb-6">
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
@@ -66,11 +66,11 @@ export default function ResultPage() {
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-stretch xl:grid-cols-[minmax(0,1fr)_360px]">
         <section className="surface-card grid-lattice p-6 sm:p-7 lg:p-8">
           <div className="flex flex-col gap-5 lg:flex-row lg:justify-between">
-            <div className="text-center lg:text-left">
+            <div className="min-w-0 text-center lg:text-left">
               <div className="text-6xl">{city.emoji}</div>
-              <h1 className="ink-title mt-3 text-4xl sm:text-5xl">{city.name}</h1>
+              <h1 className="ink-title mt-3 text-balance text-4xl sm:text-5xl">{city.name}</h1>
               <p className="mt-1 text-sm font-medium tracking-[0.16em] text-cinnabar">{city.label}</p>
-              <p className="mt-4 text-base font-semibold italic text-[color:var(--ink-800)]">"{cityT?.tagline}"</p>
+              <p className="mt-4 text-base font-semibold italic text-[color:var(--ink-800)]">“{cityT?.tagline}”</p>
             </div>
 
             <div className="surface-muted mx-auto flex w-full max-w-[220px] flex-col items-center justify-center border-[#8a6447]/25 p-5 text-center lg:mx-0">

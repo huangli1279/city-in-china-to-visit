@@ -85,7 +85,7 @@
     "noTrend": "첫 답변 후 상위 매칭이 표시됩니다."
   },
   "result": {
-    "heading": "나와 가장 잘 맞는 중국 도시는...",
+    "heading": "나와 가장 잘 맞는 중국 도시는…",
     "matchLabel": "매칭",
     "runnerUps": "이런 도시도 추천해요",
     "bestTime": "최적 여행 시기",
@@ -99,5 +99,8 @@
     "ja": "🇯🇵 日本語",
     "ko": "🇰🇷 한국어",
     "switcher": "언어 전환"
+  },
+  "a11y": {
+    "skipToMainContent": "본문으로 건너뛰기"
   }
 }

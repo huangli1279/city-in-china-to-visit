@@ -34,6 +34,10 @@ export default function QuizPage() {
     returnObjects: true,
   }) as TranslatedQuestion[]
   const tq = translatedQuestions[currentIdx]
+  const selectedLabel = selectedOption !== undefined ? tq?.options[selectedOption] ?? '' : ''
+  const liveStatus = canAdvance
+    ? `${t('quiz.progress', { current: currentIdx + 1, total })}. ${t('quiz.currentSelection')}: ${selectedLabel}`
+    : `${t('quiz.progress', { current: currentIdx + 1, total })}. ${t('quiz.noSelection')}`
 
   useEffect(() => {
     trackEvent('view_quiz', { lang })
@@ -63,7 +67,10 @@ export default function QuizPage() {
   }
 
   return (
-    <main className="no-scroll-x min-h-dvh py-4 sm:py-6 lg:py-8">
+    <main id="main-content" className="no-scroll-x min-h-dvh py-4 sm:py-6 lg:py-8">
+      <p className="sr-only" aria-live="polite">
+        {liveStatus}
+      </p>
       <header className="sticky top-3 z-20 mb-4 lg:mb-5">
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
@@ -117,7 +124,7 @@ export default function QuizPage() {
         </aside>
 
         <section className="surface-card p-5 sm:p-6 lg:p-8">
-          <h2 className="ink-title mb-6 text-xl leading-snug lg:text-2xl">{tq?.text}</h2>
+          <h2 className="ink-title mb-6 text-balance text-xl leading-snug lg:text-2xl">{tq?.text}</h2>
 
           <div className="grid gap-3 xl:grid-cols-2">
             {tq?.options.map((optionText, idx) => {

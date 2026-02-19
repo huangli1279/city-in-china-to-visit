@@ -61,7 +61,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-dvh py-4 sm:py-6 lg:py-8">
+    <main id="main-content" className="min-h-dvh py-4 sm:py-6 lg:py-8">
       <header className="sticky top-3 z-20 mb-5">
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
@@ -98,7 +98,7 @@ export default function HomePage() {
 
           <p className="brand-stamp">{t('home.badge')}</p>
 
-          <h1 className="ink-title mt-4 text-4xl leading-tight sm:text-5xl lg:text-[3.1rem] lg:leading-[1.05]">
+          <h1 className="ink-title mt-4 text-balance text-4xl leading-tight sm:text-5xl lg:text-[3.1rem] lg:leading-[1.05]">
             {t('home.title')}
           </h1>
 
@@ -134,7 +134,7 @@ export default function HomePage() {
             {PREVIEW_CITIES.map((city) => (
               <article
                 key={city.id}
-                className="surface-muted rounded-2xl border-[#826043]/20 p-4 transition-all hover:-translate-y-0.5 hover:border-[#b43c2f]/35"
+                className="surface-muted rounded-2xl border-[#826043]/20 p-4 transition-[transform,border-color] duration-200 hover:-translate-y-0.5 hover:border-[#b43c2f]/35"
               >
                 <div className="mb-2 flex items-center gap-2">
                   <span className="text-2xl">{city.emoji}</span>
@@ -166,7 +166,7 @@ export default function HomePage() {
 
       <section id="landing-pain" className="surface-card scroll-mt-28 mt-5 p-6 sm:p-8 lg:p-10">
         <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.painEyebrow')}</p>
-        <h2 className="ink-title mt-3 text-2xl leading-tight sm:text-3xl">{t('home.painTitle')}</h2>
+        <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">{t('home.painTitle')}</h2>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {painPoints.map((painPoint, i) => (
             <article key={i} className="surface-muted p-5">
@@ -183,7 +183,7 @@ export default function HomePage() {
       >
         <article className="surface-card p-6 sm:p-8 lg:p-10">
           <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.modelEyebrow')}</p>
-          <h2 className="ink-title mt-3 text-2xl leading-tight sm:text-3xl">{t('home.modelTitle')}</h2>
+          <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">{t('home.modelTitle')}</h2>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
             {t('home.modelSubtitle')}
           </p>
@@ -213,7 +213,7 @@ export default function HomePage() {
       </section>
 
       <section className="surface-card mt-5 p-6 text-center sm:p-8 lg:p-10">
-        <h2 className="ink-title text-2xl leading-tight sm:text-3xl">{t('home.finalCtaTitle')}</h2>
+        <h2 className="ink-title text-balance text-2xl leading-tight sm:text-3xl">{t('home.finalCtaTitle')}</h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
           {t('home.finalCtaSubtitle')}
         </p>

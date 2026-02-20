@@ -213,12 +213,8 @@ export default function HomePage() {
                 key={city.id}
                 className="surface-muted cursor-pointer rounded-2xl border-[#826043]/20 p-4 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[#b43c2f]/40 hover:shadow-[0_6px_18px_-8px_rgba(180,60,47,0.25)]"
               >
-                <div className="mb-2 flex items-center gap-2.5">
-                  <div className="city-icon-wrap">
-                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                  </div>
+                <div className="mb-2 flex items-center gap-3">
+                  <span className="text-4xl leading-none" aria-hidden="true">{city.emoji}</span>
                   <div>
                     <p className="font-display text-base font-semibold leading-tight text-[color:var(--ink-950)]">{city.name}</p>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cinnabar">{city.label}</p>

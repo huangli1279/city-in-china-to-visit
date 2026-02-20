@@ -17,6 +17,7 @@ interface ResultState {
 interface CityTranslation {
   tagline: string
   description: string
+  matchReason?: string
   bestTime?: string
   budgetRange?: string
 }
@@ -177,7 +178,7 @@ export default function ResultPage() {
             </svg>
             {t('result.matchReason')}
           </p>
-          <p className="text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{cityT?.description}</p>
+          <p className="text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{cityT?.matchReason ?? cityT?.description}</p>
         </div>
 
         {/* ── Quick facts ── */}

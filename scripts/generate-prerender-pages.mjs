@@ -10,6 +10,7 @@ const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://bestcityinchina.site').r
 const CTR_TITLE_VARIANT = process.env.CTR_TITLE_VARIANT === 'B' ? 'B' : 'A'
 const PRERENDER_LANDING_PAGES = process.env.PRERENDER_LANDING_PAGES === '1'
 const GA_MEASUREMENT_ID = 'G-ZTZTZ5TQMR'
+const ADSENSE_CLIENT_ID = 'ca-pub-8272386212758068'
 const ORGANIZATION_NAME = 'City Vibe Matcher'
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
 const PUBLISHED_DATE_ISO = '2026-01-15'
@@ -382,6 +383,10 @@ function renderGoogleTag() {
     </script>`
 }
 
+function renderAdsenseTag() {
+  return `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}" crossorigin="anonymous"></script>`
+}
+
 function renderDocument({
   htmlLang,
   title,
@@ -417,6 +422,7 @@ function renderDocument({
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${escapeHtml(absUrl('/og-image.svg'))}" />
     ${headExtras}
+    ${renderAdsenseTag()}
     ${renderGoogleTag()}
     <link rel="stylesheet" href="/styles/prerender.css" />
     ${renderJsonLd(jsonLd)}

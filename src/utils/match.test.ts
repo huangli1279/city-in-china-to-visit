@@ -86,11 +86,11 @@ describe("calcMatchPercentage", () => {
 });
 
 describe("getRankedCities", () => {
-  it("returns all 15 cities", () => {
+  it("returns all cities in the runtime pool", () => {
     const scores = { history: 50, natureUrban: 50, culturalComfort: 50, activityLevel: 50, socialVibe: 50, adventure: 50 };
     const ranked = getRankedCities(scores);
     expect(ranked).toHaveLength(cities.length);
-    expect(ranked).toHaveLength(15);
+    expect(ranked).toHaveLength(24);
   });
 
   it("returns cities sorted by matchPercentage descending", () => {

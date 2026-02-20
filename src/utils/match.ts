@@ -124,7 +124,7 @@ export function getUserPersonalityTagKeys(scores: CityScores): string[] {
 }
 
 /**
- * Step 3: Rank all 15 cities by match percentage (descending).
+ * Step 3: Rank all cities by match percentage (descending).
  * Returns the full ranked array.
  */
 export function getRankedCities(userScores: CityScores): RankedCity[] {

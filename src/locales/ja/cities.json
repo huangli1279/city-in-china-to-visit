@@ -104,6 +104,69 @@
       "matchReason": "あなたと広州は、日常の喜びの豊かさを共有しています。飲茶は食事ではなく哲学です。百年の茶楼、粥の香り、温かい日常の儀式——広州は、朝食と食卓を通じて文化を理解できる人のための都市です。",
       "bestTime": "10月〜4月",
       "budgetRange": "$40〜80/日"
+    },
+    "kunming": {
+      "tagline": "春が離れない街。",
+      "description": "Mild weather, flower markets, and laid-back streets make Kunming feel easy from day one. You'll wander around Dianchi Lake, day-trip to the surreal Stone Forest, and settle into a slower rhythm without sacrificing city convenience.",
+      "matchReason": "You and Kunming share a preference for balance over extremes. The city's year-round gentle climate, lakeside pace, and easy access to Yunnan's natural diversity fit travelers who want depth without pressure. Kunming won't demand urgency from you — it rewards curiosity, consistency, and calm exploration.",
+      "bestTime": "3月〜5月 / 10月〜11月",
+      "budgetRange": "$30〜60/日"
+    },
+    "qingdao": {
+      "tagline": "潮風とビール文化が出会う街。",
+      "description": "German-era avenues, fresh seafood, and a coastline built for long walks. You'll climb Laoshan for ocean views, explore red-roofed neighborhoods, and discover why Qingdao's food-and-beer culture makes summer trips effortless.",
+      "matchReason": "You and Qingdao both value atmosphere. This city blends coastal openness, walkable neighborhoods, and a relaxed social scene that feels easy to join. Between the sea, seafood, and its famous brewing legacy, Qingdao matches travelers who want culture and comfort in the same frame.",
+      "bestTime": "5月〜10月",
+      "budgetRange": "$45〜85/日"
+    },
+    "suzhou": {
+      "tagline": "庭園が静かな美を縁取る街。",
+      "description": "Classical gardens, canal-side lanes, and refined Jiangnan aesthetics define Suzhou. You'll move between UNESCO-listed gardens and old-water-town textures, then end the day with a quieter, more contemplative city pace.",
+      "matchReason": "You and Suzhou are aligned in temperament: attentive, detail-oriented, and drawn to subtle beauty. Suzhou rewards patience — from garden composition to canal-side living rhythms. If you value culture that reveals itself gradually, this city will feel deeply right.",
+      "bestTime": "3月〜5月 / 9月〜11月",
+      "budgetRange": "$50〜95/日"
+    },
+    "lijiang": {
+      "tagline": "古都の夜と雪山が出会う街。",
+      "description": "Stone alleys and mountain air make Lijiang feel cinematic. You'll explore Naxi heritage in the old town, wake up to views of Jade Dragon Snow Mountain, and choose between gentle wandering and highland excursions.",
+      "matchReason": "You and Lijiang both seek places with character and contrast. Here, nightlife in a preserved old town meets dramatic alpine scenery the next morning. Lijiang suits travelers who want emotional texture, not just a checklist — culture, altitude, and atmosphere in one trip.",
+      "bestTime": "4月〜6月 / 9月〜11月",
+      "budgetRange": "$35〜70/日"
+    },
+    "zhuhai": {
+      "tagline": "海辺の余暇が自然に馴染む街。",
+      "description": "Zhuhai is clean, open, and made for low-stress travel. You'll cycle along Lovers' Road, enjoy island-facing sunsets, and treat the trip as a true reset rather than a checklist sprint.",
+      "matchReason": "You and Zhuhai both favor ease over intensity. The city's coastal layout, lighter tempo, and practical urban comfort support travelers who want to recover energy while still staying engaged. Zhuhai is for people who define a good trip by how good it feels, not by how packed it is.",
+      "bestTime": "10月〜4月",
+      "budgetRange": "$45〜90/日"
+    },
+    "nanjing": {
+      "tagline": "歴史とキャンパス文化が交差する街。",
+      "description": "Nanjing blends imperial memory with tree-lined modern neighborhoods. You'll walk old city walls, visit major museums and memorial sites, then switch to bookshops and cafe streets shaped by a strong university culture.",
+      "matchReason": "You and Nanjing share intellectual curiosity and emotional range. The city moves from dynastic history to modern student energy without losing coherence. If you want a destination that is reflective by day and quietly lively by night, Nanjing fits naturally.",
+      "bestTime": "3月〜5月 / 9月〜11月",
+      "budgetRange": "$45〜90/日"
+    },
+    "dalian": {
+      "tagline": "北方が海へひらく街。",
+      "description": "Wide boulevards and sea air give Dalian a calm northern-coast identity. You'll combine city squares, cliffside viewpoints, and seafood-heavy evenings, especially in the summer escape season.",
+      "matchReason": "You and Dalian both prefer room to breathe. This is a city with maritime openness, manageable scale, and a practical rhythm that stays pleasant even in peak season. Dalian works well for travelers who want coastal views without tropical crowds.",
+      "bestTime": "6月〜9月",
+      "budgetRange": "$45〜85/日"
+    },
+    "wuhan": {
+      "tagline": "三つの街区が一つに脈打つ街。",
+      "description": "Built around the Yangtze and Han rivers, Wuhan moves with big-city momentum and everyday grit. You'll cross historic riverfront landmarks, taste iconic local breakfast culture, and experience a less curated but highly authentic urban China.",
+      "matchReason": "You and Wuhan both have range and resilience. The city's three-town structure, river geography, and grounded daily culture create a dynamic that feels real rather than performative. Wuhan suits travelers who want to experience the energy of a major Chinese city beyond postcard framing.",
+      "bestTime": "3月〜4月 / 10月〜11月",
+      "budgetRange": "$35〜70/日"
+    },
+    "changsha": {
+      "tagline": "ナイトマーケットが止まらない街。",
+      "description": "Changsha is all flavor, late nights, and young energy. You'll eat your way through fiery Hunan dishes, bounce between riverfront districts after dark, and see why the city has become a favorite for domestic weekend trips.",
+      "matchReason": "You and Changsha both thrive on immediacy and social energy. This city is direct, flavorful, and consistently alive at night. If your ideal trip includes street food, music, and a crowd that stays out late, Changsha will feel instantly compatible.",
+      "bestTime": "10月〜4月",
+      "budgetRange": "$30〜65/日"
     }
   }
 }

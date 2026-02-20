@@ -68,7 +68,14 @@
       "nextTitle": "Ready when you are",
       "cta": "Start the 18-question quiz",
       "disclaimer": "No signup required. Results in about 2-3 minutes.",
-      "copyright": "Which Chinese City Matches Your Vibe"
+      "copyright": "Which Chinese City Matches Your Vibe",
+      "legalLinks": {
+        "about": "About",
+        "contact": "Contact",
+        "guides": "Guides",
+        "privacy": "Privacy Policy",
+        "home": "Home"
+      }
     },
     "seo": {
       "title": "Best City to Visit in China | Find a Match in 18 Questions",
@@ -85,6 +92,30 @@
         "If landscapes and slower travel matter more, Guilin, Dali, and Sanya are often better first choices."
       ],
       "conclusion": "Use your quiz result as a starting point, then plan flights, season, and budget around your top 3 city matches."
+    },
+    "topicCluster": {
+      "eyebrow": "Topic cluster",
+      "title": "China city planning guides",
+      "subtitle": "These focused guides support the quiz and help you compare destinations, trip pace, and planning depth.",
+      "cta": "Explore all city guides",
+      "items": [
+        {
+          "title": "Best City to Visit in China for First-Time Travelers",
+          "description": "A practical way to pick your first stop based on travel style and comfort level."
+        },
+        {
+          "title": "Beijing vs Shanghai for Your First China Trip",
+          "description": "Compare history depth, city pace, convenience, and itinerary style."
+        },
+        {
+          "title": "Best China Cities by Travel Style",
+          "description": "Match city types to personality: history-first, foodie, nature, or nightlife."
+        },
+        {
+          "title": "How Many Days in Your First China City?",
+          "description": "Use a 3-to-5 day framework to avoid overpacking your first itinerary."
+        }
+      ]
     },
     "faq": {
       "eyebrow": "FAQ",

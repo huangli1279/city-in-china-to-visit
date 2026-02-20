@@ -277,9 +277,40 @@ function absUrl(pathname) {
   return `${SITE_URL}${pathname.startsWith('/') ? pathname : `/${pathname}`}`
 }
 
-function guidePath(guideOrSlug) {
+function resolveLangCode(langOrCode) {
+  if (!langOrCode) return 'en'
+  return typeof langOrCode === 'string' ? langOrCode : langOrCode.urlCode
+}
+
+function homePath(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return `/${langCode}/`
+}
+
+function aboutPath(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return `/${langCode}/about/`
+}
+
+function contactPath(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return `/${langCode}/contact/`
+}
+
+function privacyPolicyPath(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return `/${langCode}/privacy-policy/`
+}
+
+function guideHubPath(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return `/${langCode}/guides/`
+}
+
+function guidePath(langOrCode, guideOrSlug) {
+  const langCode = resolveLangCode(langOrCode)
   const slug = typeof guideOrSlug === 'string' ? guideOrSlug : guideOrSlug.slug
-  return `/en/guides/${slug}/`
+  return `${guideHubPath(langCode)}${slug}/`
 }
 
 function guideTitle(guide) {
@@ -406,6 +437,26 @@ function buildLandingAlternates() {
   return links
 }
 
+function buildGuideAlternates(slug = '') {
+  const suffix = slug ? `${slug}/` : ''
+  const links = LANGUAGES.map((lang) => ({
+    hreflang: lang.htmlLang,
+    href: absUrl(`${guideHubPath(lang)}${suffix}`),
+  }))
+  links.push({ hreflang: 'x-default', href: absUrl(`${guideHubPath('en')}${suffix}`) })
+  return links
+}
+
+function buildPageAlternates(pageSegment) {
+  const normalizedSegment = pageSegment.replace(/^\/+|\/+$/g, '')
+  const links = LANGUAGES.map((lang) => ({
+    hreflang: lang.htmlLang,
+    href: absUrl(`/${lang.urlCode}/${normalizedSegment}/`),
+  }))
+  links.push({ hreflang: 'x-default', href: absUrl(`/en/${normalizedSegment}/`) })
+  return links
+}
+
 function renderLanguageSwitcher(currentLang) {
   const links = LANGUAGES.map((lang) => {
     const active = lang.urlCode === currentLang ? 'is-active' : ''
@@ -418,16 +469,25 @@ function renderFooterNav(links) {
   return links.map((link) => `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`).join('\n      ')
 }
 
-function renderSiteFooter({ homePath = '/en/', includeGuides = true } = {}) {
+function renderSiteFooter({ lang = 'en', locale, includeGuides = true, guidesPath } = {}) {
+  const langCode = resolveLangCode(lang)
+  const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const aboutLabel = legalLinks.about ?? 'About'
+  const contactLabel = legalLinks.contact ?? 'Contact'
+  const guidesLabel = legalLinks.guides ?? 'Guides'
+  const privacyLabel = legalLinks.privacy ?? 'Privacy Policy'
+  const homeLabel = legalLinks.home ?? 'Home'
+  const resolvedHomePath = homePath(langCode)
+  const resolvedGuidesPath = guidesPath ?? guideHubPath(langCode)
   const links = [
-    { href: '/en/about/', label: 'About' },
-    { href: '/en/contact/', label: 'Contact' },
-    { href: '/en/privacy-policy/', label: 'Privacy Policy' },
+    { href: aboutPath(langCode), label: aboutLabel },
+    { href: contactPath(langCode), label: contactLabel },
+    { href: privacyPolicyPath(langCode), label: privacyLabel },
   ]
   if (includeGuides) {
-    links.push({ href: '/en/guides/', label: 'Guides' })
+    links.push({ href: resolvedGuidesPath, label: guidesLabel })
   }
-  links.push({ href: homePath, label: 'Home' })
+  links.push({ href: resolvedHomePath, label: homeLabel })
 
   return `<footer class="site-footer">
     <span>© 2026 ${escapeHtml(SITE_URL.replace(/^https?:\/\//, ''))}</span>
@@ -437,19 +497,35 @@ function renderSiteFooter({ homePath = '/en/', includeGuides = true } = {}) {
   </footer>`
 }
 
-function renderGuideCardList() {
-  return GUIDE_PAGES.map(
-    (guide) => `<article class="guide-card">
-  <h3><a href="${guidePath(guide)}">${escapeHtml(guideTitle(guide))}</a></h3>
-  <p>${escapeHtml(guide.description)}</p>
+function buildGuideCards(locale) {
+  const topicClusterItems = Array.isArray(locale?.home?.topicCluster?.items) ? locale.home.topicCluster.items : []
+  return GUIDE_PAGES.map((guide, index) => {
+    const localizedItem = topicClusterItems[index]
+    return {
+      guide,
+      title: localizedItem?.title ?? guideTitle(guide),
+      description: localizedItem?.description ?? guide.description,
+    }
+  })
+}
+
+function renderGuideCardList(lang, guideCards) {
+  return guideCards
+    .map(
+      (card) => `<article class="guide-card">
+  <h3><a href="${guidePath(lang, card.guide)}">${escapeHtml(card.title)}</a></h3>
+  <p>${escapeHtml(card.description)}</p>
 </article>`
-  ).join('\n')
+    )
+    .join('\n')
 }
 
 function renderLandingPage(lang, locale) {
   const home = locale.home ?? {}
   const faqItems = Array.isArray(home?.faq?.items) ? home.faq.items : []
   const seoGuidePoints = Array.isArray(home?.seoGuide?.points) ? home.seoGuide.points : []
+  const topicCluster = home?.topicCluster ?? {}
+  const guideCards = buildGuideCards(locale)
   const canonicalPath = `/${lang.urlCode}`
   const title = home?.seo?.title ?? home?.title ?? 'Best City to Visit in China'
   const description =
@@ -483,17 +559,15 @@ function renderLandingPage(lang, locale) {
     })
   }
 
-  if (lang.urlCode === 'en') {
-    jsonLd.push(
-      createItemList(
-        'China city planning guides',
-        GUIDE_PAGES.map((guide) => ({
-          name: guideTitle(guide),
-          path: guidePath(guide),
-        }))
-      )
+  jsonLd.push(
+    createItemList(
+      topicCluster?.title ?? 'China city planning guides',
+      guideCards.map((card) => ({
+        name: card.title,
+        path: guidePath(lang, card.guide),
+      }))
     )
-  }
+  )
 
   const seoPointHtml =
     seoGuidePoints.length > 0
@@ -512,18 +586,15 @@ function renderLandingPage(lang, locale) {
           .join('\n')
       : ''
 
-  const guideClusterSection =
-    lang.urlCode === 'en'
-      ? `<section class="block">
-  <p class="eyebrow">Topic cluster</p>
-  <h2>China city planning guides</h2>
-  <p>Use these focused guides to compare destinations, plan trip length, and narrow your first city with less research time.</p>
+  const guideClusterSection = `<section class="block">
+  <p class="eyebrow">${escapeHtml(topicCluster?.eyebrow ?? 'Topic cluster')}</p>
+  <h2>${escapeHtml(topicCluster?.title ?? 'China city planning guides')}</h2>
+  <p>${escapeHtml(topicCluster?.subtitle ?? 'Use these focused guides to compare destinations, plan trip length, and narrow your first city with less research time.')}</p>
   <div class="guide-grid">
-    ${renderGuideCardList()}
+    ${renderGuideCardList(lang, guideCards)}
   </div>
-  <p class="block-link"><a href="/en/guides/">See all guides</a></p>
+  <p class="block-link"><a href="${guideHubPath(lang)}">${escapeHtml(topicCluster?.cta ?? 'See all guides')}</a></p>
 </section>`
-      : ''
 
   const trustSection =
     lang.urlCode === 'en'
@@ -580,7 +651,7 @@ function renderLandingPage(lang, locale) {
 
   ${trustSection}
 
-  ${renderSiteFooter({ homePath: `/${lang.urlCode}/`, includeGuides: lang.urlCode === 'en' })}
+  ${renderSiteFooter({ lang, locale, includeGuides: true, guidesPath: guideHubPath(lang) })}
 </main>`
 
   return renderDocument({
@@ -594,33 +665,37 @@ function renderLandingPage(lang, locale) {
   })
 }
 
-function renderGuideHub() {
-  const canonicalPath = '/en/guides/'
-  const title = 'City Planning Guides for First-Time China Travelers'
+function renderGuideHub(lang, locale) {
+  const home = locale.home ?? {}
+  const topicCluster = home?.topicCluster ?? {}
+  const guideCards = buildGuideCards(locale)
+  const canonicalPath = guideHubPath(lang)
+  const title =
+    topicCluster?.title
+      ? `${topicCluster.title} | ${home?.header?.brandName ?? 'City Vibe Matcher'}`
+      : 'City Planning Guides for First-Time China Travelers'
   const description =
+    topicCluster?.subtitle ??
     'Explore focused guides that help first-time travelers compare destinations, choose trip length, and plan a confident first stop in China.'
-  const alternates = [
-    { hreflang: 'en', href: absUrl(canonicalPath) },
-    { hreflang: 'x-default', href: absUrl(canonicalPath) },
-  ]
+  const alternates = buildGuideAlternates()
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="/en/">City Vibe Matcher</a>
+    <a class="brand" href="/${lang.urlCode}/">${escapeHtml(home?.header?.brandName ?? 'City Vibe Matcher')}</a>
     <nav class="top-links">
-      <a href="/en/">Landing</a>
-      <a href="/en/quiz">Quiz</a>
+      <a href="/${lang.urlCode}/">Landing</a>
+      <a href="/${lang.urlCode}/quiz">Quiz</a>
     </nav>
   </header>
 
   <section class="block">
-    <p class="eyebrow">Topic cluster</p>
-    <h1>China city planning guides</h1>
-    <p>These pages support the destination-matching quiz and answer the planning questions that usually block first-time trips: where to start, how long to stay, and how to compare high-profile cities.</p>
+    <p class="eyebrow">${escapeHtml(topicCluster?.eyebrow ?? 'Topic cluster')}</p>
+    <h1>${escapeHtml(topicCluster?.title ?? 'China city planning guides')}</h1>
+    <p>${escapeHtml(topicCluster?.subtitle ?? 'These pages support the destination-matching quiz and answer the planning questions that usually block first-time trips: where to start, how long to stay, and how to compare high-profile cities.')}</p>
     <p>Instead of generic rankings, each guide is written as a decision framework. You can move from uncertainty to a practical shortlist in one reading session.</p>
     <h2>Available guides</h2>
     <div class="guide-grid">
-      ${renderGuideCardList()}
+      ${renderGuideCardList(lang, guideCards)}
     </div>
     <h2>How to use this guide cluster</h2>
     <p>Start with a comparison guide, then validate your pace with the day-planning guide. If two destinations still feel equally good, choose the one with lower logistics friction for your arrival week.</p>
@@ -633,10 +708,10 @@ function renderGuideHub() {
   <section class="cta-panel">
     <h2>Need a personalized answer?</h2>
     <p>Use the 18-question matcher to rank 15 Chinese cities by your travel style.</p>
-    <a class="cta" href="/en/quiz">Start the quiz</a>
+    <a class="cta" href="/${lang.urlCode}/quiz">${escapeHtml(home?.cta ?? 'Start the quiz')}</a>
   </section>
 
-  ${renderSiteFooter({ homePath: '/en/', includeGuides: true })}
+  ${renderSiteFooter({ lang, locale, includeGuides: true, guidesPath: guideHubPath(lang) })}
 </main>`
 
   const jsonLd = [
@@ -646,22 +721,23 @@ function renderGuideHub() {
       name: title,
       description,
       url: absUrl(canonicalPath),
+      inLanguage: lang.htmlLang,
     },
     createBreadcrumbList([
-      { name: 'Home', path: '/en' },
-      { name: 'Guides', path: '/en/guides/' },
+      { name: 'Home', path: `/${lang.urlCode}` },
+      { name: 'Guides', path: canonicalPath },
     ]),
     createItemList(
-      'China city planning guides',
-      GUIDE_PAGES.map((guide) => ({
-        name: guideTitle(guide),
-        path: guidePath(guide),
+      topicCluster?.title ?? 'China city planning guides',
+      guideCards.map((card) => ({
+        name: card.title,
+        path: guidePath(lang, card.guide),
       }))
     ),
   ]
 
   return renderDocument({
-    htmlLang: 'en',
+    htmlLang: lang.htmlLang,
     title,
     description,
     canonicalPath,
@@ -671,21 +747,22 @@ function renderGuideHub() {
   })
 }
 
-function renderGuideDetail(guide) {
-  const resolvedTitle = guideTitle(guide)
-  const canonicalPath = guidePath(guide)
-  const alternates = [
-    { hreflang: 'en', href: absUrl(canonicalPath) },
-    { hreflang: 'x-default', href: absUrl(canonicalPath) },
-  ]
+function renderGuideDetail(lang, locale, guide) {
+  const home = locale.home ?? {}
+  const guideCards = buildGuideCards(locale)
+  const localizedTitleBySlug = new Map(guideCards.map((card) => [card.guide.slug, card.title]))
+  const localizedDescriptionBySlug = new Map(guideCards.map((card) => [card.guide.slug, card.description]))
+  const resolvedTitle = localizedTitleBySlug.get(guide.slug) ?? guideTitle(guide)
+  const canonicalPath = guidePath(lang, guide)
+  const alternates = buildGuideAlternates(guide.slug)
 
   const relatedGuideItems = GUIDE_PAGES.filter((page) => page.slug !== guide.slug).map((page) => ({
-    name: guideTitle(page),
-    path: guidePath(page),
+    name: localizedTitleBySlug.get(page.slug) ?? guideTitle(page),
+    path: guidePath(lang, page),
   }))
 
   const relatedLinks = GUIDE_PAGES.filter((page) => page.slug !== guide.slug)
-    .map((page) => `<li><a href="${guidePath(page)}">${escapeHtml(guideTitle(page))}</a></li>`)
+    .map((page) => `<li><a href="${guidePath(lang, page)}">${escapeHtml(localizedTitleBySlug.get(page.slug) ?? guideTitle(page))}</a></li>`)
     .join('\n')
 
   const sectionHtml = guide.sections
@@ -702,18 +779,18 @@ function renderGuideDetail(guide) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="/en/">City Vibe Matcher</a>
+    <a class="brand" href="/${lang.urlCode}/">${escapeHtml(home?.header?.brandName ?? 'City Vibe Matcher')}</a>
     <nav class="top-links">
-      <a href="/en/">Landing</a>
-      <a href="/en/guides/">Guides</a>
-      <a href="/en/quiz">Quiz</a>
+      <a href="/${lang.urlCode}/">Landing</a>
+      <a href="${guideHubPath(lang)}">Guides</a>
+      <a href="/${lang.urlCode}/quiz">Quiz</a>
     </nav>
   </header>
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/en/">Home</a>
+    <a href="/${lang.urlCode}/">Home</a>
     <span>/</span>
-    <a href="/en/guides/">Guides</a>
+    <a href="${guideHubPath(lang)}">Guides</a>
     <span>/</span>
     <span>${escapeHtml(resolvedTitle)}</span>
   </nav>
@@ -754,10 +831,10 @@ function renderGuideDetail(guide) {
   <section class="cta-panel">
     <h2>Get your personalized city match</h2>
     <p>Stop comparing cities manually. Answer 18 questions and get a ranked recommendation.</p>
-    <a class="cta" href="/en/quiz">Take the city quiz</a>
+    <a class="cta" href="/${lang.urlCode}/quiz">${escapeHtml(home?.cta ?? 'Take the city quiz')}</a>
   </section>
 
-  ${renderSiteFooter({ homePath: '/en/', includeGuides: true })}
+  ${renderSiteFooter({ lang, locale, includeGuides: true, guidesPath: guideHubPath(lang) })}
 </main>`
 
   const jsonLd = [
@@ -765,9 +842,9 @@ function renderGuideDetail(guide) {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: resolvedTitle,
-      description: guide.description,
+      description: localizedDescriptionBySlug.get(guide.slug) ?? guide.description,
       url: absUrl(canonicalPath),
-      inLanguage: 'en',
+      inLanguage: lang.htmlLang,
       image: absUrl('/og-image.svg'),
       datePublished: PUBLISHED_DATE_ISO,
       dateModified: PUBLISHED_DATE_ISO,
@@ -785,8 +862,8 @@ function renderGuideDetail(guide) {
       },
     },
     createBreadcrumbList([
-      { name: 'Home', path: '/en' },
-      { name: 'Guides', path: '/en/guides/' },
+      { name: 'Home', path: `/${lang.urlCode}` },
+      { name: 'Guides', path: guideHubPath(lang) },
       { name: resolvedTitle, path: canonicalPath },
     ]),
     createItemList('Related China city guides', relatedGuideItems),
@@ -803,9 +880,9 @@ function renderGuideDetail(guide) {
   ].join('\n    ')
 
   return renderDocument({
-    htmlLang: 'en',
+    htmlLang: lang.htmlLang,
     title: resolvedTitle,
-    description: guide.description,
+    description: localizedDescriptionBySlug.get(guide.slug) ?? guide.description,
     canonicalPath,
     alternates,
     mainHtml,
@@ -814,34 +891,38 @@ function renderGuideDetail(guide) {
   })
 }
 
-function renderAboutPage() {
-  const canonicalPath = '/en/about/'
+function renderAboutPage(lang, locale) {
+  const langCode = resolveLangCode(lang)
+  const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
+  const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const homeLabel = legalLinks.home ?? 'Home'
+  const guidesLabel = legalLinks.guides ?? 'Guides'
+  const contactLabel = legalLinks.contact ?? 'Contact'
+  const aboutLabel = legalLinks.about ?? 'About'
+  const canonicalPath = aboutPath(langCode)
   const title = 'About City Vibe Matcher | China Trip Method'
   const description =
     'Learn how City Vibe Matcher builds first-trip China recommendations with an 18-question model, curated city profiles, and practical planning guidance.'
-  const alternates = [
-    { hreflang: 'en', href: absUrl(canonicalPath) },
-    { hreflang: 'x-default', href: absUrl(canonicalPath) },
-  ]
+  const alternates = buildPageAlternates('about')
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="/en/">City Vibe Matcher</a>
+    <a class="brand" href="${homePath(langCode)}">City Vibe Matcher</a>
     <nav class="top-links">
-      <a href="/en/">Home</a>
-      <a href="/en/guides/">Guides</a>
-      <a href="/en/contact/">Contact</a>
+      <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
+      <a href="${guideHubPath(langCode)}">${escapeHtml(guidesLabel)}</a>
+      <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a>
     </nav>
   </header>
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/en/">Home</a>
+    <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
     <span>/</span>
-    <span>About</span>
+    <span>${escapeHtml(aboutLabel)}</span>
   </nav>
 
   <article class="article-page block">
-    <p class="eyebrow">About</p>
+    <p class="eyebrow">${escapeHtml(aboutLabel)}</p>
     <h1>How this project helps first-time China travelers</h1>
     <div class="article-meta-stack">
       <p class="article-meta author-byline"><strong>Author:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
@@ -879,11 +960,11 @@ function renderAboutPage() {
 
     <section class="article-block">
       <h2>Contact and feedback</h2>
-      <p>Questions, corrections, and feedback are welcome. Reach us at <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a> or visit the <a href="/en/contact/">contact page</a>.</p>
+      <p>Questions, corrections, and feedback are welcome. Reach us at <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a> or visit the <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
     </section>
   </article>
 
-  ${renderSiteFooter({ homePath: '/en/', includeGuides: true })}
+  ${renderSiteFooter({ lang: langCode, locale, includeGuides: true, guidesPath: guideHubPath(langCode) })}
 </main>`
 
   const jsonLd = [
@@ -893,7 +974,7 @@ function renderAboutPage() {
       name: title,
       description,
       url: absUrl(canonicalPath),
-      inLanguage: 'en',
+      inLanguage: htmlLang,
       datePublished: PUBLISHED_DATE_ISO,
       dateModified: PUBLISHED_DATE_ISO,
       author: {
@@ -905,13 +986,13 @@ function renderAboutPage() {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: ORGANIZATION_NAME,
-      url: absUrl('/en/'),
+      url: absUrl(homePath(langCode)),
       email: CONTACT_EMAIL,
       logo: absUrl('/og-image.svg'),
     },
     createBreadcrumbList([
-      { name: 'Home', path: '/en' },
-      { name: 'About', path: canonicalPath },
+      { name: homeLabel, path: `/${langCode}` },
+      { name: aboutLabel, path: canonicalPath },
     ]),
   ]
 
@@ -922,7 +1003,7 @@ function renderAboutPage() {
   ].join('\n    ')
 
   return renderDocument({
-    htmlLang: 'en',
+    htmlLang,
     title,
     description,
     canonicalPath,
@@ -933,34 +1014,38 @@ function renderAboutPage() {
   })
 }
 
-function renderContactPage() {
-  const canonicalPath = '/en/contact/'
+function renderContactPage(lang, locale) {
+  const langCode = resolveLangCode(lang)
+  const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
+  const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const homeLabel = legalLinks.home ?? 'Home'
+  const guidesLabel = legalLinks.guides ?? 'Guides'
+  const aboutLabel = legalLinks.about ?? 'About'
+  const contactLabel = legalLinks.contact ?? 'Contact'
+  const canonicalPath = contactPath(langCode)
   const title = 'Contact City Vibe Matcher | Travel Match Support'
   const description =
     'Contact City Vibe Matcher for travel-matching questions, feedback, media requests, and data corrections related to our China city planning guides.'
-  const alternates = [
-    { hreflang: 'en', href: absUrl(canonicalPath) },
-    { hreflang: 'x-default', href: absUrl(canonicalPath) },
-  ]
+  const alternates = buildPageAlternates('contact')
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="/en/">City Vibe Matcher</a>
+    <a class="brand" href="${homePath(langCode)}">City Vibe Matcher</a>
     <nav class="top-links">
-      <a href="/en/">Home</a>
-      <a href="/en/about/">About</a>
-      <a href="/en/guides/">Guides</a>
+      <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
+      <a href="${aboutPath(langCode)}">${escapeHtml(aboutLabel)}</a>
+      <a href="${guideHubPath(langCode)}">${escapeHtml(guidesLabel)}</a>
     </nav>
   </header>
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/en/">Home</a>
+    <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
     <span>/</span>
-    <span>Contact</span>
+    <span>${escapeHtml(contactLabel)}</span>
   </nav>
 
   <article class="article-page block">
-    <p class="eyebrow">Contact</p>
+    <p class="eyebrow">${escapeHtml(contactLabel)}</p>
     <h1>Get in touch</h1>
     <div class="article-meta-stack">
       <p class="article-meta author-byline"><strong>Author:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
@@ -1012,7 +1097,7 @@ function renderContactPage() {
     </section>
   </article>
 
-  ${renderSiteFooter({ homePath: '/en/', includeGuides: true })}
+  ${renderSiteFooter({ lang: langCode, locale, includeGuides: true, guidesPath: guideHubPath(langCode) })}
 </main>`
 
   const jsonLd = [
@@ -1022,7 +1107,7 @@ function renderContactPage() {
       name: title,
       description,
       url: absUrl(canonicalPath),
-      inLanguage: 'en',
+      inLanguage: htmlLang,
       datePublished: PUBLISHED_DATE_ISO,
       dateModified: PUBLISHED_DATE_ISO,
       author: {
@@ -1034,19 +1119,19 @@ function renderContactPage() {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: ORGANIZATION_NAME,
-      url: absUrl('/en/'),
+      url: absUrl(homePath(langCode)),
       contactPoint: [
         {
           '@type': 'ContactPoint',
           contactType: 'customer support',
           email: CONTACT_EMAIL,
-          availableLanguage: ['en'],
+          availableLanguage: [htmlLang],
         },
       ],
     },
     createBreadcrumbList([
-      { name: 'Home', path: '/en' },
-      { name: 'Contact', path: canonicalPath },
+      { name: homeLabel, path: `/${langCode}` },
+      { name: contactLabel, path: canonicalPath },
     ]),
   ]
 
@@ -1057,7 +1142,7 @@ function renderContactPage() {
   ].join('\n    ')
 
   return renderDocument({
-    htmlLang: 'en',
+    htmlLang,
     title,
     description,
     canonicalPath,
@@ -1068,12 +1153,115 @@ function renderContactPage() {
   })
 }
 
+function renderPrivacyPolicyPage(lang, locale) {
+  const langCode = resolveLangCode(lang)
+  const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
+  const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const homeLabel = legalLinks.home ?? 'Home'
+  const guidesLabel = legalLinks.guides ?? 'Guides'
+  const aboutLabel = legalLinks.about ?? 'About'
+  const contactLabel = legalLinks.contact ?? 'Contact'
+  const privacyLabel = legalLinks.privacy ?? 'Privacy Policy'
+  const canonicalPath = privacyPolicyPath(langCode)
+  const title = `${privacyLabel} | Best City in China`
+  const description =
+    'Privacy policy for bestcityinchina.site covering analytics usage, cookies, third-party services, data retention, and how to contact us with privacy questions.'
+  const alternates = buildPageAlternates('privacy-policy')
+
+  const mainHtml = `<main id="main-content" class="page-shell">
+  <header class="site-header">
+    <a class="brand" href="${homePath(langCode)}">Best City in China</a>
+    <nav class="top-links">
+      <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
+      <a href="${aboutPath(langCode)}">${escapeHtml(aboutLabel)}</a>
+      <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a>
+      <a href="${guideHubPath(langCode)}">${escapeHtml(guidesLabel)}</a>
+    </nav>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
+    <span>/</span>
+    <span>${escapeHtml(privacyLabel)}</span>
+  </nav>
+
+  <article class="block article-page">
+    <p class="eyebrow">Legal</p>
+    <h1>${escapeHtml(privacyLabel)}</h1>
+    <p class="article-intro">Last updated: February 20, 2026</p>
+
+    <div class="article-block">
+      <h2>Overview</h2>
+      <p>bestcityinchina.site is a free travel quiz tool that helps travelers choose Chinese cities to visit. We take your privacy seriously and collect minimal data.</p>
+    </div>
+
+    <div class="article-block">
+      <h2>What data we collect</h2>
+      <p>We do not collect personally identifiable information. We do not require accounts or email addresses. Quiz answers are processed in your browser.</p>
+      <p>We use Google Analytics 4 to collect anonymous usage data such as page views, device category, referral source, and quiz interaction events.</p>
+    </div>
+
+    <div class="article-block">
+      <h2>Cookies</h2>
+      <p>Analytics cookies are used only for traffic measurement. We do not use advertising cookies or marketing trackers.</p>
+      <p>You can opt out using the Google Analytics Opt-out Browser Add-on.</p>
+    </div>
+
+    <div class="article-block">
+      <h2>Third-party services</h2>
+      <ul class="list-cards">
+        <li>Google Analytics 4 for anonymous analytics</li>
+        <li>Google Fonts for font delivery</li>
+        <li>Netlify for hosting infrastructure</li>
+      </ul>
+    </div>
+
+    <div class="article-block">
+      <h2>Data retention</h2>
+      <p>Google Analytics data is retained for 14 months. We do not store additional personal user datasets.</p>
+    </div>
+
+    <div class="article-block">
+      <h2>Contact</h2>
+      <p>If you have questions about this policy, email <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a> or visit our <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
+    </div>
+  </article>
+
+  ${renderSiteFooter({ lang: langCode, locale, includeGuides: true, guidesPath: guideHubPath(langCode) })}
+</main>`
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: privacyLabel,
+      url: absUrl(canonicalPath),
+      description,
+      inLanguage: htmlLang,
+    },
+    createBreadcrumbList([
+      { name: homeLabel, path: `/${langCode}` },
+      { name: privacyLabel, path: canonicalPath },
+    ]),
+  ]
+
+  return renderDocument({
+    htmlLang,
+    title,
+    description,
+    canonicalPath,
+    alternates,
+    mainHtml,
+    jsonLd,
+  })
+}
+
 function buildCtrTitleVariantsManifest() {
   const payload = {
     activeVariant: CTR_TITLE_VARIANT,
     guides: GUIDE_PAGES.map((guide) => ({
       slug: guide.slug,
-      path: guidePath(guide),
+      path: guidePath('en', guide),
       activeTitle: guideTitle(guide),
       titleA: guide?.titleVariants?.A ?? guide.title,
       titleB: guide?.titleVariants?.B ?? guide.title,
@@ -1085,26 +1273,26 @@ function buildCtrTitleVariantsManifest() {
 
 function buildSitemap() {
   const today = new Date().toISOString().slice(0, 10)
-  const urls = [
-    '/en',
-    '/zh',
-    '/ja',
-    '/ko',
-    '/en/about/',
-    '/en/contact/',
-    '/en/privacy-policy/',
-    '/en/guides/',
-    ...GUIDE_PAGES.map((guide) => `/en/guides/${guide.slug}/`),
-  ]
+  const languageRoots = LANGUAGES.map((lang) => `/${lang.urlCode}`)
+  const infoPageUrls = LANGUAGES.flatMap((lang) => [
+    aboutPath(lang),
+    contactPath(lang),
+    privacyPolicyPath(lang),
+  ])
+  const guideUrls = LANGUAGES.flatMap((lang) => [
+    guideHubPath(lang),
+    ...GUIDE_PAGES.map((guide) => guidePath(lang, guide)),
+  ])
+  const urls = [...languageRoots, ...infoPageUrls, ...guideUrls]
 
   const nodes = urls
     .map((pathname) => {
       const priority =
         pathname === '/en'
           ? '1.0'
-          : pathname.startsWith('/en/guides')
+          : pathname.includes('/guides/')
             ? '0.8'
-            : pathname.startsWith('/en/about') || pathname.startsWith('/en/contact') || pathname.startsWith('/en/privacy')
+            : pathname.includes('/about/') || pathname.includes('/contact/') || pathname.includes('/privacy-policy/')
               ? '0.7'
               : '0.9'
       return `  <url>
@@ -1135,13 +1323,20 @@ async function main() {
     await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/index.html`), html)
   }
 
-  await writeText(path.join(PUBLIC_DIR, 'en/about/index.html'), renderAboutPage())
-  await writeText(path.join(PUBLIC_DIR, 'en/contact/index.html'), renderContactPage())
+  for (const lang of LANGUAGES) {
+    const locale = localeMap[lang.i18nCode]
+    await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/about/index.html`), renderAboutPage(lang, locale))
+    await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/contact/index.html`), renderContactPage(lang, locale))
+    await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/privacy-policy/index.html`), renderPrivacyPolicyPage(lang, locale))
+  }
 
-  await writeText(path.join(PUBLIC_DIR, 'en/guides/index.html'), renderGuideHub())
-  for (const guide of GUIDE_PAGES) {
-    const html = renderGuideDetail(guide)
-    await writeText(path.join(PUBLIC_DIR, `en/guides/${guide.slug}/index.html`), html)
+  for (const lang of LANGUAGES) {
+    const locale = localeMap[lang.i18nCode]
+    await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/guides/index.html`), renderGuideHub(lang, locale))
+    for (const guide of GUIDE_PAGES) {
+      const html = renderGuideDetail(lang, locale, guide)
+      await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/guides/${guide.slug}/index.html`), html)
+    }
   }
 
   await writeText(path.join(PUBLIC_DIR, 'en/guides/ctr-title-variants.json'), buildCtrTitleVariantsManifest())

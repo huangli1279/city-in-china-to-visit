@@ -21,30 +21,20 @@ interface FaqItemTranslation {
   answer: string
 }
 
+interface TopicClusterItemTranslation {
+  title: string
+  description: string
+}
+
 const CITY_BY_ID = new Map(cities.map((city) => [city.id, city]))
 const PREVIEW_CITY_IDS = ['shanghai', 'xian', 'chengdu', 'guilin', 'chongqing', 'sanya'] as const
 const HOME_ALTERNATES = buildAlternates()
-const GUIDE_INTERNAL_LINKS = [
-  {
-    href: '/en/guides/best-city-to-visit-in-china-first-time/',
-    title: 'Best City to Visit in China for First-Time Travelers',
-    desc: 'A practical way to pick your first stop based on travel style and comfort level.',
-  },
-  {
-    href: '/en/guides/beijing-vs-shanghai-for-first-trip/',
-    title: 'Beijing vs Shanghai for Your First China Trip',
-    desc: 'Compare history depth, city pace, convenience, and itinerary style.',
-  },
-  {
-    href: '/en/guides/best-china-cities-by-travel-style/',
-    title: 'Best China Cities by Travel Style',
-    desc: 'Match city types to personality: history-first, foodie, nature, or nightlife.',
-  },
-  {
-    href: '/en/guides/how-many-days-in-first-china-city/',
-    title: 'How Many Days in Your First China City?',
-    desc: 'Use a 3-to-5 day framework to avoid overpacking your first itinerary.',
-  },
+const GUIDE_CONTENT_LANGS = new Set(['en', 'zh', 'ja', 'ko'])
+const GUIDE_SLUGS = [
+  'best-city-to-visit-in-china-first-time/',
+  'beijing-vs-shanghai-for-first-trip/',
+  'best-china-cities-by-travel-style/',
+  'how-many-days-in-first-china-city/',
 ]
 const PREVIEW_CITIES = PREVIEW_CITY_IDS.map((id) => CITY_BY_ID.get(id)).filter(
   (city): city is (typeof cities)[number] => city !== undefined
@@ -68,6 +58,9 @@ export default function HomePage() {
   const seoGuidePointsRaw = t('home.seoGuide.points', {
     returnObjects: true,
   }) as string[] | string
+  const topicClusterItemsRaw = t('home.topicCluster.items', {
+    returnObjects: true,
+  }) as TopicClusterItemTranslation[] | string
   const faqItemsRaw = t('home.faq.items', {
     returnObjects: true,
   }) as FaqItemTranslation[] | string
@@ -76,6 +69,7 @@ export default function HomePage() {
   const modelDimensions = Array.isArray(modelDimensionsRaw) ? modelDimensionsRaw : []
   const sharePoints = Array.isArray(sharePointsRaw) ? sharePointsRaw : []
   const seoGuidePoints = Array.isArray(seoGuidePointsRaw) ? seoGuidePointsRaw : []
+  const topicClusterItems = Array.isArray(topicClusterItemsRaw) ? topicClusterItemsRaw : []
   const faqItems = Array.isArray(faqItemsRaw) ? faqItemsRaw : []
   const currentYear = new Date().getFullYear()
   const headerLinks = [
@@ -88,6 +82,20 @@ export default function HomePage() {
     ns: 'cities',
     returnObjects: true,
   }) as Record<string, CityTranslation>
+  const topicClusterGuideLang = GUIDE_CONTENT_LANGS.has(lang) ? lang : 'en'
+  const topicClusterGuideBasePath = `/${topicClusterGuideLang}/guides`
+  const topicClusterLinks = topicClusterItems
+    .map((item, index) => {
+      const slug = GUIDE_SLUGS[index]
+      if (!slug) return null
+      return {
+        href: `${topicClusterGuideBasePath}/${slug}`,
+        title: item.title,
+        desc: item.description,
+      }
+    })
+    .filter((item): item is { href: string; title: string; desc: string } => item !== null)
+  const legalBasePath = `/${lang}`
   const canonicalPath = buildLangPath(lang)
   const faqSchema = faqItems.map((item) => ({
     '@type': 'Question',
@@ -303,15 +311,15 @@ export default function HomePage() {
         <p className="mt-5 text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{t('home.seoGuide.conclusion')}</p>
       </section>
 
-      {lang === 'en' && (
+      {topicClusterLinks.length > 0 && (
         <section className="surface-card mt-5 p-6 sm:p-8 lg:p-10">
-          <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">Topic cluster</p>
-          <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">China city planning guides</h2>
+          <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t('home.topicCluster.eyebrow')}</p>
+          <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">{t('home.topicCluster.title')}</h2>
           <p className="mt-3 max-w-4xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
-            These focused guides support the quiz and help you compare destinations, trip pace, and planning depth.
+            {t('home.topicCluster.subtitle')}
           </p>
           <div className="mt-5 grid gap-3 md:grid-cols-2">
-            {GUIDE_INTERNAL_LINKS.map((guide) => (
+            {topicClusterLinks.map((guide) => (
               <a
                 key={guide.href}
                 href={guide.href}
@@ -323,10 +331,10 @@ export default function HomePage() {
             ))}
           </div>
           <a
-            href="/en/guides/"
+            href={`${topicClusterGuideBasePath}/`}
             className="focus-ring mt-5 inline-flex rounded-xl border border-[#8a6447]/28 bg-white/70 px-4 py-2 text-sm font-semibold text-cinnabar transition-colors hover:border-[#b43c2f]/45"
           >
-            Explore all city guides
+            {t('home.topicCluster.cta')}
           </a>
         </section>
       )}
@@ -393,21 +401,17 @@ export default function HomePage() {
         <div className="border-t border-[#4f5e78] px-6 py-4 text-xs text-slate-300 sm:px-8 lg:px-10 flex flex-wrap items-center justify-between gap-2">
           <span>© {currentYear} {t('home.footer.copyright')}</span>
           <nav className="flex flex-wrap items-center gap-3">
-            {lang === 'en' && (
-              <>
-                <a href="/en/about/" className="text-slate-400 hover:text-slate-200 transition-colors">
-                  About
-                </a>
-                <a href="/en/contact/" className="text-slate-400 hover:text-slate-200 transition-colors">
-                  Contact
-                </a>
-                <a href="/en/guides/" className="text-slate-400 hover:text-slate-200 transition-colors">
-                  Guides
-                </a>
-              </>
-            )}
-            <a href="/en/privacy-policy/" className="text-slate-400 hover:text-slate-200 transition-colors">
-              Privacy Policy
+            <a href={`${legalBasePath}/about/`} className="text-slate-400 hover:text-slate-200 transition-colors">
+              {t('home.footer.legalLinks.about')}
+            </a>
+            <a href={`${legalBasePath}/contact/`} className="text-slate-400 hover:text-slate-200 transition-colors">
+              {t('home.footer.legalLinks.contact')}
+            </a>
+            <a href={`${topicClusterGuideBasePath}/`} className="text-slate-400 hover:text-slate-200 transition-colors">
+              {t('home.footer.legalLinks.guides')}
+            </a>
+            <a href={`${legalBasePath}/privacy-policy/`} className="text-slate-400 hover:text-slate-200 transition-colors">
+              {t('home.footer.legalLinks.privacy')}
             </a>
           </nav>
         </div>

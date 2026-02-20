@@ -8,6 +8,7 @@ const ROOT_DIR = path.resolve(__dirname, '..')
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public')
 const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://bestcityinchina.site').replace(/\/+$/, '')
 const CTR_TITLE_VARIANT = process.env.CTR_TITLE_VARIANT === 'B' ? 'B' : 'A'
+const PRERENDER_LANDING_PAGES = process.env.PRERENDER_LANDING_PAGES === '1'
 const GA_MEASUREMENT_ID = 'G-ZTZTZ5TQMR'
 const ORGANIZATION_NAME = 'City Vibe Matcher'
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
@@ -1457,10 +1458,12 @@ async function main() {
     localeMap[lang.i18nCode] = await readJson(LOCALE_FILES[lang.i18nCode])
   }
 
-  for (const lang of LANGUAGES) {
-    const locale = localeMap[lang.i18nCode]
-    const html = renderLandingPage(lang, locale)
-    await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/index.html`), html)
+  if (PRERENDER_LANDING_PAGES) {
+    for (const lang of LANGUAGES) {
+      const locale = localeMap[lang.i18nCode]
+      const html = renderLandingPage(lang, locale)
+      await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/index.html`), html)
+    }
   }
 
   for (const lang of LANGUAGES) {

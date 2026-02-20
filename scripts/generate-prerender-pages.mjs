@@ -151,7 +151,7 @@ const GUIDE_PAGES = [
       B: 'Best Cities to Visit in China by Travel Personality',
     },
     description:
-      'Match Chinese cities to your travel personality across heritage, food, nature, nightlife, and recovery pace, with practical examples for 15 first-trip options.',
+      'Match Chinese cities to your travel personality across heritage, food, nature, nightlife, and recovery pace, with practical examples for first-trip options.',
     intro:
       'The fastest way to choose where to go in China is to match destination archetypes to your travel style, then validate the top two or three candidates.',
     keyPoints: [
@@ -754,7 +754,7 @@ function renderLandingPage(lang, locale) {
     <div class="metric-grid">
       <article><strong>18</strong><span>${escapeHtml(home?.metrics?.questions ?? '')}</span></article>
       <article><strong>6</strong><span>${escapeHtml(home?.metrics?.dimensions ?? '')}</span></article>
-      <article><strong>15</strong><span>${escapeHtml(home?.metrics?.cities ?? '')}</span></article>
+      <article><strong>${escapeHtml(home?.metrics?.citiesValue ?? 'Curated')}</strong><span>${escapeHtml(home?.metrics?.cities ?? '')}</span></article>
     </div>
     <a class="cta" href="/${lang.urlCode}/quiz">${escapeHtml(home?.cta ?? 'Start quiz')}</a>
   </section>
@@ -836,7 +836,7 @@ function renderGuideHub(lang, locale) {
     </div>
     <h2>How to use this guide cluster</h2>
     <p>Start with a comparison guide, then validate your pace with the day-planning guide. If two destinations still feel equally good, choose the one with lower logistics friction for your arrival week.</p>
-    <p>After choosing your likely first city, use the quiz to validate fit against 15 city profiles and keep one backup city in case seasonality or flight constraints shift your plan.</p>
+    <p>After choosing your likely first city, use the quiz to validate fit against the matching model and keep one backup city in case seasonality or flight constraints shift your plan.</p>
     <h2>Scope and limitations</h2>
     <p>These guides are designed for first-time visitors and focus on decision clarity, not comprehensive destination encyclopedias. They summarize high-impact tradeoffs such as transport friction, planning load, and itinerary recovery needs.</p>
     <p>For official visa policy, entry requirements, and safety notices, always verify information through government and embassy sources before finalizing bookings.</p>
@@ -844,7 +844,7 @@ function renderGuideHub(lang, locale) {
 
   <section class="cta-panel">
     <h2>${escapeHtml(labels.personalizedAnswer)}</h2>
-    <p>Use the 18-question matcher to rank 15 Chinese cities by your travel style.</p>
+    <p>Use the 18-question matcher to rank Chinese cities by your travel style.</p>
     <a class="cta" href="/${lang.urlCode}/quiz">${escapeHtml(home?.cta ?? 'Start the quiz')}</a>
   </section>
 

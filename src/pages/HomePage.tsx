@@ -199,7 +199,7 @@ export default function HomePage() {
               <p className="mt-1 text-sm leading-relaxed text-[color:var(--ink-600)]">{t('home.metrics.dimensions')}</p>
             </article>
             <article className="surface-muted p-4">
-              <p className="font-display text-3xl font-bold text-[color:var(--ink-950)]">15</p>
+              <p className="font-display text-3xl font-bold text-[color:var(--ink-950)]">{t('home.metrics.citiesValue')}</p>
               <p className="mt-1 text-sm leading-relaxed text-[color:var(--ink-600)]">{t('home.metrics.cities')}</p>
             </article>
           </div>

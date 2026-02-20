@@ -7,7 +7,8 @@
     "metrics": {
       "questions": "여행 스타일을 파악하는 빠른 질문",
       "dimensions": "매칭 모델의 핵심 6개 차원",
-      "cities": "추천 풀에 포함된 15개 도시"
+      "citiesValue": "맞춤",
+      "cities": "여행 성향에 맞춘 도시 추천"
     },
     "desktopPreviewTitle": "도시 분위기 미리보기",
     "desktopPreviewSubtitle": "미래형 스카이라인부터 느긋한 차 문화까지. 분위기를 먼저 비교한 뒤 동선을 정할 수 있습니다.",
@@ -36,7 +37,7 @@
     ],
     "modelEyebrow": "매칭 모델",
     "modelTitle": "랜덤 추천이 아닌 설명 가능한 매칭",
-    "modelSubtitle": "답변을 6차원 여행 성향으로 변환한 뒤 15개 도시 프로필과 비교해 가장 가까운 결과를 제시합니다.",
+    "modelSubtitle": "답변을 6차원 여행 성향으로 변환한 뒤 도시 프로필과 비교해 가장 가까운 결과를 제시합니다.",
     "modelDimensions": [
       "History Appetite",
       "Nature vs Urban",
@@ -79,7 +80,7 @@
     },
     "seo": {
       "title": "Best City to Visit in China｜18문항 중국 도시 매칭",
-      "description": "best city to visit in china를 찾고 있나요? 18개 질문으로 여행 성향, 이동 속도, 문화 적응도를 분석해 15개 중국 도시 중 가장 맞는 첫 방문 도시를 고르고 실제 일정에 바로 쓸 수 있는 선택 근거를 제공합니다.",
+      "description": "best city to visit in china를 찾고 있나요? 18개 질문으로 여행 성향, 이동 속도, 문화 적응도를 분석해 중국 도시 중 가장 맞는 첫 방문 도시를 고르고 실제 일정에 바로 쓸 수 있는 선택 근거를 제공합니다.",
       "appName": "중국 도시 매칭 퀴즈"
     },
     "seoGuide": {

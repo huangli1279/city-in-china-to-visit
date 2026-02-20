@@ -7,7 +7,8 @@
     "metrics": {
       "questions": "旅の好みに関するクイック質問",
       "dimensions": "マッチングに使う6つのコア指標",
-      "cities": "推薦候補に入る15都市"
+      "citiesValue": "厳選",
+      "cities": "旅行スタイルに合わせた都市提案"
     },
     "desktopPreviewTitle": "都市ムードのプレビュー",
     "desktopPreviewSubtitle": "近未来的な夜景から茶館のスローな時間まで。先に雰囲気を比較してからルートを決められます。",
@@ -36,7 +37,7 @@
     ],
     "modelEyebrow": "マッチングモデル",
     "modelTitle": "ランダムではなく、説明できる推薦",
-    "modelSubtitle": "回答を6軸のプロフィールに変換し、15都市のプロフィールと比較して近い順に提示します。",
+    "modelSubtitle": "回答を6軸のプロフィールに変換し、都市プロフィールと比較して近い順に提示します。",
     "modelDimensions": [
       "History Appetite",
       "Nature vs Urban",
@@ -79,7 +80,7 @@
     },
     "seo": {
       "title": "Best City to Visit in China｜18問で最適な中国都市を診断",
-      "description": "best city to visit in china を探している方へ。18問で旅行スタイル、移動ペース、文化的な快適度を分析し、15都市の中から最初の訪問都市を具体的な計画目線で提案します。さらに初訪問者向けに滞在日数と代替都市の考え方も提示します。",
+      "description": "best city to visit in china を探している方へ。18問で旅行スタイル、移動ペース、文化的な快適度を分析し、中国都市の中から最初の訪問都市を具体的な計画目線で提案します。さらに初訪問者向けに滞在日数と代替都市の考え方も提示します。",
       "appName": "中国都市マッチング診断"
     },
     "seoGuide": {

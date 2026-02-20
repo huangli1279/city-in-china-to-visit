@@ -2,12 +2,13 @@
   "home": {
     "badge": "为来华旅行决策而设计",
     "title": "想找 Best City to Visit in China？先测出你的匹配城市",
-    "subtitle": "你已经决定来中国旅行。用 18 道快速问题，从 15 座城市中找出最适合你的第一站。",
+    "subtitle": "你已经决定来中国旅行。通过快速问题，找出最适合你的第一站。",
     "cta": "开始 18 题测试",
     "metrics": {
       "questions": "围绕旅行风格的快速问题",
       "dimensions": "匹配模型使用的 6 个核心维度",
-      "cities": "推荐池中的 15 座差异化城市"
+      "citiesValue": "精选",
+      "cities": "按你的旅行风格匹配城市建议"
     },
     "desktopPreviewTitle": "城市氛围预览",
     "desktopPreviewSubtitle": "从未来感天际线到茶馆慢生活，先看城市气质再决定路线。",
@@ -36,7 +37,7 @@
     ],
     "modelEyebrow": "匹配机制",
     "modelTitle": "不是随机推荐，而是可解释的匹配系统",
-    "modelSubtitle": "我们先将你的回答转为六维画像，再与 15 座城市画像逐一对比，输出最接近的结果。",
+    "modelSubtitle": "我们先将你的回答转为六维画像，再与城市画像逐一对比，输出最接近的结果。",
     "modelDimensions": [
       "历史文化兴趣",
       "自然 vs 都市偏好",
@@ -79,7 +80,7 @@
     },
     "seo": {
       "title": "Best City to Visit in China｜18题匹配你的中国旅行首站",
-      "description": "想知道 best city to visit in China 是哪座？通过 18 道题分析你的旅行节奏、文化偏好与预算容忍度，从 15 座中国城市中筛出最适合你的第一站，并给出可执行的行程起点建议，并提示适合首访者的节奏安排与备选城市策略。",
+      "description": "想知道 best city to visit in China 是哪座？通过 18 道题分析你的旅行节奏、文化偏好与预算容忍度，从中国城市中筛出最适合你的第一站，并给出可执行的行程起点建议，并提示适合首访者的节奏安排与备选城市策略。",
       "appName": "中国城市匹配测试"
     },
     "seoGuide": {

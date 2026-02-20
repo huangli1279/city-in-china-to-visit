@@ -7,7 +7,8 @@
     "metrics": {
       "questions": "Quick questions about your travel style",
       "dimensions": "Core dimensions behind the matching model",
-      "cities": "Distinctive cities in the recommendation pool"
+      "citiesValue": "Curated",
+      "cities": "Cities curated for your travel style"
     },
     "desktopPreviewTitle": "City mood preview",
     "desktopPreviewSubtitle": "From futuristic skylines to tea-house slow life. Compare the vibe before you commit to a route.",
@@ -36,7 +37,7 @@
     ],
     "modelEyebrow": "Matching model",
     "modelTitle": "A clear system, not a random city list",
-    "modelSubtitle": "We map your answers to a six-dimension profile, then compare it against 15 city profiles and rank the closest matches.",
+    "modelSubtitle": "We map your answers to a six-dimension profile, then compare city profiles and rank the closest matches.",
     "modelDimensions": [
       "History Appetite",
       "Nature vs Urban",
@@ -79,7 +80,7 @@
     },
     "seo": {
       "title": "Best City to Visit in China | Find a Match in 18 Questions",
-      "description": "Looking for the best city to visit in China? Take this 18-question travel quiz and get a personalized recommendation from 15 Chinese cities.",
+      "description": "Looking for the best city to visit in China? Take this 18-question travel quiz and get a personalized city recommendation for your first trip.",
       "appName": "China City Vibe Matcher"
     },
     "seoGuide": {

@@ -286,7 +286,7 @@ function resolveLangCode(langOrCode) {
 
 function homePath(langOrCode) {
   const langCode = resolveLangCode(langOrCode)
-  return `/${langCode}/`
+  return `/${langCode}`
 }
 
 function aboutPath(langOrCode) {
@@ -472,7 +472,7 @@ function buildPageAlternates(pageSegment) {
 function renderLanguageSwitcher(currentLang) {
   const links = LANGUAGES.map((lang) => {
     const active = lang.urlCode === currentLang ? 'is-active' : ''
-    return `<a class="lang-chip ${active}" href="/${lang.urlCode}/">${escapeHtml(lang.label)}</a>`
+    return `<a class="lang-chip ${active}" href="${homePath(lang)}">${escapeHtml(lang.label)}</a>`
   }).join('')
   return `<nav class="lang-switch" aria-label="Language">${links}</nav>`
 }
@@ -829,9 +829,9 @@ function renderGuideHub(lang, locale) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    ${renderBrandLink({ href: `/${lang.urlCode}/`, label: home?.header?.brandName ?? 'City Vibe Matcher' })}
+    ${renderBrandLink({ href: homePath(lang), label: home?.header?.brandName ?? 'City Vibe Matcher' })}
     <nav class="top-links">
-      <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
+      <a href="${homePath(lang)}">${escapeHtml(labels.home)}</a>
       <a href="/${lang.urlCode}/quiz">${escapeHtml(labels.quiz)}</a>
     </nav>
   </header>
@@ -928,16 +928,16 @@ function renderGuideDetail(lang, locale, guide) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    ${renderBrandLink({ href: `/${lang.urlCode}/`, label: home?.header?.brandName ?? 'City Vibe Matcher' })}
+    ${renderBrandLink({ href: homePath(lang), label: home?.header?.brandName ?? 'City Vibe Matcher' })}
     <nav class="top-links">
-      <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
+      <a href="${homePath(lang)}">${escapeHtml(labels.home)}</a>
       <a href="${guideHubPath(lang)}">${escapeHtml(labels.guides)}</a>
       <a href="/${lang.urlCode}/quiz">${escapeHtml(labels.quiz)}</a>
     </nav>
   </header>
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
+    <a href="${homePath(lang)}">${escapeHtml(labels.home)}</a>
     <span>/</span>
     <a href="${guideHubPath(lang)}">${escapeHtml(labels.guides)}</a>
     <span>/</span>
@@ -1110,7 +1110,7 @@ function renderAboutPage(lang, locale) {
 
     <section class="article-block">
       <h2>${escapeHtml(labels.contactAndFeedback)}</h2>
-      <p>Questions, corrections, and feedback are welcome. Reach us at <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a> or visit the <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
+      <p>Questions, corrections, and feedback are welcome. Reach us at <strong>${escapeHtml(CONTACT_EMAIL)}</strong> or visit the <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
     </section>
   </article>
 
@@ -1209,7 +1209,7 @@ function renderContactPage(lang, locale) {
 
     <section class="article-block">
       <h2>${escapeHtml(labels.email)}</h2>
-      <p>General inquiries: <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a></p>
+      <p>General inquiries: <strong>${escapeHtml(CONTACT_EMAIL)}</strong></p>
       <p>Include your trip goal, expected travel month, and the page URL if your question is about a specific guide.</p>
     </section>
 
@@ -1375,7 +1375,7 @@ function renderPrivacyPolicyPage(lang, locale) {
 
     <div class="article-block">
       <h2>Contact</h2>
-      <p>If you have questions about this policy, email <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a> or visit our <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
+      <p>If you have questions about this policy, email <strong>${escapeHtml(CONTACT_EMAIL)}</strong> or visit our <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
     </div>
   </article>
 

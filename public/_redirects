@@ -3,4 +3,19 @@
 /zh/ /zh 301
 /ja/ /ja 301
 /ko/ /ko 301
+
+/sitemap_index.xml /sitemap.xml 301
+/sitemap-index.xml /sitemap.xml 301
+/sitemaps.xml /sitemap.xml 301
+/sitemap1.xml /sitemap.xml 301
+/post-sitemap.xml /sitemap.xml 301
+/page-sitemap.xml /sitemap.xml 301
+/sitemap-*.xml /sitemap.xml 301
+
+/:lang/about /:lang/about/ 200
+/:lang/contact /:lang/contact/ 200
+/:lang/privacy-policy /:lang/privacy-policy/ 200
+/:lang/guides /:lang/guides/ 200
+/:lang/guides/:slug /:lang/guides/:slug/ 200
+
 /* /index.html 200

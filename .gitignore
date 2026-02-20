@@ -15,6 +15,7 @@ dist-ssr
 # Claude Code / AI agent directories
 .agents
 .claude
+.codex
 
 # Wrangler / Cloudflare
 .wrangler

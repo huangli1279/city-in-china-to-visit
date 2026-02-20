@@ -315,6 +315,10 @@ function guidePath(langOrCode, guideOrSlug) {
   return `${guideHubPath(langCode)}${slug}/`
 }
 
+function renderBrandLink({ href, label }) {
+  return `<a class="brand" href="${escapeHtml(href)}"><img class="brand-logo" src="/logo.svg" alt="" width="36" height="36" loading="eager" decoding="async" aria-hidden="true" /><span class="brand-text">${escapeHtml(label)}</span></a>`
+}
+
 function guideTitle(guide) {
   return guide?.titleVariants?.[CTR_TITLE_VARIANT] ?? guide.title
 }
@@ -750,7 +754,7 @@ function renderLandingPage(lang, locale) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="${escapeHtml(canonicalPath)}">${escapeHtml(home?.header?.brandName ?? 'City Vibe Matcher')}</a>
+    ${renderBrandLink({ href: canonicalPath, label: home?.header?.brandName ?? 'City Vibe Matcher' })}
     ${renderLanguageSwitcher(lang.urlCode)}
   </header>
 
@@ -825,7 +829,7 @@ function renderGuideHub(lang, locale) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="/${lang.urlCode}/">${escapeHtml(home?.header?.brandName ?? 'City Vibe Matcher')}</a>
+    ${renderBrandLink({ href: `/${lang.urlCode}/`, label: home?.header?.brandName ?? 'City Vibe Matcher' })}
     <nav class="top-links">
       <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
       <a href="/${lang.urlCode}/quiz">${escapeHtml(labels.quiz)}</a>
@@ -924,7 +928,7 @@ function renderGuideDetail(lang, locale, guide) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="/${lang.urlCode}/">${escapeHtml(home?.header?.brandName ?? 'City Vibe Matcher')}</a>
+    ${renderBrandLink({ href: `/${lang.urlCode}/`, label: home?.header?.brandName ?? 'City Vibe Matcher' })}
     <nav class="top-links">
       <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
       <a href="${guideHubPath(lang)}">${escapeHtml(labels.guides)}</a>
@@ -1053,7 +1057,7 @@ function renderAboutPage(lang, locale) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="${homePath(langCode)}">City Vibe Matcher</a>
+    ${renderBrandLink({ href: homePath(langCode), label: 'City Vibe Matcher' })}
     <nav class="top-links">
       <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
       <a href="${guideHubPath(langCode)}">${escapeHtml(guidesLabel)}</a>
@@ -1177,7 +1181,7 @@ function renderContactPage(lang, locale) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="${homePath(langCode)}">City Vibe Matcher</a>
+    ${renderBrandLink({ href: homePath(langCode), label: 'City Vibe Matcher' })}
     <nav class="top-links">
       <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
       <a href="${aboutPath(langCode)}">${escapeHtml(aboutLabel)}</a>
@@ -1318,7 +1322,7 @@ function renderPrivacyPolicyPage(lang, locale) {
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="${homePath(langCode)}">City Vibe Matcher</a>
+    ${renderBrandLink({ href: homePath(langCode), label: 'City Vibe Matcher' })}
     <nav class="top-links">
       <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
       <a href="${aboutPath(langCode)}">${escapeHtml(aboutLabel)}</a>

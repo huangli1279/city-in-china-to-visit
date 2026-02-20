@@ -66,10 +66,30 @@ a {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.58rem;
   text-decoration: none;
   font-weight: 700;
   color: var(--text);
   letter-spacing: 0.01em;
+  min-width: 0;
+}
+
+.brand-logo {
+  width: 1.95rem;
+  height: 1.95rem;
+  flex-shrink: 0;
+  border-radius: 0.55rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.brand-text {
+  display: inline-block;
+  line-height: 1.15;
 }
 
 .lang-switch {

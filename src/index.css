@@ -92,6 +92,49 @@
     background: linear-gradient(120deg, rgba(253, 233, 224, 0.95), rgba(250, 240, 222, 0.85));
   }
 
+  .brand-link {
+    @apply mr-auto flex min-w-0 items-center gap-3;
+  }
+
+  .brand-logo {
+    width: 2.1rem;
+    height: 2.1rem;
+    flex-shrink: 0;
+    border-radius: 0.6rem;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    object-fit: contain;
+  }
+
+  .brand-copy {
+    min-width: 0;
+  }
+
+  .header-brand-row {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.46rem;
+  }
+
+  .header-brand-stamp {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    border: 1px solid rgba(180, 60, 47, 0.26);
+    padding: 0.22rem 0.58rem;
+    font-size: 0.58rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cinnabar-600);
+    background: rgba(253, 233, 224, 0.52);
+  }
+
   .ink-title {
     @apply font-bold;
     font-family: var(--font-display);

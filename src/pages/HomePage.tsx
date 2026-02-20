@@ -149,9 +149,14 @@ export default function HomePage() {
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
           <div className="flex flex-wrap items-center gap-3">
-            <Link to={`/${lang}`} className="mr-auto min-w-0">
-              <p className="brand-stamp">{t('home.header.brandEyebrow')}</p>
-              <p className="ink-title mt-2 truncate text-lg font-bold sm:text-xl">{t('home.header.brandName')}</p>
+            <Link to={`/${lang}`} className="brand-link">
+              <img src="/logo.svg" alt="" aria-hidden="true" width={36} height={36} className="brand-logo" />
+              <div className="brand-copy">
+                <div className="header-brand-row">
+                  <p className="ink-title min-w-0 truncate text-base font-bold sm:text-xl">{t('home.header.brandName')}</p>
+                  <p className="header-brand-stamp hidden sm:inline-flex">{t('home.header.brandEyebrow')}</p>
+                </div>
+              </div>
             </Link>
 
             <nav className="hidden items-center gap-2 lg:flex">

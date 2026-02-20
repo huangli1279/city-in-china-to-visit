@@ -190,29 +190,6 @@ export default function ResultPage() {
           <p className="text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{cityT?.matchReason ?? cityT?.description}</p>
         </div>
 
-        {/* ── Quick facts ── */}
-        <div className="mt-7 grid grid-cols-2 gap-3">
-          <div className="rounded-xl border border-[#8a6447]/24 bg-white/70 p-3.5">
-            <div className="mb-2.5 flex h-8 w-8 items-center justify-center rounded-lg bg-[rgba(180,60,47,0.1)] text-[color:var(--cinnabar-600)]">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="18" rx="2" />
-                <path d="M16 2v4M8 2v4M3 10h18" />
-              </svg>
-            </div>
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-[color:var(--ink-600)]">{t('result.bestTime')}</p>
-            <p className="mt-1 text-sm font-medium text-[color:var(--ink-800)]">{cityT?.bestTime ?? city.bestTime}</p>
-          </div>
-          <div className="rounded-xl border border-[#8a6447]/24 bg-white/70 p-3.5">
-            <div className="mb-2.5 flex h-8 w-8 items-center justify-center rounded-lg bg-[rgba(184,140,53,0.12)] text-[color:var(--gold-500)]">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 7v10M9.5 9.5h3.25a1.75 1.75 0 0 1 0 3.5H10.5a1.75 1.75 0 0 0 0 3.5H15" />
-              </svg>
-            </div>
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-[color:var(--ink-600)]">{t('result.budget')}</p>
-            <p className="mt-1 text-sm font-medium text-[color:var(--ink-800)]">{cityT?.budgetRange ?? city.budgetRange}</p>
-          </div>
-        </div>
       </section>
 
       {/* ── Runner-up cities ── */}

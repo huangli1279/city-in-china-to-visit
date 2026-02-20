@@ -49,7 +49,7 @@
     "howItWorksTitle": "How matching works",
     "modelStep1": "Answer 18 scenario-based questions in about 2-3 minutes",
     "modelStep2": "We calculate your traveler profile across 6 dimensions",
-    "modelStep3": "You get 1 best-match city and 2 runner-up options",
+    "modelStep3": "You get 1 best-match city and 4 runner-up options",
     "finalCtaTitle": "Ready to find your Chinese city?",
     "finalCtaSubtitle": "Take the quiz now and turn your China travel idea into a concrete city plan.",
     "finalCta": "Start the Quiz",
@@ -92,7 +92,7 @@
         "If history and culture are your priority, Beijing and Xi'an usually match better.",
         "If landscapes and slower travel matter more, Guilin, Dali, and Sanya are often better first choices."
       ],
-      "conclusion": "Use your quiz result as a starting point, then plan flights, season, and budget around your top 3 city matches."
+      "conclusion": "Use your quiz result as a starting point, then plan flights, season, and budget around your top 5 city matches."
     },
     "topicCluster": {
       "eyebrow": "Topic cluster",

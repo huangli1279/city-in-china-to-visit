@@ -390,8 +390,26 @@ export default function HomePage() {
             </section>
           </div>
         </div>
-        <div className="border-t border-[#4f5e78] px-6 py-4 text-xs text-slate-300 sm:px-8 lg:px-10">
-          © {currentYear} {t('home.footer.copyright')}
+        <div className="border-t border-[#4f5e78] px-6 py-4 text-xs text-slate-300 sm:px-8 lg:px-10 flex flex-wrap items-center justify-between gap-2">
+          <span>© {currentYear} {t('home.footer.copyright')}</span>
+          <nav className="flex flex-wrap items-center gap-3">
+            {lang === 'en' && (
+              <>
+                <a href="/en/about/" className="text-slate-400 hover:text-slate-200 transition-colors">
+                  About
+                </a>
+                <a href="/en/contact/" className="text-slate-400 hover:text-slate-200 transition-colors">
+                  Contact
+                </a>
+                <a href="/en/guides/" className="text-slate-400 hover:text-slate-200 transition-colors">
+                  Guides
+                </a>
+              </>
+            )}
+            <a href="/en/privacy-policy/" className="text-slate-400 hover:text-slate-200 transition-colors">
+              Privacy Policy
+            </a>
+          </nav>
         </div>
       </footer>
       </main>

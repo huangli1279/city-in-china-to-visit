@@ -11,6 +11,7 @@ interface SeoProps {
   alternates?: AlternateLink[]
   robots?: string
   ogType?: 'website' | 'article'
+  ogImage?: string
   jsonLd?: JsonLdObject | JsonLdObject[]
 }
 
@@ -35,6 +36,8 @@ function upsertCanonical(href: string) {
   link.setAttribute('href', href)
 }
 
+const DEFAULT_OG_IMAGE = 'https://bestcityinchina.site/og-image.svg'
+
 export default function Seo({
   title,
   description,
@@ -42,6 +45,7 @@ export default function Seo({
   alternates = [],
   robots = 'index,follow',
   ogType = 'website',
+  ogImage = DEFAULT_OG_IMAGE,
   jsonLd,
 }: SeoProps) {
   const canonicalUrl = toAbsoluteUrl(canonicalPath)
@@ -57,10 +61,12 @@ export default function Seo({
     upsertMeta('property', 'og:description', description)
     upsertMeta('property', 'og:type', ogType)
     upsertMeta('property', 'og:url', canonicalUrl)
+    upsertMeta('property', 'og:image', ogImage)
 
     upsertMeta('name', 'twitter:card', 'summary_large_image')
     upsertMeta('name', 'twitter:title', title)
     upsertMeta('name', 'twitter:description', description)
+    upsertMeta('name', 'twitter:image', ogImage)
 
     upsertCanonical(canonicalUrl)
 
@@ -83,7 +89,7 @@ export default function Seo({
       script.text = JSON.stringify(entry)
       document.head.appendChild(script)
     })
-  }, [alternates, canonicalUrl, description, jsonLd, ogType, robots, serializedJsonLd, title])
+  }, [alternates, canonicalUrl, description, jsonLd, ogImage, ogType, robots, serializedJsonLd, title])
 
   return null
 }

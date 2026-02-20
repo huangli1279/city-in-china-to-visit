@@ -3,6 +3,27 @@ import react from '@vitejs/plugin-react'
 import fs from 'node:fs'
 import path from 'node:path'
 
+const SPA_LANG_CODES = new Set(['en', 'zh', 'ja', 'ko'])
+const SPA_SUB_ROUTES = new Set(['quiz', 'result'])
+
+function shouldBypassPublicDirectoryIndex(pathname: string) {
+  const normalizedPath = pathname.replace(/^\/+/, '').replace(/\/+$/, '')
+  if (!normalizedPath) {
+    return true
+  }
+
+  const segments = normalizedPath.split('/')
+  if (segments.length === 1 && SPA_LANG_CODES.has(segments[0])) {
+    return true
+  }
+
+  if (segments.length === 2 && SPA_LANG_CODES.has(segments[0]) && SPA_SUB_ROUTES.has(segments[1])) {
+    return true
+  }
+
+  return false
+}
+
 function servePublicDirectoryIndexInDev() {
   return {
     name: 'serve-public-directory-index-in-dev',
@@ -26,6 +47,11 @@ function servePublicDirectoryIndexInDev() {
           return
         }
 
+        if (shouldBypassPublicDirectoryIndex(pathname)) {
+          next()
+          return
+        }
+
         const htmlFilePath = path.join(server.config.publicDir, normalizedPath, 'index.html')
         if (!fs.existsSync(htmlFilePath) || !fs.statSync(htmlFilePath).isFile()) {
           next()
@@ -44,6 +70,13 @@ function servePublicDirectoryIndexInDev() {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), servePublicDirectoryIndexInDev()],
+  server: {
+    headers: {
+      'X-Frame-Options': 'SAMEORIGIN',
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+    },
+  },
   test: {
     environment: 'node',
   },

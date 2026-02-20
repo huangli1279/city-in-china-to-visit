@@ -31,6 +31,23 @@ body {
   line-height: 1.6;
 }
 
+.skip-link {
+  position: absolute;
+  left: 0.8rem;
+  top: -3rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.55rem;
+  background: #1f2a3d;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  z-index: 40;
+}
+
+.skip-link:focus {
+  top: 0.8rem;
+}
+
 a {
   color: inherit;
 }
@@ -85,6 +102,10 @@ a {
   text-decoration: none;
   font-size: 0.9rem;
   color: var(--text-soft);
+}
+
+.top-links a:hover {
+  color: var(--accent);
 }
 
 .block,
@@ -253,6 +274,24 @@ a {
   color: var(--text-soft);
 }
 
+.article-meta {
+  margin: 0.5rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.87rem;
+}
+
+.article-meta strong {
+  color: var(--text);
+}
+
+.article-meta-stack {
+  margin-top: 0.5rem;
+}
+
+.article-meta-stack .article-meta {
+  margin-top: 0.25rem;
+}
+
 .article-block + .article-block {
   margin-top: 1rem;
 }
@@ -281,6 +320,23 @@ a {
   color: var(--accent);
 }
 
+.site-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.site-footer .top-links {
+  flex-wrap: wrap;
+}
+
 @media (max-width: 860px) {
   .metric-grid {
     grid-template-columns: 1fr;
@@ -288,5 +344,10 @@ a {
 
   .guide-grid {
     grid-template-columns: 1fr;
+  }
+
+  .top-links {
+    gap: 0.6rem;
+    flex-wrap: wrap;
   }
 }

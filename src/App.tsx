@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LangLayout from './components/LangLayout'
 
@@ -21,8 +21,7 @@ export default function App() {
         <div className="mx-auto w-full max-w-shell px-4 sm:px-6 lg:px-10 xl:px-12">
           <Suspense fallback={<p className="py-8 text-center text-sm text-ink-soft">Loading…</p>}>
             <Routes>
-              {/* 4-5: root redirects to /en */}
-              <Route path="/" element={<Navigate to="/en" replace />} />
+              <Route path="/" element={<HomePage />} />
               {/* Language-prefixed routes */}
               <Route path="/:lang" element={<LangLayout />}>
                 <Route index element={<HomePage />} />

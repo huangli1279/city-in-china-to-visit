@@ -149,7 +149,7 @@ export default function HomePage() {
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
           <div className="flex flex-wrap items-center gap-3">
-            <Link to={`/${lang}`} className="brand-link">
+            <Link to="/" className="brand-link">
               <img src="/logo.svg" alt="" aria-hidden="true" width={36} height={36} className="brand-logo" />
               <div className="brand-copy">
                 <div className="header-brand-row">

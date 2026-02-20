@@ -8,9 +8,10 @@ const ROOT_DIR = path.resolve(__dirname, '..')
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public')
 const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://bestcityinchina.site').replace(/\/+$/, '')
 const CTR_TITLE_VARIANT = process.env.CTR_TITLE_VARIANT === 'B' ? 'B' : 'A'
-const PRERENDER_LANDING_PAGES = process.env.PRERENDER_LANDING_PAGES !== '0'
+const PRERENDER_LANDING_PAGES = process.env.PRERENDER_LANDING_PAGES === '1'
 const GA_MEASUREMENT_ID = 'G-ZTZTZ5TQMR'
 const ADSENSE_CLIENT_ID = 'ca-pub-8272386212758068'
+const ROOT_LANDING_PATH = '/'
 const ORGANIZATION_NAME = 'City Vibe Matcher'
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
 const PUBLISHED_DATE_ISO = '2026-01-15'
@@ -18,10 +19,10 @@ const PUBLISHED_DATE_TEXT = 'January 15, 2026'
 const CONTACT_EMAIL = 'team@bestcityinchina.site'
 
 const LANGUAGES = [
-  { urlCode: 'en', i18nCode: 'en', htmlLang: 'en', label: 'English' },
-  { urlCode: 'zh', i18nCode: 'zh-CN', htmlLang: 'zh-CN', label: '中文' },
-  { urlCode: 'ja', i18nCode: 'ja', htmlLang: 'ja', label: '日本語' },
-  { urlCode: 'ko', i18nCode: 'ko', htmlLang: 'ko', label: '한국어' },
+  { urlCode: 'en', i18nCode: 'en', htmlLang: 'en', label: '🇬🇧 English' },
+  { urlCode: 'zh', i18nCode: 'zh-CN', htmlLang: 'zh-CN', label: '🇨🇳 中文' },
+  { urlCode: 'ja', i18nCode: 'ja', htmlLang: 'ja', label: '🇯🇵 日本語' },
+  { urlCode: 'ko', i18nCode: 'ko', htmlLang: 'ko', label: '🇰🇷 한국어' },
 ]
 
 const LOCALE_FILES = {
@@ -315,8 +316,12 @@ function guidePath(langOrCode, guideOrSlug) {
   return `${guideHubPath(langCode)}${slug}/`
 }
 
-function renderBrandLink({ href, label }) {
-  return `<a class="brand" href="${escapeHtml(href)}"><img class="brand-logo" src="/logo.svg" alt="" width="36" height="36" loading="eager" decoding="async" aria-hidden="true" /><span class="brand-text">${escapeHtml(label)}</span></a>`
+function renderBrandLink({ href, label, eyebrow }) {
+  const eyebrowHtml = eyebrow
+    ? `<p class="header-brand-stamp">${escapeHtml(eyebrow)}</p>`
+    : ''
+
+  return `<a class="brand-link" href="${escapeHtml(href)}"><img class="brand-logo" src="/logo.svg" alt="" width="36" height="36" loading="eager" decoding="async" aria-hidden="true" /><div class="brand-copy"><div class="header-brand-row"><p class="ink-title brand-title">${escapeHtml(label)}</p>${eyebrowHtml}</div></div></a>`
 }
 
 function guideTitle(guide) {
@@ -469,12 +474,115 @@ function buildPageAlternates(pageSegment) {
   return links
 }
 
-function renderLanguageSwitcher(currentLang) {
-  const links = LANGUAGES.map((lang) => {
+function swapLangInPath(pathname, targetLang) {
+  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`
+  const hasTrailingSlash = normalizedPath.length > 1 && normalizedPath.endsWith('/')
+  const segments = normalizedPath.split('/').filter(Boolean)
+
+  if (segments.length === 0) {
+    return homePath(targetLang)
+  }
+
+  const knownLangs = new Set(LANGUAGES.map((lang) => lang.urlCode))
+  if (knownLangs.has(segments[0])) {
+    segments[0] = targetLang
+  } else {
+    segments.unshift(targetLang)
+  }
+
+  const rebuilt = `/${segments.join('/')}`
+  if (hasTrailingSlash && !rebuilt.endsWith('/')) {
+    return `${rebuilt}/`
+  }
+  return rebuilt
+}
+
+function renderLanguageSwitcher(currentLang, currentPath) {
+  const current = LANGUAGES.find((lang) => lang.urlCode === currentLang) ?? LANGUAGES[0]
+  const basePath = currentPath && typeof currentPath === 'string' ? currentPath : homePath(currentLang)
+  const items = LANGUAGES.map((lang) => {
     const active = lang.urlCode === currentLang ? 'is-active' : ''
-    return `<a class="lang-chip ${active}" href="${homePath(lang)}">${escapeHtml(lang.label)}</a>`
+    const targetPath = swapLangInPath(basePath, lang.urlCode)
+    return `<a class="lang-option ${active}" href="${targetPath}">${escapeHtml(lang.label)}</a>`
   }).join('')
-  return `<nav class="lang-switch" aria-label="Language">${links}</nav>`
+
+  return `<div class="lang-menu">
+    <details class="lang-details">
+      <summary class="lang-trigger" aria-label="Language">
+        <span class="lang-current">${escapeHtml(current.label)}</span>
+        <span class="lang-caret" aria-hidden="true">▾</span>
+      </summary>
+      <div class="lang-list" role="listbox" aria-label="Language options">
+        ${items}
+      </div>
+    </details>
+  </div>`
+}
+
+function buildLandingNavLinks(langOrCode, locale) {
+  const langCode = resolveLangCode(langOrCode)
+  const homeHeader = locale?.home?.header ?? {}
+  return [
+    {
+      href: `${homePath(langCode)}#landing-preview`,
+      label: homeHeader.navPreview ?? 'City Preview',
+    },
+    {
+      href: `${homePath(langCode)}#landing-pain`,
+      label: homeHeader.navPain ?? 'Why This Quiz',
+    },
+    {
+      href: `${homePath(langCode)}#landing-model`,
+      label: homeHeader.navModel ?? 'How Matching Works',
+    },
+  ]
+}
+
+function buildContextNavLinks(langOrCode, locale, activeKey) {
+  const langCode = resolveLangCode(langOrCode)
+  const labels = localizedUiLabels(langCode, locale)
+  const links = [
+    { key: 'home', href: homePath(langCode), label: labels.home },
+    { key: 'guides', href: guideHubPath(langCode), label: labels.guides },
+  ]
+
+  return links.map((link) => ({
+    ...link,
+    active: link.key === activeKey,
+  }))
+}
+
+function renderHeaderNav(links) {
+  return links
+    .map((link) => {
+      const activeClass = link.active ? ' is-active' : ''
+      return `<a class="header-nav-chip${activeClass}" href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`
+    })
+    .join('\n      ')
+}
+
+function renderSiteHeader({ lang = 'en', locale, navLinks = [], currentPath } = {}) {
+  const langCode = resolveLangCode(lang)
+  const brandLabel = locale?.home?.header?.brandName ?? 'City Vibe Matcher'
+  const brandEyebrow = locale?.home?.header?.brandEyebrow ?? ''
+  const headerCtaLabel = locale?.home?.header?.cta ?? locale?.home?.cta ?? 'Start Quiz'
+  const navHtml =
+    navLinks.length > 0
+      ? `<nav class="header-links" aria-label="Primary">
+      ${renderHeaderNav(navLinks)}
+    </nav>`
+      : ''
+
+  return `<header class="site-header">
+    <div class="surface-card grid-lattice header-shell">
+      <div class="header-main">
+        ${renderBrandLink({ href: ROOT_LANDING_PATH, label: brandLabel, eyebrow: brandEyebrow })}
+        ${navHtml}
+        <a class="btn-ink header-cta" href="/${langCode}/quiz">${escapeHtml(headerCtaLabel)}</a>
+        ${renderLanguageSwitcher(langCode, currentPath ?? homePath(langCode))}
+      </div>
+    </div>
+  </header>`
 }
 
 function renderFooterNav(links) {
@@ -483,12 +591,14 @@ function renderFooterNav(links) {
 
 function renderSiteFooter({ lang = 'en', locale, includeGuides = true, guidesPath } = {}) {
   const langCode = resolveLangCode(lang)
+  const footer = locale?.home?.footer ?? {}
   const legalLinks = locale?.home?.footer?.legalLinks ?? {}
   const aboutLabel = legalLinks.about ?? 'About'
   const contactLabel = legalLinks.contact ?? 'Contact'
   const guidesLabel = legalLinks.guides ?? 'Guides'
   const privacyLabel = legalLinks.privacy ?? 'Privacy Policy'
   const homeLabel = legalLinks.home ?? 'Home'
+  const currentYear = new Date().getFullYear()
   const resolvedHomePath = homePath(langCode)
   const resolvedGuidesPath = guidesPath ?? guideHubPath(langCode)
   const links = [
@@ -501,11 +611,24 @@ function renderSiteFooter({ lang = 'en', locale, includeGuides = true, guidesPat
   }
   links.push({ href: resolvedHomePath, label: homeLabel })
 
-  return `<footer class="site-footer">
-    <span>© 2026 ${escapeHtml(SITE_URL.replace(/^https?:\/\//, ''))}</span>
-    <nav class="top-links">
-      ${renderFooterNav(links)}
-    </nav>
+  return `<footer class="site-footer-shell">
+    <div class="site-footer-main">
+      <section>
+        <p class="footer-eyebrow">${escapeHtml(footer?.eyebrow ?? 'Plan less. Experience more.')}</p>
+        <h2 class="footer-title">${escapeHtml(footer?.title ?? 'Your first China city should fit who you are.')}</h2>
+        <p class="footer-subtitle">${escapeHtml(footer?.subtitle ?? 'Move from endless research to a practical first-city plan.')}</p>
+      </section>
+      <section class="footer-actions">
+        <a class="cta footer-cta" href="/${langCode}/quiz">${escapeHtml(footer?.cta ?? 'Start the quiz')}</a>
+        <p class="footer-note">${escapeHtml(footer?.disclaimer ?? 'No signup required. Results in about 2-3 minutes.')}</p>
+      </section>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© ${currentYear} ${escapeHtml(footer?.copyright ?? SITE_URL.replace(/^https?:\/\//, ''))}</span>
+      <nav class="site-footer-links">
+        ${renderFooterNav(links)}
+      </nav>
+    </div>
   </footer>`
 }
 
@@ -669,6 +792,7 @@ function renderGuideCardList(lang, guideCards) {
 
 function renderLandingPage(lang, locale) {
   const home = locale.home ?? {}
+  const labels = localizedUiLabels(lang, locale)
   const faqItems = Array.isArray(home?.faq?.items) ? home.faq.items : []
   const seoGuidePoints = Array.isArray(home?.seoGuide?.points) ? home.seoGuide.points : []
   const topicCluster = home?.topicCluster ?? {}
@@ -753,10 +877,7 @@ function renderLandingPage(lang, locale) {
       : ''
 
   const mainHtml = `<main id="main-content" class="page-shell">
-  <header class="site-header">
-    ${renderBrandLink({ href: canonicalPath, label: home?.header?.brandName ?? 'City Vibe Matcher' })}
-    ${renderLanguageSwitcher(lang.urlCode)}
-  </header>
+  ${renderSiteHeader({ lang, locale, navLinks: buildLandingNavLinks(lang, locale), currentPath: canonicalPath })}
 
   <section class="hero block">
     <p class="eyebrow">${escapeHtml(home?.badge ?? '')}</p>
@@ -828,13 +949,7 @@ function renderGuideHub(lang, locale) {
   const alternates = buildGuideAlternates()
 
   const mainHtml = `<main id="main-content" class="page-shell">
-  <header class="site-header">
-    ${renderBrandLink({ href: homePath(lang), label: home?.header?.brandName ?? 'City Vibe Matcher' })}
-    <nav class="top-links">
-      <a href="${homePath(lang)}">${escapeHtml(labels.home)}</a>
-      <a href="/${lang.urlCode}/quiz">${escapeHtml(labels.quiz)}</a>
-    </nav>
-  </header>
+  ${renderSiteHeader({ lang, locale, currentPath: canonicalPath })}
 
   <section class="block">
     <p class="eyebrow">${escapeHtml(topicCluster?.eyebrow ?? 'Topic cluster')}</p>
@@ -927,14 +1042,7 @@ function renderGuideDetail(lang, locale, guide) {
   const keyPointHtml = guide.keyPoints.map((point) => `<li>${escapeHtml(point)}</li>`).join('\n')
 
   const mainHtml = `<main id="main-content" class="page-shell">
-  <header class="site-header">
-    ${renderBrandLink({ href: homePath(lang), label: home?.header?.brandName ?? 'City Vibe Matcher' })}
-    <nav class="top-links">
-      <a href="${homePath(lang)}">${escapeHtml(labels.home)}</a>
-      <a href="${guideHubPath(lang)}">${escapeHtml(labels.guides)}</a>
-      <a href="/${lang.urlCode}/quiz">${escapeHtml(labels.quiz)}</a>
-    </nav>
-  </header>
+  ${renderSiteHeader({ lang, locale, currentPath: canonicalPath })}
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="${homePath(lang)}">${escapeHtml(labels.home)}</a>
@@ -1056,14 +1164,7 @@ function renderAboutPage(lang, locale) {
   const alternates = buildPageAlternates('about')
 
   const mainHtml = `<main id="main-content" class="page-shell">
-  <header class="site-header">
-    ${renderBrandLink({ href: homePath(langCode), label: 'City Vibe Matcher' })}
-    <nav class="top-links">
-      <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
-      <a href="${guideHubPath(langCode)}">${escapeHtml(guidesLabel)}</a>
-      <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a>
-    </nav>
-  </header>
+  ${renderSiteHeader({ lang: langCode, locale, navLinks: buildContextNavLinks(langCode, locale, ''), currentPath: canonicalPath })}
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
@@ -1180,14 +1281,7 @@ function renderContactPage(lang, locale) {
   const alternates = buildPageAlternates('contact')
 
   const mainHtml = `<main id="main-content" class="page-shell">
-  <header class="site-header">
-    ${renderBrandLink({ href: homePath(langCode), label: 'City Vibe Matcher' })}
-    <nav class="top-links">
-      <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
-      <a href="${aboutPath(langCode)}">${escapeHtml(aboutLabel)}</a>
-      <a href="${guideHubPath(langCode)}">${escapeHtml(guidesLabel)}</a>
-    </nav>
-  </header>
+  ${renderSiteHeader({ lang: langCode, locale, navLinks: buildContextNavLinks(langCode, locale, ''), currentPath: canonicalPath })}
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
@@ -1321,15 +1415,7 @@ function renderPrivacyPolicyPage(lang, locale) {
   const alternates = buildPageAlternates('privacy-policy')
 
   const mainHtml = `<main id="main-content" class="page-shell">
-  <header class="site-header">
-    ${renderBrandLink({ href: homePath(langCode), label: 'City Vibe Matcher' })}
-    <nav class="top-links">
-      <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
-      <a href="${aboutPath(langCode)}">${escapeHtml(aboutLabel)}</a>
-      <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a>
-      <a href="${guideHubPath(langCode)}">${escapeHtml(guidesLabel)}</a>
-    </nav>
-  </header>
+  ${renderSiteHeader({ lang: langCode, locale, navLinks: buildContextNavLinks(langCode, locale, ''), currentPath: canonicalPath })}
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>

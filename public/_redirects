@@ -11,6 +11,14 @@
 /:lang/privacy-policy /:lang/privacy-policy/ 200
 /:lang/guides /:lang/guides/ 200
 /:lang/guides/:slug /:lang/guides/:slug/ 200
+/en / 200
+/en/ / 200
+/zh / 200
+/zh/ / 200
+/ja / 200
+/ja/ / 200
+/ko / 200
+/ko/ / 200
 /en/quiz/ /en/quiz 301
 /zh/quiz/ /zh/quiz 301
 /ja/quiz/ /ja/quiz 301

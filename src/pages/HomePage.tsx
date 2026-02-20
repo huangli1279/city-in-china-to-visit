@@ -170,12 +170,14 @@ export default function HomePage() {
         <section className="surface-card grid-lattice animate-rise relative overflow-hidden p-6 sm:p-8 lg:p-10">
           <div className="pointer-events-none absolute -left-24 -top-20 h-64 w-64 rounded-full bg-[rgba(180,60,47,0.16)] blur-3xl" />
           <div className="pointer-events-none absolute -bottom-16 right-8 h-44 w-44 rounded-full bg-[rgba(184,140,53,0.22)] blur-3xl" />
+          <div aria-hidden="true" className="china-watermark -right-4 -top-6 text-[16rem] sm:text-[20rem] lg:text-[24rem]">旅</div>
 
           <p className="brand-stamp">{t('home.badge')}</p>
 
           <h1 className="ink-title mt-4 text-balance text-4xl leading-tight sm:text-5xl lg:text-[3.1rem] lg:leading-[1.05]">
             {t('home.title')}
           </h1>
+          <div className="hero-accent-bar mt-4" />
 
           <p className="ink-subtitle mt-4 max-w-2xl text-base leading-relaxed sm:text-lg">{t('home.subtitle')}</p>
 
@@ -209,13 +211,17 @@ export default function HomePage() {
             {PREVIEW_CITIES.map((city) => (
               <article
                 key={city.id}
-                className="surface-muted rounded-2xl border-[#826043]/20 p-4 transition-[transform,border-color] duration-200 hover:-translate-y-0.5 hover:border-[#b43c2f]/35"
+                className="surface-muted cursor-pointer rounded-2xl border-[#826043]/20 p-4 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[#b43c2f]/40 hover:shadow-[0_6px_18px_-8px_rgba(180,60,47,0.25)]"
               >
-                <div className="mb-2 flex items-center gap-2">
-                  <span className="text-2xl">{city.emoji}</span>
+                <div className="mb-2 flex items-center gap-2.5">
+                  <div className="city-icon-wrap">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                  </div>
                   <div>
-                    <p className="font-display text-lg font-semibold text-[color:var(--ink-950)]">{city.name}</p>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-cinnabar">city vibe</p>
+                    <p className="font-display text-base font-semibold leading-tight text-[color:var(--ink-950)]">{city.name}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cinnabar">{city.label}</p>
                   </div>
                 </div>
                 <p className="text-xs leading-relaxed text-[color:var(--ink-600)]">

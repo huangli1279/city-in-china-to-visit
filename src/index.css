@@ -21,7 +21,7 @@
     --jade-500: #2f8a73;
 
     --font-display: 'Noto Serif', 'Noto Serif SC', 'Noto Serif JP', 'Noto Serif KR', serif;
-    --font-accent: 'Cinzel', 'Noto Serif', 'Noto Serif SC', serif;
+    --font-accent: 'Noto Serif SC', 'Noto Serif', serif;
   }
 
   html {
@@ -53,13 +53,13 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.2;
+    opacity: 0.22;
     z-index: -1;
     background-image:
-      linear-gradient(90deg, rgba(134, 106, 60, 0.07) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(134, 106, 60, 0.05) 1px, transparent 1px);
-    background-size: 32px 32px;
-    mask-image: radial-gradient(circle at 30% 18%, black, transparent 78%);
+      linear-gradient(45deg, rgba(134, 106, 60, 0.08) 1px, transparent 1px),
+      linear-gradient(-45deg, rgba(134, 106, 60, 0.06) 1px, transparent 1px);
+    background-size: 20px 20px;
+    mask-image: radial-gradient(ellipse at 28% 14%, black 20%, transparent 76%);
   }
 }
 
@@ -134,8 +134,28 @@
   }
 
   .motif-divider {
+    position: relative;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(184, 60, 47, 0.52) 36%, rgba(184, 140, 53, 0.55) 62%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(184, 60, 47, 0.6) 30%, rgba(184, 140, 53, 0.65) 55%, transparent 100%);
+  }
+
+  .motif-divider-center {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(184, 60, 47, 0.55) 30%, rgba(184, 140, 53, 0.6) 55%, transparent 100%);
+  }
+
+  .motif-divider-center::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 7px;
+    line-height: 1;
+    color: var(--gold-500);
+    background: var(--page-bg-base);
+    padding: 0 6px;
   }
 
   .grid-lattice {
@@ -190,6 +210,38 @@
 
   .bg-ink-soft {
     background-color: rgba(32, 44, 64, 0.92);
+  }
+
+  .china-watermark {
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--cinnabar-600);
+    opacity: 0.045;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.02em;
+    position: absolute;
+  }
+
+  .hero-accent-bar {
+    height: 3px;
+    width: 3.5rem;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--cinnabar-600), var(--gold-500));
+  }
+
+  .city-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    background: linear-gradient(135deg, rgba(180, 60, 47, 0.14), rgba(184, 140, 53, 0.10));
+    color: var(--cinnabar-600);
+    border: 1px solid rgba(180, 60, 47, 0.2);
   }
 
   .skip-link {

@@ -407,6 +407,7 @@ function renderDocument({
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
+    <meta name="google-adsense-account" content="${escapeHtml(ADSENSE_CLIENT_ID)}" />
     <meta name="robots" content="${noindex ? 'noindex,follow' : 'index,follow'}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     ${renderAlternateLinks(alternates)}

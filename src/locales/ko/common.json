@@ -178,7 +178,7 @@
         "comfortSeeker": "편안함 추구",
         "slowTraveler": "여유 여행자",
         "activeTraveler": "활동적 여행자",
-        "socializer": "소셜 탐험가",
+        "socializer": "사교형 여행자",
         "soloWanderer": "혼자 여행자",
         "adventurer": "모험가"
       },
@@ -186,10 +186,10 @@
         "ancientHeritage": "역사 명소",
         "naturalWonder": "자연 절경",
         "modernMetropolis": "현대 도시",
-        "immersiveLocal": "현지 문화",
+        "immersiveLocal": "깊이 있는 로컬 문화",
         "relaxedPace": "여유로운 여행",
         "packedItinerary": "풍부한 일정",
-        "foodAndNightlife": "미식 문화",
+        "foodAndNightlife": "미식과 나이트라이프",
         "peacefulRetreat": "고요한 쉼터",
         "offBeatGems": "숨겨진 명소"
       }

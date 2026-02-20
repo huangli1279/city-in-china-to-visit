@@ -15,6 +15,8 @@ interface ResultState {
 }
 
 interface CityTranslation {
+  name?: string
+  label?: string
   tagline: string
   description: string
   matchReason?: string
@@ -64,6 +66,8 @@ export default function ResultPage() {
 
   const cityTagKeys = getCityHighlightTagKeys(city.scores)
   const userTagKeys = userScores ? getUserPersonalityTagKeys(userScores) : []
+  const cityName = cityT?.name ?? city.name
+  const cityLabel = cityT?.label ?? city.label
 
   return (
     <>
@@ -95,14 +99,14 @@ export default function ResultPage() {
       {/* ── Main result card ── */}
       <section className="surface-card grid-lattice relative overflow-hidden p-6 sm:p-8 lg:p-10">
         <div aria-hidden="true" className="china-watermark -right-3 -top-4 text-[9rem] sm:text-[14rem] lg:text-[18rem]">
-          {city.name.charAt(0)}
+          {cityName.charAt(0)}
         </div>
 
         {/* Hero: icon + match % */}
         <div className="flex flex-col items-center text-center">
           {/* City emoji – unique per city */}
           <div className="mb-4">
-            <span className="text-[4.5rem] leading-none sm:text-[5rem]" role="img" aria-label={city.name}>{city.emoji}</span>
+            <span className="text-[4.5rem] leading-none sm:text-[5rem]" role="img" aria-label={cityName}>{city.emoji}</span>
           </div>
 
           {/* Match % badge */}
@@ -120,9 +124,9 @@ export default function ResultPage() {
 
           {/* City identity */}
           <h1 className="ink-title mt-4 text-balance text-3xl sm:text-4xl">
-            {city.name}
+            {cityName}
           </h1>
-          <p className="mt-1 text-sm font-semibold tracking-[0.18em] text-cinnabar">{city.label}</p>
+          <p className="mt-1 text-sm font-semibold tracking-[0.18em] text-cinnabar">{cityLabel}</p>
           <p className="mt-3 text-sm italic text-[color:var(--ink-600)] sm:text-base">"{cityT?.tagline}"</p>
         </div>
 
@@ -216,13 +220,14 @@ export default function ResultPage() {
             {runnerUps.map((rc) => {
               const rcT = cityTranslations[rc.city.id]
               const rcTagKeys = getCityHighlightTagKeys(rc.city.scores)
+              const rcName = rcT?.name ?? rc.city.name
               return (
                 <article key={rc.city.id} className="surface-card p-5">
                   {/* City header */}
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-2.5">
-                      <span className="flex-shrink-0 text-2xl leading-none" role="img" aria-label={rc.city.name}>{rc.city.emoji}</span>
-                      <h3 className="min-w-0 truncate font-display text-lg font-bold text-[color:var(--ink-950)] sm:text-xl">{rc.city.name}</h3>
+                      <span className="flex-shrink-0 text-2xl leading-none" role="img" aria-label={rcName}>{rc.city.emoji}</span>
+                      <h3 className="min-w-0 truncate font-display text-lg font-bold text-[color:var(--ink-950)] sm:text-xl">{rcName}</h3>
                     </div>
                     <span className="flex-shrink-0 font-display text-xl font-black text-cinnabar sm:text-2xl">
                       {rc.matchPercentage}%

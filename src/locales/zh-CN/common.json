@@ -178,18 +178,18 @@
         "comfortSeeker": "舒适优先",
         "slowTraveler": "慢旅达人",
         "activeTraveler": "活力旅行者",
-        "socializer": "社交达人",
-        "soloWanderer": "独处疗愈",
+        "socializer": "社交型旅行者",
+        "soloWanderer": "独行旅人",
         "adventurer": "探险达人"
       },
       "city": {
         "ancientHeritage": "历史名城",
         "naturalWonder": "山水风光",
         "modernMetropolis": "现代都市",
-        "immersiveLocal": "深度在地",
+        "immersiveLocal": "深度本地文化",
         "relaxedPace": "慢生活",
         "packedItinerary": "丰富行程",
-        "foodAndNightlife": "美食文化",
+        "foodAndNightlife": "美食与夜生活",
         "peacefulRetreat": "宁静幽远",
         "offBeatGems": "小众探索"
       }

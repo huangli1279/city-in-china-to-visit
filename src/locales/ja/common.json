@@ -178,7 +178,7 @@
         "comfortSeeker": "快適重視",
         "slowTraveler": "のんびり旅",
         "activeTraveler": "アクティブ派",
-        "socializer": "社交型",
+        "socializer": "社交型トラベラー",
         "soloWanderer": "ひとり旅派",
         "adventurer": "冒険家"
       },
@@ -186,10 +186,10 @@
         "ancientHeritage": "歴史的遺産",
         "naturalWonder": "自然の絶景",
         "modernMetropolis": "近代都市",
-        "immersiveLocal": "文化体験",
+        "immersiveLocal": "ローカル文化への没入",
         "relaxedPace": "のんびり旅",
         "packedItinerary": "充実の旅",
-        "foodAndNightlife": "グルメ天国",
+        "foodAndNightlife": "グルメとナイトライフ",
         "peacefulRetreat": "静かな隠れ家",
         "offBeatGems": "穴場スポット"
       }

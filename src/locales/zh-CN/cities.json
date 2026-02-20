@@ -3,170 +3,218 @@
     "shanghai": {
       "tagline": "东西方在这里以全速交汇。",
       "description": "霓虹璀璨的天际线与百年石库门里弄并肩而立。你将在装饰艺术风格的爵士酒吧里举杯，又迷失在先锋艺术馆与米其林星级餐厅之间。上海奖赏那些想要一切、而且要快的人。",
-      "matchReason": "你和上海一样，追求精致又充满活力。上海的国际化视野、时尚氛围与精致的生活方式，都与你注重品质、追求多元的性格相契合。你享受外滩的灯火与法租界的咖啡馆，也能在陆家嘴的摩天楼间感受城市的雄心。这座「魔都」精致包容，能让你在快节奏中活出自己的风采。",
+      "matchReason": "你和上海一样，停不下来、国际化，而且很难被单一标签定义。上海不停融合东西方、世界级餐饮与霓虹节奏，正好呼应你“想把一切都体验到位”的旅行欲望。就像这座城市本身一样，你适合在高密度机会里前进，而不是原地停留。",
       "bestTime": "3月–5月 / 9月–11月",
-      "budgetRange": "$80–150/天"
+      "budgetRange": "$80–150/天",
+      "name": "上海",
+      "label": "国际都会"
     },
     "beijing": {
       "tagline": "帝国在这里留下了印记。",
       "description": "五千年的帝国历史从每个角落注视着你。你将踏上皇帝曾走过的土地，穿行于古老的胡同小巷，感受每一块石头里沉甸甸的历史。这里是中国最宏大的样貌。",
-      "matchReason": "你和北京一样，充满雄心壮志又不失文化底蕴。北京的快节奏、历史厚重感与无限机遇，都与你追求卓越、渴望成就的性格相契合。无论是沉醉于故宫胡同里的历史韵味，还是渴望在这座首都里找到自己的舞台，这里的大气与包容都能让你在追梦路上找到归属感。",
+      "matchReason": "你和北京都被“深度、格局与意义感”吸引。你偏爱那种每条街都有故事、每块石头都承载历史重量的地方，也会被人类文明尺度所震撼。在故宫与胡同之间，北京会直接回应你对“有厚度旅行”的期待。",
       "bestTime": "4月–5月 / 9月–10月",
-      "budgetRange": "$60–120/天"
+      "budgetRange": "$60–120/天",
+      "name": "北京",
+      "label": "皇城古都"
     },
     "xian": {
       "tagline": "历史在这里将你团团包围。",
       "description": "依然矗立在世界保存最完好的古城墙之内。你将与八千座兵马俑面对面，在回民街夜市大快朵颐，感受脚下丝绸之路的脉动。",
-      "matchReason": "你和西安一样，厚重深沉又充满历史底蕴。西安的古都气质、文化传承与西北豪爽，都与你热爱历史、追求文化深度的性格相契合。站在兵马俑前、漫步古城墙上、穿行回民街夜市，你感受到的是千年文明的真实回响。这座「古都」的厚重与豪迈，能让你在历史长河中找到文化归属。",
+      "matchReason": "你和西安都很重视“源头感”与文明脉络。兵马俑的静默方阵、古城墙的完整结构、回民街仍在延续的生活传统，会让你不只看到今天的中国，也看见它如何一步步走到今天。",
       "bestTime": "3月–5月 / 9月–11月",
-      "budgetRange": "$40–80/天"
+      "budgetRange": "$40–80/天",
+      "name": "西安",
+      "label": "千年古都"
     },
     "chengdu": {
       "tagline": "生活在这里以最完美的节奏流淌。",
       "description": "熊猫、火锅、不慌不忙——成都运转在自己的时间里。你将在上午拜访大熊猫基地，午后在茶馆里看世界从容流过，傍晚融入麻辣滚烫的热锅之中。",
-      "matchReason": "你和成都一样，懂得享受生活又不失烟火气。成都的慢节奏、美食文化与休闲氛围，都与你追求生活品质、注重内心平和的性格相契合。你在茶馆里静静看世界流过，在大熊猫的治愈中感受纯粹的快乐，在麻辣火锅的热烈中找到真实的人情味。这座「巴适之城」不会催促你——它只是邀请你留下来。",
+      "matchReason": "你和成都在同一频率上：不急、温暖，而且懂得享受。你相信旅行不是拼速度，而是把当下过得更有滋味。成都不会催你多赶一个景点，它只会邀请你在茶馆多坐一会、在火锅里再加一轮，然后真正待在当下。",
       "bestTime": "3月–6月 / 9月–11月",
-      "budgetRange": "$35–70/天"
+      "budgetRange": "$35–70/天",
+      "name": "成都",
+      "label": "慢生活之城"
     },
     "guilin": {
       "tagline": "山水在这里宛如画卷。",
       "description": "这里的每一处风景都像一幅水墨长卷。你将乘船游览险峻的喀斯特奇峰，骑行穿越梯田，在晨雾升腾的山间醒来。",
-      "matchReason": "你对自然之美有着真诚而深刻的感动。桂林山水宛如中国水墨画的实景——喀斯特奇峰拔地而起，漓江在薄雾中静静流淌，竹筏轻漾。你来这里，不只是来「看景」，而是让风景真正浸入内心，在山水之间找到某种久违的宁静与感动。",
+      "matchReason": "你和桂林都带着“看见诗意”的能力。别人看到的是地形，你看到的是画面。漓江两岸的喀斯特峰林、雾气里的梯田与水面倒影，会让你在自然面前停下来，获得那种难得的、彻底被风景击中的时刻。",
       "bestTime": "4月–5月 / 9月–10月",
-      "budgetRange": "$35–65/天"
+      "budgetRange": "$35–65/天",
+      "name": "桂林",
+      "label": "山水画境"
     },
     "dali": {
       "tagline": "自由灵魂在这里找到归属。",
       "description": "大理是那些从未完全融入的旅人真正归属的地方。你将漫步在独立咖啡馆林立的大理石街巷，观看白族的传统仪式，在终年积雪的苍山背景下，泳于碧绿的洱海之中。",
-      "matchReason": "你内心深处有一块自由的角落，渴望一个不用解释自己的地方。大理就是这样的所在——洱海的蔚蓝、苍山的雪顶、白族的市集、街巷里的独立小店，这一切都在诉说一种与众不同的生活方式。来到大理，你不是来「旅游」的，是来感受一种可能的人生的。",
+      "matchReason": "你和大理都把自由放在规则之前，把真实放在精致包装之前。这里适合那些悄悄退出主流节奏、并且过得更好的人。洱海、白族文化与慢节奏的独立咖啡馆生态，会让你感觉到环境本身是有灵魂的。",
       "bestTime": "3月–5月 / 9月–11月",
-      "budgetRange": "$30–60/天"
+      "budgetRange": "$30–60/天",
+      "name": "大理",
+      "label": "自由乌托邦"
     },
     "xiamen": {
       "tagline": "海滨风情与悠然生活在这里相遇。",
       "description": "钢琴岛、三角梅装点的殖民地街巷、你见过最鲜美的海鲜。你将漫步无车的鼓浪屿，拍摄粉彩欧式建筑，在夕阳沉落海峡时画上完美的一天。",
-      "matchReason": "你和厦门一样，文艺浪漫又充满海洋气息。厦门的海滨风光、文艺氛围与慢生活节奏，都与你追求诗意、热爱悠然的性格相契合。你会沉醉于鼓浪屿的钢琴声与海风，漫步曾厝垵的彩色小巷，在夕阳余晖中找到内心真正的平静。这座「海上花园」，是为懂得慢下来的人而生的。",
+      "matchReason": "你和厦门都带着一种轻松而浪漫的生活感。你会在海风、慢餐、有人情味的街道纹理里获得满足。鼓浪屿的旧建筑、海鲜与慢下午共同构成一种“柔和但不无聊”的旅行状态，适合珍惜日常质感的人。",
       "bestTime": "10月–次年4月",
-      "budgetRange": "$40–75/天"
+      "budgetRange": "$40–75/天",
+      "name": "厦门",
+      "label": "海滨文艺城"
     },
     "zhangjiajie": {
       "tagline": "大自然在这里创造了不可能的奇迹。",
       "description": "启发了《阿凡达》中悬浮山的真实原型。你将穿行于云雾环绕的砂岩柱峰之间，走过世界上最长的玻璃桥，在这片本不该存在的风景前，真正感受到震撼与敬畏。",
-      "matchReason": "你喜欢被大自然彻底震撼的感觉——喜欢站在某个地方、发现语言失去作用的那一刻。张家界能给你这种体验：砂岩峰柱在云雾中若隐若现，玻璃栈道悬于千米绝壁，这片景色不像地球应有的样子。来到这里，你会重新感受到渺小，也会感受到无限的壮阔。",
+      "matchReason": "你和张家界都不满足于普通体验。你会被那些超出预期、让人先张口再失语的风景吸引。像悬浮般的砂岩峰柱、云上玻璃桥以及近乎不真实的地貌，会让你在自然面前重新建立敬畏。",
       "bestTime": "4月–10月",
-      "budgetRange": "$40–70/天"
+      "budgetRange": "$40–70/天",
+      "name": "张家界",
+      "label": "奇峰秘境"
     },
     "harbin": {
       "tagline": "冬天在这里成为一场冒险。",
       "description": "每到一月，哈尔滨便用冰雪建造一座城市——就像听起来那般不真实。你将穿行于建筑般宏伟的发光冰城堡，在洋葱顶建筑里品尝俄式美食，在零下二十度的寒冷中找到属于这里的冒险精神。",
-      "matchReason": "你不惧寒冷，甚至觉得极寒之中藏着某种独特的诗意。哈尔滨的冰雪大世界、俄式建筑风情、中央大街的欧陆气氛，构成了一个奇异的冬日王国。每年一月，这座城市把自己变成冰雕艺术的殿堂。你来哈尔滨，是因为你知道有些体验值得穿越零下二十度的寒冷去亲历。",
+      "matchReason": "你和哈尔滨都愿意拥抱“极端条件下的美感”。别人躲开寒冷与黑夜时，你反而会在其中找到冒险和惊喜。冰雪大世界、俄式建筑与凛冽冬季的组合，适合收集“多数人不会尝试”的旅行记忆。",
       "bestTime": "11月–次年2月",
-      "budgetRange": "$40–75/天"
+      "budgetRange": "$40–75/天",
+      "name": "哈尔滨",
+      "label": "冰雪王国"
     },
     "hangzhou": {
       "tagline": "古典中国在这里依然鲜活。",
       "description": "清晨的西湖、山间的茶田、映在如镜湖面上的千年古寺。你将骑车环湖而行，在龙井茶的原产地品一杯新茶，理解为何古人称这里为人间天堂。",
-      "matchReason": "你和杭州一样，诗意浪漫又不失现代气息。杭州的江南韵味、科技创新与宜居环境，都与你追求美好、注重生活品质的性格相契合。西湖的烟雨、龙井的清香、灵隐寺的禅意——每一处都在诉说着一种被时光淬炼过的美丽。这座「人间天堂」，是给懂得欣赏细腻之美的人最好的馈赠。",
+      "matchReason": "你和杭州都偏爱经得起时间检验的美。你会在优雅、清晨、以及能让诗人写千年的景色里找到意义。西湖、龙井原产地与古寺雾意，不适合匆忙打卡，而适合慢慢理解、慢慢进入。",
       "bestTime": "3月–5月 / 9月–11月",
-      "budgetRange": "$50–90/天"
+      "budgetRange": "$50–90/天",
+      "name": "杭州",
+      "label": "江南雅境"
     },
     "chongqing": {
       "tagline": "城市在这里挑战物理定律。",
       "description": "重庆是三维立体的——真的。你会从地铁口走出，发现自己在一幢楼的第二十层；摩天楼在晨雾中浮现如赛博朋克幻梦；这里的火锅麻辣滚烫，是全球最让人欲罢不能的美食体验之一。",
-      "matchReason": "你和重庆一样，热情直爽又充满生命力。重庆的山城特色、火辣文化与魔幻夜景，都与你性格豪爽、热爱生活的特质相契合。你喜欢在立体交错的城市空间中穿梭，享受那碗让人欲罢不能的麻辣火锅，感受这座城市与众不同的江湖气息。这里的热情与奇幻，会让你每次离开都还想回来。",
+      "matchReason": "你和重庆都带着不加修饰的强烈感。重庆把城市叠进山体、改写平面城市逻辑，再用难以替代的麻辣风味正面冲击感官。你会被这种“每个方向都有个性”的城市气质自然吸引。",
       "bestTime": "3月–5月 / 9月–11月",
-      "budgetRange": "$35–70/天"
+      "budgetRange": "$35–70/天",
+      "name": "重庆",
+      "label": "山城魔都"
     },
     "shenzhen": {
       "tagline": "未来在这里已经到来。",
       "description": "这座中国速度最快的城市，从农田到大都会仅用了三十年，一切都看得出来。你将探索前沿科技博物馆，穿行于全球最具创意的城市空间，感受一座仍在自我创造中的城市所散发的电流般能量。",
-      "matchReason": "你和深圳一样，年轻有为又敢于突破。深圳的创新精神、拼搏氛围与开放包容，都与你勇于挑战、追求未来的性格相契合。这座三十年内从无到有的城市，散发着属于建设者的电流般能量——而你，正是那种渴望站在时代浪尖的人。这里的活力与机遇，能让你在追梦路上永不止步。",
+      "matchReason": "你和深圳都更关注“下一步会发生什么”。这是一座几乎跳过过去、直接奔向未来的城市，而你会觉得这很兴奋而不是不安。科技园、创意片区与持续变化的天际线，适合用可能性思考的人。",
       "bestTime": "10月–次年3月",
-      "budgetRange": "$60–120/天"
+      "budgetRange": "$60–120/天",
+      "name": "深圳",
+      "label": "未来之城"
     },
     "sanya": {
       "tagline": "中国在这里给你惊喜——一片天堂。",
       "description": "清澈的碧海、细腻的白沙，没有人要求你去任何地方。你将在温暖的南海海湾里游泳，傍晚探寻壮观的海岸礁石，然后发现中国拥有一片大多数人都不知道的真正热带乐园。",
-      "matchReason": "你知道自己需要真正的放松——不是刷手机，而是把脚踩进温热细沙里、让海风吹过头发的那种放松。三亚的碧海白沙、椰林树影与南海的温柔，都在邀请你放下一切。这里不要求你「有所收获」，它只要求你——在场。",
+      "matchReason": "你和三亚都知道什么时候该停下来。温暖的南海、白沙与几乎不存在的紧迫感，适合那种“目的不是完成任务，而是回到当下”的旅行方式。这里最重要的不是做了多少，而是你是否真正在场。",
       "bestTime": "10月–次年4月",
-      "budgetRange": "$60–130/天"
+      "budgetRange": "$60–130/天",
+      "name": "三亚",
+      "label": "热带度假地"
     },
     "dunhuang": {
       "tagline": "丝绸之路在这里重现。",
       "description": "古老丝绸之路在被沙漠吞噬之前的最后一个重要绿洲。你将骑骆驼翻越鸣沙山，注视新月泉在无边孤寂中的荡漾，走进莫高窟——一千年前的佛教壁画完好无损地在荒漠中存续至今。",
-      "matchReason": "你喜欢那些与历史、与文明深处相遇的旅行，喜欢在荒野中感受到某种宏大的孤独感。敦煌是古丝绸之路的终点，也是沙漠与艺术奇迹共存的地方——鸣沙山的驼铃、月牙泉的倒影、莫高窟里沉睡了千年的壁画，都等待着有足够耐心的旅人。你就是那个旅人。",
+      "matchReason": "你和敦煌都属于“寻找边界的人”：被文明交汇地带、历史边缘与荒野感吸引。鸣沙山、月牙泉与莫高窟的千年壁画，会把“古老与当下并存”的力量感直接放到你面前。你若能享受孤独，也会在这里获得很深的回报。",
       "bestTime": "5月–9月",
-      "budgetRange": "$35–65/天"
+      "budgetRange": "$35–65/天",
+      "name": "敦煌",
+      "label": "丝路明珠"
     },
     "guangzhou": {
       "tagline": "每一顿饭在这里都是一场庆典。",
       "description": "早晨饮茶，午间叉烧，晚上来一碗你吃过最好的云吞面。你将推着手推车穿行于百年老茶楼，漫步沙面岛的殖民地建筑群，最终明白广州的饮食文化是一种生活方式。",
-      "matchReason": "你和广州一样，务实低调又充满生活智慧。广州的饮食文化、务实精神与包容氛围，都与你热爱生活、懂得享受的性格相契合。早茶的从容、叉烧的香气、云吞面的温热，在广州，每一顿饭都是对生活的致敬。这里不需要宏大的愿景，只需要你真正坐下来，用心品尝。",
+      "matchReason": "你和广州都很懂日常生活里的高级满足。这里的早茶不是单纯吃饭，而是一套生活哲学。粤式餐桌、老茶楼与稳定的人间烟火，会让你意识到：理解一座城市，最好从它的早晨、餐桌和人情开始。",
       "bestTime": "10月–次年4月",
-      "budgetRange": "$40–80/天"
+      "budgetRange": "$40–80/天",
+      "name": "广州",
+      "label": "粤味之都"
     },
     "kunming": {
       "tagline": "春天在这里从不离开。",
-      "description": "Mild weather, flower markets, and laid-back streets make Kunming feel easy from day one. You'll wander around Dianchi Lake, day-trip to the surreal Stone Forest, and settle into a slower rhythm without sacrificing city convenience.",
-      "matchReason": "You and Kunming share a preference for balance over extremes. The city's year-round gentle climate, lakeside pace, and easy access to Yunnan's natural diversity fit travelers who want depth without pressure. Kunming won't demand urgency from you — it rewards curiosity, consistency, and calm exploration.",
+      "description": "温和的气候、花市与松弛街区，让昆明从第一天起就很好相处。你可以沿滇池散步，去石林来一次当日往返，也能在不牺牲城市便利的前提下，把节奏慢下来。",
+      "matchReason": "你和昆明都偏好平衡而不是极端。四季温和的气候、湖边的慢节奏、通往云南多样自然景观的便捷连接，适合想要深度但不想被行程压迫的旅行者。昆明不催促你赶路，它奖励的是稳定的好奇心与从容探索。",
       "bestTime": "3月–5月 / 10月–11月",
-      "budgetRange": "$30–60/天"
+      "budgetRange": "$30–60/天",
+      "name": "昆明",
+      "label": "春城"
     },
     "qingdao": {
       "tagline": "海风与啤酒文化在这里相遇。",
-      "description": "German-era avenues, fresh seafood, and a coastline built for long walks. You'll climb Laoshan for ocean views, explore red-roofed neighborhoods, and discover why Qingdao's food-and-beer culture makes summer trips effortless.",
-      "matchReason": "You and Qingdao both value atmosphere. This city blends coastal openness, walkable neighborhoods, and a relaxed social scene that feels easy to join. Between the sea, seafood, and its famous brewing legacy, Qingdao matches travelers who want culture and comfort in the same frame.",
+      "description": "德式老街、新鲜海产和适合长距离散步的海岸线，构成了青岛的日常。你可以登崂山看海景，穿行红瓦街区，再在夏季晚风里理解这座城市为何把啤酒与海鲜变成了生活方式。",
+      "matchReason": "你和青岛都重视氛围感。这座城市把海滨开阔感、可步行街区和轻松社交场景结合在一起，既有文化质地，也有生活舒适度。海风、海鲜与酿造传统，让青岛特别适合想要“好逛、好吃、好住”的旅行者。",
       "bestTime": "5月–10月",
-      "budgetRange": "$45–85/天"
+      "budgetRange": "$45–85/天",
+      "name": "青岛",
+      "label": "海岸啤酒城"
     },
     "suzhou": {
       "tagline": "园林把宁静雅致框进日常。",
-      "description": "Classical gardens, canal-side lanes, and refined Jiangnan aesthetics define Suzhou. You'll move between UNESCO-listed gardens and old-water-town textures, then end the day with a quieter, more contemplative city pace.",
-      "matchReason": "You and Suzhou are aligned in temperament: attentive, detail-oriented, and drawn to subtle beauty. Suzhou rewards patience — from garden composition to canal-side living rhythms. If you value culture that reveals itself gradually, this city will feel deeply right.",
+      "description": "古典园林、河道小巷与细腻的江南审美，定义了苏州的气质。你可以在世界文化遗产园林与水乡肌理之间切换，最后回到更安静、更适合细品的城市节奏。",
+      "matchReason": "你和苏州在气质上高度一致：重细节、讲秩序、偏爱含蓄之美。苏州会奖励耐心，从园林的借景布局到河巷的生活纹理，都需要慢慢看。若你喜欢层层展开的文化体验，这里会非常对味。",
       "bestTime": "3月–5月 / 9月–11月",
-      "budgetRange": "$50–95/天"
+      "budgetRange": "$50–95/天",
+      "name": "苏州",
+      "label": "园林水城"
     },
     "lijiang": {
       "tagline": "古城夜色与雪山天际在此相逢。",
-      "description": "Stone alleys and mountain air make Lijiang feel cinematic. You'll explore Naxi heritage in the old town, wake up to views of Jade Dragon Snow Mountain, and choose between gentle wandering and highland excursions.",
-      "matchReason": "You and Lijiang both seek places with character and contrast. Here, nightlife in a preserved old town meets dramatic alpine scenery the next morning. Lijiang suits travelers who want emotional texture, not just a checklist — culture, altitude, and atmosphere in one trip.",
+      "description": "石板巷与高原空气让丽江自带电影感。你可以在古城里理解纳西文化，清晨远望玉龙雪山，再在慢逛与高海拔出游之间自由切换。",
+      "matchReason": "你和丽江都偏爱有反差、有情绪质感的目的地。这里前一晚是古城灯火与夜色，第二天就是雪山与高原风景。若你想要的不只是打卡，而是文化、海拔与氛围并存的旅程，丽江会很合适。",
       "bestTime": "4月–6月 / 9月–11月",
-      "budgetRange": "$35–70/天"
+      "budgetRange": "$35–70/天",
+      "name": "丽江",
+      "label": "古城雪山"
     },
     "zhuhai": {
       "tagline": "海岸休闲在这里毫不费力。",
-      "description": "Zhuhai is clean, open, and made for low-stress travel. You'll cycle along Lovers' Road, enjoy island-facing sunsets, and treat the trip as a true reset rather than a checklist sprint.",
-      "matchReason": "You and Zhuhai both favor ease over intensity. The city's coastal layout, lighter tempo, and practical urban comfort support travelers who want to recover energy while still staying engaged. Zhuhai is for people who define a good trip by how good it feels, not by how packed it is.",
+      "description": "珠海干净、开阔，天生适合低压力旅行。你可以沿情侣路骑行，看海岛方向的落日，把这趟出行当作一次真正的重启，而不是清单式冲刺。",
+      "matchReason": "你和珠海都更偏好轻松而非高强度。沿海布局、较慢节奏与实用的城市便利，适合想恢复能量又不想与城市脱节的旅行者。对你来说，好旅行不在于排得多满，而在于整体体感是否舒展。",
       "bestTime": "10月–次年4月",
-      "budgetRange": "$45–90/天"
+      "budgetRange": "$45–90/天",
+      "name": "珠海",
+      "label": "海岸慢城"
     },
     "nanjing": {
       "tagline": "历史底蕴与校园气质在此交汇。",
-      "description": "Nanjing blends imperial memory with tree-lined modern neighborhoods. You'll walk old city walls, visit major museums and memorial sites, then switch to bookshops and cafe streets shaped by a strong university culture.",
-      "matchReason": "You and Nanjing share intellectual curiosity and emotional range. The city moves from dynastic history to modern student energy without losing coherence. If you want a destination that is reflective by day and quietly lively by night, Nanjing fits naturally.",
+      "description": "南京把帝都记忆与现代林荫街区融合在一起。你可以走城墙、看博物馆与纪念场馆，再转入大学氛围塑造的书店和咖啡街区。",
+      "matchReason": "你和南京都具备思考型旅行的偏好。这里能在历史厚度与当代学生气之间自然切换，白天可沉浸式参观，晚上也有温和但不沉闷的城市活力。若你喜欢有内容又有生活感的目的地，南京很匹配。",
       "bestTime": "3月–5月 / 9月–11月",
-      "budgetRange": "$45–90/天"
+      "budgetRange": "$45–90/天",
+      "name": "南京",
+      "label": "六朝古都"
     },
     "dalian": {
       "tagline": "北方在这里向海展开。",
-      "description": "Wide boulevards and sea air give Dalian a calm northern-coast identity. You'll combine city squares, cliffside viewpoints, and seafood-heavy evenings, especially in the summer escape season.",
-      "matchReason": "You and Dalian both prefer room to breathe. This is a city with maritime openness, manageable scale, and a practical rhythm that stays pleasant even in peak season. Dalian works well for travelers who want coastal views without tropical crowds.",
+      "description": "宽阔街道和海风，让大连呈现出北方海滨城市特有的从容。你可以把城市广场、海岸观景点和海鲜晚餐组合在一条轻松路线里，尤其适合夏季避暑。",
+      "matchReason": "你和大连都需要呼吸感。这是一座尺度友好、节奏实用的海港城市，即使旺季也不容易失控拥挤。若你想看海，又不想要热带海岛式喧闹，大连会是更稳妥的选择。",
       "bestTime": "6月–9月",
-      "budgetRange": "$45–85/天"
+      "budgetRange": "$45–85/天",
+      "name": "大连",
+      "label": "北方海港"
     },
     "wuhan": {
       "tagline": "三镇在这里同频跃动。",
-      "description": "Built around the Yangtze and Han rivers, Wuhan moves with big-city momentum and everyday grit. You'll cross historic riverfront landmarks, taste iconic local breakfast culture, and experience a less curated but highly authentic urban China.",
-      "matchReason": "You and Wuhan both have range and resilience. The city's three-town structure, river geography, and grounded daily culture create a dynamic that feels real rather than performative. Wuhan suits travelers who want to experience the energy of a major Chinese city beyond postcard framing.",
+      "description": "长江与汉江把武汉塑造成真实而有冲劲的大城。你可以穿梭江滩地标，体验极具代表性的过早文化，看到一个不刻意包装、但非常鲜活的中国城市日常。",
+      "matchReason": "你和武汉都具备弹性与韧性。三镇结构、双江地理与接地气的生活密度，让这座城市呈现出非常真实的能量。若你想体验“明信片之外”的中国大城市，武汉会给你更多立体感。",
       "bestTime": "3月–4月 / 10月–11月",
-      "budgetRange": "$35–70/天"
+      "budgetRange": "$35–70/天",
+      "name": "武汉",
+      "label": "江城三镇"
     },
     "changsha": {
       "tagline": "夜市烟火在这里从不降温。",
-      "description": "Changsha is all flavor, late nights, and young energy. You'll eat your way through fiery Hunan dishes, bounce between riverfront districts after dark, and see why the city has become a favorite for domestic weekend trips.",
-      "matchReason": "You and Changsha both thrive on immediacy and social energy. This city is direct, flavorful, and consistently alive at night. If your ideal trip includes street food, music, and a crowd that stays out late, Changsha will feel instantly compatible.",
+      "description": "长沙的关键词是重口味、夜生活和年轻能量。你可以一路吃遍湘菜与夜宵，在入夜后的江边商圈来回切换，也会理解它为何成为周末短途旅行的热门目的地。",
+      "matchReason": "你和长沙都偏爱即时反馈与社交热度。这座城市直接、热烈、越夜越有活力。若你的理想旅行包括街头美食、音乐现场和晚睡人群，长沙会让你很快进入状态。",
       "bestTime": "10月–次年4月",
-      "budgetRange": "$30–65/天"
+      "budgetRange": "$30–65/天",
+      "name": "长沙",
+      "label": "夜生活之都"
     }
   }
 }

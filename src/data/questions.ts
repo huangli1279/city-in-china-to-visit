@@ -80,12 +80,12 @@ export const questions: Question[] = [
   {
     id: 6,
     dimension: "natureUrban",
-    text: "Which sounds more exhausting to you?",
+    text: "After a full day of exploring, where do you feel most recharged?",
     options: [
-      { text: "Two hours on a crowded subway", score: 0 },
-      { text: "A long uphill hike with a heavy bag", score: 100 },
-      { text: "Both sound fine honestly", score: 50 },
-      { text: "Both sound terrible", score: 50 },
+      { text: "On a quiet mountain trail or lakeside meadow with only natural sounds", score: 0 },
+      { text: "In a mellow small town with trees, cafés, and a slower rhythm", score: 30 },
+      { text: "In a compact city district where every turn reveals a new food stall or gallery", score: 70 },
+      { text: "Under a glittering skyline at a rooftop bar or neon night market", score: 100 },
     ],
   },
 

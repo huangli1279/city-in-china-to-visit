@@ -52,12 +52,12 @@
     },
     {
       "id": 6,
-      "text": "Which sounds more exhausting to you?",
+      "text": "After a full day of exploring, where do you feel most recharged?",
       "options": [
-        "Two hours on a crowded subway",
-        "A long uphill hike with a heavy bag",
-        "Both sound fine honestly",
-        "Both sound terrible"
+        "On a quiet mountain trail or lakeside meadow with only natural sounds",
+        "In a mellow small town with trees, cafés, and a slower rhythm",
+        "In a compact city district where every turn reveals a new food stall or gallery",
+        "Under a glittering skyline at a rooftop bar or neon night market"
       ]
     },
     {

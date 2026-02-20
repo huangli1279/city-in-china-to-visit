@@ -90,6 +90,18 @@
 - 海滨度假型：三亚、青岛、厦门、珠海、大连
 - 冰雪/丝路型：哈尔滨、敦煌
 
+实现字段规范（必须与代码一致）：
+- 运行城市池以 `src/data/cities.ts` 为准，每座城市必须包含 `id`、`name`、`label`、`emoji`、`tagline`、`description`、`bestTime`、`budgetRange`、`scores`。
+- `scores` 固定六个键：`history`、`natureUrban`、`culturalComfort`、`activityLevel`、`socialVibe`、`adventure`，值域均为 0–100。
+- `src/locales/*/cities.json` 的城市文案必须与 `id` 一一对应，禁止新增“只在文档存在、代码不可运行”的城市条目。
+
+类型与维度校验规则（用于防止“标签写一套、分值跑另一套”）：
+- 历史文化型：`history >= 75`
+- 都市烟火型：`natureUrban >= 60` 且 `socialVibe >= 65`
+- 自然山水型：`natureUrban <= 35`
+- 海滨度假型：`natureUrban <= 40` 且 `activityLevel <= 55`
+- 冰雪/丝路型：`adventure >= 75`
+
 ---
 
 ## 四、性格维度模型
@@ -139,6 +151,18 @@
 - Dimension 3（Local Immersion）：分数越高表示越能接受本地化沉浸，越低表示越依赖英语/国际化便利。
 - 工程实现可沿用历史字段名 `culturalComfort`，其语义与 `Local Immersion` 完全等价。
 
+实现映射（文档名 <-> 代码字段名）：
+- History Appetite -> `history`
+- Nature vs Urban -> `natureUrban`
+- Local Immersion -> `culturalComfort`（保留旧字段名）
+- Activity Level -> `activityLevel`
+- Social Vibe -> `socialVibe`
+- Adventure Appetite -> `adventure`
+
+维度去重约束（用于题目设计与调参）：
+- `activityLevel` 只衡量行程密度与节奏，不包含“是否爱社交”。
+- `socialVibe` 只衡量对人群互动和热闹氛围的偏好，不包含“是否体力充沛”。
+
 ---
 
 ## 五、题目设计
@@ -149,6 +173,7 @@
 - 每题 4 个选项，每个选项对应该维度的一个分值
 - 全英文，口语化表达，避免学术/测试感
 - 问法以「场景代入」为主，不直接问偏好
+- 同一题内分值方向必须单调且可解释，禁止“语义 A 偏自然但分值给都市”的反向设计
 
 ### 5.2 完整题目列表
 
@@ -188,11 +213,11 @@
 - C. Explore neighborhoods, shops, and street food `[75]`
 - D. Hit a mall, art gallery, or trendy urban spot `[100]`
 
-**Q6.** Which sounds more exhausting to you?
-- A. Two hours on a crowded subway `[0]` *(prefers nature)*
-- B. A long uphill hike with a heavy bag `[100]` *(prefers urban)*
-- C. Both sound fine honestly `[50]`
-- D. Both sound terrible `[50]`
+**Q6.** After a full day of exploring, where do you feel most recharged?
+- A. On a quiet mountain trail or lakeside meadow with only natural sounds `[0]`
+- B. In a mellow small town with trees, cafés, and a slower rhythm `[30]`
+- C. In a compact city district where every turn reveals a new food stall or gallery `[70]`
+- D. Under a glittering skyline at a rooftop bar or neon night market `[100]`
 
 ---
 

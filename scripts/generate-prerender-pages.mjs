@@ -497,6 +497,141 @@ function renderSiteFooter({ lang = 'en', locale, includeGuides = true, guidesPat
   </footer>`
 }
 
+function localizedUiLabels(langOrCode, locale) {
+  const langCode = resolveLangCode(langOrCode)
+  const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const shortLabelMap = {
+    en: {
+      quiz: 'Quiz',
+      guideEyebrow: 'Guide',
+      availableGuides: 'Available guides',
+      furtherReading: 'Further reading',
+      relatedGuides: 'Related guides',
+      relatedGuidesList: 'Related China city guides',
+      personalizedAnswer: 'Need a personalized answer?',
+      personalizedMatch: 'Get your personalized city match',
+      author: 'Author',
+      published: 'Published',
+      lastUpdated: 'Last updated',
+      by: 'By',
+      publishedOn: 'Published on',
+      legalEyebrow: 'Legal',
+      email: 'Email',
+      contactAndFeedback: 'Contact and feedback',
+      responseTarget: 'Response target',
+      responseTargetValue: 'within 3 business days',
+      whatWeHelpWith: 'What we can help with',
+      beforeContact: 'Before you contact us',
+      correctionRequest: 'How to request a content correction',
+      importantNote: 'Important note',
+      privacyHandling: 'Privacy and message handling',
+      overview: 'Overview',
+      dataCollection: 'What data we collect',
+      thirdPartyServices: 'Third-party services',
+      dataRetention: 'Data retention',
+    },
+    zh: {
+      quiz: '测试',
+      guideEyebrow: '攻略',
+      availableGuides: '攻略列表',
+      furtherReading: '延伸阅读',
+      relatedGuides: '相关攻略',
+      relatedGuidesList: '相关中国城市攻略',
+      personalizedAnswer: '需要个性化结果？',
+      personalizedMatch: '获取你的个性化城市匹配',
+      author: '作者',
+      published: '发布时间',
+      lastUpdated: '最近更新',
+      by: '作者',
+      publishedOn: '发布于',
+      legalEyebrow: '法律信息',
+      email: '邮箱',
+      contactAndFeedback: '联系与反馈',
+      responseTarget: '回复时效',
+      responseTargetValue: '3 个工作日内',
+      whatWeHelpWith: '我们可协助的事项',
+      beforeContact: '联系前请先阅读',
+      correctionRequest: '如何提交内容更正',
+      importantNote: '重要说明',
+      privacyHandling: '隐私与信息处理',
+      overview: '概述',
+      dataCollection: '我们收集的数据',
+      thirdPartyServices: '第三方服务',
+      dataRetention: '数据保留',
+    },
+    ja: {
+      quiz: 'クイズ',
+      guideEyebrow: 'ガイド',
+      availableGuides: 'ガイド一覧',
+      furtherReading: '関連情報',
+      relatedGuides: '関連ガイド',
+      relatedGuidesList: '関連する中国都市ガイド',
+      personalizedAnswer: 'あなた向けの結果が必要ですか？',
+      personalizedMatch: 'あなた向けの都市マッチを取得',
+      author: '著者',
+      published: '公開日',
+      lastUpdated: '最終更新',
+      by: '作成者',
+      publishedOn: '公開',
+      legalEyebrow: '法務',
+      email: 'メール',
+      contactAndFeedback: 'お問い合わせとフィードバック',
+      responseTarget: '返信目安',
+      responseTargetValue: '3 営業日以内',
+      whatWeHelpWith: '対応できる内容',
+      beforeContact: 'お問い合わせ前の確認事項',
+      correctionRequest: '修正依頼の方法',
+      importantNote: '重要事項',
+      privacyHandling: 'プライバシーと問い合わせ管理',
+      overview: '概要',
+      dataCollection: '収集するデータ',
+      thirdPartyServices: '第三者サービス',
+      dataRetention: 'データ保持',
+    },
+    ko: {
+      quiz: '퀴즈',
+      guideEyebrow: '가이드',
+      availableGuides: '가이드 목록',
+      furtherReading: '추가 읽을거리',
+      relatedGuides: '관련 가이드',
+      relatedGuidesList: '관련 중국 도시 가이드',
+      personalizedAnswer: '개인 맞춤 결과가 필요하신가요?',
+      personalizedMatch: '개인 맞춤 도시 매칭 받기',
+      author: '작성자',
+      published: '게시일',
+      lastUpdated: '최종 업데이트',
+      by: '작성',
+      publishedOn: '게시',
+      legalEyebrow: '법률',
+      email: '이메일',
+      contactAndFeedback: '문의 및 피드백',
+      responseTarget: '응답 목표',
+      responseTargetValue: '영업일 기준 3일 이내',
+      whatWeHelpWith: '도움드릴 수 있는 내용',
+      beforeContact: '문의 전 확인 사항',
+      correctionRequest: '콘텐츠 수정 요청 방법',
+      importantNote: '중요 안내',
+      privacyHandling: '개인정보 및 문의 처리',
+      overview: '개요',
+      dataCollection: '수집하는 데이터',
+      thirdPartyServices: '제3자 서비스',
+      dataRetention: '데이터 보관',
+    },
+  }
+
+  const defaults = shortLabelMap.en
+  const localized = shortLabelMap[langCode] ?? defaults
+
+  return {
+    home: legalLinks.home ?? 'Home',
+    guides: legalLinks.guides ?? 'Guides',
+    about: legalLinks.about ?? 'About',
+    contact: legalLinks.contact ?? 'Contact',
+    privacy: legalLinks.privacy ?? 'Privacy Policy',
+    ...localized,
+  }
+}
+
 function buildGuideCards(locale) {
   const topicClusterItems = Array.isArray(locale?.home?.topicCluster?.items) ? locale.home.topicCluster.items : []
   return GUIDE_PAGES.map((guide, index) => {
@@ -669,6 +804,7 @@ function renderGuideHub(lang, locale) {
   const home = locale.home ?? {}
   const topicCluster = home?.topicCluster ?? {}
   const guideCards = buildGuideCards(locale)
+  const labels = localizedUiLabels(lang, locale)
   const canonicalPath = guideHubPath(lang)
   const title =
     topicCluster?.title
@@ -683,8 +819,8 @@ function renderGuideHub(lang, locale) {
   <header class="site-header">
     <a class="brand" href="/${lang.urlCode}/">${escapeHtml(home?.header?.brandName ?? 'City Vibe Matcher')}</a>
     <nav class="top-links">
-      <a href="/${lang.urlCode}/">Landing</a>
-      <a href="/${lang.urlCode}/quiz">Quiz</a>
+      <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
+      <a href="/${lang.urlCode}/quiz">${escapeHtml(labels.quiz)}</a>
     </nav>
   </header>
 
@@ -693,7 +829,7 @@ function renderGuideHub(lang, locale) {
     <h1>${escapeHtml(topicCluster?.title ?? 'China city planning guides')}</h1>
     <p>${escapeHtml(topicCluster?.subtitle ?? 'These pages support the destination-matching quiz and answer the planning questions that usually block first-time trips: where to start, how long to stay, and how to compare high-profile cities.')}</p>
     <p>Instead of generic rankings, each guide is written as a decision framework. You can move from uncertainty to a practical shortlist in one reading session.</p>
-    <h2>Available guides</h2>
+    <h2>${escapeHtml(labels.availableGuides)}</h2>
     <div class="guide-grid">
       ${renderGuideCardList(lang, guideCards)}
     </div>
@@ -706,7 +842,7 @@ function renderGuideHub(lang, locale) {
   </section>
 
   <section class="cta-panel">
-    <h2>Need a personalized answer?</h2>
+    <h2>${escapeHtml(labels.personalizedAnswer)}</h2>
     <p>Use the 18-question matcher to rank 15 Chinese cities by your travel style.</p>
     <a class="cta" href="/${lang.urlCode}/quiz">${escapeHtml(home?.cta ?? 'Start the quiz')}</a>
   </section>
@@ -724,8 +860,8 @@ function renderGuideHub(lang, locale) {
       inLanguage: lang.htmlLang,
     },
     createBreadcrumbList([
-      { name: 'Home', path: `/${lang.urlCode}` },
-      { name: 'Guides', path: canonicalPath },
+      { name: labels.home, path: `/${lang.urlCode}` },
+      { name: labels.guides, path: canonicalPath },
     ]),
     createItemList(
       topicCluster?.title ?? 'China city planning guides',
@@ -749,6 +885,7 @@ function renderGuideHub(lang, locale) {
 
 function renderGuideDetail(lang, locale, guide) {
   const home = locale.home ?? {}
+  const labels = localizedUiLabels(lang, locale)
   const guideCards = buildGuideCards(locale)
   const localizedTitleBySlug = new Map(guideCards.map((card) => [card.guide.slug, card.title]))
   const localizedDescriptionBySlug = new Map(guideCards.map((card) => [card.guide.slug, card.description]))
@@ -781,28 +918,28 @@ function renderGuideDetail(lang, locale, guide) {
   <header class="site-header">
     <a class="brand" href="/${lang.urlCode}/">${escapeHtml(home?.header?.brandName ?? 'City Vibe Matcher')}</a>
     <nav class="top-links">
-      <a href="/${lang.urlCode}/">Landing</a>
-      <a href="${guideHubPath(lang)}">Guides</a>
-      <a href="/${lang.urlCode}/quiz">Quiz</a>
+      <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
+      <a href="${guideHubPath(lang)}">${escapeHtml(labels.guides)}</a>
+      <a href="/${lang.urlCode}/quiz">${escapeHtml(labels.quiz)}</a>
     </nav>
   </header>
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/${lang.urlCode}/">Home</a>
+    <a href="/${lang.urlCode}/">${escapeHtml(labels.home)}</a>
     <span>/</span>
-    <a href="${guideHubPath(lang)}">Guides</a>
+    <a href="${guideHubPath(lang)}">${escapeHtml(labels.guides)}</a>
     <span>/</span>
     <span>${escapeHtml(resolvedTitle)}</span>
   </nav>
 
   <article class="article-page block">
-    <p class="eyebrow">Guide</p>
+    <p class="eyebrow">${escapeHtml(labels.guideEyebrow)}</p>
     <h1>${escapeHtml(resolvedTitle)}</h1>
     <div class="article-meta-stack">
-      <p class="article-meta author-byline"><strong>Author:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
-      <p class="article-meta"><strong>Published:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
-      <p class="article-meta">By ${escapeHtml(AUTHOR_NAME)}</p>
-      <p class="article-meta">Published on <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta"><strong>${escapeHtml(labels.published)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta">${escapeHtml(labels.by)} ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta">${escapeHtml(labels.publishedOn)} <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
     </div>
     <p class="article-intro">${escapeHtml(guide.intro)}</p>
     <ul class="list-cards">
@@ -810,7 +947,7 @@ function renderGuideDetail(lang, locale, guide) {
     </ul>
     ${sectionHtml}
     <section class="article-block">
-      <h2>Further reading</h2>
+      <h2>${escapeHtml(labels.furtherReading)}</h2>
       <ul class="related-links">
         <li><a href="https://www.thechinaguide.com/" rel="noopener noreferrer">The China Guide</a> — visa and travel logistics</li>
       </ul>
@@ -822,14 +959,14 @@ function renderGuideDetail(lang, locale, guide) {
   </article>
 
   <section class="block">
-    <h2>Related guides</h2>
+    <h2>${escapeHtml(labels.relatedGuides)}</h2>
     <ul class="related-links">
       ${relatedLinks}
     </ul>
   </section>
 
   <section class="cta-panel">
-    <h2>Get your personalized city match</h2>
+    <h2>${escapeHtml(labels.personalizedMatch)}</h2>
     <p>Stop comparing cities manually. Answer 18 questions and get a ranked recommendation.</p>
     <a class="cta" href="/${lang.urlCode}/quiz">${escapeHtml(home?.cta ?? 'Take the city quiz')}</a>
   </section>
@@ -862,11 +999,11 @@ function renderGuideDetail(lang, locale, guide) {
       },
     },
     createBreadcrumbList([
-      { name: 'Home', path: `/${lang.urlCode}` },
-      { name: 'Guides', path: guideHubPath(lang) },
+      { name: labels.home, path: `/${lang.urlCode}` },
+      { name: labels.guides, path: guideHubPath(lang) },
       { name: resolvedTitle, path: canonicalPath },
     ]),
-    createItemList('Related China city guides', relatedGuideItems),
+    createItemList(labels.relatedGuidesList, relatedGuideItems),
   ]
 
   const headExtras = [
@@ -895,12 +1032,13 @@ function renderAboutPage(lang, locale) {
   const langCode = resolveLangCode(lang)
   const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
   const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const labels = localizedUiLabels(lang, locale)
   const homeLabel = legalLinks.home ?? 'Home'
   const guidesLabel = legalLinks.guides ?? 'Guides'
   const contactLabel = legalLinks.contact ?? 'Contact'
   const aboutLabel = legalLinks.about ?? 'About'
   const canonicalPath = aboutPath(langCode)
-  const title = 'About City Vibe Matcher | China Trip Method'
+  const title = `${aboutLabel} | City Vibe Matcher`
   const description =
     'Learn how City Vibe Matcher builds first-trip China recommendations with an 18-question model, curated city profiles, and practical planning guidance.'
   const alternates = buildPageAlternates('about')
@@ -925,11 +1063,11 @@ function renderAboutPage(lang, locale) {
     <p class="eyebrow">${escapeHtml(aboutLabel)}</p>
     <h1>How this project helps first-time China travelers</h1>
     <div class="article-meta-stack">
-      <p class="article-meta author-byline"><strong>Author:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
-      <p class="article-meta"><strong>Published:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
-      <p class="article-meta"><strong>Last updated:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
-      <p class="article-meta">By ${escapeHtml(AUTHOR_NAME)}</p>
-      <p class="article-meta">Published on <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta"><strong>${escapeHtml(labels.published)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta">${escapeHtml(labels.by)} ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta">${escapeHtml(labels.publishedOn)} <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
     </div>
     <p class="article-intro">City Vibe Matcher is a planning-first project for travelers who already decided to visit China but still need confidence about where to start.</p>
 
@@ -959,7 +1097,7 @@ function renderAboutPage(lang, locale) {
     </section>
 
     <section class="article-block">
-      <h2>Contact and feedback</h2>
+      <h2>${escapeHtml(labels.contactAndFeedback)}</h2>
       <p>Questions, corrections, and feedback are welcome. Reach us at <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a> or visit the <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
     </section>
   </article>
@@ -1018,12 +1156,13 @@ function renderContactPage(lang, locale) {
   const langCode = resolveLangCode(lang)
   const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
   const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const labels = localizedUiLabels(lang, locale)
   const homeLabel = legalLinks.home ?? 'Home'
   const guidesLabel = legalLinks.guides ?? 'Guides'
   const aboutLabel = legalLinks.about ?? 'About'
   const contactLabel = legalLinks.contact ?? 'Contact'
   const canonicalPath = contactPath(langCode)
-  const title = 'Contact City Vibe Matcher | Travel Match Support'
+  const title = `${contactLabel} | City Vibe Matcher`
   const description =
     'Contact City Vibe Matcher for travel-matching questions, feedback, media requests, and data corrections related to our China city planning guides.'
   const alternates = buildPageAlternates('contact')
@@ -1048,22 +1187,22 @@ function renderContactPage(lang, locale) {
     <p class="eyebrow">${escapeHtml(contactLabel)}</p>
     <h1>Get in touch</h1>
     <div class="article-meta-stack">
-      <p class="article-meta author-byline"><strong>Author:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
-      <p class="article-meta"><strong>Last updated:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
-      <p class="article-meta"><strong>Response target:</strong> within 3 business days</p>
-      <p class="article-meta">By ${escapeHtml(AUTHOR_NAME)}</p>
-      <p class="article-meta">Published on <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta"><strong>${escapeHtml(labels.responseTarget)}:</strong> ${escapeHtml(labels.responseTargetValue)}</p>
+      <p class="article-meta">${escapeHtml(labels.by)} ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta">${escapeHtml(labels.publishedOn)} <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
     </div>
     <p class="article-intro">Use this page for feedback about matching results, content corrections, partnerships, or media inquiries.</p>
 
     <section class="article-block">
-      <h2>Email</h2>
+      <h2>${escapeHtml(labels.email)}</h2>
       <p>General inquiries: <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a></p>
       <p>Include your trip goal, expected travel month, and the page URL if your question is about a specific guide.</p>
     </section>
 
     <section class="article-block">
-      <h2>What we can help with</h2>
+      <h2>${escapeHtml(labels.whatWeHelpWith)}</h2>
       <ul class="list-cards">
         <li>Questions about quiz logic and recommendation interpretation</li>
         <li>Requests to correct outdated planning details in guides</li>
@@ -1072,26 +1211,26 @@ function renderContactPage(lang, locale) {
     </section>
 
     <section class="article-block">
-      <h2>Before you contact us</h2>
+      <h2>${escapeHtml(labels.beforeContact)}</h2>
       <p>If your request is about one destination page, include the exact page URL and the section that should be corrected. This helps us verify and update content much faster.</p>
       <p>If your request is about your quiz result, include your top three recommended cities and your planned travel month so we can provide more relevant context.</p>
     </section>
 
     <section class="article-block">
-      <h2>How to request a content correction</h2>
+      <h2>${escapeHtml(labels.correctionRequest)}</h2>
       <p>Please include three details in your message: the current statement, the proposed correction, and one source link that supports the update. This structure helps us review requests quickly and consistently.</p>
       <p>For corrections involving regulations, include the publication date of your source so we can evaluate whether it reflects the latest policy revision.</p>
       <p>Editorial corrections are reviewed in batches and may be applied across multiple guides when the same issue affects more than one city page.</p>
     </section>
 
     <section class="article-block">
-      <h2>Important note</h2>
+      <h2>${escapeHtml(labels.importantNote)}</h2>
       <p>We do not provide visa, legal, or emergency travel advice. For official entry requirements and policy updates, use government and embassy sources.</p>
       <p>For urgent operational travel issues such as flight cancellations or border policy changes, always rely on official airline and government channels first.</p>
     </section>
 
     <section class="article-block">
-      <h2>Privacy and message handling</h2>
+      <h2>${escapeHtml(labels.privacyHandling)}</h2>
       <p>When you email us, we only use your message to respond and improve relevant guide content. We do not sell contact details or use inquiry emails for unrelated marketing campaigns.</p>
       <p>If you want your message deleted after resolution, mention it in your thread and we will remove it from our working notes.</p>
     </section>
@@ -1157,20 +1296,21 @@ function renderPrivacyPolicyPage(lang, locale) {
   const langCode = resolveLangCode(lang)
   const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
   const legalLinks = locale?.home?.footer?.legalLinks ?? {}
+  const labels = localizedUiLabels(lang, locale)
   const homeLabel = legalLinks.home ?? 'Home'
   const guidesLabel = legalLinks.guides ?? 'Guides'
   const aboutLabel = legalLinks.about ?? 'About'
   const contactLabel = legalLinks.contact ?? 'Contact'
   const privacyLabel = legalLinks.privacy ?? 'Privacy Policy'
   const canonicalPath = privacyPolicyPath(langCode)
-  const title = `${privacyLabel} | Best City in China`
+  const title = `${privacyLabel} | City Vibe Matcher`
   const description =
     'Privacy policy for bestcityinchina.site covering analytics usage, cookies, third-party services, data retention, and how to contact us with privacy questions.'
   const alternates = buildPageAlternates('privacy-policy')
 
   const mainHtml = `<main id="main-content" class="page-shell">
   <header class="site-header">
-    <a class="brand" href="${homePath(langCode)}">Best City in China</a>
+    <a class="brand" href="${homePath(langCode)}">City Vibe Matcher</a>
     <nav class="top-links">
       <a href="${homePath(langCode)}">${escapeHtml(homeLabel)}</a>
       <a href="${aboutPath(langCode)}">${escapeHtml(aboutLabel)}</a>
@@ -1186,17 +1326,17 @@ function renderPrivacyPolicyPage(lang, locale) {
   </nav>
 
   <article class="block article-page">
-    <p class="eyebrow">Legal</p>
+    <p class="eyebrow">${escapeHtml(labels.legalEyebrow)}</p>
     <h1>${escapeHtml(privacyLabel)}</h1>
-    <p class="article-intro">Last updated: February 20, 2026</p>
+    <p class="article-intro">${escapeHtml(labels.lastUpdated)}: February 20, 2026</p>
 
     <div class="article-block">
-      <h2>Overview</h2>
+      <h2>${escapeHtml(labels.overview)}</h2>
       <p>bestcityinchina.site is a free travel quiz tool that helps travelers choose Chinese cities to visit. We take your privacy seriously and collect minimal data.</p>
     </div>
 
     <div class="article-block">
-      <h2>What data we collect</h2>
+      <h2>${escapeHtml(labels.dataCollection)}</h2>
       <p>We do not collect personally identifiable information. We do not require accounts or email addresses. Quiz answers are processed in your browser.</p>
       <p>We use Google Analytics 4 to collect anonymous usage data such as page views, device category, referral source, and quiz interaction events.</p>
     </div>
@@ -1208,7 +1348,7 @@ function renderPrivacyPolicyPage(lang, locale) {
     </div>
 
     <div class="article-block">
-      <h2>Third-party services</h2>
+      <h2>${escapeHtml(labels.thirdPartyServices)}</h2>
       <ul class="list-cards">
         <li>Google Analytics 4 for anonymous analytics</li>
         <li>Google Fonts for font delivery</li>
@@ -1217,7 +1357,7 @@ function renderPrivacyPolicyPage(lang, locale) {
     </div>
 
     <div class="article-block">
-      <h2>Data retention</h2>
+      <h2>${escapeHtml(labels.dataRetention)}</h2>
       <p>Google Analytics data is retained for 14 months. We do not store additional personal user datasets.</p>
     </div>
 

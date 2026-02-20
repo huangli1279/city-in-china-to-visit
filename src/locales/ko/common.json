@@ -70,11 +70,11 @@
       "disclaimer": "회원가입 없이 약 2-3분 안에 결과를 확인할 수 있습니다.",
       "copyright": "나에게 맞는 중국 도시는?",
       "legalLinks": {
-        "about": "About",
-        "contact": "Contact",
-        "guides": "Guides",
-        "privacy": "Privacy Policy",
-        "home": "Home"
+        "about": "소개",
+        "contact": "문의",
+        "guides": "가이드",
+        "privacy": "개인정보처리방침",
+        "home": "홈"
       }
     },
     "seo": {

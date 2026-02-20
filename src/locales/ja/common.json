@@ -70,11 +70,11 @@
       "disclaimer": "登録不要。約2-3分で結果が出ます。",
       "copyright": "あなたにぴったりの中国の都市は？",
       "legalLinks": {
-        "about": "About",
-        "contact": "Contact",
-        "guides": "Guides",
-        "privacy": "Privacy Policy",
-        "home": "Home"
+        "about": "概要",
+        "contact": "お問い合わせ",
+        "guides": "ガイド",
+        "privacy": "プライバシーポリシー",
+        "home": "ホーム"
       }
     },
     "seo": {

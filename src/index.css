@@ -154,8 +154,9 @@
     font-size: 7px;
     line-height: 1;
     color: var(--gold-500);
-    background: var(--page-bg-base);
-    padding: 0 6px;
+    background: transparent;
+    padding: 0 4px;
+    text-shadow: 0 0 6px rgba(252, 248, 240, 0.95);
   }
 
   .grid-lattice {

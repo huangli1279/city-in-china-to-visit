@@ -133,6 +133,34 @@
     "seo": {
       "title": "나의 중국 도시 매칭 결과",
       "description": "개인화 추천 결과가 준비되었습니다. 최적 도시 1개와 대안 2개를 확인할 수 있습니다."
+    },
+    "matchReason": "추천 이유",
+    "yourProfile": "나의 여행 스타일",
+    "cityHighlights": "도시 하이라이트",
+    "tags": {
+      "user": {
+        "historyBuff": "역사 마니아",
+        "natureLover": "자연 애호가",
+        "cityExplorer": "도시 탐험가",
+        "culturalDiver": "문화 탐험가",
+        "comfortSeeker": "편안함 추구",
+        "slowTraveler": "여유 여행자",
+        "activeTraveler": "활동적 여행자",
+        "socializer": "소셜 탐험가",
+        "soloWanderer": "혼자 여행자",
+        "adventurer": "모험가"
+      },
+      "city": {
+        "ancientHeritage": "역사 명소",
+        "naturalWonder": "자연 절경",
+        "modernMetropolis": "현대 도시",
+        "immersiveLocal": "현지 문화",
+        "relaxedPace": "여유로운 여행",
+        "packedItinerary": "풍부한 일정",
+        "foodAndNightlife": "미식 문화",
+        "peacefulRetreat": "고요한 쉼터",
+        "offBeatGems": "숨겨진 명소"
+      }
     }
   },
   "language": {

@@ -67,6 +67,7 @@ export default function QuizPage() {
       state: {
         bestMatch: ranked[0],
         runnerUps: ranked.slice(1, 3),
+        userScores,
       },
     })
   }

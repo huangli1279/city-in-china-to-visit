@@ -133,6 +133,34 @@
     "seo": {
       "title": "あなたの中国都市マッチ結果",
       "description": "診断結果が完成しました。最適な1都市と代替候補2都市を確認できます。"
+    },
+    "matchReason": "おすすめの理由",
+    "yourProfile": "あなたの旅スタイル",
+    "cityHighlights": "都市の魅力",
+    "tags": {
+      "user": {
+        "historyBuff": "歴史好き",
+        "natureLover": "自然派",
+        "cityExplorer": "都市探索者",
+        "culturalDiver": "文化探求者",
+        "comfortSeeker": "快適重視",
+        "slowTraveler": "のんびり旅",
+        "activeTraveler": "アクティブ派",
+        "socializer": "社交型",
+        "soloWanderer": "ひとり旅派",
+        "adventurer": "冒険家"
+      },
+      "city": {
+        "ancientHeritage": "歴史的遺産",
+        "naturalWonder": "自然の絶景",
+        "modernMetropolis": "近代都市",
+        "immersiveLocal": "文化体験",
+        "relaxedPace": "のんびり旅",
+        "packedItinerary": "充実の旅",
+        "foodAndNightlife": "グルメ天国",
+        "peacefulRetreat": "静かな隠れ家",
+        "offBeatGems": "穴場スポット"
+      }
     }
   },
   "language": {

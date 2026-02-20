@@ -133,6 +133,34 @@
     "seo": {
       "title": "Your China City Match Result",
       "description": "Your personalized city recommendation is ready. Review your best match and two alternative cities."
+    },
+    "matchReason": "Why This City",
+    "yourProfile": "Your Travel Style",
+    "cityHighlights": "City Highlights",
+    "tags": {
+      "user": {
+        "historyBuff": "History Buff",
+        "natureLover": "Nature Lover",
+        "cityExplorer": "City Explorer",
+        "culturalDiver": "Cultural Explorer",
+        "comfortSeeker": "Comfort Seeker",
+        "slowTraveler": "Slow Traveler",
+        "activeTraveler": "Active Traveler",
+        "socializer": "Social Explorer",
+        "soloWanderer": "Solo Wanderer",
+        "adventurer": "Adventurer"
+      },
+      "city": {
+        "ancientHeritage": "Ancient Heritage",
+        "naturalWonder": "Natural Wonder",
+        "modernMetropolis": "Modern Metropolis",
+        "immersiveLocal": "Deep Local Culture",
+        "relaxedPace": "Relaxed Pace",
+        "packedItinerary": "Rich Itinerary",
+        "foodAndNightlife": "Food & Nightlife",
+        "peacefulRetreat": "Peaceful Retreat",
+        "offBeatGems": "Off-Beat Gems"
+      }
     }
   },
   "language": {

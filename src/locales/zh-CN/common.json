@@ -133,6 +133,34 @@
     "seo": {
       "title": "你的中国城市匹配结果",
       "description": "你的个性化推荐已生成，可查看最佳匹配城市与 2 个备选城市。"
+    },
+    "matchReason": "为何推荐",
+    "yourProfile": "你的旅行风格",
+    "cityHighlights": "城市亮点",
+    "tags": {
+      "user": {
+        "historyBuff": "历史控",
+        "natureLover": "自然爱好者",
+        "cityExplorer": "城市探索者",
+        "culturalDiver": "文化探索者",
+        "comfortSeeker": "舒适优先",
+        "slowTraveler": "慢旅达人",
+        "activeTraveler": "活力旅行者",
+        "socializer": "社交达人",
+        "soloWanderer": "独处疗愈",
+        "adventurer": "探险达人"
+      },
+      "city": {
+        "ancientHeritage": "历史名城",
+        "naturalWonder": "山水风光",
+        "modernMetropolis": "现代都市",
+        "immersiveLocal": "深度在地",
+        "relaxedPace": "慢生活",
+        "packedItinerary": "丰富行程",
+        "foodAndNightlife": "美食文化",
+        "peacefulRetreat": "宁静幽远",
+        "offBeatGems": "小众探索"
+      }
     }
   },
   "language": {

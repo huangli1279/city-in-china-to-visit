@@ -1,7 +1,7 @@
 export interface CityScores {
   history: number;        // History Appetite (0–100)
   natureUrban: number;    // Nature vs Urban (0=nature, 100=urban)
-  culturalComfort: number; // Cultural Comfort / immersion (0=western comfort, 100=full local)
+  culturalComfort: number; // Local Immersion (legacy key name; 0=western comfort, 100=full local)
   activityLevel: number;  // Activity Level (0=slow, 100=packed)
   socialVibe: number;     // Social Vibe (0=quiet, 100=buzzing)
   adventure: number;      // Adventure Appetite (0=tourist trail, 100=off-beaten-path)

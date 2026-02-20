@@ -72,12 +72,12 @@
     },
     {
       "id": 8,
-      "text": "How important is it that a place has good English signage and English-speaking staff?",
+      "text": "You arrive at a busy transit hub where almost everything is in Chinese. You…",
       "options": [
-        "Not important at all — I like figuring things out",
-        "Nice to have, but I can manage without it",
-        "Fairly important — it reduces stress a lot",
-        "Very important — I need it to feel comfortable"
+        "Treat it like a fun puzzle and figure it out step by step",
+        "Use maps/translation tools and adapt quickly",
+        "Feel stressed and try to find English help first",
+        "Change plans immediately to somewhere easier to navigate"
       ]
     },
     {
@@ -112,12 +112,12 @@
     },
     {
       "id": 12,
-      "text": "A long hike with stunning views at the top — are you in?",
+      "text": "You only have one full day left in a city. You…",
       "options": [
-        "Yes, 100% — that's what travel is about",
-        "Yes if it's not too intense",
-        "Maybe — depends on how long and how hot",
-        "I'll look at photos from the bottom, thanks"
+        "Pack the day with as many spots as possible from morning to night",
+        "Plan 3-4 must-sees and keep a steady pace",
+        "Pick 1-2 highlights and leave plenty of downtime",
+        "Keep the day mostly open and move slowly with no checklist"
       ]
     },
     {
@@ -132,12 +132,12 @@
     },
     {
       "id": 14,
-      "text": "When you travel, how do you feel about interacting with locals?",
+      "text": "At dinner, a local traveler at the next table starts chatting with you. You…",
       "options": [
-        "It's one of my favorite parts — I love the connections",
-        "I enjoy it when it happens naturally",
-        "I'm a bit shy but open to it",
-        "I prefer to observe from a comfortable distance"
+        "Jump right in and turn it into a real conversation",
+        "Chat for a while if the vibe feels natural",
+        "Respond politely but keep it brief",
+        "Smile, nod, and return to your own space quickly"
       ]
     },
     {

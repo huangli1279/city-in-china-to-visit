@@ -62,7 +62,7 @@
 | 北京 Beijing | *The Imperial* | 故宫、长城、历史底蕴、大国首都气质 | Top 10 热门 |
 | 西安 Xi'an | *The Ancient* | 兵马俑、丝绸之路、回民街夜市、古城墙 | Top 10 热门 |
 | 成都 Chengdu | *The Unbothered* | 大熊猫、火锅、茶馆、慢节奏生活 | Top 10 热门 |
-| 桂林/阳朔 Guilin | *The Dreamscape* | 喀斯特山水、漓江、稻田、田园风光 | 高人气榜单 |
+| 桂林 Guilin | *The Dreamscape* | 喀斯特山水、漓江、阳朔稻田、田园风光 | 高人气榜单 |
 | 大理 Dali | *The Free Spirit* | 洱海、苍山、少数民族文化、背包客圣地 | 特色补充 |
 | 厦门 Xiamen | *The Coastal Charmer* | 鼓浪屿、殖民建筑、海鲜、悠闲漫步 | 高人气榜单 |
 | 张家界 Zhangjiajie | *The Avatar Mountains* | 极致自然奇观、玻璃桥、徒步冒险 | 高人气榜单 |
@@ -83,11 +83,11 @@
 | 武汉 Wuhan | *The River Metropolis* | 长江两岸、城市烟火、交通枢纽型中转 | 特色补充 |
 | 长沙 Changsha | *The Nightlife Spice* | 夜生活密集、湘菜风味、年轻娱乐氛围 | 特色补充 |
 
-覆盖类型（用于确保结果分布不扎堆）：
+覆盖类型（用于确保结果分布不扎堆，24 城全部覆盖）：
 - 历史文化型：北京、西安、南京、苏州
-- 现代都市型：上海、深圳、广州、重庆、武汉、长沙
+- 都市烟火型：上海、深圳、广州、重庆、武汉、长沙、成都
 - 自然山水型：杭州、桂林、张家界、丽江、大理、昆明
-- 休闲度假型：三亚、青岛、厦门、珠海、大连
+- 海滨度假型：三亚、青岛、厦门、珠海、大连
 - 冰雪/丝路型：哈尔滨、敦煌
 
 ---
@@ -100,14 +100,14 @@
 |---|------|-----------|-------------|
 | 1 | **History Appetite** 历史文化兴趣 | Don't care about history | Obsessed with ancient history |
 | 2 | **Nature vs Urban** 自然/都市偏好 | Pure nature & landscapes | Pure city energy & streets |
-| 3 | **Cultural Comfort** 文化冒险度 | Need Western comforts & English | Love full local immersion |
+| 3 | **Local Immersion** 文化沉浸倾向 | Need Western comforts & English | Love full local immersion |
 | 4 | **Activity Level** 行程节奏 | Slow down, soak it in | Pack it in, maximize everything |
 | 5 | **Social Vibe** 社交氛围 | Peaceful & quiet experience | Buzzing, vibrant, meet people |
 | 6 | **Adventure Appetite** 探险欲 | Stick to famous tourist spots | Off-beaten-path explorer |
 
 ### 城市六维得分矩阵（统一城市池）
 
-| 城市 | History | Nature/Urban | Cultural Comfort | Activity | Social | Adventure |
+| 城市 | History | Nature/Urban | Local Immersion | Activity | Social | Adventure |
 |------|---------|-------------|-----------------|----------|--------|-----------|
 | 上海 | 30 | 90 | 25 | 75 | 90 | 30 |
 | 北京 | 85 | 70 | 45 | 75 | 65 | 45 |
@@ -133,6 +133,11 @@
 | 大连 | 42 | 35 | 38 | 45 | 50 | 40 |
 | 武汉 | 65 | 70 | 50 | 70 | 75 | 45 |
 | 长沙 | 52 | 62 | 55 | 78 | 88 | 50 |
+
+说明（避免实现歧义）：
+- Dimension 2（Nature vs Urban）：分数越高越偏都市，越低越偏自然。
+- Dimension 3（Local Immersion）：分数越高表示越能接受本地化沉浸，越低表示越依赖英语/国际化便利。
+- 工程实现可沿用历史字段名 `culturalComfort`，其语义与 `Local Immersion` 完全等价。
 
 ---
 
@@ -191,7 +196,7 @@
 
 ---
 
-#### Dimension 3 — Cultural Comfort（文化冒险度）
+#### Dimension 3 — Local Immersion（文化沉浸倾向）
 
 **Q7.** You're at a local restaurant with no English menu and no pictures. You…
 - A. Pull out Google Translate and point at random — this is the fun part `[100]`
@@ -199,11 +204,11 @@
 - C. Look for something recognizable, play it safe `[30]`
 - D. Quietly look for another restaurant with photos `[0]`
 
-**Q8.** How important is it that a place has good English signage and English-speaking staff?
-- A. Not important at all — I like figuring things out `[100]`
-- B. Nice to have, but I can manage without it `[65]`
-- C. Fairly important — it reduces stress a lot `[30]`
-- D. Very important — I need it to feel comfortable `[0]`
+**Q8.** You arrive at a busy transit hub where almost everything is in Chinese. You…
+- A. Treat it like a fun puzzle and figure it out step by step `[100]`
+- B. Use maps/translation tools and adapt quickly `[65]`
+- C. Feel stressed and try to find English help first `[30]`
+- D. Change plans immediately to somewhere easier to navigate `[0]`
 
 **Q9.** Which accommodation sounds most appealing?
 - A. A family-run guesthouse where you eat breakfast with the owners `[100]`
@@ -227,11 +232,11 @@
 - C. Moving through my list but taking breaks `[65]`
 - D. Already thinking about what I might have missed and how to fit more in `[100]`
 
-**Q12.** A long hike with stunning views at the top — are you in?
-- A. Yes, 100% — that's what travel is about `[100]`
-- B. Yes if it's not too intense `[65]`
-- C. Maybe — depends on how long and how hot `[35]`
-- D. I'll look at photos from the bottom, thanks `[0]`
+**Q12.** You only have one full day left in a city. You…
+- A. Pack the day with as many spots as possible from morning to night `[100]`
+- B. Plan 3-4 must-sees and keep a steady pace `[65]`
+- C. Pick 1-2 highlights and leave plenty of downtime `[35]`
+- D. Keep the day mostly open and move slowly with no checklist `[0]`
 
 ---
 
@@ -243,11 +248,11 @@
 - C. A quiet dinner at a place with great atmosphere `[35]`
 - D. In my room, decompressing with a book or show `[0]`
 
-**Q14.** When you travel, how do you feel about interacting with locals?
-- A. It's one of my favorite parts — I love the connections `[100]`
-- B. I enjoy it when it happens naturally `[65]`
-- C. I'm a bit shy but open to it `[35]`
-- D. I prefer to observe from a comfortable distance `[0]`
+**Q14.** At dinner, a local traveler at the next table starts chatting with you. You…
+- A. Jump right in and turn it into a real conversation `[100]`
+- B. Chat for a while if the vibe feels natural `[65]`
+- C. Respond politely but keep it brief `[35]`
+- D. Smile, nod, and return to your own space quickly `[0]`
 
 **Q15.** Your dream city has…
 - A. A wild nightlife scene and always something going on `[100]`

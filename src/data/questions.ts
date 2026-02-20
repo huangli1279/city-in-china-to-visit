@@ -89,7 +89,7 @@ export const questions: Question[] = [
     ],
   },
 
-  // Dimension 3 — Cultural Comfort
+  // Dimension 3 — Local Immersion (legacy key: culturalComfort)
   {
     id: 7,
     dimension: "culturalComfort",
@@ -104,12 +104,12 @@ export const questions: Question[] = [
   {
     id: 8,
     dimension: "culturalComfort",
-    text: "How important is it that a place has good English signage and English-speaking staff?",
+    text: "You arrive at a busy transit hub where almost everything is in Chinese. You…",
     options: [
-      { text: "Not important at all — I like figuring things out", score: 100 },
-      { text: "Nice to have, but I can manage without it", score: 65 },
-      { text: "Fairly important — it reduces stress a lot", score: 30 },
-      { text: "Very important — I need it to feel comfortable", score: 0 },
+      { text: "Treat it like a fun puzzle and figure it out step by step", score: 100 },
+      { text: "Use maps/translation tools and adapt quickly", score: 65 },
+      { text: "Feel stressed and try to find English help first", score: 30 },
+      { text: "Change plans immediately to somewhere easier to navigate", score: 0 },
     ],
   },
   {
@@ -150,12 +150,12 @@ export const questions: Question[] = [
   {
     id: 12,
     dimension: "activityLevel",
-    text: "A long hike with stunning views at the top — are you in?",
+    text: "You only have one full day left in a city. You…",
     options: [
-      { text: "Yes, 100% — that's what travel is about", score: 100 },
-      { text: "Yes if it's not too intense", score: 65 },
-      { text: "Maybe — depends on how long and how hot", score: 35 },
-      { text: "I'll look at photos from the bottom, thanks", score: 0 },
+      { text: "Pack the day with as many spots as possible from morning to night", score: 100 },
+      { text: "Plan 3-4 must-sees and keep a steady pace", score: 65 },
+      { text: "Pick 1-2 highlights and leave plenty of downtime", score: 35 },
+      { text: "Keep the day mostly open and move slowly with no checklist", score: 0 },
     ],
   },
 
@@ -174,12 +174,12 @@ export const questions: Question[] = [
   {
     id: 14,
     dimension: "socialVibe",
-    text: "When you travel, how do you feel about interacting with locals?",
+    text: "At dinner, a local traveler at the next table starts chatting with you. You…",
     options: [
-      { text: "It's one of my favorite parts — I love the connections", score: 100 },
-      { text: "I enjoy it when it happens naturally", score: 65 },
-      { text: "I'm a bit shy but open to it", score: 35 },
-      { text: "I prefer to observe from a comfortable distance", score: 0 },
+      { text: "Jump right in and turn it into a real conversation", score: 100 },
+      { text: "Chat for a while if the vibe feels natural", score: 65 },
+      { text: "Respond politely but keep it brief", score: 35 },
+      { text: "Smile, nod, and return to your own space quickly", score: 0 },
     ],
   },
   {

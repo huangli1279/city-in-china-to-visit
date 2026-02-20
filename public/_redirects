@@ -1,8 +1,4 @@
-/ /en 301
-/en/ /en 301
-/zh/ /zh 301
-/ja/ /ja 301
-/ko/ /ko 301
+/ /en/ 301
 
 /sitemap_index.xml /sitemap.xml 301
 /sitemap-index.xml /sitemap.xml 301
@@ -17,5 +13,19 @@
 /:lang/privacy-policy /:lang/privacy-policy/ 200
 /:lang/guides /:lang/guides/ 200
 /:lang/guides/:slug /:lang/guides/:slug/ 200
-
-/* /index.html 200
+/en/quiz/ /en/quiz 301
+/zh/quiz/ /zh/quiz 301
+/ja/quiz/ /ja/quiz 301
+/ko/quiz/ /ko/quiz 301
+/en/result/ /en/result 301
+/zh/result/ /zh/result 301
+/ja/result/ /ja/result 301
+/ko/result/ /ko/result 301
+/en/quiz / 200
+/zh/quiz / 200
+/ja/quiz / 200
+/ko/quiz / 200
+/en/result / 200
+/zh/result / 200
+/ja/result / 200
+/ko/result / 200

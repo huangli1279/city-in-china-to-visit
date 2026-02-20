@@ -1,13 +1,4 @@
 User-agent: *
 Allow: /
 
-Disallow: /en/quiz
-Disallow: /zh/quiz
-Disallow: /ja/quiz
-Disallow: /ko/quiz
-Disallow: /en/result
-Disallow: /zh/result
-Disallow: /ja/result
-Disallow: /ko/result
-
 Sitemap: https://bestcityinchina.site/sitemap.xml

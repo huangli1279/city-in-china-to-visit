@@ -41,7 +41,7 @@ export default function LangLayout() {
   }, [isValid, targetI18nLang])
 
   if (!isValid) {
-    return <Navigate to="/en" replace />
+    return <Navigate to="/404" replace />
   }
 
   if (normalizedResolvedLang !== targetI18nLang) {

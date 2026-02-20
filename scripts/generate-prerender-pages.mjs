@@ -8,7 +8,7 @@ const ROOT_DIR = path.resolve(__dirname, '..')
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public')
 const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://bestcityinchina.site').replace(/\/+$/, '')
 const CTR_TITLE_VARIANT = process.env.CTR_TITLE_VARIANT === 'B' ? 'B' : 'A'
-const PRERENDER_LANDING_PAGES = process.env.PRERENDER_LANDING_PAGES === '1'
+const PRERENDER_LANDING_PAGES = process.env.PRERENDER_LANDING_PAGES !== '0'
 const GA_MEASUREMENT_ID = 'G-ZTZTZ5TQMR'
 const ADSENSE_CLIENT_ID = 'ca-pub-8272386212758068'
 const ORGANIZATION_NAME = 'City Vibe Matcher'
@@ -286,7 +286,7 @@ function resolveLangCode(langOrCode) {
 
 function homePath(langOrCode) {
   const langCode = resolveLangCode(langOrCode)
-  return `/${langCode}`
+  return `/${langCode}/`
 }
 
 function aboutPath(langOrCode) {
@@ -443,9 +443,9 @@ function renderDocument({
 function buildLandingAlternates() {
   const links = LANGUAGES.map((lang) => ({
     hreflang: lang.htmlLang,
-    href: absUrl(`/${lang.urlCode}`),
+    href: absUrl(homePath(lang)),
   }))
-  links.push({ hreflang: 'x-default', href: absUrl('/en') })
+  links.push({ hreflang: 'x-default', href: absUrl(homePath('en')) })
   return links
 }
 
@@ -673,7 +673,7 @@ function renderLandingPage(lang, locale) {
   const seoGuidePoints = Array.isArray(home?.seoGuide?.points) ? home.seoGuide.points : []
   const topicCluster = home?.topicCluster ?? {}
   const guideCards = buildGuideCards(locale)
-  const canonicalPath = `/${lang.urlCode}`
+  const canonicalPath = homePath(lang)
   const title = home?.seo?.title ?? home?.title ?? 'Best City to Visit in China'
   const description =
     home?.seo?.description ??
@@ -1425,7 +1425,7 @@ function buildCtrTitleVariantsManifest() {
 
 function buildSitemap() {
   const today = new Date().toISOString().slice(0, 10)
-  const languageRoots = LANGUAGES.map((lang) => `/${lang.urlCode}`)
+  const languageRoots = LANGUAGES.map((lang) => homePath(lang))
   const infoPageUrls = LANGUAGES.flatMap((lang) => [
     aboutPath(lang),
     contactPath(lang),
@@ -1440,7 +1440,7 @@ function buildSitemap() {
   const nodes = urls
     .map((pathname) => {
       const priority =
-        pathname === '/en'
+        pathname === '/en/'
           ? '1.0'
           : pathname.includes('/guides/')
             ? '0.8'
@@ -1460,6 +1460,40 @@ function buildSitemap() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${nodes}
 </urlset>
+`
+}
+
+function renderNotFoundPage() {
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Page not found | City Vibe Matcher</title>
+    <meta name="description" content="The page you requested could not be found." />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="canonical" href="${escapeHtml(absUrl('/404'))}" />
+    <style>
+      body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f2e8; color: #171b25; }
+      main { max-width: 760px; margin: 0 auto; padding: 48px 20px; }
+      h1 { margin: 0 0 12px; font-size: 2rem; line-height: 1.2; }
+      p { margin: 0 0 14px; line-height: 1.6; }
+      a { color: #b43c2f; text-decoration: none; font-weight: 600; }
+      a:hover { text-decoration: underline; }
+      .box { border: 1px solid rgba(134, 106, 73, 0.28); background: rgba(255, 255, 255, 0.76); border-radius: 16px; padding: 22px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="box">
+        <h1>Page not found</h1>
+        <p>The URL may be outdated, misspelled, or removed.</p>
+        <p>Start from <a href="/en">the English homepage</a> or choose another language:</p>
+        <p><a href="/zh">中文</a> · <a href="/ja">日本語</a> · <a href="/ko">한국어</a></p>
+      </div>
+    </main>
+  </body>
+</html>
 `
 }
 
@@ -1495,6 +1529,7 @@ async function main() {
 
   await writeText(path.join(PUBLIC_DIR, 'en/guides/ctr-title-variants.json'), buildCtrTitleVariantsManifest())
   await writeText(path.join(PUBLIC_DIR, 'sitemap.xml'), buildSitemap())
+  await writeText(path.join(PUBLIC_DIR, '404.html'), renderNotFoundPage())
 }
 
 await main()

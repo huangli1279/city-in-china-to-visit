@@ -5,3 +5,30 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com; frame-ancestors 'none'
+
+/en/quiz
+  X-Robots-Tag: noindex, follow
+
+/zh/quiz
+  X-Robots-Tag: noindex, follow
+
+/ja/quiz
+  X-Robots-Tag: noindex, follow
+
+/ko/quiz
+  X-Robots-Tag: noindex, follow
+
+/en/result
+  X-Robots-Tag: noindex, follow
+
+/zh/result
+  X-Robots-Tag: noindex, follow
+
+/ja/result
+  X-Robots-Tag: noindex, follow
+
+/ko/result
+  X-Robots-Tag: noindex, follow
+
+/404.html
+  X-Robots-Tag: noindex, nofollow

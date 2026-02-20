@@ -13,10 +13,6 @@ function shouldBypassPublicDirectoryIndex(pathname: string) {
   }
 
   const segments = normalizedPath.split('/')
-  if (segments.length === 1 && SPA_LANG_CODES.has(segments[0])) {
-    return true
-  }
-
   if (segments.length === 2 && SPA_LANG_CODES.has(segments[0]) && SPA_SUB_ROUTES.has(segments[1])) {
     return true
   }

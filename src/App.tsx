@@ -7,6 +7,7 @@ import LangLayout from './components/LangLayout'
 const HomePage = lazy(() => import('./pages/HomePage'))
 const QuizPage = lazy(() => import('./pages/QuizPage'))
 const ResultPage = lazy(() => import('./pages/ResultPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 export default function App() {
   const { t } = useTranslation('common')
@@ -28,7 +29,8 @@ export default function App() {
                 <Route path="quiz" element={<QuizPage />} />
                 <Route path="result" element={<ResultPage />} />
               </Route>
-              <Route path="*" element={<Navigate to="/en" replace />} />
+              <Route path="/404" element={<NotFoundPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </div>

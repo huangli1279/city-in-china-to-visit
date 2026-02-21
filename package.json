@@ -4,21 +4,19 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "generate:prerender": "node scripts/generate-prerender-pages.mjs",
-    "prebuild": "npm run generate:prerender",
-    "build": "tsc && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview": "npx wrangler pages dev out",
     "test": "vitest run"
   },
   "dependencies": {
     "i18next": "^23.11.5",
-    "i18next-browser-languagedetector": "^7.2.2",
+    "next": "^16.1.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-i18next": "^14.1.3",
-    "react-router-dom": "^6.23.1"
+    "react-i18next": "^14.1.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

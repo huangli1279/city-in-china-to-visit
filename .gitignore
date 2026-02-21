@@ -17,6 +17,10 @@ dist-ssr
 .claude
 .codex
 
+# Next.js
+.next
+out
+
 # Wrangler / Cloudflare
 .wrangler
 

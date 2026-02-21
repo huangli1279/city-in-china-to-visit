@@ -1,4 +1,4 @@
-# P0/P1/P2 SEO 优化交接文档（handoff）
+# P0/P1/P2/P3 SEO 优化交接文档（handoff）
 
 ## 1. 背景与目标
 
@@ -520,3 +520,140 @@ npm test
 10. `src/locales/ko/common.json`
 11. `index.html`
 12. 对应 `public/en|zh|ja|ko/**/index.html` 预渲染产物
+
+---
+
+## 12. P3 开发复盘（本次接手）
+
+### 12.1 目标范围（对应 `plan.md`）
+
+本轮接手聚焦 `P3` 三项：
+
+1. 主题集群与内链扩展（P3-1）
+2. E-E-A-T 信号增强（P3-2）
+3. 持续更新节奏落地（P3-3）
+
+### 12.2 执行过程复盘（按时间顺序）
+
+#### 12.2.1 现状缺口确认
+
+改造前主要存在三类缺口：
+
+- guide 集群仅 4 篇，预算/季节/签证与支付准备等主题覆盖不足；
+- guide 页已有 related 列表，但缺少“语义化 3-5 条上下游路径内链”；
+- 缺少独立的编辑规范（Who wrote/reviewed/updated）与公开更新节奏页。
+
+#### 12.2.2 P3-1 主题与内链扩展
+
+在 `scripts/generate-prerender-pages.mjs` 中完成：
+
+- `GUIDE_PAGES` 从 4 篇扩展到 8 篇，新增：
+  - `beijing-shanghai-chengdu-first-trip-comparison`
+  - `china-first-trip-budget-by-city`
+  - `best-time-to-visit-china-first-trip`
+  - `china-visa-payment-checklist-first-timers`
+- 每篇 guide 增加 `internalLinks`（3-5 条语义化锚文本链路）；
+- 新增 `updateSummary`，并在文章正文输出“更新摘要”模块。
+
+同时同步多语言卡片文案：
+
+- `src/locales/en/common.json`
+- `src/locales/zh-CN/common.json`
+- `src/locales/ja/common.json`
+- `src/locales/ko/common.json`
+
+`home.topicCluster.items` 从 4 项扩展到 8 项，覆盖新增主题。
+
+#### 12.2.3 P3-2 E-E-A-T 增强
+
+在 guide 渲染链路中落地：
+
+- 元信息新增 reviewer 信号（`reviewedBy` + `<meta name="reviewer">`）；
+- 每篇 guide 新增“权威来源”区块（外链出处标注）；
+- Article JSON-LD 增补 `reviewedBy` 与 `citation`。
+
+新增独立编辑规范页（多语言）：
+
+- 路径：`/{lang}/editorial-policy/`
+- 内容包含：Who wrote / reviewed / updated、纠错流程、来源核验、发布节奏要求。
+
+#### 12.2.4 P3-3 持续节奏落地
+
+新增多语言“内容更新日志”页：
+
+- 路径：`/{lang}/content-updates/`
+- 公开内容：周更与双周刷新节奏、最近改动日志、涉及 guide 链接。
+
+并接入站点体系：
+
+- Footer 新增 `Editorial policy` 与 `Content updates` 链接；
+- `sitemap.xml` 纳入 `editorial-policy` 与 `content-updates`；
+- `main()` 预渲染流程纳入上述页面静态生成。
+
+### 12.3 本轮关键文件变更
+
+1. 源码与配置
+- `scripts/generate-prerender-pages.mjs`
+- `src/locales/en/common.json`
+- `src/locales/zh-CN/common.json`
+- `src/locales/ja/common.json`
+- `src/locales/ko/common.json`
+- `handoff.md`
+
+2. 预渲染产物
+- `public/en|zh|ja|ko/guides/**/index.html`（含新增 4 篇）
+- `public/en|zh|ja|ko/editorial-policy/index.html`
+- `public/en|zh|ja|ko/content-updates/index.html`
+- `public/sitemap.xml`
+
+### 12.4 验证结果
+
+已执行并通过：
+
+```bash
+node --check scripts/generate-prerender-pages.mjs
+npm run generate:prerender
+npm run build
+npm test
+```
+
+结果：
+
+- 语法检查通过
+- `vite build` 成功
+- `vitest` 12/12 通过
+
+关键抽检结果：
+
+- 英文 guide 目录数：`8`
+- 4 语种 `editorial-policy` 与 `content-updates` 页面均已生成
+- `sitemap.xml` 已包含新增 4 篇 guide + 2 类新页面
+- guide “阅读路径”内链条数校验（每页）满足 `3-5`
+
+### 12.5 P3 完成度评估
+
+1. P3-1 主题集群与内链：`已完成`
+- 新增预算/季节/签证支付/三城对比主题；
+- 每篇 guide 已具备语义化上下游路径内链。
+
+2. P3-2 E-E-A-T 信号增强：`已完成`
+- 新增 reviewer、更新摘要、权威来源标注；
+- 新增编辑规范页面并纳入多语言与 sitemap。
+
+3. P3-3 稳定迭代节奏：`已落地机制`
+- 已上线公开更新日志与节奏约束；
+- 未来“每周 2 篇、双周刷新”需按运营节奏持续执行。
+
+### 12.6 回滚建议（P3）
+
+若需仅回滚 P3，本轮优先回滚：
+
+1. `scripts/generate-prerender-pages.mjs`
+2. `src/locales/en/common.json`
+3. `src/locales/zh-CN/common.json`
+4. `src/locales/ja/common.json`
+5. `src/locales/ko/common.json`
+6. `public/en|zh|ja|ko/guides/**/index.html`
+7. `public/en|zh|ja|ko/editorial-policy/index.html`
+8. `public/en|zh|ja|ko/content-updates/index.html`
+9. `public/sitemap.xml`

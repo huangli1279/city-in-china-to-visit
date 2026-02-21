@@ -14,6 +14,7 @@ const ADSENSE_CLIENT_ID = 'ca-pub-8272386212758068'
 const ROOT_LANDING_PATH = '/'
 const ORGANIZATION_NAME = 'City Vibe Matcher'
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
+const REVIEWER_TEAM_NAME = 'City Vibe Matcher Research Desk'
 const PUBLISHED_DATE_ISO = '2026-01-15'
 const PUBLISHED_DATE_TEXT = 'January 15, 2026'
 const LAST_MODIFIED_DATE_ISO = '2026-02-21'
@@ -51,6 +52,16 @@ const PAGE_SEO_COPY = {
       description:
         'Read how bestcityinchina.site handles analytics data, cookies, third-party services, and retention practices, and how to contact us with privacy-related questions.',
     },
+    editorial: {
+      title: 'Editorial Policy | Who Wrote, Reviewed, and Updated City Vibe Matcher Guides',
+      description:
+        'See who writes, reviews, and updates our China city guides, plus the correction workflow and evidence standards used across each article revision.',
+    },
+    updates: {
+      title: 'Content Updates | City Vibe Matcher Publishing Rhythm and Changelog',
+      description:
+        'Track weekly guide releases, bi-weekly refresh cycles, and detailed update logs across our first-time China city planning content.',
+    },
   },
   zh: {
     about: {
@@ -67,6 +78,16 @@ const PAGE_SEO_COPY = {
       title: '隐私政策｜City Vibe Matcher 的数据与 Cookie 说明',
       description:
         '查看 bestcityinchina.site 如何处理分析数据、Cookie、第三方服务与数据保留周期，并了解如何就隐私问题联系我们。',
+    },
+    editorial: {
+      title: '编辑规范｜谁撰写、审核并更新 City Vibe Matcher 攻略',
+      description:
+        '查看 City Vibe Matcher 的内容生产流程：谁负责撰写与审核、如何处理纠错、以及每次更新采用的来源核验标准。',
+    },
+    updates: {
+      title: '内容更新日志｜City Vibe Matcher 发布节奏与版本记录',
+      description:
+        '透明展示每周内容发布、双周旧文刷新与内链补强节奏，追踪来华首站攻略的实际更新记录。',
     },
   },
   ja: {
@@ -85,6 +106,16 @@ const PAGE_SEO_COPY = {
       description:
         'bestcityinchina.site における解析データ、Cookie、第三者サービス、データ保持期間、プライバシーに関するお問い合わせ方法をまとめています。',
     },
+    editorial: {
+      title: '編集ポリシー｜誰が執筆・レビュー・更新しているか',
+      description:
+        'City Vibe Matcher の中国都市ガイドを誰が執筆し、誰がレビューし、どの基準で更新しているかを公開しています。',
+    },
+    updates: {
+      title: '更新ログ｜City Vibe Matcher の公開リズムと改訂履歴',
+      description:
+        '週次公開・隔週リフレッシュ・内部リンク強化を含む、初中国向けガイドの更新履歴を確認できます。',
+    },
   },
   ko: {
     about: {
@@ -101,6 +132,16 @@ const PAGE_SEO_COPY = {
       title: '개인정보처리방침｜City Vibe Matcher 데이터·쿠키·보관 정책',
       description:
         'bestcityinchina.site의 분석 데이터 처리, 쿠키 사용, 제3자 서비스, 데이터 보관 기간, 개인정보 문의 방법을 확인할 수 있습니다.',
+    },
+    editorial: {
+      title: '편집 정책｜누가 작성·검수·업데이트하는가',
+      description:
+        'City Vibe Matcher 중국 도시 가이드의 작성자, 검수 절차, 정정 처리 기준, 업데이트 운영 원칙을 확인할 수 있습니다.',
+    },
+    updates: {
+      title: '콘텐츠 업데이트 로그｜발행 주기와 개정 이력',
+      description:
+        '주간 발행, 격주 리프레시, 내부 링크 보강을 포함한 중국 첫 방문 가이드의 실제 업데이트 이력을 확인하세요.',
     },
   },
 }
@@ -168,6 +209,46 @@ const GUIDE_PAGES = [
       answer:
         'For many first-time tourists, Shanghai and Beijing are common starting points. The better answer depends on your travel style, which is why personalized matching often performs better than one-size-fits-all lists.',
     },
+    internalLinks: [
+      {
+        slug: 'beijing-vs-shanghai-for-first-trip',
+        anchor: 'Compare Beijing and Shanghai with a first-trip decision matrix',
+      },
+      {
+        slug: 'best-china-cities-by-travel-style',
+        anchor: 'Match your travel style to Chinese city archetypes',
+      },
+      {
+        slug: 'china-first-trip-budget-by-city',
+        anchor: 'Estimate first-trip budget bands before you pick a city',
+      },
+      {
+        slug: 'china-visa-payment-checklist-first-timers',
+        anchor: 'Run a visa and digital-payment readiness checklist',
+      },
+    ],
+    updateSummary: [
+      'Added clearer city-selection checkpoints for convenience, culture depth, and pace tolerance.',
+      'Inserted budget and payment-prep linkouts to reduce booking-stage surprises.',
+    ],
+    sources: [
+      {
+        name: 'National Immigration Administration of China',
+        url: 'https://en.nia.gov.cn/',
+        note: 'Official entry and immigration updates.',
+      },
+      {
+        name: 'IATA Travel Centre',
+        url: 'https://www.iatatravelcentre.com/',
+        note: 'Airline-facing entry document reference.',
+      },
+      {
+        name: 'Ministry of Foreign Affairs of the PRC',
+        url: 'https://www.fmprc.gov.cn/eng/',
+        note: 'Official diplomatic notices and policy links.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
   },
   {
     slug: 'beijing-vs-shanghai-for-first-trip',
@@ -224,6 +305,46 @@ const GUIDE_PAGES = [
       answer:
         'Beijing is better for history-first travel. Shanghai is better for modern city experiences and convenience. The best choice depends on your trip goals.',
     },
+    internalLinks: [
+      {
+        slug: 'beijing-shanghai-chengdu-first-trip-comparison',
+        anchor: 'Add Chengdu to the comparison when pace and food matter',
+      },
+      {
+        slug: 'how-many-days-in-first-china-city',
+        anchor: 'Choose a 3-, 4-, or 5-day structure after selecting the city',
+      },
+      {
+        slug: 'china-first-trip-budget-by-city',
+        anchor: 'Compare cost rhythm between heritage-heavy and modern-city itineraries',
+      },
+      {
+        slug: 'best-time-to-visit-china-first-trip',
+        anchor: 'Validate your shortlist against seasonality and weather windows',
+      },
+    ],
+    updateSummary: [
+      'Expanded the comparison into pace, transfer friction, and schedule resilience factors.',
+      'Added links to season and budget planning so city choice and execution stay aligned.',
+    ],
+    sources: [
+      {
+        name: 'Beijing Municipal Government (English)',
+        url: 'https://english.beijing.gov.cn/',
+        note: 'Official city information and visitor notices.',
+      },
+      {
+        name: 'Shanghai Municipal Government (English)',
+        url: 'https://english.shanghai.gov.cn/',
+        note: 'Official city information and public-service updates.',
+      },
+      {
+        name: 'IATA Travel Centre',
+        url: 'https://www.iatatravelcentre.com/',
+        note: 'Travel document and transit requirement reference.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
   },
   {
     slug: 'best-china-cities-by-travel-style',
@@ -288,6 +409,46 @@ const GUIDE_PAGES = [
       answer:
         'Start by ranking your priorities: history, city life, nature, comfort, pace, and social vibe. Then map your top priorities to city profiles and compare the top three matches.',
     },
+    internalLinks: [
+      {
+        slug: 'best-city-to-visit-in-china-first-time',
+        anchor: 'Use the first-city framework to turn style fit into one final pick',
+      },
+      {
+        slug: 'beijing-shanghai-chengdu-first-trip-comparison',
+        anchor: 'Contrast Beijing, Shanghai, and Chengdu with style-specific tradeoffs',
+      },
+      {
+        slug: 'best-time-to-visit-china-first-trip',
+        anchor: 'Check whether your style match still works in your travel month',
+      },
+      {
+        slug: 'how-many-days-in-first-china-city',
+        anchor: 'Pair each style with a realistic day-count template',
+      },
+    ],
+    updateSummary: [
+      'Added explicit style-to-city mapping for food-led and recovery-paced travelers.',
+      'Connected style decisions with season and trip-length planning pages.',
+    ],
+    sources: [
+      {
+        name: 'UNESCO World Heritage',
+        url: 'https://www.unesco.org/en',
+        note: 'Context for heritage-oriented destination planning.',
+      },
+      {
+        name: 'China Meteorological Administration',
+        url: 'https://www.cma.gov.cn/en/',
+        note: 'Seasonality context for travel-style timing.',
+      },
+      {
+        name: 'State Council of the PRC (English)',
+        url: 'https://english.www.gov.cn/',
+        note: 'Official policy and infrastructure updates.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
   },
   {
     slug: 'how-many-days-in-first-china-city',
@@ -344,6 +505,462 @@ const GUIDE_PAGES = [
       answer:
         'Three days is enough for key sights, but 4 to 5 days is usually better for first-time travelers who want a smoother pace and deeper experience.',
     },
+    internalLinks: [
+      {
+        slug: 'china-first-trip-budget-by-city',
+        anchor: 'Adjust day-count plans to your lodging and local transport budget',
+      },
+      {
+        slug: 'best-time-to-visit-china-first-trip',
+        anchor: 'Align day count with shoulder-season weather patterns',
+      },
+      {
+        slug: 'china-visa-payment-checklist-first-timers',
+        anchor: 'Finish visa and payment setup before locking transfer days',
+      },
+      {
+        slug: 'best-city-to-visit-in-china-first-time',
+        anchor: 'Return to city selection if your day plan feels overloaded',
+      },
+    ],
+    updateSummary: [
+      'Added practical triggers for switching between 3, 4, and 5 days.',
+      'Linked day-count planning to pre-departure prep and budget constraints.',
+    ],
+    sources: [
+      {
+        name: 'Civil Aviation Administration of China',
+        url: 'https://www.caac.gov.cn/en/',
+        note: 'Aviation operations context for transfer-day planning.',
+      },
+      {
+        name: 'China Railway 12306',
+        url: 'https://www.12306.cn/en/index.html',
+        note: 'Rail scheduling context for intercity timing.',
+      },
+      {
+        name: 'IATA Travel Centre',
+        url: 'https://www.iatatravelcentre.com/',
+        note: 'Transit and document considerations for multi-city routes.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
+  {
+    slug: 'beijing-shanghai-chengdu-first-trip-comparison',
+    title: 'Beijing vs Shanghai vs Chengdu for a First China Trip',
+    titleVariants: {
+      A: 'Beijing vs Shanghai vs Chengdu for a First China Trip',
+      B: 'Beijing, Shanghai, or Chengdu: Which First City Fits You Best?',
+    },
+    description:
+      'Compare Beijing, Shanghai, and Chengdu across history depth, logistics friction, food scene intensity, and recovery pace to choose your first city.',
+    intro:
+      'When first-time travelers cannot decide between Beijing and Shanghai, Chengdu is often the missing third option that changes the decision.',
+    keyPoints: [
+      'Beijing leads for heritage density and iconic first-time landmarks.',
+      'Shanghai leads for low-friction logistics and flexible city flow.',
+      'Chengdu leads for food culture, slower rhythm, and local-life depth.',
+    ],
+    sections: [
+      {
+        heading: '1. Heritage, modernity, and lifestyle depth',
+        paragraphs: [
+          'Beijing is strongest when your trip must center on dynastic history and landmark narratives. It has higher density of headline heritage sites than most first-trip alternatives.',
+          'Shanghai is strongest when you value modern urban variety and smooth transitions between neighborhoods. It usually requires less rigid day planning to stay enjoyable.',
+          'Chengdu stands out for lifestyle immersion, tea-house culture, and food-first exploration. It rewards travelers who prefer local rhythm over checklist landmarks.',
+        ],
+      },
+      {
+        heading: '2. Daily friction and schedule pressure',
+        paragraphs: [
+          'Beijing often needs early starts and stricter attraction sequencing because queue pressure can be high at signature sites.',
+          'Shanghai remains the easiest city for first-time navigation because transport density and payment convenience are generally more forgiving.',
+          'Chengdu sits in the middle: less schedule pressure than Beijing, but still benefits from selective planning when you include nearby excursions.',
+        ],
+      },
+      {
+        heading: '3. Food, social atmosphere, and recovery',
+        paragraphs: [
+          'Travelers who prioritize food and local neighborhood texture often rate Chengdu highest for satisfaction-to-fatigue ratio.',
+          'Shanghai offers the broadest international dining range and nightlife options, which is useful for mixed-group itineraries.',
+          'Beijing delivers strong culinary value too, but many first-time travelers spend more daytime energy on landmarks and transfers.',
+        ],
+      },
+      {
+        heading: '4. Decision shortcut for first-time visitors',
+        paragraphs: [
+          'Pick Beijing if heritage depth is your non-negotiable trip anchor.',
+          'Pick Shanghai if arrival smoothness and itinerary flexibility are your top goals.',
+          'Pick Chengdu if you want culture-rich local life with a gentler daily pace.',
+        ],
+      },
+    ],
+    faq: {
+      question: 'Should first-time visitors choose Beijing, Shanghai, or Chengdu?',
+      answer:
+        'Choose Beijing for imperial heritage, Shanghai for convenience, and Chengdu for food-led local culture. The right answer depends on your pace and trip goals.',
+    },
+    internalLinks: [
+      {
+        slug: 'beijing-vs-shanghai-for-first-trip',
+        anchor: 'Use the two-city comparison if Chengdu is not on your shortlist yet',
+      },
+      {
+        slug: 'best-china-cities-by-travel-style',
+        anchor: 'Map personality fit before finalizing this three-city decision',
+      },
+      {
+        slug: 'china-first-trip-budget-by-city',
+        anchor: 'Check cost differences between these three major gateways',
+      },
+      {
+        slug: 'how-many-days-in-first-china-city',
+        anchor: 'Pick a day-count template once your city choice is clear',
+      },
+      {
+        slug: 'best-time-to-visit-china-first-trip',
+        anchor: 'Validate city choice with weather and season windows',
+      },
+    ],
+    updateSummary: [
+      'Added Chengdu as a third benchmark city for first-trip decisions.',
+      'Introduced a pace-versus-friction comparison to reduce decision paralysis.',
+    ],
+    sources: [
+      {
+        name: 'Beijing Municipal Government (English)',
+        url: 'https://english.beijing.gov.cn/',
+        note: 'Official municipal reference.',
+      },
+      {
+        name: 'Shanghai Municipal Government (English)',
+        url: 'https://english.shanghai.gov.cn/',
+        note: 'Official municipal reference.',
+      },
+      {
+        name: 'Chengdu Municipal Government',
+        url: 'https://www.chengdu.gov.cn/',
+        note: 'Official municipal reference.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
+  {
+    slug: 'china-first-trip-budget-by-city',
+    title: 'China First-Trip Budget Guide by City',
+    titleVariants: {
+      A: 'China First-Trip Budget Guide by City',
+      B: 'How Much Budget Do You Need for Your First China City?',
+    },
+    description:
+      'Build a practical first-trip budget by city with daily spend ranges for lodging, transport, attractions, and meal rhythm before booking.',
+    intro:
+      'Budget planning works best when you compare spending patterns by city instead of using one national average.',
+    keyPoints: [
+      'Plan by daily spending rhythm, not just total trip budget.',
+      'Big gateways often trade higher accommodation cost for lower planning friction.',
+      'A contingency buffer is mandatory for first-time itineraries.',
+    ],
+    sections: [
+      {
+        heading: '1. Separate fixed costs from variable city costs',
+        paragraphs: [
+          'Your flights and major rail transfers are fixed-cost anchors. Accommodation, local transport, and attraction intensity are variable costs shaped by city choice.',
+          'Shanghai usually concentrates spend into accommodation and urban convenience. Beijing can concentrate spend into attraction tickets and transfer blocks.',
+          'Chengdu often delivers stronger value on food and everyday local spending, which can improve budget resilience on longer stays.',
+        ],
+      },
+      {
+        heading: '2. Use daily budget bands for scenario planning',
+        paragraphs: [
+          'Use three daily bands for each city: efficient, balanced, and comfort-oriented. This keeps your plan adaptable when conditions change.',
+          'If your city shortlist includes one high-cost and one medium-cost option, model both before payment deadlines so you can pivot without stress.',
+          'Always reserve a contingency block for weather shifts, booking changes, and transfer delays.',
+        ],
+      },
+      {
+        heading: '3. Budget by trip style, not by destination branding',
+        paragraphs: [
+          'A food-led local itinerary can be cheaper than a landmark-heavy itinerary in the same city.',
+          'A short, high-intensity schedule can cost more than a slower four-day structure due to ticket clustering and peak-hour transfers.',
+          'Budget confidence improves when itinerary pace and city choice are planned together.',
+        ],
+      },
+      {
+        heading: '4. Fast budgeting checklist before booking',
+        paragraphs: [
+          'Confirm payment method readiness, average local transfer spend, and one backup accommodation zone.',
+          'Review your likely daily activity load and classify each day as high-cost or low-cost.',
+          'Lock your first city only after your budget model still works under a 10-15% cost increase scenario.',
+        ],
+      },
+    ],
+    faq: {
+      question: 'How much budget should I prepare for my first China city?',
+      answer:
+        'Start with city-specific daily spend bands and a contingency buffer. Budget varies by pace, accommodation preference, and attraction intensity more than city name alone.',
+    },
+    internalLinks: [
+      {
+        slug: 'how-many-days-in-first-china-city',
+        anchor: 'Set your day count first so the budget model reflects real pace',
+      },
+      {
+        slug: 'best-time-to-visit-china-first-trip',
+        anchor: 'Use season windows to estimate peak-price pressure',
+      },
+      {
+        slug: 'china-visa-payment-checklist-first-timers',
+        anchor: 'Prevent payment setup gaps from causing hidden travel costs',
+      },
+      {
+        slug: 'best-city-to-visit-in-china-first-time',
+        anchor: 'Return to city selection if budget stress changes your shortlist',
+      },
+    ],
+    updateSummary: [
+      'Added city-level budget rhythm guidance instead of one-size-fits-all totals.',
+      'Linked budget planning with payment readiness and seasonality risk.',
+    ],
+    sources: [
+      {
+        name: 'National Bureau of Statistics of China (English)',
+        url: 'https://www.stats.gov.cn/english/',
+        note: 'Macro-level price and consumption context.',
+      },
+      {
+        name: 'State Council of the PRC (English)',
+        url: 'https://english.www.gov.cn/',
+        note: 'Policy and infrastructure context affecting travel operations.',
+      },
+      {
+        name: 'IATA Travel Centre',
+        url: 'https://www.iatatravelcentre.com/',
+        note: 'Entry requirement context for booking readiness.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
+  {
+    slug: 'best-time-to-visit-china-first-trip',
+    title: 'Best Time to Visit China for a First Trip',
+    titleVariants: {
+      A: 'Best Time to Visit China for a First Trip',
+      B: 'When Should You Take Your First China Trip? Season Planning Guide',
+    },
+    description:
+      'Choose the best travel window for your first China trip by balancing weather comfort, crowd pressure, and city-specific event seasonality.',
+    intro:
+      'Seasonality can change how the same city feels. Good timing often matters as much as destination choice for first-time satisfaction.',
+    keyPoints: [
+      'Shoulder seasons usually offer the best balance for first-time travelers.',
+      'Weather comfort, holiday crowding, and price pressure should be evaluated together.',
+      'One backup city protects your plan when seasonal conditions shift.',
+    ],
+    sections: [
+      {
+        heading: '1. Why shoulder seasons are often the safest first-trip choice',
+        paragraphs: [
+          'Shoulder seasons can reduce extreme weather risk while avoiding the heaviest holiday crowd pressure.',
+          'For first-time travelers, this usually means lower logistics stress and more stable day-to-day energy use.',
+          'If your schedule is fixed in peak season, pre-booking and day-structure discipline become more important.',
+        ],
+      },
+      {
+        heading: '2. Match season to city profile',
+        paragraphs: [
+          'Dense landmark itineraries in Beijing need weather and queue management more than flexible neighborhood-led plans in Shanghai.',
+          'Cities with slower lifestyle pacing can absorb weather disruptions better when your itinerary is not tightly packed.',
+          'A season-city fit check helps avoid the common mistake of selecting a great city in the wrong month for your travel style.',
+        ],
+      },
+      {
+        heading: '3. Use a weather-and-crowd fallback rule',
+        paragraphs: [
+          'Keep one alternate city in a different climate profile so your trip remains viable under adverse weather.',
+          'If your primary city falls into severe crowd or weather conditions, switch early rather than compressing activities into fewer days.',
+          'Fallback planning improves trip quality more than trying to optimize every hour in a constrained window.',
+        ],
+      },
+      {
+        heading: '4. Season planning checklist',
+        paragraphs: [
+          'Check likely weather ranges, public-holiday overlap, and transfer reliability for your travel window.',
+          'Combine season checks with day-count and budget models before locking non-refundable bookings.',
+          'Reconfirm entry and payment readiness close to departure in case policy or platform details change.',
+        ],
+      },
+    ],
+    faq: {
+      question: 'When is the best time for first-time travelers to visit China?',
+      answer:
+        'For many travelers, shoulder seasons are the safest choice because they balance weather comfort, manageable crowds, and better itinerary flexibility.',
+    },
+    internalLinks: [
+      {
+        slug: 'best-city-to-visit-in-china-first-time',
+        anchor: 'Re-check city fit after season constraints are clear',
+      },
+      {
+        slug: 'how-many-days-in-first-china-city',
+        anchor: 'Adjust your day-count template to weather and crowd conditions',
+      },
+      {
+        slug: 'china-first-trip-budget-by-city',
+        anchor: 'Estimate seasonal price pressure before committing',
+      },
+      {
+        slug: 'beijing-shanghai-chengdu-first-trip-comparison',
+        anchor: 'Compare seasonal tradeoffs across Beijing, Shanghai, and Chengdu',
+      },
+    ],
+    updateSummary: [
+      'Added month-window decision logic focused on first-time logistics risk.',
+      'Connected season planning with budget and day-count pages for execution.',
+    ],
+    sources: [
+      {
+        name: 'China Meteorological Administration',
+        url: 'https://www.cma.gov.cn/en/',
+        note: 'Official weather and climate context.',
+      },
+      {
+        name: 'World Meteorological Organization',
+        url: 'https://wmo.int/',
+        note: 'Global climate context and standards.',
+      },
+      {
+        name: 'State Council of the PRC (English)',
+        url: 'https://english.www.gov.cn/',
+        note: 'Official public-holiday and policy announcements.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
+  {
+    slug: 'china-visa-payment-checklist-first-timers',
+    title: 'China Visa and Payment Checklist for First-Time Travelers',
+    titleVariants: {
+      A: 'China Visa and Payment Checklist for First-Time Travelers',
+      B: 'China Entry and Payment Prep: First-Trip Checklist',
+    },
+    description:
+      'Use a practical pre-departure checklist for visa, entry documentation, and digital payment readiness before your first China trip.',
+    intro:
+      'Many first-trip disruptions happen before arrival: incomplete entry preparation and payment setup gaps are common avoidable blockers.',
+    keyPoints: [
+      'Confirm entry requirements early and re-check near departure.',
+      'Prepare at least two payment paths to reduce arrival friction.',
+      'Link pre-departure checks with city choice and day-count planning.',
+    ],
+    sections: [
+      {
+        heading: '1. Entry readiness before booking non-refundable plans',
+        paragraphs: [
+          'Confirm your passport validity window, document requirements, and latest entry notices before locking non-refundable bookings.',
+          'If your route includes transfers, verify transit-related requirements separately from destination entry rules.',
+          'Keep digital and printed copies of critical documents so unexpected connectivity problems do not block your movement.',
+        ],
+      },
+      {
+        heading: '2. Payment readiness for the first 72 hours',
+        paragraphs: [
+          'Prepare more than one payment method. Single-platform dependency can create avoidable stress during arrival and transfers.',
+          'Test account setup, card linkage, and authentication before departure so your first day is not consumed by configuration issues.',
+          'Carry a practical fallback plan for cases where your primary payment flow fails temporarily.',
+        ],
+      },
+      {
+        heading: '3. Policy-sensitive information handling',
+        paragraphs: [
+          'Policy details can change. Always check official channels close to departure and before final payment.',
+          'Do not rely on old forum screenshots or unverifiable reposts for critical entry steps.',
+          'If information conflicts across sources, prioritize official government and transport channels.',
+        ],
+      },
+      {
+        heading: '4. Final pre-departure checklist',
+        paragraphs: [
+          'Reconfirm entry requirements, payment readiness, and your first 48-hour city logistics plan.',
+          'Save offline copies of key addresses, transport plans, and emergency contacts.',
+          'If any critical item is uncertain, delay non-refundable payments until resolved.',
+        ],
+      },
+    ],
+    faq: {
+      question: 'What should first-time travelers prepare before entering China?',
+      answer:
+        'Prepare verified entry documents, two payment options, and an arrival-week logistics plan. Re-check policy details through official channels close to departure.',
+    },
+    internalLinks: [
+      {
+        slug: 'best-city-to-visit-in-china-first-time',
+        anchor: 'Choose a first city only after entry and payment readiness are confirmed',
+      },
+      {
+        slug: 'china-first-trip-budget-by-city',
+        anchor: 'Include payment constraints in your budget model',
+      },
+      {
+        slug: 'how-many-days-in-first-china-city',
+        anchor: 'Adjust day-count plans when prep tasks need extra lead time',
+      },
+      {
+        slug: 'best-time-to-visit-china-first-trip',
+        anchor: 'Coordinate departure month with policy and operational readiness',
+      },
+    ],
+    updateSummary: [
+      'Added a 72-hour arrival checklist focused on entry and payment resilience.',
+      'Strengthened source policy: official channels first for all time-sensitive claims.',
+    ],
+    sources: [
+      {
+        name: 'National Immigration Administration of China',
+        url: 'https://en.nia.gov.cn/',
+        note: 'Official entry and immigration policies.',
+      },
+      {
+        name: 'Ministry of Foreign Affairs of the PRC',
+        url: 'https://www.fmprc.gov.cn/eng/',
+        note: 'Diplomatic and consular policy information.',
+      },
+      {
+        name: "People's Bank of China (English)",
+        url: 'https://www.pbc.gov.cn/en/',
+        note: 'Payment system and financial service context.',
+      },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
+]
+
+const GUIDE_BY_SLUG = new Map(GUIDE_PAGES.map((guide) => [guide.slug, guide]))
+
+const CONTENT_UPDATE_LOG = [
+  {
+    dateISO: '2026-02-21',
+    dateText: 'February 21, 2026',
+    summary: 'Expanded the guide cluster with budget, season, and entry-readiness content for first-time China travelers.',
+    guideSlugs: [
+      'china-first-trip-budget-by-city',
+      'best-time-to-visit-china-first-trip',
+      'china-visa-payment-checklist-first-timers',
+      'beijing-shanghai-chengdu-first-trip-comparison',
+    ],
+  },
+  {
+    dateISO: '2026-02-18',
+    dateText: 'February 18, 2026',
+    summary: 'Refreshed Beijing and Shanghai comparison with friction and pace-based decision rules.',
+    guideSlugs: ['beijing-vs-shanghai-for-first-trip', 'how-many-days-in-first-china-city'],
+  },
+  {
+    dateISO: '2026-02-14',
+    dateText: 'February 14, 2026',
+    summary: 'Updated first-city decision framework and added style-based internal links.',
+    guideSlugs: ['best-city-to-visit-in-china-first-time', 'best-china-cities-by-travel-style'],
   },
 ]
 
@@ -402,6 +1019,16 @@ function contactPath(langOrCode) {
 function privacyPolicyPath(langOrCode) {
   const langCode = resolveLangCode(langOrCode)
   return `/${langCode}/privacy-policy/`
+}
+
+function editorialPolicyPath(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return `/${langCode}/editorial-policy/`
+}
+
+function contentUpdatesPath(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return `/${langCode}/content-updates/`
 }
 
 function guideHubPath(langOrCode) {
@@ -723,24 +1350,21 @@ function renderFooterNav(links) {
 function renderSiteFooter({ lang = 'en', locale, includeGuides = true, guidesPath } = {}) {
   const langCode = resolveLangCode(lang)
   const footer = locale?.home?.footer ?? {}
-  const legalLinks = locale?.home?.footer?.legalLinks ?? {}
-  const aboutLabel = legalLinks.about ?? 'About'
-  const contactLabel = legalLinks.contact ?? 'Contact'
-  const guidesLabel = legalLinks.guides ?? 'Guides'
-  const privacyLabel = legalLinks.privacy ?? 'Privacy Policy'
-  const homeLabel = legalLinks.home ?? 'Home'
+  const labels = localizedUiLabels(langCode, locale)
   const currentYear = new Date().getFullYear()
   const resolvedHomePath = homePath(langCode)
   const resolvedGuidesPath = guidesPath ?? guideHubPath(langCode)
   const links = [
-    { href: aboutPath(langCode), label: aboutLabel },
-    { href: contactPath(langCode), label: contactLabel },
-    { href: privacyPolicyPath(langCode), label: privacyLabel },
+    { href: aboutPath(langCode), label: labels.about },
+    { href: contactPath(langCode), label: labels.contact },
+    { href: editorialPolicyPath(langCode), label: labels.editorialPolicy },
+    { href: contentUpdatesPath(langCode), label: labels.contentUpdates },
+    { href: privacyPolicyPath(langCode), label: labels.privacy },
   ]
   if (includeGuides) {
-    links.push({ href: resolvedGuidesPath, label: guidesLabel })
+    links.push({ href: resolvedGuidesPath, label: labels.guides })
   }
-  links.push({ href: resolvedHomePath, label: homeLabel })
+  links.push({ href: resolvedHomePath, label: labels.home })
 
   return `<footer class="site-footer-shell">
     <div class="site-footer-main">
@@ -795,6 +1419,15 @@ function localizedUiLabels(langOrCode, locale) {
       dataCollection: 'What data we collect',
       thirdPartyServices: 'Third-party services',
       dataRetention: 'Data retention',
+      reviewedBy: 'Reviewed by',
+      updateSummary: 'Latest update summary',
+      authoritySources: 'Authoritative sources',
+      guidePathway: 'Recommended reading path',
+      editorialPolicy: 'Editorial policy',
+      contentUpdates: 'Content updates',
+      publishingRhythm: 'Publishing rhythm',
+      latestChanges: 'Latest changes',
+      cadenceTarget: 'Cadence target',
     },
     zh: {
       quiz: '测试',
@@ -824,6 +1457,15 @@ function localizedUiLabels(langOrCode, locale) {
       dataCollection: '我们收集的数据',
       thirdPartyServices: '第三方服务',
       dataRetention: '数据保留',
+      reviewedBy: '审核',
+      updateSummary: '本次更新摘要',
+      authoritySources: '权威来源',
+      guidePathway: '推荐阅读路径',
+      editorialPolicy: '编辑规范',
+      contentUpdates: '内容更新',
+      publishingRhythm: '发布节奏',
+      latestChanges: '最近变更',
+      cadenceTarget: '节奏目标',
     },
     ja: {
       quiz: 'クイズ',
@@ -853,6 +1495,15 @@ function localizedUiLabels(langOrCode, locale) {
       dataCollection: '収集するデータ',
       thirdPartyServices: '第三者サービス',
       dataRetention: 'データ保持',
+      reviewedBy: 'レビュー',
+      updateSummary: '更新サマリー',
+      authoritySources: '参照ソース',
+      guidePathway: 'おすすめ読書ルート',
+      editorialPolicy: '編集ポリシー',
+      contentUpdates: '更新ログ',
+      publishingRhythm: '公開リズム',
+      latestChanges: '最新変更',
+      cadenceTarget: '運用目標',
     },
     ko: {
       quiz: '퀴즈',
@@ -882,6 +1533,15 @@ function localizedUiLabels(langOrCode, locale) {
       dataCollection: '수집하는 데이터',
       thirdPartyServices: '제3자 서비스',
       dataRetention: '데이터 보관',
+      reviewedBy: '검수',
+      updateSummary: '최근 업데이트 요약',
+      authoritySources: '권위 출처',
+      guidePathway: '추천 읽기 경로',
+      editorialPolicy: '편집 정책',
+      contentUpdates: '업데이트 로그',
+      publishingRhythm: '발행 리듬',
+      latestChanges: '최근 변경',
+      cadenceTarget: '운영 목표',
     },
   }
 
@@ -1145,6 +1805,33 @@ function renderGuideHub(lang, locale) {
   })
 }
 
+function buildGuidePathwayLinksHtml(lang, guide, localizedTitleBySlug) {
+  const links = Array.isArray(guide?.internalLinks) ? guide.internalLinks : []
+  const items = links
+    .map((entry) => {
+      const targetGuide = GUIDE_BY_SLUG.get(entry.slug)
+      if (!targetGuide) return null
+      const targetTitle = localizedTitleBySlug.get(targetGuide.slug) ?? guideTitle(targetGuide)
+      return `<li><a href="${guidePath(lang, targetGuide)}">${escapeHtml(entry.anchor)}</a> — ${escapeHtml(targetTitle)}</li>`
+    })
+    .filter(Boolean)
+
+  return items.join('\n')
+}
+
+function buildGuideSourceLinksHtml(guide) {
+  const sources = Array.isArray(guide?.sources) ? guide.sources : []
+  const items = sources.map(
+    (source) =>
+      `<li><a href="${escapeHtml(source.url)}" rel="noopener noreferrer">${escapeHtml(source.name)}</a> — ${escapeHtml(source.note)}</li>`
+  )
+  return items.join('\n')
+}
+
+function buildGuideCitationUrls(guide) {
+  return (Array.isArray(guide?.sources) ? guide.sources : []).map((source) => source.url)
+}
+
 function renderGuideDetail(lang, locale, guide) {
   const home = locale.home ?? {}
   const labels = localizedUiLabels(lang, locale)
@@ -1154,6 +1841,10 @@ function renderGuideDetail(lang, locale, guide) {
   const resolvedTitle = localizedTitleBySlug.get(guide.slug) ?? guideTitle(guide)
   const canonicalPath = guidePath(lang, guide)
   const alternates = buildGuideAlternates(guide.slug)
+  const reviewer = guide.reviewer ?? REVIEWER_TEAM_NAME
+  const updateSummary = Array.isArray(guide?.updateSummary) ? guide.updateSummary : []
+  const pathwayLinksHtml = buildGuidePathwayLinksHtml(lang, guide, localizedTitleBySlug)
+  const sourceLinksHtml = buildGuideSourceLinksHtml(guide)
 
   const relatedGuideItems = GUIDE_PAGES.filter((page) => page.slug !== guide.slug).map((page) => ({
     name: localizedTitleBySlug.get(page.slug) ?? guideTitle(page),
@@ -1175,6 +1866,7 @@ function renderGuideDetail(lang, locale, guide) {
     .join('\n')
 
   const keyPointHtml = guide.keyPoints.map((point) => `<li>${escapeHtml(point)}</li>`).join('\n')
+  const updateSummaryHtml = updateSummary.map((item) => `<li>${escapeHtml(item)}</li>`).join('\n')
 
   const mainHtml = `<main id="main-content" class="page-shell">
   ${renderSiteHeader({ lang, locale, currentPath: canonicalPath })}
@@ -1192,20 +1884,33 @@ function renderGuideDetail(lang, locale, guide) {
     <h1>${escapeHtml(resolvedTitle)}</h1>
     <div class="article-meta-stack">
       <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta"><strong>${escapeHtml(labels.reviewedBy)}:</strong> ${escapeHtml(reviewer)}</p>
       <p class="article-meta"><strong>${escapeHtml(labels.published)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
       <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${LAST_MODIFIED_DATE_ISO}">${escapeHtml(LAST_MODIFIED_DATE_TEXT)}</time></p>
       <p class="article-meta">${escapeHtml(labels.by)} ${escapeHtml(AUTHOR_NAME)}</p>
       <p class="article-meta">${escapeHtml(labels.publishedOn)} <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
     </div>
     <p class="article-intro">${escapeHtml(guide.intro)}</p>
+    <section class="article-block">
+      <h2>${escapeHtml(labels.updateSummary)}</h2>
+      <ul class="list-cards">
+        ${updateSummaryHtml}
+      </ul>
+    </section>
     <ul class="list-cards">
       ${keyPointHtml}
     </ul>
     ${sectionHtml}
     <section class="article-block">
-      <h2>${escapeHtml(labels.furtherReading)}</h2>
+      <h2>${escapeHtml(labels.guidePathway)}</h2>
       <ul class="related-links">
-        <li><a href="https://www.thechinaguide.com/" rel="noopener noreferrer">The China Guide</a> — visa and travel logistics</li>
+        ${pathwayLinksHtml}
+      </ul>
+    </section>
+    <section class="article-block">
+      <h2>${escapeHtml(labels.authoritySources)}</h2>
+      <ul class="related-links">
+        ${sourceLinksHtml}
       </ul>
     </section>
     <section class="article-block faq-item">
@@ -1243,7 +1948,12 @@ function renderGuideDetail(lang, locale, guide) {
       datePublished: PUBLISHED_DATE_ISO,
       dateModified: LAST_MODIFIED_DATE_ISO,
       author: buildAuthorEntity(lang),
+      reviewedBy: {
+        '@type': 'Organization',
+        name: reviewer,
+      },
       publisher: buildPublisherEntity(),
+      citation: buildGuideCitationUrls(guide),
     },
     createBreadcrumbList([
       { name: labels.home, path: `/${lang.urlCode}` },
@@ -1258,6 +1968,7 @@ function renderGuideDetail(lang, locale, guide) {
     `<meta name="seo-title-a" content="${escapeHtml(guide?.titleVariants?.A ?? guide.title)}" />`,
     `<meta name="seo-title-b" content="${escapeHtml(guide?.titleVariants?.B ?? guide.title)}" />`,
     `<meta name="author" content="${escapeHtml(AUTHOR_NAME)}" />`,
+    `<meta name="reviewer" content="${escapeHtml(reviewer)}" />`,
     `<meta property="article:author" content="${escapeHtml(absUrl(aboutPath(lang)))}" />`,
     `<meta property="article:published_time" content="${PUBLISHED_DATE_ISO}" />`,
     `<meta property="article:modified_time" content="${LAST_MODIFIED_DATE_ISO}" />`,
@@ -1342,6 +2053,7 @@ function renderAboutPage(lang, locale) {
     <section class="article-block">
       <h2>${escapeHtml(labels.contactAndFeedback)}</h2>
       <p>Questions, corrections, and feedback are welcome. Reach us at <strong>${escapeHtml(CONTACT_EMAIL)}</strong> or visit the <a href="${contactPath(langCode)}">${escapeHtml(contactLabel)}</a> page.</p>
+      <p>For transparency on editorial workflow, see <a href="${editorialPolicyPath(langCode)}">${escapeHtml(labels.editorialPolicy)}</a> and <a href="${contentUpdatesPath(langCode)}">${escapeHtml(labels.contentUpdates)}</a>.</p>
     </section>
   </article>
 
@@ -1524,6 +2236,215 @@ function renderContactPage(lang, locale) {
   })
 }
 
+function renderEditorialPolicyPage(lang, locale) {
+  const langCode = resolveLangCode(lang)
+  const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
+  const labels = localizedUiLabels(lang, locale)
+  const canonicalPath = editorialPolicyPath(langCode)
+  const fallbackTitle = `${labels.editorialPolicy} | City Vibe Matcher`
+  const fallbackDescription =
+    'Editorial standards page describing who writes, reviews, and updates City Vibe Matcher guides for first-time China travelers.'
+  const { title, description } = resolvePageSeoCopy(langCode, 'editorial', fallbackTitle, fallbackDescription)
+  const alternates = buildPageAlternates('editorial-policy')
+
+  const mainHtml = `<main id="main-content" class="page-shell">
+  ${renderSiteHeader({ lang: langCode, locale, navLinks: buildContextNavLinks(langCode, locale, ''), currentPath: canonicalPath })}
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="${homePath(langCode)}">${escapeHtml(labels.home)}</a>
+    <span>/</span>
+    <span>${escapeHtml(labels.editorialPolicy)}</span>
+  </nav>
+
+  <article class="article-page block">
+    <p class="eyebrow">${escapeHtml(labels.editorialPolicy)}</p>
+    <h1>${escapeHtml(title)}</h1>
+    <div class="article-meta-stack">
+      <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
+      <p class="article-meta"><strong>${escapeHtml(labels.reviewedBy)}:</strong> ${escapeHtml(REVIEWER_TEAM_NAME)}</p>
+      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${LAST_MODIFIED_DATE_ISO}">${escapeHtml(LAST_MODIFIED_DATE_TEXT)}</time></p>
+    </div>
+    <p class="article-intro">This page explains who writes, reviews, and updates our China city planning guides and how corrections are handled.</p>
+
+    <section class="article-block">
+      <h2>Who wrote, reviewed, and updated this site</h2>
+      <p><strong>${escapeHtml(AUTHOR_NAME)}</strong> drafts and updates guide content with a planning-first scope for first-time travelers.</p>
+      <p><strong>${escapeHtml(REVIEWER_TEAM_NAME)}</strong> reviews structure, factual alignment, source quality, and internal-link consistency before publication.</p>
+    </section>
+
+    <section class="article-block">
+      <h2>Editorial standards</h2>
+      <ul class="list-cards">
+        <li>Every guide must include a practical decision framework, not only destination descriptions.</li>
+        <li>Time-sensitive claims must point readers to official channels for final confirmation.</li>
+        <li>Each guide update requires an update summary and refreshed internal pathway links.</li>
+      </ul>
+    </section>
+
+    <section class="article-block">
+      <h2>Correction workflow</h2>
+      <p>Correction requests are processed with source-date checks. If a correction affects multiple pages, we patch all impacted guides in one batch.</p>
+      <p>Use the <a href="${contactPath(langCode)}">${escapeHtml(labels.contact)}</a> page and include URL, current statement, proposed correction, and source link.</p>
+    </section>
+
+    <section class="article-block">
+      <h2>${escapeHtml(labels.publishingRhythm)}</h2>
+      <ul class="list-cards">
+        <li>${escapeHtml(labels.cadenceTarget)}: publish or refresh at least two high-value guides every week.</li>
+        <li>Run a cross-link and outdated-claim refresh cycle every two weeks.</li>
+        <li>Public changelog is maintained on the <a href="${contentUpdatesPath(langCode)}">${escapeHtml(labels.contentUpdates)}</a> page.</li>
+      </ul>
+    </section>
+  </article>
+
+  ${renderSiteFooter({ lang: langCode, locale, includeGuides: true, guidesPath: guideHubPath(langCode) })}
+</main>`
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: title,
+      description,
+      url: absUrl(canonicalPath),
+      inLanguage: htmlLang,
+      dateModified: LAST_MODIFIED_DATE_ISO,
+      author: buildAuthorEntity(langCode),
+      reviewedBy: {
+        '@type': 'Organization',
+        name: REVIEWER_TEAM_NAME,
+      },
+      publisher: buildPublisherEntity(),
+    },
+    createBreadcrumbList([
+      { name: labels.home, path: `/${langCode}` },
+      { name: labels.editorialPolicy, path: canonicalPath },
+    ]),
+  ]
+
+  const headExtras = [
+    `<meta name="author" content="${escapeHtml(AUTHOR_NAME)}" />`,
+    `<meta name="reviewer" content="${escapeHtml(REVIEWER_TEAM_NAME)}" />`,
+    `<meta property="article:modified_time" content="${LAST_MODIFIED_DATE_ISO}" />`,
+  ].join('\n    ')
+
+  return renderDocument({
+    htmlLang,
+    title,
+    description,
+    canonicalPath,
+    alternates,
+    ogLocale: ogLocaleForLang(langCode),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(langCode),
+    mainHtml,
+    jsonLd,
+    headExtras,
+  })
+}
+
+function renderContentUpdatesPage(lang, locale) {
+  const langCode = resolveLangCode(lang)
+  const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
+  const labels = localizedUiLabels(lang, locale)
+  const canonicalPath = contentUpdatesPath(langCode)
+  const fallbackTitle = `${labels.contentUpdates} | City Vibe Matcher`
+  const fallbackDescription =
+    'Changelog and publishing rhythm for City Vibe Matcher guides, including weekly releases and bi-weekly refresh cycles.'
+  const { title, description } = resolvePageSeoCopy(langCode, 'updates', fallbackTitle, fallbackDescription)
+  const alternates = buildPageAlternates('content-updates')
+  const localizedTitleBySlug = new Map(buildGuideCards(locale).map((card) => [card.guide.slug, card.title]))
+
+  const updateLogHtml = CONTENT_UPDATE_LOG.map((entry) => {
+    const guideLinks = entry.guideSlugs
+      .map((slug) => {
+        const guide = GUIDE_BY_SLUG.get(slug)
+        if (!guide) return null
+        const guideTitleText = localizedTitleBySlug.get(slug) ?? guideTitle(guide)
+        return `<li><a href="${guidePath(langCode, guide)}">${escapeHtml(guideTitleText)}</a></li>`
+      })
+      .filter(Boolean)
+      .join('\n')
+    return `<section class="article-block">
+      <h2><time datetime="${entry.dateISO}">${escapeHtml(entry.dateText)}</time></h2>
+      <p>${escapeHtml(entry.summary)}</p>
+      <ul class="related-links">
+        ${guideLinks}
+      </ul>
+    </section>`
+  }).join('\n')
+
+  const mainHtml = `<main id="main-content" class="page-shell">
+  ${renderSiteHeader({ lang: langCode, locale, navLinks: buildContextNavLinks(langCode, locale, ''), currentPath: canonicalPath })}
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="${homePath(langCode)}">${escapeHtml(labels.home)}</a>
+    <span>/</span>
+    <span>${escapeHtml(labels.contentUpdates)}</span>
+  </nav>
+
+  <article class="article-page block">
+    <p class="eyebrow">${escapeHtml(labels.contentUpdates)}</p>
+    <h1>${escapeHtml(title)}</h1>
+    <p class="article-intro">${escapeHtml(labels.publishingRhythm)}: weekly 2+ high-value updates, plus a bi-weekly refresh cycle for older guides and internal links.</p>
+
+    <section class="article-block">
+      <h2>${escapeHtml(labels.cadenceTarget)}</h2>
+      <ul class="list-cards">
+        <li>Publish or update at least two guide pages every week.</li>
+        <li>Revalidate internal links and source timestamps every two weeks.</li>
+        <li>Document every content revision with impacted guide URLs.</li>
+      </ul>
+    </section>
+
+    <section class="article-block">
+      <h2>${escapeHtml(labels.latestChanges)}</h2>
+      <p>Latest production changes across the China city guide cluster are listed below.</p>
+    </section>
+    ${updateLogHtml}
+  </article>
+
+  ${renderSiteFooter({ lang: langCode, locale, includeGuides: true, guidesPath: guideHubPath(langCode) })}
+</main>`
+
+  const updateItems = CONTENT_UPDATE_LOG.map((entry, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: entry.summary,
+    url: absUrl(canonicalPath),
+  }))
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: title,
+      description,
+      url: absUrl(canonicalPath),
+      inLanguage: htmlLang,
+      dateModified: LAST_MODIFIED_DATE_ISO,
+      author: buildAuthorEntity(langCode),
+      publisher: buildPublisherEntity(),
+      hasPart: updateItems,
+    },
+    createBreadcrumbList([
+      { name: labels.home, path: `/${langCode}` },
+      { name: labels.contentUpdates, path: canonicalPath },
+    ]),
+  ]
+
+  return renderDocument({
+    htmlLang,
+    title,
+    description,
+    canonicalPath,
+    alternates,
+    ogLocale: ogLocaleForLang(langCode),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(langCode),
+    mainHtml,
+    jsonLd,
+  })
+}
+
 function renderPrivacyPolicyPage(lang, locale) {
   const langCode = resolveLangCode(lang)
   const htmlLang = lang.htmlLang ?? (langCode === 'zh' ? 'zh-CN' : langCode)
@@ -1648,6 +2569,8 @@ function buildSitemap() {
   const infoPageUrls = LANGUAGES.flatMap((lang) => [
     aboutPath(lang),
     contactPath(lang),
+    editorialPolicyPath(lang),
+    contentUpdatesPath(lang),
     privacyPolicyPath(lang),
   ])
   const guideUrls = LANGUAGES.flatMap((lang) => [
@@ -1663,7 +2586,11 @@ function buildSitemap() {
           ? '1.0'
           : pathname.includes('/guides/')
             ? '0.8'
-            : pathname.includes('/about/') || pathname.includes('/contact/') || pathname.includes('/privacy-policy/')
+            : pathname.includes('/about/') ||
+                pathname.includes('/contact/') ||
+                pathname.includes('/editorial-policy/') ||
+                pathname.includes('/content-updates/') ||
+                pathname.includes('/privacy-policy/')
               ? '0.7'
               : '0.9'
       return `  <url>
@@ -1734,6 +2661,14 @@ async function main() {
     const locale = localeMap[lang.i18nCode]
     await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/about/index.html`), renderAboutPage(lang, locale))
     await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/contact/index.html`), renderContactPage(lang, locale))
+    await writeText(
+      path.join(PUBLIC_DIR, `${lang.urlCode}/editorial-policy/index.html`),
+      renderEditorialPolicyPage(lang, locale)
+    )
+    await writeText(
+      path.join(PUBLIC_DIR, `${lang.urlCode}/content-updates/index.html`),
+      renderContentUpdatesPage(lang, locale)
+    )
     await writeText(path.join(PUBLIC_DIR, `${lang.urlCode}/privacy-policy/index.html`), renderPrivacyPolicyPage(lang, locale))
   }
 

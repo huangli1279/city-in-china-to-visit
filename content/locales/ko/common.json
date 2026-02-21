@@ -1,0 +1,224 @@
+{
+  "home": {
+    "badge": "중국 여행 첫 도시 선택용",
+    "title": "Best City to Visit in China, 18문항으로 찾기",
+    "subtitle": "중국 여행을 결정했다면 이제 첫 도시를 고를 차례입니다. 18개 질문으로 나에게 맞는 첫 방문 도시를 찾으세요.",
+    "cta": "18문항 퀴즈 시작",
+    "metrics": {
+      "questions": "여행 스타일을 파악하는 빠른 질문",
+      "dimensions": "매칭 모델의 핵심 6개 차원",
+      "citiesValue": "맞춤",
+      "cities": "여행 성향에 맞춘 도시 추천"
+    },
+    "desktopPreviewTitle": "도시 분위기 미리보기",
+    "desktopPreviewSubtitle": "미래형 스카이라인부터 느긋한 차 문화까지. 분위기를 먼저 비교한 뒤 동선을 정할 수 있습니다.",
+    "shareTitle": "공유에 최적화",
+    "shareSubtitle": "결과 카드는 TikTok / Instagram 스크린샷 공유 흐름에 맞게 설계했습니다.",
+    "sharePoints": [
+      "도시 정체성이 한눈에 보이는 고대비 메인 카드",
+      "최적 매칭 1개 + 대안 2개를 한 화면에 표시",
+      "방문 적기와 예산 정보까지 함께 제공"
+    ],
+    "painEyebrow": "왜 이 퀴즈가 필요한가",
+    "painTitle": "가장 어려운 결정은 첫 도시 선택",
+    "painPoints": [
+      {
+        "title": "선택지가 너무 많다",
+        "description": "중국은 도시별 개성이 크게 달라서 처음 방문할 때 시작 도시를 고르기 어렵습니다."
+      },
+      {
+        "title": "정보 과부하",
+        "description": "가이드를 많이 볼수록 오히려 출발 도시 결정을 더 미루게 됩니다."
+      },
+      {
+        "title": "개인화된 추천 필요",
+        "description": "인기 순위는 대중 기준입니다. 실제로는 내 속도와 취향에 맞는 도시가 더 중요합니다."
+      }
+    ],
+    "modelEyebrow": "매칭 모델",
+    "modelTitle": "랜덤 추천이 아닌 설명 가능한 매칭",
+    "modelSubtitle": "답변을 6차원 여행 성향으로 변환한 뒤 도시 프로필과 비교해 가장 가까운 결과를 제시합니다.",
+    "modelDimensions": [
+      "History Appetite",
+      "Nature vs Urban",
+      "Local Immersion",
+      "Activity Level",
+      "Social Vibe",
+      "Adventure Appetite"
+    ],
+    "howItWorksTitle": "작동 방식",
+    "modelStep1": "약 2-3분 동안 18개의 상황형 문항에 답변",
+    "modelStep2": "6개 차원으로 여행자 프로필 계산",
+    "modelStep3": "최적 도시 1개와 대안 4개 제공",
+    "finalCtaTitle": "이제 내 중국 도시를 찾아볼까요?",
+    "finalCtaSubtitle": "지금 시작해서 '중국에 가고 싶다'를 구체적인 도시 계획으로 바꿔보세요.",
+    "finalCta": "퀴즈 시작하기",
+    "header": {
+      "brandEyebrow": "중국 여행 플래너",
+      "brandName": "City Vibe Matcher",
+      "navPreview": "도시 미리보기",
+      "navPain": "이 퀴즈가 필요한 이유",
+      "navModel": "매칭 방식",
+      "cta": "퀴즈 시작"
+    },
+    "footer": {
+      "eyebrow": "고민은 줄이고, 여행은 앞당기세요.",
+      "title": "첫 중국 도시는 내 여행 성향에 맞아야 합니다.",
+      "subtitle": "퀴즈로 첫 목적지를 정하고, 끝없는 검색에서 실제 일정으로 넘어가세요.",
+      "jumpTitle": "이 페이지 둘러보기",
+      "nextTitle": "준비되면 시작",
+      "cta": "18문항 퀴즈 시작",
+      "disclaimer": "회원가입 없이 약 2-3분 안에 결과를 확인할 수 있습니다.",
+      "copyright": "나에게 맞는 중국 도시는?",
+      "legalLinks": {
+        "about": "소개",
+        "contact": "문의",
+        "guides": "가이드",
+        "privacy": "개인정보처리방침",
+        "home": "홈"
+      }
+    },
+    "seo": {
+      "title": "Best City to Visit in China｜18문항 중국 도시 매칭",
+      "description": "best city to visit in china를 찾고 있나요? 18개 질문으로 여행 성향, 이동 속도, 문화 적응도를 분석해 중국 도시 중 가장 맞는 첫 방문 도시를 고르고 실제 일정에 바로 쓸 수 있는 선택 근거를 제공합니다.",
+      "appName": "중국 도시 매칭 퀴즈"
+    },
+    "seoGuide": {
+      "eyebrow": "도시 선택 가이드",
+      "title": "중국 첫 여행 도시를 고르는 방법",
+      "intro": "모든 사람에게 동일한 “최고의 중국 도시”는 없습니다. 여행 속도, 문화 적응도, 선호 활동에 따라 최적의 도시가 달라집니다. 이 퀴즈는 인기순이 아니라 성향 기반으로 후보를 좁혀줍니다.",
+      "points": [
+        "대도시 에너지, 야간 분위기, 편의성을 원하면 상하이와 선전이 잘 맞는 편입니다.",
+        "역사와 문화 체험이 중요하면 베이징과 시안이 더 잘 맞을 가능성이 큽니다.",
+        "자연 풍경과 느린 여행을 원하면 구이린, 다리, 싼야가 좋은 출발점이 됩니다."
+      ],
+      "conclusion": "먼저 상위 5개 도시를 고른 뒤, 항공편·계절·예산으로 최종 목적지를 확정하세요."
+    },
+    "topicCluster": {
+      "eyebrow": "토픽 클러스터",
+      "title": "중국 도시 여행 계획 가이드",
+      "subtitle": "이 가이드들은 퀴즈 결과와 함께 활용하면 도시 비교, 체류 일수 결정, 예산 페이스 조정, 대체 도시 선정까지 한 번에 정리할 수 있습니다.",
+      "cta": "모든 도시 가이드 보기",
+      "items": [
+        {
+          "title": "중국 첫 여행자에게 맞는 시작 도시",
+          "description": "여행 스타일, 이동 피로 허용도, 편의성 우선순위를 기준으로 첫 중국 여행의 시작 도시를 실전형으로 좁혀갈 수 있습니다."
+        },
+        {
+          "title": "첫 중국 여행, 베이징 vs 상하이",
+          "description": "베이징과 상하이를 역사 체험 밀도, 이동 편의성, 하루 체력 소모, 일정 유연성 관점에서 비교해 첫 도시를 결정할 수 있습니다."
+        },
+        {
+          "title": "여행 스타일별 중국 도시 추천",
+          "description": "역사 중심, 미식 중심, 자연 중심, 야간 활동 중심 등 여행 성향별로 맞는 중국 도시 유형을 구체적으로 정리해 줍니다."
+        },
+        {
+          "title": "첫 중국 도시, 며칠이 적당할까?",
+          "description": "3일·4일·5일 일정 틀을 활용해 명소 소화, 휴식 버퍼, 도시 간 이동까지 균형 잡힌 첫 방문 계획을 세울 수 있습니다."
+        },
+        {
+          "title": "첫 중국 여행: 베이징·상하이·청두 비교",
+          "description": "역사 체험 밀도, 이동 난이도, 미식 성향, 일일 체력 페이스를 기준으로 3대 인기 첫 도시를 비교합니다."
+        },
+        {
+          "title": "중국 첫 여행 도시별 예산 가이드",
+          "description": "숙소·교통·명소·예비비를 도시 단위로 나눠 예산을 설계해 예약 전 실행 가능성을 점검할 수 있습니다."
+        },
+        {
+          "title": "첫 중국 여행, 어느 계절이 좋을까?",
+          "description": "날씨 체감, 성수기 혼잡, 도시별 계절 특성을 함께 비교해 첫 방문에 더 안정적인 여행 시기를 고를 수 있습니다."
+        },
+        {
+          "title": "초행자를 위한 중국 비자·결제 준비 체크리스트",
+          "description": "출발 전 입국 서류와 모바일 결제 준비 상태를 점검해 도착 첫 주의 운영 리스크를 줄이는 실전 체크리스트입니다."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "best city to visit in china 자주 묻는 질문",
+      "items": [
+        {
+          "question": "중국이 처음이라면 어디부터 가는 게 좋나요?",
+          "answer": "처음 방문이라면 교통과 핵심 관광 동선이 편한 상하이·베이징이 많이 선택됩니다. 이 퀴즈는 여행 성향에 맞춘 개인화 추천을 제공합니다."
+        },
+        {
+          "question": "관광 목적이면 베이징과 상하이 중 어디가 더 좋나요?",
+          "answer": "역사 유적과 문화 중심이면 베이징, 현대 도시 경험과 국제적 편의성을 원하면 상하이가 더 적합한 경우가 많습니다."
+        },
+        {
+          "question": "첫 중국 도시는 보통 며칠이 적당한가요?",
+          "answer": "대부분 3~5일이 적당합니다. 주요 명소, 음식, 여유 일정까지 균형 있게 소화할 수 있습니다."
+        }
+      ]
+    }
+  },
+  "quiz": {
+    "progress": "질문 {{current}} / {{total}}",
+    "back": "이전",
+    "next": "다음",
+    "submit": "내 도시 보기",
+    "questionMap": "문항 지도",
+    "answered": "{{total}}문항 중 {{answered}}문항 답변",
+    "goToQuestion": "{{number}}번 문항으로 이동",
+    "currentSelection": "현재 선택",
+    "noSelection": "계속하려면 선택지를 고르세요.",
+    "currentTrends": "현재 상위 매칭",
+    "noTrend": "첫 답변 후 상위 매칭이 표시됩니다.",
+    "seo": {
+      "title": "중국 도시 퀴즈｜18문항으로 나에게 맞는 도시 찾기",
+      "description": "18개 질문에 답하고 내 여행 성향에 맞는 중국 도시를 추천받으세요."
+    }
+  },
+  "result": {
+    "heading": "나와 가장 잘 맞는 중국 도시는…",
+    "matchLabel": "매칭",
+    "runnerUps": "이런 도시도 추천해요",
+    "bestTime": "최적 여행 시기",
+    "budget": "예산 범위",
+    "retake": "다시 테스트하기",
+    "quickFacts": "여행 요약",
+    "seo": {
+      "title": "나의 중국 도시 매칭 결과",
+      "description": "개인화 추천 결과가 준비되었습니다. 최적 도시 1개와 대안 2개를 확인할 수 있습니다."
+    },
+    "matchReason": "추천 이유",
+    "yourProfile": "나의 여행 스타일",
+    "cityHighlights": "도시 하이라이트",
+    "tags": {
+      "user": {
+        "historyBuff": "역사 마니아",
+        "natureLover": "자연 애호가",
+        "cityExplorer": "도시 탐험가",
+        "culturalDiver": "문화 탐험가",
+        "comfortSeeker": "편안함 추구",
+        "slowTraveler": "여유 여행자",
+        "activeTraveler": "활동적 여행자",
+        "socializer": "사교형 여행자",
+        "soloWanderer": "혼자 여행자",
+        "adventurer": "모험가"
+      },
+      "city": {
+        "ancientHeritage": "역사 명소",
+        "naturalWonder": "자연 절경",
+        "modernMetropolis": "현대 도시",
+        "immersiveLocal": "깊이 있는 로컬 문화",
+        "relaxedPace": "여유로운 여행",
+        "packedItinerary": "풍부한 일정",
+        "foodAndNightlife": "미식과 나이트라이프",
+        "peacefulRetreat": "고요한 쉼터",
+        "offBeatGems": "숨겨진 명소"
+      }
+    }
+  },
+  "language": {
+    "en": "🇬🇧 English",
+    "zh-CN": "🇨🇳 中文",
+    "ja": "🇯🇵 日本語",
+    "ko": "🇰🇷 한국어",
+    "switcher": "언어 전환"
+  },
+  "a11y": {
+    "skipToMainContent": "본문으로 건너뛰기"
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "home": {
+    "badge": "为来华旅行决策而设计",
+    "title": "想找 Best City to Visit in China？先测出你的匹配城市",
+    "subtitle": "你已经决定来中国旅行。通过快速问题，找出最适合你的第一站。",
+    "cta": "开始 18 题测试",
+    "metrics": {
+      "questions": "围绕旅行风格的快速问题",
+      "dimensions": "匹配模型使用的 6 个核心维度",
+      "citiesValue": "精选",
+      "cities": "按你的旅行风格匹配城市建议"
+    },
+    "desktopPreviewTitle": "城市氛围预览",
+    "desktopPreviewSubtitle": "从未来感天际线到茶馆慢生活，先看城市气质再决定路线。",
+    "shareTitle": "为分享而生",
+    "shareSubtitle": "结果卡片按 TikTok / Instagram 截图传播场景设计。",
+    "sharePoints": [
+      "高对比主卡，城市身份信息一眼可见",
+      "同一张图展示最佳匹配 + 2 个备选",
+      "附带最佳时间与预算提示，便于快速决策"
+    ],
+    "painEyebrow": "为什么做这个测试",
+    "painTitle": "最难的一步，往往是先选哪座城市",
+    "painPoints": [
+      {
+        "title": "城市选择太多",
+        "description": "中国城市差异很大，第一次来往往不知道该从哪座城市开始。"
+      },
+      {
+        "title": "攻略信息过载",
+        "description": "信息越多不一定越容易决策，反而会拉高选择成本。"
+      },
+      {
+        "title": "需要个性化匹配",
+        "description": "热门榜单只讲大众偏好，不一定适合你的旅行节奏和兴趣。"
+      }
+    ],
+    "modelEyebrow": "匹配机制",
+    "modelTitle": "不是随机推荐，而是可解释的匹配系统",
+    "modelSubtitle": "我们先将你的回答转为六维画像，再与城市画像逐一对比，输出最接近的结果。",
+    "modelDimensions": [
+      "历史文化兴趣",
+      "自然 vs 都市偏好",
+      "本地沉浸倾向",
+      "行程节奏",
+      "社交氛围",
+      "探险欲"
+    ],
+    "howItWorksTitle": "匹配流程",
+    "modelStep1": "用约 2-3 分钟完成 18 道场景题",
+    "modelStep2": "系统计算你的 6 维旅行画像",
+    "modelStep3": "返回 1 个最佳匹配城市和 4 个备选城市",
+    "finalCtaTitle": "准备好找到你的中国城市了吗？",
+    "finalCtaSubtitle": "现在开始测试，把“想去中国”变成明确的城市计划。",
+    "finalCta": "开始测试",
+    "header": {
+      "brandEyebrow": "中国旅行决策工具",
+      "brandName": "City Vibe Matcher",
+      "navPreview": "城市预览",
+      "navPain": "为什么做这份测试",
+      "navModel": "匹配机制",
+      "cta": "开始测试"
+    },
+    "footer": {
+      "eyebrow": "少做功课，更快出发。",
+      "title": "你的第一座中国城市，应该和你的旅行性格匹配。",
+      "subtitle": "完成测试，锁定第一站，把反复纠结变成可执行的行程计划。",
+      "jumpTitle": "继续浏览本页",
+      "nextTitle": "准备好了就开始",
+      "cta": "开始 18 题测试",
+      "disclaimer": "无需注册，约 2-3 分钟即可得到结果。",
+      "copyright": "哪座中国城市最适合你",
+      "legalLinks": {
+        "about": "关于我们",
+        "contact": "联系我们",
+        "guides": "攻略",
+        "privacy": "隐私政策",
+        "home": "首页"
+      }
+    },
+    "seo": {
+      "title": "Best City to Visit in China｜18题匹配你的中国旅行首站",
+      "description": "想知道 best city to visit in China 是哪座？通过 18 道题分析你的旅行节奏、文化偏好与预算容忍度，从中国城市中筛出最适合你的第一站，并给出可执行的行程起点建议，并提示适合首访者的节奏安排与备选城市策略。",
+      "appName": "中国城市匹配测试"
+    },
+    "seoGuide": {
+      "eyebrow": "选城指南",
+      "title": "如何判断哪座城市是你在中国的最佳第一站",
+      "intro": "“最值得去的中国城市”并没有统一答案。真正关键的是你的旅行节奏、文化适应度和偏好体验。这个测试用结构化模型，帮你比热门榜单更快做出决定。",
+      "points": [
+        "如果你偏爱都市活力、夜生活和便利度，上海或深圳通常更合适。",
+        "如果你更看重历史文化与地标深度，北京和西安往往更匹配。",
+        "如果你更想看自然风景并放慢节奏，桂林、大理、三亚通常是更好的首站。"
+      ],
+      "conclusion": "先用结果锁定前 5 座候选城市，再结合航班、季节和预算做最终决策。"
+    },
+    "topicCluster": {
+      "eyebrow": "主题内容",
+      "title": "中国城市行前攻略精选",
+      "subtitle": "这些深度攻略可与测试结果联动使用，帮助你在城市对比、停留天数、预算节奏与备选方案之间做出更稳妥的首站决策。",
+      "cta": "查看全部城市攻略",
+      "items": [
+        {
+          "title": "第一次来中国，先去哪座城市？",
+          "description": "用旅行节奏、舒适阈值与行程压力三项指标，判断哪座城市更适合你作为来华第一站，并提前准备可执行路线。"
+        },
+        {
+          "title": "第一次来华，北京和上海怎么选？",
+          "description": "从历史体验密度、换乘便利、每日体力消耗和行程弹性四个维度，对比北京与上海哪座更适合首次来华。"
+        },
+        {
+          "title": "按旅行风格选中国城市",
+          "description": "把你的偏好映射到历史文化型、都市活力型、美食社交型、山水慢游型城市画像，快速缩小到优先候选。"
+        },
+        {
+          "title": "第一次到中国，一座城市安排几天合适？",
+          "description": "按 3 天、4 天、5 天三种节奏模板规划首站行程，兼顾景点深度、休息缓冲与跨城衔接，避免过满或过松。"
+        },
+        {
+          "title": "首访中国：北京、上海、成都怎么选？",
+          "description": "从历史体验、出行摩擦、饮食风格与体力节奏四个维度，对比北京、上海、成都三座高关注首站城市。"
+        },
+        {
+          "title": "首访中国预算怎么做：按城市拆解",
+          "description": "按住宿、交通、景点与弹性预留四项建立城市级预算模型，在订票前先验证可执行性。"
+        },
+        {
+          "title": "第一次去中国，哪个季节更合适？",
+          "description": "结合天气舒适度、节假日客流与城市季节差异，选择更稳妥的出行窗口，降低行程波动。"
+        },
+        {
+          "title": "首次来华签证与支付准备清单",
+          "description": "用出发前清单核对签证材料与移动支付配置，减少落地后在证件与付款环节的不确定性。"
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "常见问题",
+      "title": "best city to visit in china 常见问题",
+      "items": [
+        {
+          "question": "第一次去中国，先去哪座城市更合适？",
+          "answer": "对多数首次来华旅行者来说，上海和北京是常见起点，交通与核心景点都更成熟。这个测试会根据你的偏好给出个性化答案。"
+        },
+        {
+          "question": "北京和上海哪个更适合游客？",
+          "answer": "北京更偏向历史文化和地标体验，上海更偏向现代都市、夜生活与国际化便利。具体要看你希望这趟旅行更像哪一种。"
+        },
+        {
+          "question": "第一座中国城市通常安排几天比较好？",
+          "answer": "通常建议 3 到 5 天，能覆盖核心景点、本地美食和至少一天弹性安排。"
+        }
+      ]
+    }
+  },
+  "quiz": {
+    "progress": "第 {{current}} 题 / 共 {{total}} 题",
+    "back": "上一题",
+    "next": "下一题",
+    "submit": "查看我的城市",
+    "questionMap": "题号导航",
+    "answered": "已完成 {{answered}} / {{total}}",
+    "goToQuestion": "前往第 {{number}} 题",
+    "currentSelection": "当前选择",
+    "noSelection": "请选择一个选项后继续。",
+    "currentTrends": "当前匹配领先",
+    "noTrend": "回答第一题后会显示当前领先城市。",
+    "seo": {
+      "title": "中国城市匹配测试｜18题找出你的旅行首站",
+      "description": "完成 18 道题，基于你的旅行风格匹配最适合你的中国城市。"
+    }
+  },
+  "result": {
+    "heading": "最适合你的中国城市是…",
+    "matchLabel": "匹配度",
+    "runnerUps": "也值得考虑",
+    "bestTime": "最佳旅行时间",
+    "budget": "预算参考",
+    "retake": "重新测试",
+    "quickFacts": "行程速览",
+    "seo": {
+      "title": "你的中国城市匹配结果",
+      "description": "你的个性化推荐已生成，可查看最佳匹配城市与 2 个备选城市。"
+    },
+    "matchReason": "为何推荐",
+    "yourProfile": "你的旅行风格",
+    "cityHighlights": "城市亮点",
+    "tags": {
+      "user": {
+        "historyBuff": "历史控",
+        "natureLover": "自然爱好者",
+        "cityExplorer": "城市探索者",
+        "culturalDiver": "文化探索者",
+        "comfortSeeker": "舒适优先",
+        "slowTraveler": "慢旅达人",
+        "activeTraveler": "活力旅行者",
+        "socializer": "社交型旅行者",
+        "soloWanderer": "独行旅人",
+        "adventurer": "探险达人"
+      },
+      "city": {
+        "ancientHeritage": "历史名城",
+        "naturalWonder": "山水风光",
+        "modernMetropolis": "现代都市",
+        "immersiveLocal": "深度本地文化",
+        "relaxedPace": "慢生活",
+        "packedItinerary": "丰富行程",
+        "foodAndNightlife": "美食与夜生活",
+        "peacefulRetreat": "宁静幽远",
+        "offBeatGems": "小众探索"
+      }
+    }
+  },
+  "language": {
+    "en": "🇬🇧 English",
+    "zh-CN": "🇨🇳 中文",
+    "ja": "🇯🇵 日本語",
+    "ko": "🇰🇷 한국어",
+    "switcher": "切换语言"
+  },
+  "a11y": {
+    "skipToMainContent": "跳到主要内容"
+  }
+}

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { I18N_TO_URL } from './LangLayout'
+import { ensureI18nLanguage } from '../i18n'
 
 const LANGUAGE_CODES = ['en', 'ja', 'ko', 'zh-CN'] as const
 type LanguageCode = typeof LANGUAGE_CODES[number]
@@ -41,13 +42,13 @@ export default function LanguageSwitcher() {
     return () => document.removeEventListener('keydown', onEscape)
   }, [open])
 
-  function handleSelect(i18nCode: LanguageCode) {
+  async function handleSelect(i18nCode: LanguageCode) {
     const urlCode = I18N_TO_URL[i18nCode] ?? 'en'
     // Replace the first path segment (language prefix) with the new language
     const segments = location.pathname.split('/').filter(Boolean)
     segments[0] = urlCode
     navigate('/' + segments.join('/'), { replace: true, state: location.state })
-    i18n.changeLanguage(i18nCode)
+    await ensureI18nLanguage(i18nCode)
     setOpen(false)
   }
 

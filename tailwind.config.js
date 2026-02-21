@@ -8,10 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'Noto Sans',
-          'Noto Sans SC',
-          'Noto Sans JP',
-          'Noto Sans KR',
+          'var(--font-sans)',
           'system-ui',
           'sans-serif',
         ],

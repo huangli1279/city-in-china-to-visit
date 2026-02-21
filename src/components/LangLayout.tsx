@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useParams, Outlet, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { ensureI18nLanguage } from '../i18n'
 
 export const VALID_LANGS = ['en', 'zh', 'ja', 'ko'] as const
 export type UrlLang = typeof VALID_LANGS[number]
@@ -31,9 +32,9 @@ export default function LangLayout() {
   useEffect(() => {
     if (!isValid) return
     if (normalizedResolvedLang !== targetI18nLang) {
-      void i18n.changeLanguage(targetI18nLang)
+      void ensureI18nLanguage(targetI18nLang)
     }
-  }, [i18n, isValid, normalizedResolvedLang, targetI18nLang])
+  }, [isValid, normalizedResolvedLang, targetI18nLang])
 
   useEffect(() => {
     if (!isValid) return

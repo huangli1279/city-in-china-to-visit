@@ -412,7 +412,8 @@ function renderDocument({
 <html lang="${escapeHtml(htmlLang)}">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
@@ -1449,8 +1450,8 @@ function renderPrivacyPolicyPage(lang, locale) {
       <h2>${escapeHtml(labels.thirdPartyServices)}</h2>
       <ul class="list-cards">
         <li>Google Analytics 4 for anonymous analytics</li>
-        <li>Google Fonts for font delivery</li>
-        <li>Netlify for hosting infrastructure</li>
+        <li>Self-hosted font files for local text rendering</li>
+        <li>Cloudflare Pages for hosting infrastructure</li>
       </ul>
     </div>
 

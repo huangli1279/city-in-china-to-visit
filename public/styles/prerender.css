@@ -1,3 +1,153 @@
+@font-face {
+  font-family: "BCI Noto Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/noto-sans-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
+}
+
+@font-face {
+  font-family: "BCI Noto Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/noto-sans-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
+}
+
+@font-face {
+  font-family: "BCI Noto Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/noto-sans-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
+}
+
+@font-face {
+  font-family: "BCI Noto Serif";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/noto-serif-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
+}
+
+@font-face {
+  font-family: "BCI Noto Serif";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/noto-serif-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
+}
+
+@font-face {
+  font-family: "BCI Noto Serif";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/noto-serif-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
+}
+
 :root {
   --bg: #f4ecdf;
   --bg-soft: #fff8ef;
@@ -7,6 +157,24 @@
   --accent-strong: #cc4e3f;
   --line: #d8c3a4;
   --card: #fffaf2;
+  --font-sans: "BCI Noto Sans", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "BCI Noto Serif", "Iowan Old Style", Georgia, serif;
+}
+
+html[lang='zh'],
+html[lang='zh-CN'] {
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  --font-display: "Songti SC", "Noto Serif CJK SC", "STSong", serif;
+}
+
+html[lang='ja'] {
+  --font-sans: "Hiragino Sans", "Yu Gothic", "Noto Sans CJK JP", "Meiryo", sans-serif;
+  --font-display: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", serif;
+}
+
+html[lang='ko'] {
+  --font-sans: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif;
+  --font-display: "Nanum Myeongjo", "Noto Serif CJK KR", "Batang", serif;
 }
 
 *,
@@ -22,7 +190,7 @@ body {
 }
 
 body {
-  font-family: "Noto Sans", "Noto Sans SC", "Noto Sans JP", "Noto Sans KR", Arial, sans-serif;
+  font-family: var(--font-sans);
   color: var(--text);
   background:
     radial-gradient(circle at 8% 8%, rgba(204, 78, 63, 0.16), transparent 30%),
@@ -173,7 +341,7 @@ a {
 
 .ink-title {
   margin: 0;
-  font-family: "Noto Serif", "Noto Serif SC", "Noto Serif JP", "Noto Serif KR", Georgia, serif;
+  font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.01em;
   color: var(--text);
@@ -316,7 +484,7 @@ a {
 }
 
 .hero h1 {
-  font-family: "Noto Serif", "Noto Serif SC", "Noto Serif JP", "Noto Serif KR", Georgia, serif;
+  font-family: var(--font-display);
   line-height: 1.15;
   margin: 0.3rem 0 0;
 }

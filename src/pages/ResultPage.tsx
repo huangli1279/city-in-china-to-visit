@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Seo from '../components/Seo'
-import { buildAlternates, buildLangPath } from '../seo/config'
+import { buildAlternates, buildLangPath, buildOgLocale, buildOgLocaleAlternates } from '../seo/config'
 import type { RankedCity } from '../utils/match'
 import { getCityHighlightTagKeys, getUserPersonalityTagKeys } from '../utils/match'
 import type { CityScores } from '../data/cities'
@@ -35,6 +35,8 @@ export default function ResultPage() {
   const state = location.state as ResultState | null
   const hasResult = Boolean(state?.bestMatch)
   const canonicalPath = buildLangPath(lang, 'result')
+  const ogLocale = buildOgLocale(lang)
+  const ogLocaleAlternates = buildOgLocaleAlternates(lang)
 
   useEffect(() => {
     if (!hasResult) {
@@ -49,6 +51,8 @@ export default function ResultPage() {
         description={t('result.seo.description')}
         canonicalPath={canonicalPath}
         alternates={RESULT_ALTERNATES}
+        ogLocale={ogLocale}
+        ogLocaleAlternates={ogLocaleAlternates}
         robots="noindex,follow"
       />
     )
@@ -76,6 +80,8 @@ export default function ResultPage() {
         description={t('result.seo.description')}
         canonicalPath={canonicalPath}
         alternates={RESULT_ALTERNATES}
+        ogLocale={ogLocale}
+        ogLocaleAlternates={ogLocaleAlternates}
         robots="noindex,follow"
       />
       <main id="main-content" className="min-h-dvh py-5 sm:py-7 lg:py-9">

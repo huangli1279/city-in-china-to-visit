@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import Seo from '../components/Seo'
 import { cities } from '../data/cities'
-import { buildAlternates, buildLangPath, toAbsoluteUrl } from '../seo/config'
+import { buildAlternates, buildLangPath, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '../seo/config'
 import { trackEvent } from '../utils/analytics'
 
 interface CityTranslation {
@@ -84,6 +84,8 @@ export default function HomePage() {
   }) as Record<string, CityTranslation>
   const topicClusterGuideLang = GUIDE_CONTENT_LANGS.has(lang) ? lang : 'en'
   const topicClusterGuideBasePath = `/${topicClusterGuideLang}/guides`
+  const ogLocale = buildOgLocale(lang)
+  const ogLocaleAlternates = buildOgLocaleAlternates(lang)
   const topicClusterLinks = topicClusterItems
     .map((item, index) => {
       const slug = GUIDE_SLUGS[index]
@@ -141,6 +143,8 @@ export default function HomePage() {
         description={t('home.seo.description')}
         canonicalPath={canonicalPath}
         alternates={HOME_ALTERNATES}
+        ogLocale={ogLocale}
+        ogLocaleAlternates={ogLocaleAlternates}
         robots="index,follow"
         jsonLd={jsonLd}
       />

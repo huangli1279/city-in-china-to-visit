@@ -10,6 +10,13 @@ const HREFLANG_MAP: Record<SeoLang, string> = {
   ko: 'ko',
 }
 
+const OG_LOCALE_MAP: Record<SeoLang, string> = {
+  en: 'en_US',
+  zh: 'zh_CN',
+  ja: 'ja_JP',
+  ko: 'ko_KR',
+}
+
 export const SITE_URL = (import.meta.env.VITE_SITE_URL ?? DEFAULT_SITE_URL).replace(/\/+$/, '')
 
 function normalizeLang(lang: string): SeoLang {
@@ -46,4 +53,13 @@ export function buildAlternates(suffix?: string): AlternateLink[] {
     href: toAbsoluteUrl(`/en${normalizedSuffix}`),
   })
   return links
+}
+
+export function buildOgLocale(lang: string): string {
+  return OG_LOCALE_MAP[normalizeLang(lang)]
+}
+
+export function buildOgLocaleAlternates(lang: string): string[] {
+  const currentOgLocale = buildOgLocale(lang)
+  return SEO_LANGS.map((localeLang) => OG_LOCALE_MAP[localeLang]).filter((locale) => locale !== currentOgLocale)
 }

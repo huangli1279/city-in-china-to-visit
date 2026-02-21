@@ -16,6 +16,8 @@ const ORGANIZATION_NAME = 'City Vibe Matcher'
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
 const PUBLISHED_DATE_ISO = '2026-01-15'
 const PUBLISHED_DATE_TEXT = 'January 15, 2026'
+const LAST_MODIFIED_DATE_ISO = '2026-02-21'
+const LAST_MODIFIED_DATE_TEXT = 'February 21, 2026'
 const CONTACT_EMAIL = 'team@bestcityinchina.site'
 
 const LANGUAGES = [
@@ -24,6 +26,84 @@ const LANGUAGES = [
   { urlCode: 'ja', i18nCode: 'ja', htmlLang: 'ja', label: '🇯🇵 日本語' },
   { urlCode: 'ko', i18nCode: 'ko', htmlLang: 'ko', label: '🇰🇷 한국어' },
 ]
+
+const OG_LOCALE_MAP = {
+  en: 'en_US',
+  zh: 'zh_CN',
+  ja: 'ja_JP',
+  ko: 'ko_KR',
+}
+
+const PAGE_SEO_COPY = {
+  en: {
+    about: {
+      title: 'About City Vibe Matcher | Methodology, Editorial Standards, and First-Trip Scope',
+      description:
+        'Learn how City Vibe Matcher uses an 18-question model, manually reviewed city profiles, and editorial standards to help first-time China travelers choose a practical first stop.',
+    },
+    contact: {
+      title: 'Contact City Vibe Matcher | Feedback, Corrections, and Media Inquiries',
+      description:
+        'Contact City Vibe Matcher for quiz feedback, guide corrections, partnership opportunities, and media requests, and include relevant page URLs for faster editorial review.',
+    },
+    privacy: {
+      title: 'Privacy Policy | City Vibe Matcher Data, Cookies, and Retention Practices',
+      description:
+        'Read how bestcityinchina.site handles analytics data, cookies, third-party services, and retention practices, and how to contact us with privacy-related questions.',
+    },
+  },
+  zh: {
+    about: {
+      title: '关于 City Vibe Matcher｜首访中国选城方法与编辑准则',
+      description:
+        '了解 City Vibe Matcher 如何通过 18 道题、人工维护的城市画像与编辑审校流程，为首次来华旅行者提供可执行的首站决策框架与备选策略。',
+    },
+    contact: {
+      title: '联系 City Vibe Matcher｜反馈、内容纠错与合作咨询',
+      description:
+        '如需反馈匹配结果、提交内容更正、媒体采访或合作咨询，可通过本页联系 City Vibe Matcher，并附上页面链接与问题背景以便快速处理。',
+    },
+    privacy: {
+      title: '隐私政策｜City Vibe Matcher 的数据与 Cookie 说明',
+      description:
+        '查看 bestcityinchina.site 如何处理分析数据、Cookie、第三方服务与数据保留周期，并了解如何就隐私问题联系我们。',
+    },
+  },
+  ja: {
+    about: {
+      title: 'City Vibe Matcher について｜初中国向け選城メソッドと編集基準',
+      description:
+        'City Vibe Matcher が18問診断、編集チームの都市プロファイル、更新ポリシーを用いて、初めて中国を訪れる旅行者の最初の都市選びをどう支援するかを説明します。',
+    },
+    contact: {
+      title: 'お問い合わせ｜City Vibe Matcher への質問・修正依頼・取材相談',
+      description:
+        '診断結果へのフィードバック、ガイド内容の修正依頼、提携や取材の相談はこのページから受け付けています。対象ページURLと背景を添えてご連絡ください。',
+    },
+    privacy: {
+      title: 'プライバシーポリシー｜City Vibe Matcher のデータ利用と保持方針',
+      description:
+        'bestcityinchina.site における解析データ、Cookie、第三者サービス、データ保持期間、プライバシーに関するお問い合わせ方法をまとめています。',
+    },
+  },
+  ko: {
+    about: {
+      title: 'City Vibe Matcher 소개｜중국 첫 방문 도시 선정 방식과 편집 원칙',
+      description:
+        'City Vibe Matcher가 18문항 진단, 수동 검수 도시 프로필, 편집 업데이트 기준을 통해 중국 첫 방문자의 시작 도시 결정을 어떻게 돕는지 설명합니다.',
+    },
+    contact: {
+      title: '문의하기｜City Vibe Matcher 피드백·수정 요청·협업 제안',
+      description:
+        '매칭 결과 피드백, 가이드 내용 정정, 제휴 및 미디어 문의는 이 페이지에서 접수합니다. 빠른 검토를 위해 대상 URL과 문의 배경을 함께 보내주세요.',
+    },
+    privacy: {
+      title: '개인정보처리방침｜City Vibe Matcher 데이터·쿠키·보관 정책',
+      description:
+        'bestcityinchina.site의 분석 데이터 처리, 쿠키 사용, 제3자 서비스, 데이터 보관 기간, 개인정보 문의 방법을 확인할 수 있습니다.',
+    },
+  },
+}
 
 const LOCALE_FILES = {
   en: path.join(ROOT_DIR, 'src/locales/en/common.json'),
@@ -285,6 +365,25 @@ function resolveLangCode(langOrCode) {
   return typeof langOrCode === 'string' ? langOrCode : langOrCode.urlCode
 }
 
+function ogLocaleForLang(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  return OG_LOCALE_MAP[langCode] ?? OG_LOCALE_MAP.en
+}
+
+function ogLocaleAlternatesForLang(langOrCode) {
+  const currentLocale = ogLocaleForLang(langOrCode)
+  return Object.values(OG_LOCALE_MAP).filter((locale) => locale !== currentLocale)
+}
+
+function resolvePageSeoCopy(langOrCode, pageKey, fallbackTitle, fallbackDescription) {
+  const langCode = resolveLangCode(langOrCode)
+  const copy = PAGE_SEO_COPY[langCode]?.[pageKey]
+  return {
+    title: copy?.title ?? fallbackTitle,
+    description: copy?.description ?? fallbackDescription,
+  }
+}
+
 function homePath(langOrCode) {
   const langCode = resolveLangCode(langOrCode)
   return `/${langCode}/`
@@ -314,6 +413,31 @@ function guidePath(langOrCode, guideOrSlug) {
   const langCode = resolveLangCode(langOrCode)
   const slug = typeof guideOrSlug === 'string' ? guideOrSlug : guideOrSlug.slug
   return `${guideHubPath(langCode)}${slug}/`
+}
+
+function buildAuthorEntity(langOrCode) {
+  const langCode = resolveLangCode(langOrCode)
+  const authorPageUrl = absUrl(aboutPath(langCode))
+  return {
+    '@type': 'Organization',
+    '@id': `${authorPageUrl}#author`,
+    name: AUTHOR_NAME,
+    url: authorPageUrl,
+  }
+}
+
+function buildPublisherEntity() {
+  return {
+    '@type': 'Organization',
+    '@id': absUrl('/#organization'),
+    name: ORGANIZATION_NAME,
+    url: absUrl('/'),
+    email: CONTACT_EMAIL,
+    logo: {
+      '@type': 'ImageObject',
+      url: absUrl('/og-image.svg'),
+    },
+  }
 }
 
 function renderBrandLink({ href, label, eyebrow }) {
@@ -402,6 +526,8 @@ function renderDocument({
   description,
   canonicalPath,
   alternates,
+  ogLocale = 'en_US',
+  ogLocaleAlternates = ['zh_CN', 'ja_JP', 'ko_KR'],
   mainHtml,
   jsonLd,
   headExtras = '',
@@ -425,6 +551,10 @@ function renderDocument({
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(description)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
+    <meta property="og:locale" content="${escapeHtml(ogLocale)}" />
+    ${ogLocaleAlternates
+      .map((locale) => `<meta property="og:locale:alternate" content="${escapeHtml(locale)}" />`)
+      .join('\n    ')}
     <meta property="og:image" content="${escapeHtml(absUrl('/og-image.svg'))}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -929,6 +1059,8 @@ function renderLandingPage(lang, locale) {
     description,
     canonicalPath,
     alternates: buildLandingAlternates(),
+    ogLocale: ogLocaleForLang(lang),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(lang),
     mainHtml,
     jsonLd,
   })
@@ -1006,6 +1138,8 @@ function renderGuideHub(lang, locale) {
     description,
     canonicalPath,
     alternates,
+    ogLocale: ogLocaleForLang(lang),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(lang),
     mainHtml,
     jsonLd,
   })
@@ -1059,6 +1193,7 @@ function renderGuideDetail(lang, locale, guide) {
     <div class="article-meta-stack">
       <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
       <p class="article-meta"><strong>${escapeHtml(labels.published)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${LAST_MODIFIED_DATE_ISO}">${escapeHtml(LAST_MODIFIED_DATE_TEXT)}</time></p>
       <p class="article-meta">${escapeHtml(labels.by)} ${escapeHtml(AUTHOR_NAME)}</p>
       <p class="article-meta">${escapeHtml(labels.publishedOn)} <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
     </div>
@@ -1104,20 +1239,11 @@ function renderGuideDetail(lang, locale, guide) {
       url: absUrl(canonicalPath),
       inLanguage: lang.htmlLang,
       image: absUrl('/og-image.svg'),
+      mainEntityOfPage: absUrl(canonicalPath),
       datePublished: PUBLISHED_DATE_ISO,
-      dateModified: PUBLISHED_DATE_ISO,
-      author: {
-        '@type': 'Organization',
-        name: AUTHOR_NAME,
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: ORGANIZATION_NAME,
-        logo: {
-          '@type': 'ImageObject',
-          url: absUrl('/og-image.svg'),
-        },
-      },
+      dateModified: LAST_MODIFIED_DATE_ISO,
+      author: buildAuthorEntity(lang),
+      publisher: buildPublisherEntity(),
     },
     createBreadcrumbList([
       { name: labels.home, path: `/${lang.urlCode}` },
@@ -1132,9 +1258,9 @@ function renderGuideDetail(lang, locale, guide) {
     `<meta name="seo-title-a" content="${escapeHtml(guide?.titleVariants?.A ?? guide.title)}" />`,
     `<meta name="seo-title-b" content="${escapeHtml(guide?.titleVariants?.B ?? guide.title)}" />`,
     `<meta name="author" content="${escapeHtml(AUTHOR_NAME)}" />`,
-    `<meta property="article:author" content="${escapeHtml(AUTHOR_NAME)}" />`,
+    `<meta property="article:author" content="${escapeHtml(absUrl(aboutPath(lang)))}" />`,
     `<meta property="article:published_time" content="${PUBLISHED_DATE_ISO}" />`,
-    `<meta property="article:modified_time" content="${PUBLISHED_DATE_ISO}" />`,
+    `<meta property="article:modified_time" content="${LAST_MODIFIED_DATE_ISO}" />`,
   ].join('\n    ')
 
   return renderDocument({
@@ -1143,6 +1269,8 @@ function renderGuideDetail(lang, locale, guide) {
     description: localizedDescriptionBySlug.get(guide.slug) ?? guide.description,
     canonicalPath,
     alternates,
+    ogLocale: ogLocaleForLang(lang),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(lang),
     mainHtml,
     jsonLd,
     headExtras,
@@ -1159,9 +1287,10 @@ function renderAboutPage(lang, locale) {
   const contactLabel = legalLinks.contact ?? 'Contact'
   const aboutLabel = legalLinks.about ?? 'About'
   const canonicalPath = aboutPath(langCode)
-  const title = `${aboutLabel} | City Vibe Matcher`
-  const description =
+  const fallbackTitle = `${aboutLabel} | City Vibe Matcher`
+  const fallbackDescription =
     'Learn how City Vibe Matcher builds first-trip China recommendations with an 18-question model, curated city profiles, and practical planning guidance.'
+  const { title, description } = resolvePageSeoCopy(langCode, 'about', fallbackTitle, fallbackDescription)
   const alternates = buildPageAlternates('about')
 
   const mainHtml = `<main id="main-content" class="page-shell">
@@ -1179,7 +1308,7 @@ function renderAboutPage(lang, locale) {
     <div class="article-meta-stack">
       <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
       <p class="article-meta"><strong>${escapeHtml(labels.published)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
-      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${LAST_MODIFIED_DATE_ISO}">${escapeHtml(LAST_MODIFIED_DATE_TEXT)}</time></p>
       <p class="article-meta">${escapeHtml(labels.by)} ${escapeHtml(AUTHOR_NAME)}</p>
       <p class="article-meta">${escapeHtml(labels.publishedOn)} <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
     </div>
@@ -1228,19 +1357,13 @@ function renderAboutPage(lang, locale) {
       url: absUrl(canonicalPath),
       inLanguage: htmlLang,
       datePublished: PUBLISHED_DATE_ISO,
-      dateModified: PUBLISHED_DATE_ISO,
-      author: {
-        '@type': 'Organization',
-        name: AUTHOR_NAME,
-      },
+      dateModified: LAST_MODIFIED_DATE_ISO,
+      author: buildAuthorEntity(langCode),
+      publisher: buildPublisherEntity(),
     },
     {
       '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: ORGANIZATION_NAME,
-      url: absUrl(homePath(langCode)),
-      email: CONTACT_EMAIL,
-      logo: absUrl('/og-image.svg'),
+      ...buildPublisherEntity(),
     },
     createBreadcrumbList([
       { name: homeLabel, path: `/${langCode}` },
@@ -1250,8 +1373,9 @@ function renderAboutPage(lang, locale) {
 
   const headExtras = [
     `<meta name="author" content="${escapeHtml(AUTHOR_NAME)}" />`,
-    `<meta property="article:author" content="${escapeHtml(AUTHOR_NAME)}" />`,
+    `<meta property="article:author" content="${escapeHtml(absUrl(aboutPath(langCode)))}" />`,
     `<meta property="article:published_time" content="${PUBLISHED_DATE_ISO}" />`,
+    `<meta property="article:modified_time" content="${LAST_MODIFIED_DATE_ISO}" />`,
   ].join('\n    ')
 
   return renderDocument({
@@ -1260,6 +1384,8 @@ function renderAboutPage(lang, locale) {
     description,
     canonicalPath,
     alternates,
+    ogLocale: ogLocaleForLang(langCode),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(langCode),
     mainHtml,
     jsonLd,
     headExtras,
@@ -1276,9 +1402,10 @@ function renderContactPage(lang, locale) {
   const aboutLabel = legalLinks.about ?? 'About'
   const contactLabel = legalLinks.contact ?? 'Contact'
   const canonicalPath = contactPath(langCode)
-  const title = `${contactLabel} | City Vibe Matcher`
-  const description =
+  const fallbackTitle = `${contactLabel} | City Vibe Matcher`
+  const fallbackDescription =
     'Contact City Vibe Matcher for travel-matching questions, feedback, media requests, and data corrections related to our China city planning guides.'
+  const { title, description } = resolvePageSeoCopy(langCode, 'contact', fallbackTitle, fallbackDescription)
   const alternates = buildPageAlternates('contact')
 
   const mainHtml = `<main id="main-content" class="page-shell">
@@ -1295,7 +1422,7 @@ function renderContactPage(lang, locale) {
     <h1>Get in touch</h1>
     <div class="article-meta-stack">
       <p class="article-meta author-byline"><strong>${escapeHtml(labels.author)}:</strong> ${escapeHtml(AUTHOR_NAME)}</p>
-      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
+      <p class="article-meta"><strong>${escapeHtml(labels.lastUpdated)}:</strong> <time datetime="${LAST_MODIFIED_DATE_ISO}">${escapeHtml(LAST_MODIFIED_DATE_TEXT)}</time></p>
       <p class="article-meta"><strong>${escapeHtml(labels.responseTarget)}:</strong> ${escapeHtml(labels.responseTargetValue)}</p>
       <p class="article-meta">${escapeHtml(labels.by)} ${escapeHtml(AUTHOR_NAME)}</p>
       <p class="article-meta">${escapeHtml(labels.publishedOn)} <time datetime="${PUBLISHED_DATE_ISO}">${escapeHtml(PUBLISHED_DATE_TEXT)}</time></p>
@@ -1355,17 +1482,13 @@ function renderContactPage(lang, locale) {
       url: absUrl(canonicalPath),
       inLanguage: htmlLang,
       datePublished: PUBLISHED_DATE_ISO,
-      dateModified: PUBLISHED_DATE_ISO,
-      author: {
-        '@type': 'Organization',
-        name: AUTHOR_NAME,
-      },
+      dateModified: LAST_MODIFIED_DATE_ISO,
+      author: buildAuthorEntity(langCode),
+      publisher: buildPublisherEntity(),
     },
     {
       '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: ORGANIZATION_NAME,
-      url: absUrl(homePath(langCode)),
+      ...buildPublisherEntity(),
       contactPoint: [
         {
           '@type': 'ContactPoint',
@@ -1383,8 +1506,8 @@ function renderContactPage(lang, locale) {
 
   const headExtras = [
     `<meta name="author" content="${escapeHtml(AUTHOR_NAME)}" />`,
-    `<meta property="article:author" content="${escapeHtml(AUTHOR_NAME)}" />`,
-    `<meta property="article:modified_time" content="${PUBLISHED_DATE_ISO}" />`,
+    `<meta property="article:author" content="${escapeHtml(absUrl(aboutPath(langCode)))}" />`,
+    `<meta property="article:modified_time" content="${LAST_MODIFIED_DATE_ISO}" />`,
   ].join('\n    ')
 
   return renderDocument({
@@ -1393,6 +1516,8 @@ function renderContactPage(lang, locale) {
     description,
     canonicalPath,
     alternates,
+    ogLocale: ogLocaleForLang(langCode),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(langCode),
     mainHtml,
     jsonLd,
     headExtras,
@@ -1410,9 +1535,10 @@ function renderPrivacyPolicyPage(lang, locale) {
   const contactLabel = legalLinks.contact ?? 'Contact'
   const privacyLabel = legalLinks.privacy ?? 'Privacy Policy'
   const canonicalPath = privacyPolicyPath(langCode)
-  const title = `${privacyLabel} | City Vibe Matcher`
-  const description =
+  const fallbackTitle = `${privacyLabel} | City Vibe Matcher`
+  const fallbackDescription =
     'Privacy policy for bestcityinchina.site covering analytics usage, cookies, third-party services, data retention, and how to contact us with privacy questions.'
+  const { title, description } = resolvePageSeoCopy(langCode, 'privacy', fallbackTitle, fallbackDescription)
   const alternates = buildPageAlternates('privacy-policy')
 
   const mainHtml = `<main id="main-content" class="page-shell">
@@ -1427,7 +1553,7 @@ function renderPrivacyPolicyPage(lang, locale) {
   <article class="block article-page">
     <p class="eyebrow">${escapeHtml(labels.legalEyebrow)}</p>
     <h1>${escapeHtml(privacyLabel)}</h1>
-    <p class="article-intro">${escapeHtml(labels.lastUpdated)}: February 20, 2026</p>
+    <p class="article-intro">${escapeHtml(labels.lastUpdated)}: ${escapeHtml(LAST_MODIFIED_DATE_TEXT)}</p>
 
     <div class="article-block">
       <h2>${escapeHtml(labels.overview)}</h2>
@@ -1477,6 +1603,10 @@ function renderPrivacyPolicyPage(lang, locale) {
       url: absUrl(canonicalPath),
       description,
       inLanguage: htmlLang,
+      dateModified: LAST_MODIFIED_DATE_ISO,
+      isPartOf: {
+        '@id': absUrl('/#organization'),
+      },
     },
     createBreadcrumbList([
       { name: homeLabel, path: `/${langCode}` },
@@ -1490,6 +1620,8 @@ function renderPrivacyPolicyPage(lang, locale) {
     description,
     canonicalPath,
     alternates,
+    ogLocale: ogLocaleForLang(langCode),
+    ogLocaleAlternates: ogLocaleAlternatesForLang(langCode),
     mainHtml,
     jsonLd,
   })

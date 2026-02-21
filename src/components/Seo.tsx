@@ -9,6 +9,8 @@ interface SeoProps {
   description: string
   canonicalPath: string
   alternates?: AlternateLink[]
+  ogLocale?: string
+  ogLocaleAlternates?: string[]
   robots?: string
   ogType?: 'website' | 'article'
   ogImage?: string
@@ -43,6 +45,8 @@ export default function Seo({
   description,
   canonicalPath,
   alternates = [],
+  ogLocale = 'en_US',
+  ogLocaleAlternates = ['zh_CN', 'ja_JP', 'ko_KR'],
   robots = 'index,follow',
   ogType = 'website',
   ogImage = DEFAULT_OG_IMAGE,
@@ -61,7 +65,17 @@ export default function Seo({
     upsertMeta('property', 'og:description', description)
     upsertMeta('property', 'og:type', ogType)
     upsertMeta('property', 'og:url', canonicalUrl)
+    upsertMeta('property', 'og:locale', ogLocale)
     upsertMeta('property', 'og:image', ogImage)
+
+    document.head.querySelectorAll('meta[data-seo-og-locale-alt="true"]').forEach((tag) => tag.remove())
+    ogLocaleAlternates.forEach((locale) => {
+      const tag = document.createElement('meta')
+      tag.setAttribute('property', 'og:locale:alternate')
+      tag.setAttribute('content', locale)
+      tag.setAttribute('data-seo-og-locale-alt', 'true')
+      document.head.appendChild(tag)
+    })
 
     upsertMeta('name', 'twitter:card', 'summary_large_image')
     upsertMeta('name', 'twitter:title', title)
@@ -89,7 +103,19 @@ export default function Seo({
       script.text = JSON.stringify(entry)
       document.head.appendChild(script)
     })
-  }, [alternates, canonicalUrl, description, jsonLd, ogImage, ogType, robots, serializedJsonLd, title])
+  }, [
+    alternates,
+    canonicalUrl,
+    description,
+    jsonLd,
+    ogImage,
+    ogLocale,
+    ogLocaleAlternates,
+    ogType,
+    robots,
+    serializedJsonLd,
+    title,
+  ])
 
   return null
 }

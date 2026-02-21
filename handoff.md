@@ -1,4 +1,4 @@
-# P0 SEO 优化交接文档（handoff）
+# P0/P1/P2 SEO 优化交接文档（handoff）
 
 ## 1. 背景与目标
 
@@ -230,8 +230,293 @@ curl -s https://bestcityinchina.site/robots.txt
 
 ---
 
-## 9. 当前变更状态说明
+## 9. 当前变更状态说明（更新于 2026-02-21）
 
-当前工作区包含 P0 相关代码与预渲染产物变更（含多语言静态页更新），尚未提交。  
-如进入提交流程，建议使用单独 commit（例如：`feat(seo): complete p0 indexation and routing fixes`），便于后续追踪与回滚。
+P0 与 P1 相关变更已完成并进入远端仓库，当前状态：
 
+- Git 分支：`main`
+- 最新提交：`392858c`
+- 提交信息：`feat(seo): complete p1 performance optimizations and adsense-safe csp`
+- 远端推送：`origin/main` 已推送
+- Cloudflare Pages 部署：已发布
+  - 预览 URL：`https://45322c6d.city-in-china-to-visit.pages.dev`
+  - 生产域名：`https://bestcityinchina.site`
+
+---
+
+## 10. P1 开发复盘（本次接手）
+
+### 10.1 目标范围（对应 `plan.md`）
+
+本轮接手聚焦 `P1` 三项：
+
+1. 字体策略重构（P1-1）
+2. 首屏关键路径与资源体积优化（P1-2）
+3. 缓存策略升级（P1-3）
+
+### 10.2 执行过程复盘（按时间顺序）
+
+#### 10.2.1 基线核查
+
+先核查了 `index.html`、`src/index.css`、`public/styles/prerender.css`、`public/_headers` 与预渲染脚本，确认以下性能瓶颈：
+
+- 首页存在 Google Fonts 多语种大组合直连；
+- i18n 资源为全量静态打包导入；
+- `_headers` 缺少 hash 资源长期缓存策略；
+- 第三方脚本与首屏渲染路径存在竞争。
+
+#### 10.2.2 第一轮优化落地
+
+完成以下改动：
+
+- 字体：
+  - 新增本地字体文件：`public/fonts/noto-sans-latin.woff2`、`public/fonts/noto-serif-latin.woff2`
+  - `src/index.css` 与 `public/styles/prerender.css` 引入 `@font-face + unicode-range + font-display: swap`
+  - 按 `html[lang]` 提供中/日/韩系统字体回退栈
+  - `tailwind.config.js` 的 `fontFamily.sans` 改为 `var(--font-sans)`
+- JS 体积：
+  - `src/i18n.ts` 改为按语言动态导入 locale 资源
+  - `src/main.tsx` 改为 `initializeI18n()` 后再挂载应用
+  - `src/components/LangLayout.tsx`、`src/components/LanguageSwitcher.tsx` 改为按需加载并切换语言资源
+- 缓存：
+  - `public/_headers` 增加 `/assets/*`、`/fonts/*` 长缓存 immutable
+  - HTML/语言目录使用 `max-age=0, must-revalidate`
+
+#### 10.2.3 需求变更与回调处理（GA/AdSense）
+
+第一轮曾尝试把 GA/AdSense 延迟到 idle/交互后加载，以降低首屏争抢；后续按产品要求“不要改 GA/AdSense 配置有效性”执行回滚：
+
+- 已恢复 `index.html` 原始 GA/AdSense 直连 async + `gtag('config')` 初始化；
+- 已恢复 `scripts/generate-prerender-pages.mjs` 中预渲染页面的 GA/AdSense 注入方式；
+- 最终未保留“延迟加载第三方脚本”策略。
+
+#### 10.2.4 AdSense 放行问题修复（CSP）
+
+根据“不要拦截 AdSense 广告”要求，补齐 CSP 白名单：
+
+- 在 `public/_headers` 的 `Content-Security-Policy` 中补充 AdSense/DoubleClick 相关域名；
+- 放开 `script-src`、`connect-src`、`frame-src` 的广告必需目标域。
+
+### 10.3 本轮关键文件变更
+
+1. 字体与样式
+- `src/index.css`
+- `public/styles/prerender.css`
+- `tailwind.config.js`
+- `public/fonts/noto-sans-latin.woff2`
+- `public/fonts/noto-serif-latin.woff2`
+
+2. i18n 与前端加载路径
+- `src/i18n.ts`
+- `src/main.tsx`
+- `src/components/LangLayout.tsx`
+- `src/components/LanguageSwitcher.tsx`
+
+3. 部署与策略
+- `public/_headers`
+- `index.html`
+- `scripts/generate-prerender-pages.mjs`
+- 预渲染静态页（`public/en|zh|ja|ko/**`）与 `public/sitemap.xml`
+
+### 10.4 验证结果
+
+#### 10.4.1 构建与测试
+
+已执行并通过：
+
+```bash
+npm run generate:prerender
+npm run build
+npm test
+```
+
+结果：
+- `vite build` 成功
+- `vitest` 12/12 通过
+
+#### 10.4.2 产物体积观察（关键项）
+
+- 主入口 JS（gzip）由约 `117.86 kB` 下降到约 `71.28 kB`（受 i18n 按需加载影响明显）。
+
+#### 10.4.3 Header 与策略抽检
+
+通过 `wrangler pages dev dist` + `curl -I` 抽检确认：
+
+- `/assets/*.js`：`Cache-Control: public, max-age=31536000, immutable`
+- `/fonts/*.woff2`：`Cache-Control: public, max-age=31536000, immutable`
+- `/en/guides/`：`Cache-Control: public, max-age=0, must-revalidate`
+- `/en/quiz`：仍含 `X-Robots-Tag: noindex, follow`
+- 生产域名响应头已含更新后的 AdSense CSP 放行配置
+
+### 10.5 P1 完成度评估
+
+1. P1-1 字体策略重构：`已完成（阶段性）`
+- 已移除 Google Fonts 依赖并本地化拉丁字体，CJK 采用系统字体回退。
+
+2. P1-2 CSS/JS 与关键路径：`部分完成`
+- 已完成 i18n 资源按需加载与入口 JS 体积下降；
+- 由于业务要求，未保留 GA/AdSense 延迟加载策略。
+
+3. P1-3 缓存策略升级：`已完成`
+- 已落实静态资源长期缓存与 HTML revalidate 策略。
+
+### 10.6 仍需关注项（后续建议）
+
+1. CJK 字体子集化仍可继续
+- 当前为系统字体回退，若要进一步控首屏一致性，可后续做中/日/韩本地子集化。
+
+2. AdSense CSP 需持续监控
+- 广告网络域名可能随投放类型变化，建议上线后在浏览器 Console 观察 CSP 违规日志并按需补白名单。
+
+3. `_redirects` 规则顺序优化
+- Wrangler 仍会提示 quiz/result 规则顺序可优化（性能层面），功能不受影响。
+
+### 10.7 回滚建议（P1）
+
+若需仅回滚 P1，本轮优先回滚：
+
+1. `src/i18n.ts`
+2. `src/main.tsx`
+3. `src/components/LangLayout.tsx`
+4. `src/components/LanguageSwitcher.tsx`
+5. `src/index.css`
+6. `public/styles/prerender.css`
+7. `tailwind.config.js`
+8. `public/_headers`
+9. `public/fonts/*`
+
+---
+
+## 11. P2 开发复盘（本次接手）
+
+### 11.1 目标范围（对应 `plan.md`）
+
+本轮接手聚焦 `P2` 三项：
+
+1. 标题与描述本地化改写（P2-1）
+2. OG/Twitter 多语言对齐（P2-2）
+3. 结构化数据增强（P2-3）
+
+### 11.2 执行过程复盘（按时间顺序）
+
+#### 11.2.1 现状抽检与问题定位
+
+先对 `public/**/index.html` 做了批量抽检，确认 P2 的主要缺口：
+
+- 多语种 guide 页 description 偏短（`zh` 最短约 24 字）；
+- about/contact/privacy 四语种共用英文 description，存在“跨语种同模板”；
+- 全站预渲染页面缺少 `og:locale`；
+- Article/About/Contact 的结构化数据作者实体缺少作者页 URL，`dateModified` 长期固定。
+
+#### 11.2.2 P2-1 文案与元信息本地化
+
+- 更新 `src/locales/en|zh-CN|ja|ko/common.json`：
+  - 扩写 `home.topicCluster.subtitle`；
+  - 扩写 4 篇 guide card 的 description，提升语言自然度与可检索信息量。
+- 在 `scripts/generate-prerender-pages.mjs` 新增 `PAGE_SEO_COPY`：
+  - 为 `about/contact/privacy` 提供按语言独立的 title/description；
+  - 不再共用英文模板。
+
+#### 11.2.3 P2-2 OG/Twitter 多语言对齐
+
+- 预渲染链路：
+  - `scripts/generate-prerender-pages.mjs` 增加 `OG_LOCALE_MAP`；
+  - `renderDocument()` 输出 `og:locale` 与 `og:locale:alternate`；
+  - 保持 `og:url` 与 canonical 一致（抽检为 0 差异）。
+- SPA 运行时链路：
+  - `src/seo/config.ts` 新增 `buildOgLocale()` 与 `buildOgLocaleAlternates()`；
+  - `src/components/Seo.tsx` 支持并注入 `og:locale` / `og:locale:alternate`；
+  - `src/pages/HomePage.tsx`、`src/pages/QuizPage.tsx`、`src/pages/ResultPage.tsx` 传入对应语言值。
+- 更新 `index.html`：
+  - 补齐 `og:locale` / `og:locale:alternate`；
+  - 统一首页 canonical/hreflang/og:url 为带尾斜杠版本（`/en/`、`/zh/`、`/ja/`、`/ko/`）。
+
+#### 11.2.4 P2-3 结构化数据增强
+
+- 在 `scripts/generate-prerender-pages.mjs` 新增：
+  - `buildAuthorEntity()`：输出带 `@id` + `url` 的作者组织实体（指向语言版 about 页）；
+  - `buildPublisherEntity()`：统一发布者组织实体。
+- 应用到 Guide Article / About / Contact JSON-LD：
+  - `author` 统一为可解析实体；
+  - `publisher` 统一组织实体，减少跨页不一致。
+- 更新时间信号：
+  - 新增 `LAST_MODIFIED_DATE_ISO = 2026-02-21`；
+  - `dateModified`、`article:modified_time`、页面可见“最近更新”同步到本次真实维护日期；
+  - 保留 `datePublished = 2026-01-15`。
+
+### 11.3 本轮关键文件变更
+
+1. 源码与配置
+- `scripts/generate-prerender-pages.mjs`
+- `src/components/Seo.tsx`
+- `src/seo/config.ts`
+- `src/pages/HomePage.tsx`
+- `src/pages/QuizPage.tsx`
+- `src/pages/ResultPage.tsx`
+- `src/locales/en/common.json`
+- `src/locales/zh-CN/common.json`
+- `src/locales/ja/common.json`
+- `src/locales/ko/common.json`
+- `index.html`
+
+2. 预渲染产物
+- `public/en|zh|ja|ko/guides/**/index.html`
+- `public/en|zh|ja|ko/about/index.html`
+- `public/en|zh|ja|ko/contact/index.html`
+- `public/en|zh|ja|ko/privacy-policy/index.html`
+
+### 11.4 验证结果
+
+#### 11.4.1 构建与测试
+
+已执行并通过：
+
+```bash
+npm run generate:prerender
+npm run build
+npm test
+```
+
+结果：
+- `vite build` 成功
+- `vitest` 12/12 通过
+
+#### 11.4.2 P2 验收脚本抽检（静态页面）
+
+对 32 个语言页批量检查结果：
+
+- `description` 长度 `<45` 的页面数：`0`
+- 缺失 `og:locale` 页面数：`0`
+- `canonical != og:url` 页面数：`0`
+- 重复 description 分组（>1）：`0`
+
+### 11.5 P2 完成度评估
+
+1. P2-1 标题与描述本地化：`已完成`
+- 已消除 about/contact/privacy 跨语种英文模板问题；
+- guide 相关 description 已扩写并去重。
+
+2. P2-2 OG/Twitter 多语言对齐：`已完成`
+- 预渲染与 SPA 双链路均已输出 `og:locale`；
+- `og:url` 与 canonical 一致。
+
+3. P2-3 结构化数据增强：`已完成`
+- 作者实体补齐 URL/@id，发布者实体统一；
+- `dateModified` 更新为本次真实维护日期。
+
+### 11.6 回滚建议（P2）
+
+若需仅回滚 P2，本轮优先回滚：
+
+1. `scripts/generate-prerender-pages.mjs`
+2. `src/components/Seo.tsx`
+3. `src/seo/config.ts`
+4. `src/pages/HomePage.tsx`
+5. `src/pages/QuizPage.tsx`
+6. `src/pages/ResultPage.tsx`
+7. `src/locales/en/common.json`
+8. `src/locales/zh-CN/common.json`
+9. `src/locales/ja/common.json`
+10. `src/locales/ko/common.json`
+11. `index.html`
+12. 对应 `public/en|zh|ja|ko/**/index.html` 预渲染产物

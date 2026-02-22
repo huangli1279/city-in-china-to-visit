@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { trackEvent } from '@/lib/analytics'
@@ -171,7 +172,7 @@ export default function HomepageClient({
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
           <div className="flex flex-wrap items-center gap-3">
             <Link href={`/${lang}/`} className="brand-link">
-              <img src="/logo.svg" alt="" aria-hidden="true" width={36} height={36} className="brand-logo" />
+              <Image src="/logo.svg" alt="" aria-hidden="true" width={36} height={36} className="brand-logo" />
               <div className="brand-copy">
                 <div className="header-brand-row">
                   <p className="ink-title min-w-0 truncate text-base font-bold sm:text-xl">{t.header.brandName}</p>

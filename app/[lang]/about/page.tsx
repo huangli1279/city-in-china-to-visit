@@ -5,7 +5,6 @@ import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
-const REVIEWER_TEAM_NAME = 'City Vibe Matcher Research Desk'
 const PUBLISHED_DATE_ISO = '2026-01-15'
 const PUBLISHED_DATE_TEXT = 'January 15, 2026'
 const LAST_MODIFIED_DATE_ISO = '2026-02-21'

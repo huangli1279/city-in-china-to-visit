@@ -24,15 +24,15 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
-  const optionRefs = useRef<Array<HTMLButtonElement | null>>([])
-  const listboxId = useId()
+  const itemRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const menuId = useId()
 
   const fallbackLang: UrlLang = URL_LANGS.includes(currentLang as UrlLang) ? (currentLang as UrlLang) : 'en'
   const selectedIndex = Math.max(URL_LANGS.indexOf(fallbackLang), 0)
 
   function focusOption(index: number) {
     const boundedIndex = Math.min(Math.max(index, 0), URL_LANGS.length - 1)
-    optionRefs.current[boundedIndex]?.focus()
+    itemRefs.current[boundedIndex]?.focus()
   }
 
   function moveOptionFocus(currentIndex: number, direction: 1 | -1) {
@@ -130,6 +130,12 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
       return
     }
 
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault()
+      openAndFocus(selectedIndex)
+      return
+    }
+
     if (e.key === 'Home') {
       e.preventDefault()
       openAndFocus(0)
@@ -142,16 +148,16 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
     }
   }
 
-  function handleOptionKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, optionIndex: number, code: UrlLang) {
-    if (e.key === 'ArrowDown') {
+  function handleMenuItemKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, itemIndex: number, code: UrlLang) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
       e.preventDefault()
-      moveOptionFocus(optionIndex, 1)
+      moveOptionFocus(itemIndex, 1)
       return
     }
 
-    if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       e.preventDefault()
-      moveOptionFocus(optionIndex, -1)
+      moveOptionFocus(itemIndex, -1)
       return
     }
 
@@ -192,7 +198,7 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
       </label>
       <select
         id="language-switcher-mobile"
-        value={currentLang}
+        value={fallbackLang}
         onChange={(e) => handleSelect(e.target.value as UrlLang)}
         className="focus-ring block min-h-[44px] rounded-xl border border-[#8a6447]/20 bg-white/65 px-3 py-2 text-sm font-medium text-[color:var(--ink-800)] sm:hidden"
         aria-label={switcherLabel}
@@ -210,46 +216,48 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
         onClick={() => setOpen((o) => !o)}
         onKeyDown={handleTriggerKeyDown}
         className="focus-ring hidden min-h-[44px] items-center gap-1 whitespace-nowrap rounded-xl border border-[#8a6447]/20 bg-white/65 px-3 py-2 text-sm font-medium text-[color:var(--ink-800)] transition-colors hover:border-[#b43c2f]/35 hover:bg-white/85 sm:flex"
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
         aria-expanded={open}
-        aria-controls={open ? listboxId : undefined}
+        aria-controls={open ? menuId : undefined}
         aria-label={switcherLabel}
       >
-        {LANG_LABELS[currentLang] ?? LANG_LABELS.en}
+        {LANG_LABELS[fallbackLang] ?? LANG_LABELS.en}
         <span className={`ml-0.5 text-[10px] transition-transform duration-150 ${open ? 'rotate-180' : ''}`}>
           ▾
         </span>
       </button>
 
       {open && (
-        <div
-          id={listboxId}
-          role="listbox"
+        <ul
+          id={menuId}
+          role="menu"
           aria-label={switcherLabel}
+          aria-orientation="vertical"
           className="absolute right-0 top-[calc(100%+0.55rem)] z-[120] hidden min-w-[188px] overflow-hidden rounded-2xl border border-[#8a6447]/25 bg-[rgba(253,248,240,0.97)] py-1 shadow-[0_24px_40px_-28px_rgba(58,35,23,0.62)] backdrop-blur sm:block"
         >
           {URL_LANGS.map((code, idx) => (
-            <button
-              key={code}
-              type="button"
-              ref={(el) => {
-                optionRefs.current[idx] = el
-              }}
-              id={`${listboxId}-option-${code}`}
-              role="option"
-              aria-selected={code === currentLang}
-              onClick={() => handleSelect(code)}
-              onKeyDown={(e) => handleOptionKeyDown(e, idx, code)}
-              className={`focus-ring w-full whitespace-nowrap px-4 py-2.5 text-left text-sm transition-colors ${
-                code === currentLang
-                  ? 'bg-[rgba(180,60,47,0.12)] font-semibold text-[color:var(--cinnabar-600)]'
-                  : 'text-[color:var(--ink-800)] hover:bg-[rgba(47,138,115,0.09)]'
-              }`}
-            >
-              {LANG_LABELS[code]}
-            </button>
+            <li key={code} role="none">
+              <button
+                type="button"
+                ref={(el) => {
+                  itemRefs.current[idx] = el
+                }}
+                role="menuitemradio"
+                aria-checked={code === fallbackLang}
+                tabIndex={code === fallbackLang ? 0 : -1}
+                onClick={() => handleSelect(code)}
+                onKeyDown={(e) => handleMenuItemKeyDown(e, idx, code)}
+                className={`focus-ring w-full whitespace-nowrap px-4 py-2.5 text-left text-sm transition-colors ${
+                  code === fallbackLang
+                    ? 'bg-[rgba(180,60,47,0.12)] font-semibold text-[color:var(--cinnabar-600)]'
+                    : 'text-[color:var(--ink-800)] hover:bg-[rgba(47,138,115,0.09)]'
+                }`}
+              >
+                {LANG_LABELS[code]}
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   )

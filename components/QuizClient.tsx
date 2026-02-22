@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
@@ -21,6 +21,8 @@ export default function QuizClient({ lang }: { lang: string }) {
   const t = useTranslations('common')
   const tQuestions = useTranslations('questions')
   const [quizState, setQuizState] = useState(() => getInitialQuizState(QUIZ_QUESTION_COUNT))
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const optionGroupId = useId()
   const { currentIdx, answers } = quizState
 
   useEffect(() => {
@@ -73,6 +75,47 @@ export default function QuizClient({ lang }: { lang: string }) {
         [prev.currentIdx]: optionIdx,
       },
     }))
+  }
+
+  function focusOption(optionIdx: number) {
+    const optionCount = tq?.options.length ?? 0
+    if (optionCount === 0) return
+    const bounded = (optionIdx + optionCount) % optionCount
+    optionRefs.current[bounded]?.focus()
+  }
+
+  function handleOptionKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, optionIdx: number) {
+    const optionCount = tq?.options.length ?? 0
+    if (optionCount === 0) return
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault()
+      focusOption(optionIdx + 1)
+      return
+    }
+
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault()
+      focusOption(optionIdx - 1)
+      return
+    }
+
+    if (e.key === 'Home') {
+      e.preventDefault()
+      focusOption(0)
+      return
+    }
+
+    if (e.key === 'End') {
+      e.preventDefault()
+      focusOption(optionCount - 1)
+      return
+    }
+
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault()
+      handleSelectOption(optionIdx)
+    }
   }
 
   function handleBack() {
@@ -140,6 +183,7 @@ export default function QuizClient({ lang }: { lang: string }) {
               return (
                 <button
                   key={idx}
+                  type="button"
                   onClick={() =>
                     setQuizState((prev) => ({
                       ...prev,
@@ -163,22 +207,45 @@ export default function QuizClient({ lang }: { lang: string }) {
         </aside>
 
         <section className="surface-card p-5 sm:p-6 lg:p-8">
-          <h2 className="ink-title mb-6 text-balance text-xl leading-snug lg:text-2xl">{tq?.text}</h2>
+          <h2 id={`${optionGroupId}-question`} className="ink-title mb-6 text-balance text-xl leading-snug lg:text-2xl">
+            {tq?.text}
+          </h2>
 
-          <div className="grid gap-3 xl:grid-cols-2">
+          <div role="radiogroup" aria-labelledby={`${optionGroupId}-question`} className="grid gap-3 xl:grid-cols-2">
             {tq?.options.map((optionText, idx) => {
               const isSelected = selectedOption === idx
+              const canTabToOption = isSelected || (selectedOption === undefined && idx === 0)
               return (
                 <button
                   key={idx}
+                  type="button"
+                  ref={(el) => {
+                    optionRefs.current[idx] = el
+                  }}
                   onClick={() => handleSelectOption(idx)}
+                  onKeyDown={(e) => handleOptionKeyDown(e, idx)}
+                  role="radio"
+                  aria-checked={isSelected}
+                  tabIndex={canTabToOption ? 0 : -1}
                   className={`focus-ring min-h-[64px] rounded-2xl border-2 px-4 py-4 text-left transition-colors ${
                     isSelected
                       ? 'border-[#b43c2f]/60 bg-[rgba(180,60,47,0.1)] text-[color:var(--ink-950)]'
                       : 'border-[#866949]/26 bg-white/72 text-[color:var(--ink-800)] hover:border-[#b43c2f]/32 hover:bg-[rgba(47,138,115,0.08)]'
                   }`}
                 >
-                  <span className="text-sm font-medium leading-snug">{optionText}</span>
+                  <span className="flex items-start gap-3">
+                    <span
+                      aria-hidden="true"
+                      className={`mt-0.5 inline-flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
+                        isSelected
+                          ? 'bg-[rgba(180,60,47,0.18)] text-cinnabar'
+                          : 'bg-[rgba(134,105,74,0.12)] text-[color:var(--ink-600)]'
+                      }`}
+                    >
+                      {idx + 1}
+                    </span>
+                    <span className="text-sm font-medium leading-snug">{optionText}</span>
+                  </span>
                 </button>
               )
             })}
@@ -191,6 +258,7 @@ export default function QuizClient({ lang }: { lang: string }) {
           <div className="flex gap-3">
             {!isFirstQuestion && (
               <button
+                type="button"
                 onClick={handleBack}
                 className="focus-ring min-h-[52px] flex-1 rounded-2xl border-2 border-[#866949]/25 py-3 text-base font-semibold text-[color:var(--ink-600)] transition-colors hover:bg-[rgba(241,233,219,0.85)]"
               >
@@ -198,6 +266,7 @@ export default function QuizClient({ lang }: { lang: string }) {
               </button>
             )}
             <button
+              type="button"
               onClick={isLastQuestion ? handleSubmit : handleNext}
               disabled={isLastQuestion ? !canSubmit : !canAdvance}
               className={`focus-ring min-h-[52px] flex-1 rounded-2xl py-3 text-base font-semibold transition-colors ${

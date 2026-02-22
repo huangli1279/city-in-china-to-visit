@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
-import { ALL_GUIDES, GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
+import { GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
 
 const LAST_MODIFIED_DATE_ISO = '2026-02-21'
 

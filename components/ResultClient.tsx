@@ -12,9 +12,18 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 interface CityTranslation {
   name?: string
   label?: string
-  tagline: string
-  description: string
+  tagline?: string
+  description?: string
   matchReason?: string
+}
+
+function firstNonEmpty(...candidates: Array<string | undefined>): string {
+  for (const candidate of candidates) {
+    if (typeof candidate === 'string' && candidate.trim().length > 0) {
+      return candidate
+    }
+  }
+  return ''
 }
 
 export default function ResultClient({ lang }: { lang: string }) {
@@ -65,6 +74,8 @@ export default function ResultClient({ lang }: { lang: string }) {
   const userTagKeys = userScores ? getUserPersonalityTagKeys(userScores) : []
   const cityName = cityT?.name ?? city.name
   const cityLabel = cityT?.label ?? city.label
+  const cityTagline = firstNonEmpty(cityT?.tagline, city.tagline)
+  const matchReason = firstNonEmpty(cityT?.matchReason, cityT?.description, city.description)
 
   return (
     <main id="main-content" className="min-h-dvh py-5 sm:py-7 lg:py-9">
@@ -115,7 +126,7 @@ export default function ResultClient({ lang }: { lang: string }) {
             {cityName}
           </h1>
           <p className="mt-1 text-sm font-semibold tracking-[0.18em] text-cinnabar">{cityLabel}</p>
-          <p className="mt-3 text-sm italic text-[color:var(--ink-600)] sm:text-base">"{cityT?.tagline}"</p>
+          {cityTagline && <p className="mt-3 text-sm italic text-[color:var(--ink-600)] sm:text-base">"{cityTagline}"</p>}
         </div>
 
         {/* ── Tags ── */}
@@ -168,7 +179,7 @@ export default function ResultClient({ lang }: { lang: string }) {
             </svg>
             {t('result.matchReason')}
           </p>
-          <p className="text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{cityT?.matchReason ?? cityT?.description}</p>
+          <p className="text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{matchReason}</p>
         </div>
       </section>
 
@@ -183,6 +194,7 @@ export default function ResultClient({ lang }: { lang: string }) {
               const rcT = cityTranslations[rc.city.id]
               const rcTagKeys = getCityHighlightTagKeys(rc.city.scores)
               const rcName = rcT?.name ?? rc.city.name
+              const rcTagline = firstNonEmpty(rcT?.tagline, rc.city.tagline)
               return (
                 <article key={rc.city.id} className="surface-card p-5">
                   <div className="flex items-center justify-between gap-3">
@@ -220,7 +232,7 @@ export default function ResultClient({ lang }: { lang: string }) {
                     </div>
                   )}
 
-                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-600)]">{rcT?.tagline}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-600)]">{rcTagline}</p>
                 </article>
               )
             })}

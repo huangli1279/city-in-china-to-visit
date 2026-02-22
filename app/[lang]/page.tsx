@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   if (!(VALID_LANGS as readonly string[]).includes(lang)) return {}
 
-  const t = getTranslation(lang, 'common')
+  const t = await getTranslation(lang, 'common')
   const title = t('home.seo.title') as string
   const description = t('home.seo.description') as string
   const canonicalUrl = toAbsoluteUrl(`/${lang}/`)
@@ -84,8 +84,10 @@ export default async function HomePage({ params }: Props) {
   const { lang } = await params
   if (!(VALID_LANGS as readonly string[]).includes(lang)) notFound()
 
-  const t = getTranslation(lang, 'common')
-  const citiesT = getTranslation(lang, 'cities')
+  const [t, citiesT] = await Promise.all([
+    getTranslation(lang, 'common'),
+    getTranslation(lang, 'cities'),
+  ])
 
   // Build city taglines map from cities namespace
   const citiesData = citiesT('') as Record<string, { tagline: string }> | undefined

@@ -25,28 +25,53 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!open) return
+
     function handleClickOutside(e: PointerEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false)
       }
     }
-    document.addEventListener('pointerdown', handleClickOutside)
-    return () => document.removeEventListener('pointerdown', handleClickOutside)
-  }, [])
 
-  useEffect(() => {
-    if (!open) return
     function onEscape(e: KeyboardEvent) {
       if (e.key === 'Escape') setOpen(false)
     }
+
+    document.addEventListener('pointerdown', handleClickOutside)
     document.addEventListener('keydown', onEscape)
-    return () => document.removeEventListener('keydown', onEscape)
+
+    return () => {
+      document.removeEventListener('pointerdown', handleClickOutside)
+      document.removeEventListener('keydown', onEscape)
+    }
   }, [open])
 
   function handleSelect(targetLang: UrlLang) {
+    if (targetLang === currentLang) {
+      setOpen(false)
+      return
+    }
+
     const segments = (pathname ?? '/').split('/').filter(Boolean)
-    segments[0] = targetLang
-    router.push('/' + segments.join('/') + '/')
+    if (segments.length === 0) {
+      segments.push(targetLang)
+    } else {
+      segments[0] = targetLang
+    }
+
+    const nextPath = `/${segments.join('/')}/`
+    const normalizedPathname = pathname
+      ? (pathname.endsWith('/') ? pathname : `${pathname}/`)
+      : '/'
+    const query = typeof window !== 'undefined' ? window.location.search : ''
+    const hash = typeof window !== 'undefined' ? window.location.hash : ''
+    const nextUrl = `${nextPath}${query}${hash}`
+    const currentUrl = `${normalizedPathname}${query}${hash}`
+
+    if (nextUrl !== currentUrl) {
+      router.replace(nextUrl, { scroll: false })
+    }
+
     setOpen(false)
   }
 

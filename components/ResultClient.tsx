@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { calcUserScores, getRankedCities, getCityHighlightTagKeys, getUserPersonalityTagKeys, type Answers, type RankedCity } from '@/lib/match'
-import type { CityScores } from '@/lib/cities'
 import { ensureI18nLanguage } from '@/lib/i18n-client'
+import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 interface CityTranslation {
@@ -18,7 +18,7 @@ interface CityTranslation {
 }
 
 function decodeAnswers(encoded: string): Answers | null {
-  if (encoded.length !== 18) return null
+  if (encoded.length !== QUIZ_QUESTION_COUNT) return null
   const answers: Answers = {}
   for (let i = 0; i < encoded.length; i++) {
     const val = parseInt(encoded[i], 10)
@@ -43,12 +43,21 @@ export default function ResultClient({ lang }: { lang: string }) {
   }, [lang])
 
   const encoded = searchParams?.get('a') ?? null
-  const answers = encoded ? decodeAnswers(encoded) : null
-  const userScores: CityScores | null = answers ? calcUserScores(answers) : null
-  const ranked: RankedCity[] = userScores ? getRankedCities(userScores) : []
+  const answers = useMemo(() => (encoded ? decodeAnswers(encoded) : null), [encoded])
+  const userScores = useMemo(() => (answers ? calcUserScores(answers) : null), [answers])
+  const ranked: RankedCity[] = useMemo(() => (userScores ? getRankedCities(userScores) : []), [userScores])
   const bestMatch = ranked[0]
-  const runnerUps = ranked.slice(1, 5)
+  const runnerUps = useMemo(() => ranked.slice(1, 5), [ranked])
   const hasResult = Boolean(bestMatch)
+  const cityTranslations = useMemo(() => {
+    const value = t('cities', {
+      ns: 'cities',
+      returnObjects: true,
+    })
+    return value && typeof value === 'object' && !Array.isArray(value)
+      ? (value as Record<string, CityTranslation>)
+      : {}
+  }, [t])
 
   useEffect(() => {
     if (!i18nReady) return
@@ -60,11 +69,6 @@ export default function ResultClient({ lang }: { lang: string }) {
   if (!i18nReady || !hasResult) return <div className="min-h-dvh" aria-busy="true" />
 
   const { city, matchPercentage } = bestMatch
-  const cityTranslations = t('cities', {
-    ns: 'cities',
-    returnObjects: true,
-  }) as Record<string, CityTranslation>
-
   const cityT = cityTranslations[city.id]
   const cityTagKeys = getCityHighlightTagKeys(city.scores)
   const userTagKeys = userScores ? getUserPersonalityTagKeys(userScores) : []
@@ -230,12 +234,9 @@ export default function ResultClient({ lang }: { lang: string }) {
 
       {/* ── Retake ── */}
       <div className="mt-5">
-        <button
-          onClick={() => router.push(`/${lang}/quiz/`)}
-          className="btn-cinnabar w-full px-6 py-4 text-lg"
-        >
+        <Link href={`/${lang}/quiz/`} className="btn-cinnabar inline-flex w-full justify-center px-6 py-4 text-lg">
           {t('result.retake')}
-        </button>
+        </Link>
       </div>
     </main>
   )

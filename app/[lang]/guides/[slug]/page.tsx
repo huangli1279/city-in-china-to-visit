@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = GUIDE_BY_SLUG.get(slug)
   if (!guide) return {}
 
-  const t = getTranslation(lang, 'common')
+  const t = await getTranslation(lang, 'common')
   const topicCluster = t('home.topicCluster') as { items?: Array<{ title: string; description: string }> } | undefined
   const localizedItems = Array.isArray(topicCluster?.items) ? topicCluster.items : []
   const guideIndex = ALL_GUIDES.findIndex((g) => g.slug === slug)
@@ -79,7 +79,7 @@ export default async function GuideDetailPage({ params }: Props) {
   const guide = GUIDE_BY_SLUG.get(slug)
   if (!guide) notFound()
 
-  const t = getTranslation(lang, 'common')
+  const t = await getTranslation(lang, 'common')
   const topicCluster = t('home.topicCluster') as { items?: Array<{ title: string; description: string }> } | undefined
   const localizedItems = Array.isArray(topicCluster?.items) ? topicCluster.items : []
   const guideIndex = ALL_GUIDES.findIndex((g) => g.slug === slug)

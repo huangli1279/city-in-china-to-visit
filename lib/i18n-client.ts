@@ -64,34 +64,49 @@ i18n.use(initReactI18next).init({
 })
 
 const loadedLanguages = new Set<SupportedI18nLang>()
+const loadingLanguages = new Map<SupportedI18nLang, Promise<void>>()
 let ensureEnPromise: Promise<void> | null = null
 
 async function loadAndAddLanguage(language: SupportedI18nLang): Promise<void> {
   if (loadedLanguages.has(language)) return
-  const entries = await Promise.all(
-    NAMESPACES.map(async (namespace) => {
-      const module = await RESOURCE_LOADERS[language][namespace]()
-      return [namespace, module.default] as const
-    })
-  )
-  for (const [namespace, data] of entries) {
-    i18n.addResourceBundle(language, namespace, data, true, true)
+
+  const inFlight = loadingLanguages.get(language)
+  if (inFlight) {
+    await inFlight
+    return
   }
-  loadedLanguages.add(language)
+
+  const loadPromise = (async () => {
+    const entries = await Promise.all(
+      NAMESPACES.map(async (namespace) => {
+        const module = await RESOURCE_LOADERS[language][namespace]()
+        return [namespace, module.default] as const
+      })
+    )
+    for (const [namespace, data] of entries) {
+      i18n.addResourceBundle(language, namespace, data, true, true)
+    }
+    loadedLanguages.add(language)
+  })()
+
+  loadingLanguages.set(language, loadPromise)
+  try {
+    await loadPromise
+  } finally {
+    loadingLanguages.delete(language)
+  }
 }
 
 export async function ensureI18nLanguage(input?: string | null): Promise<SupportedI18nLang> {
   const language = normalizeI18nLanguage(input)
 
-  // Always load English first so fallback keys always resolve
+  // Always include English fallback. Load target language in parallel to avoid waterfalls.
   if (!ensureEnPromise) {
     ensureEnPromise = loadAndAddLanguage('en')
   }
-  await ensureEnPromise
 
-  if (language !== 'en') {
-    await loadAndAddLanguage(language)
-  }
+  const targetLoadPromise = language === 'en' ? ensureEnPromise : loadAndAddLanguage(language)
+  await Promise.all([ensureEnPromise, targetLoadPromise])
 
   if (i18n.resolvedLanguage !== language) {
     await i18n.changeLanguage(language)

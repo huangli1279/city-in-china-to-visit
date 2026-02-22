@@ -1,48 +1,43 @@
-import enCommon from '@/content/locales/en/common.json'
-import enQuestions from '@/content/locales/en/questions.json'
-import enCities from '@/content/locales/en/cities.json'
-import zhCommon from '@/content/locales/zh-CN/common.json'
-import zhQuestions from '@/content/locales/zh-CN/questions.json'
-import zhCities from '@/content/locales/zh-CN/cities.json'
-import jaCommon from '@/content/locales/ja/common.json'
-import jaQuestions from '@/content/locales/ja/questions.json'
-import jaCities from '@/content/locales/ja/cities.json'
-import koCommon from '@/content/locales/ko/common.json'
-import koQuestions from '@/content/locales/ko/questions.json'
-import koCities from '@/content/locales/ko/cities.json'
-
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue }
 type Namespace = Record<string, JsonValue>
+type SupportedI18nLang = 'en' | 'zh-CN' | 'ja' | 'ko'
+type NamespaceName = 'common' | 'questions' | 'cities'
+type LocaleModule = { default: Namespace }
 
-const resources: Record<string, Record<string, Namespace>> = {
-  en: {
-    common: enCommon as Namespace,
-    questions: enQuestions as Namespace,
-    cities: enCities as Namespace,
-  },
-  'zh-CN': {
-    common: zhCommon as Namespace,
-    questions: zhQuestions as Namespace,
-    cities: zhCities as Namespace,
-  },
-  ja: {
-    common: jaCommon as Namespace,
-    questions: jaQuestions as Namespace,
-    cities: jaCities as Namespace,
-  },
-  ko: {
-    common: koCommon as Namespace,
-    questions: koQuestions as Namespace,
-    cities: koCities as Namespace,
-  },
-}
+const NAMESPACES: readonly NamespaceName[] = ['common', 'questions', 'cities']
 
-const URL_LANG_MAP: Record<string, string> = {
+const URL_LANG_MAP: Record<string, SupportedI18nLang> = {
   en: 'en',
   zh: 'zh-CN',
   ja: 'ja',
   ko: 'ko',
 }
+
+const RESOURCE_LOADERS: Record<SupportedI18nLang, Record<NamespaceName, () => Promise<LocaleModule>>> = {
+  en: {
+    common: () => import('@/content/locales/en/common.json'),
+    questions: () => import('@/content/locales/en/questions.json'),
+    cities: () => import('@/content/locales/en/cities.json'),
+  },
+  'zh-CN': {
+    common: () => import('@/content/locales/zh-CN/common.json'),
+    questions: () => import('@/content/locales/zh-CN/questions.json'),
+    cities: () => import('@/content/locales/zh-CN/cities.json'),
+  },
+  ja: {
+    common: () => import('@/content/locales/ja/common.json'),
+    questions: () => import('@/content/locales/ja/questions.json'),
+    cities: () => import('@/content/locales/ja/cities.json'),
+  },
+  ko: {
+    common: () => import('@/content/locales/ko/common.json'),
+    questions: () => import('@/content/locales/ko/questions.json'),
+    cities: () => import('@/content/locales/ko/cities.json'),
+  },
+}
+
+const namespaceCache = new Map<string, Namespace>()
+const namespacePromises = new Map<string, Promise<Namespace>>()
 
 function resolveDotPath(obj: unknown, key: string): unknown {
   return key.split('.').reduce((current: unknown, k: string) => {
@@ -53,11 +48,45 @@ function resolveDotPath(obj: unknown, key: string): unknown {
   }, obj)
 }
 
+function toNamespaceName(input: string): NamespaceName | null {
+  return (NAMESPACES as readonly string[]).includes(input) ? (input as NamespaceName) : null
+}
+
+function getCacheKey(language: SupportedI18nLang, namespace: NamespaceName): string {
+  return `${language}:${namespace}`
+}
+
+async function loadNamespace(language: SupportedI18nLang, namespace: NamespaceName): Promise<Namespace> {
+  const key = getCacheKey(language, namespace)
+  const cached = namespaceCache.get(key)
+  if (cached) return cached
+
+  const inFlight = namespacePromises.get(key)
+  if (inFlight) return inFlight
+
+  const loadPromise = RESOURCE_LOADERS[language][namespace]()
+    .then((module) => {
+      const data = module.default ?? {}
+      namespaceCache.set(key, data)
+      return data
+    })
+    .finally(() => {
+      namespacePromises.delete(key)
+    })
+
+  namespacePromises.set(key, loadPromise)
+  return loadPromise
+}
+
 export type TranslationFn = (key: string, options?: { returnObjects?: boolean }) => unknown
 
-export function getTranslation(urlLang: string, namespace: string): TranslationFn {
-  const i18nLang = URL_LANG_MAP[urlLang] ?? 'en'
-  const data: unknown = resources[i18nLang]?.[namespace] ?? resources.en[namespace] ?? {}
+export async function getTranslation(urlLang: string, namespace: string): Promise<TranslationFn> {
+  const language = URL_LANG_MAP[urlLang] ?? 'en'
+  const namespaceName = toNamespaceName(namespace)
+
+  const data = namespaceName
+    ? await loadNamespace(language, namespaceName)
+    : {}
 
   return function t(key: string): unknown {
     const value = resolveDotPath(data, key)

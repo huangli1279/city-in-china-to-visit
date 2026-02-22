@@ -8,7 +8,7 @@ type Props = { params: Promise<{ lang: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
-  const t = getTranslation(lang, 'common')
+  const t = await getTranslation(lang, 'common')
   const topicCluster = t('home.topicCluster') as { title?: string; subtitle?: string } | undefined
   const header = t('home.header') as { brandName?: string } | undefined
 
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuidesHubPage({ params }: Props) {
   const { lang } = await params
-  const t = getTranslation(lang, 'common')
+  const t = await getTranslation(lang, 'common')
   const topicCluster = t('home.topicCluster') as {
     eyebrow?: string
     title?: string

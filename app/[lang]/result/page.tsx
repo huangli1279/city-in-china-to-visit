@@ -15,7 +15,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
-  const t = getTranslation(lang, 'common')
+  const t = await getTranslation(lang, 'common')
   const title = t('result.seo.title') as string
   const description = t('result.seo.description') as string
   const canonicalUrl = toAbsoluteUrl(`/${lang}/result/`)

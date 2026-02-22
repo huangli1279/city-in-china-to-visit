@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { trackEvent } from '@/lib/analytics'
 
@@ -132,12 +131,12 @@ export default function HomepageClient({
   previewCities,
   cityTaglines,
 }: HomepageClientProps) {
-  const router = useRouter()
   const currentYear = new Date().getFullYear()
 
   const topicClusterGuideLang = GUIDE_CONTENT_LANGS.has(lang) ? lang : 'en'
   const topicClusterGuideBasePath = `/${topicClusterGuideLang}/guides`
   const legalBasePath = `/${lang}`
+  const quizPath = `/${lang}/quiz/`
 
   const headerLinks = [
     { href: '#landing-preview', label: t.header.navPreview },
@@ -161,9 +160,8 @@ export default function HomepageClient({
     trackEvent('view_landing', { lang })
   }, [lang])
 
-  function goToQuiz(section: 'header' | 'hero' | 'final' | 'footer') {
+  function trackQuizCta(section: 'header' | 'hero' | 'final' | 'footer') {
     trackEvent('click_start_quiz', { lang, section })
-    router.push(`/${lang}/quiz`)
   }
 
   return (
@@ -172,7 +170,7 @@ export default function HomepageClient({
         <div className="surface-card grid-lattice relative overflow-visible px-4 py-3 backdrop-blur-sm sm:px-5 lg:px-6">
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
           <div className="flex flex-wrap items-center gap-3">
-            <Link href="/" className="brand-link">
+            <Link href={`/${lang}/`} className="brand-link">
               <img src="/logo.svg" alt="" aria-hidden="true" width={36} height={36} className="brand-logo" />
               <div className="brand-copy">
                 <div className="header-brand-row">
@@ -194,12 +192,13 @@ export default function HomepageClient({
               ))}
             </nav>
 
-            <button
-              onClick={() => goToQuiz('header')}
+            <Link
+              href={quizPath}
+              onClick={() => trackQuizCta('header')}
               className="btn-ink hidden px-4 py-2 text-sm md:inline-flex"
             >
               {t.header.cta}
-            </button>
+            </Link>
             <LanguageSwitcher currentLang={lang} switcherLabel={t.languageSwitcher} />
           </div>
         </div>
@@ -237,12 +236,13 @@ export default function HomepageClient({
             </article>
           </div>
 
-          <button
-            onClick={() => goToQuiz('hero')}
-            className="btn-cinnabar mt-7 w-full px-8 py-4 text-lg sm:w-auto"
+          <Link
+            href={quizPath}
+            onClick={() => trackQuizCta('hero')}
+            className="btn-cinnabar mt-7 inline-flex w-full px-8 py-4 text-lg sm:w-auto"
           >
             {t.cta}
-          </button>
+          </Link>
         </section>
 
         <aside id="landing-preview" className="surface-card animate-rise-delay scroll-mt-28 p-5 sm:p-6 lg:p-7">
@@ -356,22 +356,22 @@ export default function HomepageClient({
           </p>
           <div className="mt-5 grid gap-3 md:grid-cols-2">
             {topicClusterLinks.map((guide) => (
-              <a
+              <Link
                 key={guide.href}
                 href={guide.href}
                 className="focus-ring surface-muted block p-5 transition-colors hover:border-[#b43c2f]/35"
               >
                 <h3 className="font-display text-lg font-semibold leading-snug text-[color:var(--ink-950)]">{guide.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-600)]">{guide.desc}</p>
-              </a>
+              </Link>
             ))}
           </div>
-          <a
+          <Link
             href={`${topicClusterGuideBasePath}/`}
             className="focus-ring mt-5 inline-flex rounded-xl border border-[#8a6447]/28 bg-white/70 px-4 py-2 text-sm font-semibold text-cinnabar transition-colors hover:border-[#b43c2f]/45"
           >
             {t.topicCluster.cta}
-          </a>
+          </Link>
         </section>
       )}
 
@@ -393,9 +393,13 @@ export default function HomepageClient({
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">
           {t.finalCtaSubtitle}
         </p>
-        <button onClick={() => goToQuiz('final')} className="btn-cinnabar mt-6 w-full px-8 py-4 text-lg sm:w-auto">
+        <Link
+          href={quizPath}
+          onClick={() => trackQuizCta('final')}
+          className="btn-cinnabar mt-6 inline-flex w-full px-8 py-4 text-lg sm:w-auto"
+        >
           {t.finalCta}
-        </button>
+        </Link>
       </section>
 
       <footer className="surface-card mt-5 overflow-hidden bg-[linear-gradient(145deg,#1b2434,#2a364d)] text-slate-200">
@@ -427,9 +431,13 @@ export default function HomepageClient({
 
             <section className="rounded-2xl border border-[#56627a] bg-[#202a3d]/70 p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">{t.footer.nextTitle}</p>
-              <button onClick={() => goToQuiz('footer')} className="btn-cinnabar mt-3 w-full px-4 py-3 text-sm">
+              <Link
+                href={quizPath}
+                onClick={() => trackQuizCta('footer')}
+                className="btn-cinnabar mt-3 inline-flex w-full justify-center px-4 py-3 text-sm"
+              >
                 {t.footer.cta}
-              </button>
+              </Link>
               <p className="mt-3 text-xs leading-relaxed text-slate-300">{t.footer.disclaimer}</p>
             </section>
           </div>
@@ -439,18 +447,18 @@ export default function HomepageClient({
             © {currentYear} {t.footer.copyright}
           </span>
           <nav className="flex flex-wrap items-center gap-3">
-            <a href={`${legalBasePath}/about/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            <Link href={`${legalBasePath}/about/`} className="text-slate-400 transition-colors hover:text-slate-200">
               {t.footer.legalLinks.about}
-            </a>
-            <a href={`${legalBasePath}/contact/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            </Link>
+            <Link href={`${legalBasePath}/contact/`} className="text-slate-400 transition-colors hover:text-slate-200">
               {t.footer.legalLinks.contact}
-            </a>
-            <a href={`${topicClusterGuideBasePath}/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            </Link>
+            <Link href={`${topicClusterGuideBasePath}/`} className="text-slate-400 transition-colors hover:text-slate-200">
               {t.footer.legalLinks.guides}
-            </a>
-            <a href={`${legalBasePath}/privacy-policy/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            </Link>
+            <Link href={`${legalBasePath}/privacy-policy/`} className="text-slate-400 transition-colors hover:text-slate-200">
               {t.footer.legalLinks.privacy}
-            </a>
+            </Link>
           </nav>
         </div>
       </footer>

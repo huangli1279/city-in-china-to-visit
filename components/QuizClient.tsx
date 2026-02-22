@@ -1,13 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { questions } from '@/lib/questions'
-import { calcUserScores, getRankedCities, type Answers } from '@/lib/match'
 import { trackEvent } from '@/lib/analytics'
 import { ensureI18nLanguage } from '@/lib/i18n-client'
+import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
 import ProgressBar from '@/components/ProgressBar'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
@@ -17,16 +16,76 @@ interface TranslatedQuestion {
   options: string[]
 }
 
-function encodeAnswers(answers: Answers): string {
-  return Array.from({ length: 18 }, (_, i) => String(answers[i] ?? 0)).join('')
+type Answers = Record<number, number>
+
+function encodeAnswers(answers: Answers, questionCount: number): string {
+  return Array.from({ length: questionCount }, (_, i) => String(answers[i] ?? 0)).join('')
+}
+
+const QUIZ_INDEX_PARAM = 'i'
+const QUIZ_PROGRESS_PARAM = 'q'
+const UNANSWERED_MARKER = 'x'
+
+interface QuizState {
+  currentIdx: number
+  answers: Answers
+}
+
+function encodeProgress(answers: Answers, questionCount: number): string {
+  return Array.from({ length: questionCount }, (_, idx) => {
+    const answer = answers[idx]
+    return answer === undefined ? UNANSWERED_MARKER : String(answer)
+  }).join('')
+}
+
+function decodeProgress(encoded: string, questionCount: number): Answers | null {
+  if (encoded.length !== questionCount) return null
+
+  const answers: Answers = {}
+  for (let i = 0; i < encoded.length; i++) {
+    const token = encoded[i]
+    if (token === UNANSWERED_MARKER) continue
+
+    const parsed = Number.parseInt(token, 10)
+    if (Number.isNaN(parsed) || parsed < 0 || parsed > 3) return null
+    answers[i] = parsed
+  }
+
+  return answers
+}
+
+function getInitialQuizState(questionCount: number): QuizState {
+  if (typeof window === 'undefined') {
+    return {
+      currentIdx: 0,
+      answers: {},
+    }
+  }
+
+  const params = new URLSearchParams(window.location.search)
+  const idxRaw = params.get(QUIZ_INDEX_PARAM)
+  const progressRaw = params.get(QUIZ_PROGRESS_PARAM) ?? ''
+  const parsedIdx = idxRaw ? Number.parseInt(idxRaw, 10) : 0
+  const maxIdx = Math.max(questionCount - 1, 0)
+  const currentIdx = Number.isInteger(parsedIdx)
+    ? Math.min(Math.max(parsedIdx, 0), maxIdx)
+    : 0
+  const answers = decodeProgress(progressRaw, questionCount) ?? {}
+
+  return {
+    currentIdx,
+    answers,
+  }
 }
 
 export default function QuizClient({ lang }: { lang: string }) {
   const router = useRouter()
+  const pathname = usePathname()
+  const resolvedPathname = pathname ?? '/'
   const { t } = useTranslation('common')
   const [i18nReady, setI18nReady] = useState(false)
-  const [currentIdx, setCurrentIdx] = useState(0)
-  const [answers, setAnswers] = useState<Answers>({})
+  const [quizState, setQuizState] = useState<QuizState>(() => getInitialQuizState(QUIZ_QUESTION_COUNT))
+  const { currentIdx, answers } = quizState
 
   useEffect(() => {
     let cancelled = false
@@ -41,40 +100,105 @@ export default function QuizClient({ lang }: { lang: string }) {
     trackEvent('view_quiz', { lang })
   }, [i18nReady, lang])
 
-  const total = questions.length
+  const translatedQuestions = useMemo(() => {
+    const value = t('questions', {
+      ns: 'questions',
+      returnObjects: true,
+    })
+    return Array.isArray(value) ? (value as TranslatedQuestion[]) : []
+  }, [t])
+
+  const total = translatedQuestions.length > 0 ? translatedQuestions.length : QUIZ_QUESTION_COUNT
+  const questionIndexes = useMemo(() => Array.from({ length: total }, (_, idx) => idx), [total])
   const isFirstQuestion = currentIdx === 0
   const isLastQuestion = currentIdx === total - 1
   const selectedOption = answers[currentIdx]
-  const answeredCount = Object.keys(answers).length
+  const answeredCount = useMemo(
+    () => questionIndexes.reduce((count, idx) => (answers[idx] !== undefined ? count + 1 : count), 0),
+    [answers, questionIndexes],
+  )
   const canAdvance = selectedOption !== undefined
   const canSubmit = isLastQuestion && answeredCount === total
 
-  const translatedQuestions = t('questions', {
-    ns: 'questions',
-    returnObjects: true,
-  }) as TranslatedQuestion[]
   const tq = translatedQuestions[currentIdx]
   const selectedLabel = selectedOption !== undefined ? tq?.options[selectedOption] ?? '' : ''
   const liveStatus = canAdvance
     ? `${t('quiz.progress', { current: currentIdx + 1, total })}. ${t('quiz.currentSelection')}: ${selectedLabel}`
     : `${t('quiz.progress', { current: currentIdx + 1, total })}. ${t('quiz.noSelection')}`
 
+  useEffect(() => {
+    const maxIdx = Math.max(total - 1, 0)
+    setQuizState((prev) => {
+      if (prev.currentIdx <= maxIdx) return prev
+      return {
+        ...prev,
+        currentIdx: maxIdx,
+      }
+    })
+  }, [total])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const params = new URLSearchParams(window.location.search)
+    const hasProgress = currentIdx > 0 || Object.keys(answers).length > 0
+    let changed = false
+
+    if (!hasProgress) {
+      if (params.has(QUIZ_INDEX_PARAM)) {
+        params.delete(QUIZ_INDEX_PARAM)
+        changed = true
+      }
+      if (params.has(QUIZ_PROGRESS_PARAM)) {
+        params.delete(QUIZ_PROGRESS_PARAM)
+        changed = true
+      }
+    } else {
+      const nextIndex = String(currentIdx)
+      const nextProgress = encodeProgress(answers, QUIZ_QUESTION_COUNT)
+
+      if (params.get(QUIZ_INDEX_PARAM) !== nextIndex) {
+        params.set(QUIZ_INDEX_PARAM, nextIndex)
+        changed = true
+      }
+      if (params.get(QUIZ_PROGRESS_PARAM) !== nextProgress) {
+        params.set(QUIZ_PROGRESS_PARAM, nextProgress)
+        changed = true
+      }
+    }
+    if (!changed) return
+
+    const nextQuery = params.toString()
+    const nextUrl = `${resolvedPathname}${nextQuery ? `?${nextQuery}` : ''}${window.location.hash}`
+    window.history.replaceState(window.history.state, '', nextUrl)
+  }, [answers, currentIdx, resolvedPathname])
+
   function handleSelectOption(optionIdx: number) {
-    setAnswers((prev) => ({ ...prev, [currentIdx]: optionIdx }))
+    setQuizState((prev) => ({
+      ...prev,
+      answers: {
+        ...prev.answers,
+        [prev.currentIdx]: optionIdx,
+      },
+    }))
   }
 
   function handleBack() {
-    setCurrentIdx((prev) => prev - 1)
+    setQuizState((prev) => ({
+      ...prev,
+      currentIdx: Math.max(prev.currentIdx - 1, 0),
+    }))
   }
 
   function handleNext() {
-    setCurrentIdx((prev) => prev + 1)
+    setQuizState((prev) => ({
+      ...prev,
+      currentIdx: Math.min(prev.currentIdx + 1, Math.max(total - 1, 0)),
+    }))
   }
 
   function handleSubmit() {
-    const userScores = calcUserScores(answers)
-    getRankedCities(userScores) // pre-validate
-    router.push(`/${lang}/result/?a=${encodeAnswers(answers)}`)
+    router.push(`/${lang}/result/?a=${encodeAnswers(answers, total)}`)
   }
 
   if (!i18nReady) return <div className="min-h-dvh" aria-busy="true" />
@@ -118,13 +242,18 @@ export default function QuizClient({ lang }: { lang: string }) {
             {t('quiz.answered', { answered: answeredCount, total })}
           </p>
           <div className="grid grid-cols-6 gap-2 sm:grid-cols-9 lg:grid-cols-4">
-            {questions.map((question, idx) => {
+            {questionIndexes.map((idx) => {
               const isCurrent = idx === currentIdx
               const isAnswered = answers[idx] !== undefined
               return (
                 <button
-                  key={question.id}
-                  onClick={() => setCurrentIdx(idx)}
+                  key={idx}
+                  onClick={() =>
+                    setQuizState((prev) => ({
+                      ...prev,
+                      currentIdx: idx,
+                    }))
+                  }
                   aria-label={t('quiz.goToQuestion', { number: idx + 1 })}
                   className={`focus-ring min-h-[42px] rounded-xl border text-sm font-semibold transition-colors ${
                     isCurrent

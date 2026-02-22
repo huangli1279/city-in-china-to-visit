@@ -1,3 +1,4 @@
+# Sitemap aliases — handle various crawler patterns
 /sitemap_index.xml /sitemap.xml 301
 /sitemap-index.xml /sitemap.xml 301
 /sitemaps.xml /sitemap.xml 301
@@ -6,32 +7,24 @@
 /page-sitemap.xml /sitemap.xml 301
 /sitemap-*.xml /sitemap.xml 301
 
-/:lang/about /:lang/about/ 200
-/:lang/contact /:lang/contact/ 200
-/:lang/privacy-policy /:lang/privacy-policy/ 200
-/:lang/guides /:lang/guides/ 200
-/:lang/guides/:slug /:lang/guides/:slug/ 200
-/en / 200
-/en/ / 200
-/zh / 200
-/zh/ / 200
-/ja / 200
-/ja/ / 200
-/ko / 200
-/ko/ / 200
-/en/quiz/ /en/quiz 301
-/zh/quiz/ /zh/quiz 301
-/ja/quiz/ /ja/quiz 301
-/ko/quiz/ /ko/quiz 301
-/en/result/ /en/result 301
-/zh/result/ /zh/result 301
-/ja/result/ /ja/result 301
-/ko/result/ /ko/result 301
-/en/quiz / 200
-/zh/quiz / 200
-/ja/quiz / 200
-/ko/quiz / 200
-/en/result / 200
-/zh/result / 200
-/ja/result / 200
-/ko/result / 200
+# Root → English homepage (server-side 301, faster than client-side Next.js redirect)
+/ /en/ 301
+
+# Language root: enforce trailing slash
+/en /en/ 301
+/zh /zh/ 301
+/ja /ja/ 301
+/ko /ko/ 301
+
+# Static pages: enforce trailing slash (trailingSlash: true in next.config.mjs)
+/:lang/about /:lang/about/ 301
+/:lang/contact /:lang/contact/ 301
+/:lang/privacy-policy /:lang/privacy-policy/ 301
+/:lang/editorial-policy /:lang/editorial-policy/ 301
+/:lang/content-updates /:lang/content-updates/ 301
+/:lang/guides /:lang/guides/ 301
+/:lang/guides/:slug /:lang/guides/:slug/ 301
+
+# Quiz and result: enforce trailing slash
+/:lang/quiz /:lang/quiz/ 301
+/:lang/result /:lang/result/ 301

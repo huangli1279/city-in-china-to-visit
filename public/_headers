@@ -33,28 +33,28 @@
 /404.html
   Cache-Control: public, max-age=0, must-revalidate
 
-/en/quiz
+/en/quiz/
   X-Robots-Tag: noindex, follow
 
-/zh/quiz
+/zh/quiz/
   X-Robots-Tag: noindex, follow
 
-/ja/quiz
+/ja/quiz/
   X-Robots-Tag: noindex, follow
 
-/ko/quiz
+/ko/quiz/
   X-Robots-Tag: noindex, follow
 
-/en/result
+/en/result/
   X-Robots-Tag: noindex, follow
 
-/zh/result
+/zh/result/
   X-Robots-Tag: noindex, follow
 
-/ja/result
+/ja/result/
   X-Robots-Tag: noindex, follow
 
-/ko/result
+/ko/result/
   X-Robots-Tag: noindex, follow
 
 /404.html

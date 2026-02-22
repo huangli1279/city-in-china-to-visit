@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import { getTranslation } from '@/lib/i18n'
+import { isUrlLocale } from '@/i18n/locales'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import QuizClient from '@/components/QuizClient'
 
@@ -14,7 +15,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
-  const t = await getTranslation(lang, 'common')
+  if (!isUrlLocale(lang)) return {}
+
+  const t = await getTranslations({ locale: lang, namespace: 'common' })
   const title = t('quiz.seo.title') as string
   const description = t('quiz.seo.description') as string
   const canonicalUrl = toAbsoluteUrl(`/${lang}/quiz/`)
@@ -39,6 +42,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function QuizPage({ params }: Props) {
   const { lang } = await params
-  if (!(VALID_LANGS as readonly string[]).includes(lang)) notFound()
+  if (!isUrlLocale(lang)) notFound()
   return <QuizClient lang={lang} />
 }

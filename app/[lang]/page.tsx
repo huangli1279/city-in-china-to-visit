@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { cities } from '@/lib/cities'
-import { getTranslation } from '@/lib/i18n'
+import { isUrlLocale, toContentLocale } from '@/i18n/locales'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import HomepageClient, { type HomepageTranslations } from '@/components/HomepageClient'
 
-const VALID_LANGS = ['en', 'zh', 'ja', 'ko'] as const
 const PREVIEW_CITY_IDS = ['shanghai', 'xian', 'chengdu', 'guilin', 'chongqing', 'sanya'] as const
 const CITY_BY_ID = new Map(cities.map((city) => [city.id, city]))
 
@@ -17,16 +17,16 @@ type Props = { params: Promise<{ lang: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
-  if (!(VALID_LANGS as readonly string[]).includes(lang)) return {}
+  if (!isUrlLocale(lang)) return {}
 
-  const t = await getTranslation(lang, 'common')
+  const t = await getTranslations({ locale: lang, namespace: 'common' })
   const title = t('home.seo.title') as string
   const description = t('home.seo.description') as string
   const canonicalUrl = toAbsoluteUrl(`/${lang}/`)
   const ogLocale = buildOgLocale(lang)
   const ogLocaleAlternates = buildOgLocaleAlternates(lang)
 
-  const faqItems = t('home.faq.items') as Array<{ question: string; answer: string }>
+  const faqItems = t.raw('home.faq.items') as Array<{ question: string; answer: string }> | undefined
   const faqSchema =
     Array.isArray(faqItems) && faqItems.length > 0
       ? faqItems.map((item) => ({
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       name: t('home.seo.appName') as string,
       applicationCategory: 'TravelApplication',
       operatingSystem: 'Any',
-      inLanguage: lang === 'zh' ? 'zh-CN' : lang,
+      inLanguage: toContentLocale(lang),
       url: canonicalUrl,
       description,
     },
@@ -82,15 +82,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function HomePage({ params }: Props) {
   const { lang } = await params
-  if (!(VALID_LANGS as readonly string[]).includes(lang)) notFound()
+  if (!isUrlLocale(lang)) notFound()
 
   const [t, citiesT] = await Promise.all([
-    getTranslation(lang, 'common'),
-    getTranslation(lang, 'cities'),
+    getTranslations({ locale: lang, namespace: 'common' }),
+    getTranslations({ locale: lang, namespace: 'cities' }),
   ])
 
   // Build city taglines map from cities namespace
-  const citiesData = citiesT('') as Record<string, { tagline: string }> | undefined
+  const citiesData = citiesT.raw('cities') as Record<string, { tagline: string }> | undefined
   const cityTaglines: Record<string, string> = {}
   if (citiesData && typeof citiesData === 'object') {
     for (const [id, data] of Object.entries(citiesData)) {
@@ -105,19 +105,19 @@ export default async function HomePage({ params }: Props) {
     title: t('home.title') as string,
     subtitle: t('home.subtitle') as string,
     cta: t('home.cta') as string,
-    metrics: t('home.metrics') as HomepageTranslations['metrics'],
+    metrics: t.raw('home.metrics') as HomepageTranslations['metrics'],
     desktopPreviewTitle: t('home.desktopPreviewTitle') as string,
     desktopPreviewSubtitle: t('home.desktopPreviewSubtitle') as string,
     shareTitle: t('home.shareTitle') as string,
     shareSubtitle: t('home.shareSubtitle') as string,
-    sharePoints: (t('home.sharePoints') as string[]) ?? [],
+    sharePoints: (t.raw('home.sharePoints') as string[]) ?? [],
     painEyebrow: t('home.painEyebrow') as string,
     painTitle: t('home.painTitle') as string,
-    painPoints: (t('home.painPoints') as HomepageTranslations['painPoints']) ?? [],
+    painPoints: (t.raw('home.painPoints') as HomepageTranslations['painPoints']) ?? [],
     modelEyebrow: t('home.modelEyebrow') as string,
     modelTitle: t('home.modelTitle') as string,
     modelSubtitle: t('home.modelSubtitle') as string,
-    modelDimensions: (t('home.modelDimensions') as string[]) ?? [],
+    modelDimensions: (t.raw('home.modelDimensions') as string[]) ?? [],
     howItWorksTitle: t('home.howItWorksTitle') as string,
     modelStep1: t('home.modelStep1') as string,
     modelStep2: t('home.modelStep2') as string,
@@ -125,11 +125,11 @@ export default async function HomePage({ params }: Props) {
     finalCtaTitle: t('home.finalCtaTitle') as string,
     finalCtaSubtitle: t('home.finalCtaSubtitle') as string,
     finalCta: t('home.finalCta') as string,
-    header: t('home.header') as HomepageTranslations['header'],
-    footer: t('home.footer') as HomepageTranslations['footer'],
-    seoGuide: t('home.seoGuide') as HomepageTranslations['seoGuide'],
-    topicCluster: t('home.topicCluster') as HomepageTranslations['topicCluster'],
-    faq: t('home.faq') as HomepageTranslations['faq'],
+    header: t.raw('home.header') as HomepageTranslations['header'],
+    footer: t.raw('home.footer') as HomepageTranslations['footer'],
+    seoGuide: t.raw('home.seoGuide') as HomepageTranslations['seoGuide'],
+    topicCluster: t.raw('home.topicCluster') as HomepageTranslations['topicCluster'],
+    faq: t.raw('home.faq') as HomepageTranslations['faq'],
     languageSwitcher: t('language.switcher') as string,
   }
 
@@ -158,7 +158,7 @@ export default async function HomePage({ params }: Props) {
       name: translations.header.brandName,
       applicationCategory: 'TravelApplication',
       operatingSystem: 'Any',
-      inLanguage: lang === 'zh' ? 'zh-CN' : lang,
+      inLanguage: toContentLocale(lang),
       url: toAbsoluteUrl(`/${lang}/`),
       description: translations.header.brandEyebrow,
     },

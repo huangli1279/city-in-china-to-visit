@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
-import { getTranslation } from '@/lib/i18n'
+import { normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { ALL_GUIDES } from '@/content/guides'
 
 type Props = { params: Promise<{ lang: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
-  const t = await getTranslation(lang, 'common')
-  const topicCluster = t('home.topicCluster') as { title?: string; subtitle?: string } | undefined
-  const header = t('home.header') as { brandName?: string } | undefined
+  const locale = normalizeUrlLocale(lang)
+  const t = await getTranslations({ locale, namespace: 'common' })
+  const topicCluster = t.raw('home.topicCluster') as { title?: string; subtitle?: string } | undefined
+  const header = t.raw('home.header') as { brandName?: string } | undefined
 
   const title = topicCluster?.title
     ? `${topicCluster.title} | ${header?.brandName ?? 'City Vibe Matcher'}`
@@ -43,15 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuidesHubPage({ params }: Props) {
   const { lang } = await params
-  const t = await getTranslation(lang, 'common')
-  const topicCluster = t('home.topicCluster') as {
+  const locale = normalizeUrlLocale(lang)
+  const t = await getTranslations({ locale, namespace: 'common' })
+  const topicCluster = t.raw('home.topicCluster') as {
     eyebrow?: string
     title?: string
     subtitle?: string
     cta?: string
     items?: Array<{ title: string; description: string }>
   }
-  const home = t('home') as { cta?: string; header?: { brandName?: string } }
+  const home = t.raw('home') as { cta?: string; header?: { brandName?: string } }
 
   const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/`)
   const title = topicCluster?.title
@@ -71,7 +74,7 @@ export default async function GuidesHubPage({ params }: Props) {
       name: title,
       description,
       url: canonicalUrl,
-      inLanguage: lang === 'zh' ? 'zh-CN' : lang,
+      inLanguage: toContentLocale(lang),
     },
     {
       '@context': 'https://schema.org',

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
-import { getTranslation } from '@/lib/i18n'
+import { normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { ALL_GUIDES, GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
 
 const VALID_LANGS = ['en', 'zh', 'ja', 'ko'] as const
@@ -37,14 +38,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = GUIDE_BY_SLUG.get(slug)
   if (!guide) return {}
 
-  const t = await getTranslation(lang, 'common')
-  const topicCluster = t('home.topicCluster') as { items?: Array<{ title: string; description: string }> } | undefined
+  const locale = normalizeUrlLocale(lang)
+  const t = await getTranslations({ locale, namespace: 'common' })
+  const topicCluster = t.raw('home.topicCluster') as { items?: Array<{ title: string; description: string }> } | undefined
   const localizedItems = Array.isArray(topicCluster?.items) ? topicCluster.items : []
   const guideIndex = ALL_GUIDES.findIndex((g) => g.slug === slug)
   const localizedTitle = localizedItems[guideIndex]?.title ?? guide.title
   const localizedDescription = localizedItems[guideIndex]?.description ?? guide.description
 
-  const header = t('home.header') as { brandName?: string } | undefined
+  const header = t.raw('home.header') as { brandName?: string } | undefined
   const brandName = header?.brandName ?? 'City Vibe Matcher'
   const title = `${localizedTitle} | ${brandName}`
   const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/${slug}/`)
@@ -79,15 +81,16 @@ export default async function GuideDetailPage({ params }: Props) {
   const guide = GUIDE_BY_SLUG.get(slug)
   if (!guide) notFound()
 
-  const t = await getTranslation(lang, 'common')
-  const topicCluster = t('home.topicCluster') as { items?: Array<{ title: string; description: string }> } | undefined
+  const locale = normalizeUrlLocale(lang)
+  const t = await getTranslations({ locale, namespace: 'common' })
+  const topicCluster = t.raw('home.topicCluster') as { items?: Array<{ title: string; description: string }> } | undefined
   const localizedItems = Array.isArray(topicCluster?.items) ? topicCluster.items : []
   const guideIndex = ALL_GUIDES.findIndex((g) => g.slug === slug)
   const localizedTitle = localizedItems[guideIndex]?.title ?? guide.title
   const localizedDescription = localizedItems[guideIndex]?.description ?? guide.description
 
-  const home = t('home') as { cta?: string }
-  const header = t('home.header') as { brandName?: string } | undefined
+  const home = t.raw('home') as { cta?: string }
+  const header = t.raw('home.header') as { brandName?: string } | undefined
   const brandName = header?.brandName ?? 'City Vibe Matcher'
 
   const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/${slug}/`)
@@ -106,7 +109,7 @@ export default async function GuideDetailPage({ params }: Props) {
       headline: guide.title,
       description: localizedDescription,
       url: canonicalUrl,
-      inLanguage: lang === 'zh' ? 'zh-CN' : lang,
+      inLanguage: toContentLocale(lang),
       dateModified: lastModified,
       author: { '@type': 'Organization', name: AUTHOR_NAME },
       reviewedBy: { '@type': 'Organization', name: guide.reviewer },

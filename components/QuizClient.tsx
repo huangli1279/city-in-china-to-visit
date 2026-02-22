@@ -2,10 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { usePathname, useRouter } from 'next/navigation'
-import { useTranslation } from 'react-i18next'
 import { trackEvent } from '@/lib/analytics'
-import { ensureI18nLanguage } from '@/lib/i18n-client'
 import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
 import ProgressBar from '@/components/ProgressBar'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
@@ -82,31 +81,19 @@ export default function QuizClient({ lang }: { lang: string }) {
   const router = useRouter()
   const pathname = usePathname()
   const resolvedPathname = pathname ?? '/'
-  const { t } = useTranslation('common')
-  const [i18nReady, setI18nReady] = useState(false)
+  const t = useTranslations('common')
+  const tQuestions = useTranslations('questions')
   const [quizState, setQuizState] = useState<QuizState>(() => getInitialQuizState(QUIZ_QUESTION_COUNT))
   const { currentIdx, answers } = quizState
 
   useEffect(() => {
-    let cancelled = false
-    ensureI18nLanguage(lang).then(() => {
-      if (!cancelled) setI18nReady(true)
-    })
-    return () => { cancelled = true }
+    trackEvent('view_quiz', { lang })
   }, [lang])
 
-  useEffect(() => {
-    if (!i18nReady) return
-    trackEvent('view_quiz', { lang })
-  }, [i18nReady, lang])
-
   const translatedQuestions = useMemo(() => {
-    const value = t('questions', {
-      ns: 'questions',
-      returnObjects: true,
-    })
+    const value = tQuestions.raw('questions')
     return Array.isArray(value) ? (value as TranslatedQuestion[]) : []
-  }, [t])
+  }, [tQuestions])
 
   const total = translatedQuestions.length > 0 ? translatedQuestions.length : QUIZ_QUESTION_COUNT
   const questionIndexes = useMemo(() => Array.from({ length: total }, (_, idx) => idx), [total])
@@ -200,8 +187,6 @@ export default function QuizClient({ lang }: { lang: string }) {
   function handleSubmit() {
     router.push(`/${lang}/result/?a=${encodeAnswers(answers, total)}`)
   }
-
-  if (!i18nReady) return <div className="min-h-dvh" aria-busy="true" />
 
   return (
     <main id="main-content" className="no-scroll-x min-h-dvh py-4 sm:py-6 lg:py-8">

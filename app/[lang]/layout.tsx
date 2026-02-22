@@ -1,10 +1,12 @@
+import { NextIntlClientProvider } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-
-const VALID_LANGS = ['en', 'zh', 'ja', 'ko'] as const
-type Lang = (typeof VALID_LANGS)[number]
+import { getMessages } from '@/i18n/messages'
+import { isUrlLocale, toContentLocale } from '@/i18n/locales'
+import { routing } from '@/i18n/routing'
 
 export function generateStaticParams() {
-  return VALID_LANGS.map((lang) => ({ lang }))
+  return routing.locales.map((lang) => ({ lang }))
 }
 
 export default async function LangLayout({
@@ -15,9 +17,11 @@ export default async function LangLayout({
   params: Promise<{ lang: string }>
 }) {
   const { lang } = await params
-  if (!VALID_LANGS.includes(lang as Lang)) notFound()
+  if (!isUrlLocale(lang)) notFound()
 
-  const htmlLang = lang === 'zh' ? 'zh-CN' : lang
+  setRequestLocale(lang)
+  const messages = await getMessages(lang)
+  const htmlLang = toContentLocale(lang)
 
   return (
     <>
@@ -27,7 +31,9 @@ export default async function LangLayout({
           __html: `document.documentElement.lang='${htmlLang}'`,
         }}
       />
-      {children}
+      <NextIntlClientProvider locale={lang} messages={messages}>
+        {children}
+      </NextIntlClientProvider>
     </>
   )
 }

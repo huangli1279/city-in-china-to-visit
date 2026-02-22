@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslations } from 'next-intl'
 
 interface Props {
   current: number
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function ProgressBar({ current, total }: Props) {
-  const { t } = useTranslation('common')
+  const t = useTranslations('common')
   const pct = Math.round((current / total) * 100)
 
   return (

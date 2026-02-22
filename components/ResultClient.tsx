@@ -1,11 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useTranslation } from 'react-i18next'
 import { calcUserScores, getRankedCities, getCityHighlightTagKeys, getUserPersonalityTagKeys, type Answers, type RankedCity } from '@/lib/match'
-import { ensureI18nLanguage } from '@/lib/i18n-client'
 import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
@@ -31,16 +30,8 @@ function decodeAnswers(encoded: string): Answers | null {
 export default function ResultClient({ lang }: { lang: string }) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { t } = useTranslation('common')
-  const [i18nReady, setI18nReady] = useState(false)
-
-  useEffect(() => {
-    let cancelled = false
-    ensureI18nLanguage(lang).then(() => {
-      if (!cancelled) setI18nReady(true)
-    })
-    return () => { cancelled = true }
-  }, [lang])
+  const t = useTranslations('common')
+  const tCities = useTranslations('cities')
 
   const encoded = searchParams?.get('a') ?? null
   const answers = useMemo(() => (encoded ? decodeAnswers(encoded) : null), [encoded])
@@ -50,23 +41,19 @@ export default function ResultClient({ lang }: { lang: string }) {
   const runnerUps = useMemo(() => ranked.slice(1, 5), [ranked])
   const hasResult = Boolean(bestMatch)
   const cityTranslations = useMemo(() => {
-    const value = t('cities', {
-      ns: 'cities',
-      returnObjects: true,
-    })
+    const value = tCities.raw('cities')
     return value && typeof value === 'object' && !Array.isArray(value)
       ? (value as Record<string, CityTranslation>)
       : {}
-  }, [t])
+  }, [tCities])
 
   useEffect(() => {
-    if (!i18nReady) return
     if (!hasResult) {
       router.replace(`/${lang}/quiz/`)
     }
-  }, [i18nReady, hasResult, lang, router])
+  }, [hasResult, lang, router])
 
-  if (!i18nReady || !hasResult) return <div className="min-h-dvh" aria-busy="true" />
+  if (!hasResult) return <div className="min-h-dvh" aria-busy="true" />
 
   const { city, matchPercentage } = bestMatch
   const cityT = cityTranslations[city.id]

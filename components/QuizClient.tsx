@@ -3,9 +3,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { trackEvent } from '@/lib/analytics'
 import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
+import { clearQuizState, encodeAnswers, getInitialQuizState, saveQuizState, saveResultAnswers } from '@/lib/quiz-session'
 import ProgressBar from '@/components/ProgressBar'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
@@ -15,75 +16,11 @@ interface TranslatedQuestion {
   options: string[]
 }
 
-type Answers = Record<number, number>
-
-function encodeAnswers(answers: Answers, questionCount: number): string {
-  return Array.from({ length: questionCount }, (_, i) => String(answers[i] ?? 0)).join('')
-}
-
-const QUIZ_INDEX_PARAM = 'i'
-const QUIZ_PROGRESS_PARAM = 'q'
-const UNANSWERED_MARKER = 'x'
-
-interface QuizState {
-  currentIdx: number
-  answers: Answers
-}
-
-function encodeProgress(answers: Answers, questionCount: number): string {
-  return Array.from({ length: questionCount }, (_, idx) => {
-    const answer = answers[idx]
-    return answer === undefined ? UNANSWERED_MARKER : String(answer)
-  }).join('')
-}
-
-function decodeProgress(encoded: string, questionCount: number): Answers | null {
-  if (encoded.length !== questionCount) return null
-
-  const answers: Answers = {}
-  for (let i = 0; i < encoded.length; i++) {
-    const token = encoded[i]
-    if (token === UNANSWERED_MARKER) continue
-
-    const parsed = Number.parseInt(token, 10)
-    if (Number.isNaN(parsed) || parsed < 0 || parsed > 3) return null
-    answers[i] = parsed
-  }
-
-  return answers
-}
-
-function getInitialQuizState(questionCount: number): QuizState {
-  if (typeof window === 'undefined') {
-    return {
-      currentIdx: 0,
-      answers: {},
-    }
-  }
-
-  const params = new URLSearchParams(window.location.search)
-  const idxRaw = params.get(QUIZ_INDEX_PARAM)
-  const progressRaw = params.get(QUIZ_PROGRESS_PARAM) ?? ''
-  const parsedIdx = idxRaw ? Number.parseInt(idxRaw, 10) : 0
-  const maxIdx = Math.max(questionCount - 1, 0)
-  const currentIdx = Number.isInteger(parsedIdx)
-    ? Math.min(Math.max(parsedIdx, 0), maxIdx)
-    : 0
-  const answers = decodeProgress(progressRaw, questionCount) ?? {}
-
-  return {
-    currentIdx,
-    answers,
-  }
-}
-
 export default function QuizClient({ lang }: { lang: string }) {
   const router = useRouter()
-  const pathname = usePathname()
-  const resolvedPathname = pathname ?? '/'
   const t = useTranslations('common')
   const tQuestions = useTranslations('questions')
-  const [quizState, setQuizState] = useState<QuizState>(() => getInitialQuizState(QUIZ_QUESTION_COUNT))
+  const [quizState, setQuizState] = useState(() => getInitialQuizState(QUIZ_QUESTION_COUNT))
   const { currentIdx, answers } = quizState
 
   useEffect(() => {
@@ -125,40 +62,8 @@ export default function QuizClient({ lang }: { lang: string }) {
   }, [total])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const params = new URLSearchParams(window.location.search)
-    const hasProgress = currentIdx > 0 || Object.keys(answers).length > 0
-    let changed = false
-
-    if (!hasProgress) {
-      if (params.has(QUIZ_INDEX_PARAM)) {
-        params.delete(QUIZ_INDEX_PARAM)
-        changed = true
-      }
-      if (params.has(QUIZ_PROGRESS_PARAM)) {
-        params.delete(QUIZ_PROGRESS_PARAM)
-        changed = true
-      }
-    } else {
-      const nextIndex = String(currentIdx)
-      const nextProgress = encodeProgress(answers, QUIZ_QUESTION_COUNT)
-
-      if (params.get(QUIZ_INDEX_PARAM) !== nextIndex) {
-        params.set(QUIZ_INDEX_PARAM, nextIndex)
-        changed = true
-      }
-      if (params.get(QUIZ_PROGRESS_PARAM) !== nextProgress) {
-        params.set(QUIZ_PROGRESS_PARAM, nextProgress)
-        changed = true
-      }
-    }
-    if (!changed) return
-
-    const nextQuery = params.toString()
-    const nextUrl = `${resolvedPathname}${nextQuery ? `?${nextQuery}` : ''}${window.location.hash}`
-    window.history.replaceState(window.history.state, '', nextUrl)
-  }, [answers, currentIdx, resolvedPathname])
+    saveQuizState(quizState, total)
+  }, [quizState, total])
 
   function handleSelectOption(optionIdx: number) {
     setQuizState((prev) => ({
@@ -185,7 +90,9 @@ export default function QuizClient({ lang }: { lang: string }) {
   }
 
   function handleSubmit() {
-    router.push(`/${lang}/result/?a=${encodeAnswers(answers, total)}`)
+    saveResultAnswers(encodeAnswers(answers, total))
+    clearQuizState()
+    router.push(`/${lang}/result/`)
   }
 
   return (

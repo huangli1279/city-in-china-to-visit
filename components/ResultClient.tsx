@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { calcUserScores, getRankedCities, getCityHighlightTagKeys, getUserPersonalityTagKeys, type Answers, type RankedCity } from '@/lib/match'
+import { useRouter } from 'next/navigation'
+import { calcUserScores, getRankedCities, getCityHighlightTagKeys, getUserPersonalityTagKeys, type RankedCity } from '@/lib/match'
 import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
+import { clearQuizState, clearResultAnswers, decodeAnswers, loadResultAnswers } from '@/lib/quiz-session'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 interface CityTranslation {
@@ -16,25 +17,22 @@ interface CityTranslation {
   matchReason?: string
 }
 
-function decodeAnswers(encoded: string): Answers | null {
-  if (encoded.length !== QUIZ_QUESTION_COUNT) return null
-  const answers: Answers = {}
-  for (let i = 0; i < encoded.length; i++) {
-    const val = parseInt(encoded[i], 10)
-    if (isNaN(val) || val < 0 || val > 3) return null
-    answers[i] = val
-  }
-  return answers
-}
-
 export default function ResultClient({ lang }: { lang: string }) {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const t = useTranslations('common')
   const tCities = useTranslations('cities')
+  const [encoded, setEncoded] = useState<string | null>(null)
+  const [storageReady, setStorageReady] = useState(false)
 
-  const encoded = searchParams?.get('a') ?? null
-  const answers = useMemo(() => (encoded ? decodeAnswers(encoded) : null), [encoded])
+  useEffect(() => {
+    setEncoded(loadResultAnswers(QUIZ_QUESTION_COUNT))
+    setStorageReady(true)
+  }, [])
+
+  const answers = useMemo(
+    () => (encoded ? decodeAnswers(encoded, QUIZ_QUESTION_COUNT) : null),
+    [encoded],
+  )
   const userScores = useMemo(() => (answers ? calcUserScores(answers) : null), [answers])
   const ranked: RankedCity[] = useMemo(() => (userScores ? getRankedCities(userScores) : []), [userScores])
   const bestMatch = ranked[0]
@@ -48,12 +46,12 @@ export default function ResultClient({ lang }: { lang: string }) {
   }, [tCities])
 
   useEffect(() => {
-    if (!hasResult) {
+    if (storageReady && !hasResult) {
       router.replace(`/${lang}/quiz/`)
     }
-  }, [hasResult, lang, router])
+  }, [hasResult, lang, router, storageReady])
 
-  if (!hasResult) return <div className="min-h-dvh" aria-busy="true" />
+  if (!storageReady || !hasResult) return <div className="min-h-dvh" aria-busy="true" />
 
   const { city, matchPercentage } = bestMatch
   const cityT = cityTranslations[city.id]
@@ -221,7 +219,14 @@ export default function ResultClient({ lang }: { lang: string }) {
 
       {/* ── Retake ── */}
       <div className="mt-5">
-        <Link href={`/${lang}/quiz/`} className="btn-cinnabar inline-flex w-full justify-center px-6 py-4 text-lg">
+        <Link
+          href={`/${lang}/quiz/`}
+          onClick={() => {
+            clearQuizState()
+            clearResultAnswers()
+          }}
+          className="btn-cinnabar inline-flex w-full justify-center px-6 py-4 text-lg"
+        >
           {t('result.retake')}
         </Link>
       </div>

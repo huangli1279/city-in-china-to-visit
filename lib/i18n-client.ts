@@ -46,58 +46,51 @@ const RESOURCE_LOADERS: Record<SupportedI18nLang, Record<NamespaceName, () => Pr
   },
 }
 
-const loadedLanguages = new Set<SupportedI18nLang>()
-let initPromise: Promise<void> | null = null
+// Initialize synchronously at module load with empty resources.
+// react-i18next v14 uses different internal hooks depending on whether
+// i18next is initialized, causing a hook order violation between the first
+// render (uninitialized) and subsequent renders (initialized). Calling init()
+// here with initImmediate: false ensures a consistent initialized state from
+// the very first render, so useTranslation always follows the same hook path.
+i18n.use(initReactI18next).init({
+  lng: 'en',
+  resources: { en: { common: {}, questions: {}, cities: {} } },
+  fallbackLng: 'en',
+  supportedLngs: [...SUPPORTED_I18N_LANGS],
+  interpolation: { escapeValue: false },
+  defaultNS: 'common',
+  ns: [...NAMESPACES],
+  initImmediate: false,
+})
 
-async function loadLanguageResources(language: SupportedI18nLang) {
+const loadedLanguages = new Set<SupportedI18nLang>()
+let ensureEnPromise: Promise<void> | null = null
+
+async function loadAndAddLanguage(language: SupportedI18nLang): Promise<void> {
+  if (loadedLanguages.has(language)) return
   const entries = await Promise.all(
     NAMESPACES.map(async (namespace) => {
       const module = await RESOURCE_LOADERS[language][namespace]()
       return [namespace, module.default] as const
     })
   )
-  return Object.fromEntries(entries) as Record<NamespaceName, Record<string, unknown>>
-}
-
-async function doInit(initialLanguage: SupportedI18nLang) {
-  const languages: SupportedI18nLang[] = initialLanguage === 'en' ? ['en'] : ['en', initialLanguage]
-  const entries = await Promise.all(
-    languages.map(async (language) => {
-      const resources = await loadLanguageResources(language)
-      loadedLanguages.add(language)
-      return [language, resources] as const
-    })
-  )
-  const preloaded = Object.fromEntries(entries) as Record<
-    SupportedI18nLang,
-    Record<NamespaceName, Record<string, unknown>>
-  >
-
-  await i18n.use(initReactI18next).init({
-    lng: initialLanguage,
-    resources: preloaded,
-    fallbackLng: 'en',
-    supportedLngs: [...SUPPORTED_I18N_LANGS],
-    interpolation: { escapeValue: false },
-    defaultNS: 'common',
-    ns: [...NAMESPACES],
-  })
+  for (const [namespace, data] of entries) {
+    i18n.addResourceBundle(language, namespace, data, true, true)
+  }
+  loadedLanguages.add(language)
 }
 
 export async function ensureI18nLanguage(input?: string | null): Promise<SupportedI18nLang> {
   const language = normalizeI18nLanguage(input)
 
-  if (!initPromise) {
-    initPromise = doInit(language)
+  // Always load English first so fallback keys always resolve
+  if (!ensureEnPromise) {
+    ensureEnPromise = loadAndAddLanguage('en')
   }
-  await initPromise
+  await ensureEnPromise
 
-  if (!loadedLanguages.has(language)) {
-    const resources = await loadLanguageResources(language)
-    for (const namespace of NAMESPACES) {
-      i18n.addResourceBundle(language, namespace, resources[namespace], true, true)
-    }
-    loadedLanguages.add(language)
+  if (language !== 'en') {
+    await loadAndAddLanguage(language)
   }
 
   if (i18n.resolvedLanguage !== language) {

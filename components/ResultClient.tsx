@@ -33,6 +33,7 @@ export default function ResultClient({ lang }: { lang: string }) {
   const tCities = useTranslations('cities')
   const [encoded, setEncoded] = useState<string | null>(null)
   const [storageReady, setStorageReady] = useState(false)
+  const [displayedPct, setDisplayedPct] = useState(0)
 
   useEffect(() => {
     setEncoded(loadResultAnswers(QUIZ_QUESTION_COUNT))
@@ -60,6 +61,22 @@ export default function ResultClient({ lang }: { lang: string }) {
       router.replace(`/${lang}/quiz/`)
     }
   }, [hasResult, lang, router, storageReady])
+
+  useEffect(() => {
+    if (!bestMatch) return
+    const target = bestMatch.matchPercentage
+    let startTime: number | null = null
+    function step(ts: number) {
+      if (startTime === null) startTime = ts
+      const elapsed = ts - startTime
+      const progress = Math.min(elapsed / 1100, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setDisplayedPct(Math.round(eased * target))
+      if (progress < 1) requestAnimationFrame(step)
+    }
+    const id = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(id)
+  }, [bestMatch])
 
   if (!storageReady || !hasResult) {
     return (
@@ -109,29 +126,29 @@ export default function ResultClient({ lang }: { lang: string }) {
 
         <div className="flex flex-col items-center text-center">
           <div className="mb-4">
-            <span className="text-[4.5rem] leading-none sm:text-[5rem]" role="img" aria-label={cityName}>{city.emoji}</span>
+            <span className="text-[4.5rem] leading-none sm:text-[5rem]" role="img" aria-label={cityName} style={{ display: 'inline-block', animation: 'bounceIn 0.78s cubic-bezier(0.2, 0.78, 0.2, 1) 0.08s both' }}>{city.emoji}</span>
           </div>
 
-          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-[#8a6447]/28 bg-white/75 px-3 py-1 text-xs font-semibold text-[color:var(--ink-600)]">
+          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-[#8a6447]/28 bg-white/75 px-3 py-1 text-xs font-semibold text-[color:var(--ink-600)]" style={{ animation: 'slideUp 0.55s cubic-bezier(0.2, 0.78, 0.2, 1) 0.24s both' }}>
             <svg className="h-3 w-3 text-[color:var(--gold-500)]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
             </svg>
             {t('result.matchLabel')}
           </div>
 
-          <div className="font-display text-7xl font-black leading-none text-cinnabar sm:text-8xl">
-            {matchPercentage}%
+          <div className="font-display text-7xl font-black leading-none text-cinnabar sm:text-8xl" style={{ animation: 'slideUp 0.6s cubic-bezier(0.2, 0.78, 0.2, 1) 0.36s both' }}>
+            {displayedPct}%
           </div>
 
-          <h1 className="ink-title mt-4 text-balance text-3xl sm:text-4xl">
+          <h1 className="ink-title mt-4 text-balance text-3xl sm:text-4xl" style={{ animation: 'slideUp 0.58s cubic-bezier(0.2, 0.78, 0.2, 1) 0.5s both' }}>
             {cityName}
           </h1>
-          <p className="mt-1 text-sm font-semibold tracking-[0.18em] text-cinnabar">{cityLabel}</p>
-          {cityTagline && <p className="mt-3 text-sm italic text-[color:var(--ink-600)] sm:text-base">"{cityTagline}"</p>}
+          <p className="mt-1 text-sm font-semibold tracking-[0.18em] text-cinnabar" style={{ animation: 'slideUp 0.55s cubic-bezier(0.2, 0.78, 0.2, 1) 0.6s both' }}>{cityLabel}</p>
+          {cityTagline && <p className="mt-3 text-sm italic text-[color:var(--ink-600)] sm:text-base" style={{ animation: 'slideUp 0.55s cubic-bezier(0.2, 0.78, 0.2, 1) 0.68s both' }}>"{cityTagline}"</p>}
         </div>
 
         {/* ── Tags ── */}
-        <div className="mt-7 space-y-4">
+        <div className="mt-7 space-y-4" style={{ animation: 'slideUp 0.6s cubic-bezier(0.2, 0.78, 0.2, 1) 0.78s both' }}>
           {userTagKeys.length > 0 && (
             <div>
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--ink-600)]">
@@ -173,7 +190,7 @@ export default function ResultClient({ lang }: { lang: string }) {
         <div className="motif-divider-center my-7" />
 
         {/* ── Match reason ── */}
-        <div>
+        <div style={{ animation: 'slideUp 0.6s cubic-bezier(0.2, 0.78, 0.2, 1) 0.9s both' }}>
           <p className="mb-3 flex items-center gap-2 font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">
             <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
@@ -186,7 +203,7 @@ export default function ResultClient({ lang }: { lang: string }) {
 
       {/* ── Runner-up cities ── */}
       {runnerUps.length > 0 && (
-        <section className="mt-5">
+        <section className="mt-5" style={{ animation: 'slideUp 0.65s cubic-bezier(0.2, 0.78, 0.2, 1) 0.3s both' }}>
           <h2 className="mb-4 text-center font-accent text-xs font-semibold uppercase tracking-[0.22em] text-cinnabar">
             {t('result.runnerUps')}
           </h2>
@@ -242,7 +259,7 @@ export default function ResultClient({ lang }: { lang: string }) {
       )}
 
       {/* ── Retake ── */}
-      <div className="mt-5">
+      <div className="mt-5" style={{ animation: 'slideUp 0.65s cubic-bezier(0.2, 0.78, 0.2, 1) 0.45s both' }}>
         <Link
           href={`/${lang}/quiz/`}
           onClick={() => {

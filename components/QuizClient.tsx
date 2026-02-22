@@ -22,6 +22,7 @@ export default function QuizClient({ lang }: { lang: string }) {
   const t = useTranslations('common')
   const tQuestions = useTranslations('questions')
   const [quizState, setQuizState] = useState(() => getInitialQuizState(QUIZ_QUESTION_COUNT))
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([])
   const optionGroupId = useId()
   const { currentIdx, answers } = quizState
@@ -134,9 +135,12 @@ export default function QuizClient({ lang }: { lang: string }) {
   }
 
   function handleSubmit() {
+    setIsSubmitting(true)
     saveResultAnswers(encodeAnswers(answers, total))
     clearQuizState()
-    router.push(`/${lang}/result/`)
+    setTimeout(() => {
+      router.push(`/${lang}/result/`)
+    }, 600)
   }
 
   return (
@@ -281,6 +285,40 @@ export default function QuizClient({ lang }: { lang: string }) {
           </div>
         </div>
       </footer>
+
+      {isSubmitting && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 300,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'linear-gradient(155deg, #b43c2f 0%, #8a2c22 100%)',
+            animation: 'curtainUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both',
+          }}
+        >
+          <div
+            style={{
+              width: 72,
+              height: 72,
+              borderRadius: '50%',
+              border: '1.5px solid rgba(255,255,255,0.3)',
+              background: 'rgba(255,255,255,0.08)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.75rem',
+              color: 'rgba(255,255,255,0.85)',
+              animation: 'orbPulse 1.1s ease-in-out infinite',
+            }}
+          >
+            ✦
+          </div>
+        </div>
+      )}
     </main>
   )
 }

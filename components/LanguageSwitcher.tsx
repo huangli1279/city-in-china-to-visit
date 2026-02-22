@@ -10,7 +10,7 @@ const LANG_LABELS: Record<string, string> = {
   ko: '🇰🇷 한국어',
 }
 
-const URL_LANGS = ['en', 'zh', 'ja', 'ko'] as const
+const URL_LANGS = ['en', 'ja', 'ko', 'zh'] as const
 type UrlLang = (typeof URL_LANGS)[number]
 
 interface LanguageSwitcherProps {

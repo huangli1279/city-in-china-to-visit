@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 import { GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
+import SiteHeader from '@/components/SiteHeader'
+import SiteFooter from '@/components/SiteFooter'
+import Breadcrumb from '@/components/Breadcrumb'
 
 const LAST_MODIFIED_DATE_ISO = '2026-02-21'
 
@@ -47,6 +51,41 @@ export default async function ContentUpdatesPage({ params }: Props) {
   const { title, description } = getPageSeo(locale, 'updates')
   const canonicalUrl = toAbsoluteUrl(`/${lang}/content-updates/`)
 
+  const t = await getTranslations({ locale, namespace: 'common' })
+  const home = t.raw('home') as {
+    header?: { brandName?: string; brandEyebrow?: string; navPreview?: string; navPain?: string; navModel?: string; cta?: string }
+    footer?: {
+      eyebrow?: string; title?: string; subtitle?: string; jumpTitle?: string; nextTitle?: string
+      cta?: string; disclaimer?: string; copyright?: string
+      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string }
+    }
+  }
+  const language = t.raw('language') as { switcher?: string }
+  const brandName = home?.header?.brandName ?? 'City Vibe Matcher'
+
+  const navLinks = [
+    { href: `/${lang}/#landing-preview`, label: home?.header?.navPreview ?? 'City Preview' },
+    { href: `/${lang}/#landing-pain`, label: home?.header?.navPain ?? 'Why This Quiz' },
+    { href: `/${lang}/#landing-model`, label: home?.header?.navModel ?? 'How Matching Works' },
+  ]
+
+  const footerData = {
+    eyebrow: home?.footer?.eyebrow ?? 'Plan less. Experience more.',
+    title: home?.footer?.title ?? 'Your first China city should fit who you are.',
+    subtitle: home?.footer?.subtitle ?? 'Take the quiz, lock your first stop, and move from endless research to a real itinerary.',
+    jumpTitle: home?.footer?.jumpTitle ?? 'Explore this page',
+    nextTitle: home?.footer?.nextTitle ?? 'Ready when you are',
+    cta: home?.footer?.cta ?? 'Start the 18-question quiz',
+    disclaimer: home?.footer?.disclaimer ?? 'No signup required. Results in about 2-3 minutes.',
+    copyright: home?.footer?.copyright ?? 'Which Chinese City Matches Your Vibe',
+    legalLinks: {
+      about: home?.footer?.legalLinks?.about ?? 'About',
+      contact: home?.footer?.legalLinks?.contact ?? 'Contact',
+      guides: home?.footer?.legalLinks?.guides ?? 'Guides',
+      privacy: home?.footer?.legalLinks?.privacy ?? 'Privacy Policy',
+    },
+  }
+
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -73,11 +112,21 @@ export default async function ContentUpdatesPage({ params }: Props) {
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
 
-      <nav className="mb-5 flex items-center gap-2 text-sm text-[color:var(--ink-600)]" aria-label="Breadcrumb">
-        <Link href={`/${lang}/`} className="hover:text-cinnabar transition-colors">Home</Link>
-        <span>/</span>
-        <span>Content Updates</span>
-      </nav>
+      <SiteHeader
+        lang={lang}
+        brandName={brandName}
+        brandEyebrow={home?.header?.brandEyebrow ?? 'China Trip Planner'}
+        ctaLabel={home?.header?.cta ?? 'Start Quiz'}
+        switcherLabel={language?.switcher ?? 'Language'}
+        navLinks={navLinks}
+      />
+
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: `/${lang}/` },
+          { label: 'Content Updates' },
+        ]}
+      />
 
       <article className="surface-card p-6 sm:p-8 lg:p-10">
         <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">Content Updates</p>
@@ -131,6 +180,8 @@ export default async function ContentUpdatesPage({ params }: Props) {
           </section>
         ))}
       </article>
+
+      <SiteFooter lang={lang} footer={footerData} navLinks={navLinks} />
     </main>
   )
 }

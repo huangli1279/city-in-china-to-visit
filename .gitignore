@@ -20,9 +20,13 @@ dist-ssr
 # Next.js
 .next
 out
+test-results
 
 # Wrangler / Cloudflare
 .wrangler
+
+# TypeScript incremental cache
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*

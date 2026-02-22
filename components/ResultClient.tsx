@@ -51,7 +51,13 @@ export default function ResultClient({ lang }: { lang: string }) {
     }
   }, [hasResult, lang, router, storageReady])
 
-  if (!storageReady || !hasResult) return <div className="min-h-dvh" aria-busy="true" />
+  if (!storageReady || !hasResult) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center" role="status" aria-live="polite" aria-busy="true">
+        <span className="text-sm font-medium text-[color:var(--ink-600)]">{t('result.matchLabel')}...</span>
+      </div>
+    )
+  }
 
   const { city, matchPercentage } = bestMatch
   const cityT = cityTranslations[city.id]
@@ -189,9 +195,14 @@ export default function ResultClient({ lang }: { lang: string }) {
                     </span>
                   </div>
 
-                  <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[rgba(134,106,60,0.15)]">
+                  <div
+                    className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[rgba(134,106,60,0.15)]"
+                    role="img"
+                    aria-label={`${rcName} ${rc.matchPercentage}% ${t('result.matchLabel')}`}
+                  >
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-[var(--cinnabar-600)] to-[var(--gold-500)]"
+                      aria-hidden="true"
                       style={{ width: `${rc.matchPercentage}%` }}
                     />
                   </div>

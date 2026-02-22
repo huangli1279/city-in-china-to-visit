@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 
 const LANG_LABELS: Record<string, string> = {
@@ -23,6 +23,29 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const listboxId = useId()
+
+  const fallbackLang: UrlLang = URL_LANGS.includes(currentLang as UrlLang) ? (currentLang as UrlLang) : 'en'
+  const selectedIndex = Math.max(URL_LANGS.indexOf(fallbackLang), 0)
+
+  function focusOption(index: number) {
+    const boundedIndex = Math.min(Math.max(index, 0), URL_LANGS.length - 1)
+    optionRefs.current[boundedIndex]?.focus()
+  }
+
+  function moveOptionFocus(currentIndex: number, direction: 1 | -1) {
+    const nextIndex = (currentIndex + direction + URL_LANGS.length) % URL_LANGS.length
+    focusOption(nextIndex)
+  }
+
+  function openAndFocus(index: number) {
+    setOpen(true)
+    requestAnimationFrame(() => {
+      focusOption(index)
+    })
+  }
 
   useEffect(() => {
     if (!open) return
@@ -34,17 +57,36 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
     }
 
     function onEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') {
+        setOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
+
+    function handleFocusIn(e: FocusEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
     }
 
     document.addEventListener('pointerdown', handleClickOutside)
     document.addEventListener('keydown', onEscape)
+    document.addEventListener('focusin', handleFocusIn)
 
     return () => {
       document.removeEventListener('pointerdown', handleClickOutside)
       document.removeEventListener('keydown', onEscape)
+      document.removeEventListener('focusin', handleFocusIn)
     }
   }, [open])
+
+  useEffect(() => {
+    if (open) {
+      requestAnimationFrame(() => {
+        focusOption(selectedIndex)
+      })
+    }
+  }, [open, selectedIndex])
 
   function handleSelect(targetLang: UrlLang) {
     if (targetLang === currentLang) {
@@ -75,6 +117,74 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
     setOpen(false)
   }
 
+  function handleTriggerKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      openAndFocus(selectedIndex)
+      return
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      openAndFocus(selectedIndex)
+      return
+    }
+
+    if (e.key === 'Home') {
+      e.preventDefault()
+      openAndFocus(0)
+      return
+    }
+
+    if (e.key === 'End') {
+      e.preventDefault()
+      openAndFocus(URL_LANGS.length - 1)
+    }
+  }
+
+  function handleOptionKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, optionIndex: number, code: UrlLang) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      moveOptionFocus(optionIndex, 1)
+      return
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      moveOptionFocus(optionIndex, -1)
+      return
+    }
+
+    if (e.key === 'Home') {
+      e.preventDefault()
+      focusOption(0)
+      return
+    }
+
+    if (e.key === 'End') {
+      e.preventDefault()
+      focusOption(URL_LANGS.length - 1)
+      return
+    }
+
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      setOpen(false)
+      triggerRef.current?.focus()
+      return
+    }
+
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault()
+      handleSelect(code)
+      return
+    }
+
+    if (e.key === 'Tab') {
+      setOpen(false)
+    }
+  }
+
   return (
     <div ref={ref} className="relative flex-shrink-0">
       <label htmlFor="language-switcher-mobile" className="sr-only">
@@ -95,10 +205,14 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
       </select>
 
       <button
+        ref={triggerRef}
+        type="button"
         onClick={() => setOpen((o) => !o)}
+        onKeyDown={handleTriggerKeyDown}
         className="focus-ring hidden min-h-[44px] items-center gap-1 whitespace-nowrap rounded-xl border border-[#8a6447]/20 bg-white/65 px-3 py-2 text-sm font-medium text-[color:var(--ink-800)] transition-colors hover:border-[#b43c2f]/35 hover:bg-white/85 sm:flex"
         aria-haspopup="listbox"
         aria-expanded={open}
+        aria-controls={open ? listboxId : undefined}
         aria-label={switcherLabel}
       >
         {LANG_LABELS[currentLang] ?? LANG_LABELS.en}
@@ -109,15 +223,23 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
 
       {open && (
         <div
+          id={listboxId}
           role="listbox"
+          aria-label={switcherLabel}
           className="absolute right-0 top-[calc(100%+0.55rem)] z-[120] hidden min-w-[188px] overflow-hidden rounded-2xl border border-[#8a6447]/25 bg-[rgba(253,248,240,0.97)] py-1 shadow-[0_24px_40px_-28px_rgba(58,35,23,0.62)] backdrop-blur sm:block"
         >
-          {URL_LANGS.map((code) => (
+          {URL_LANGS.map((code, idx) => (
             <button
               key={code}
+              type="button"
+              ref={(el) => {
+                optionRefs.current[idx] = el
+              }}
+              id={`${listboxId}-option-${code}`}
               role="option"
               aria-selected={code === currentLang}
               onClick={() => handleSelect(code)}
+              onKeyDown={(e) => handleOptionKeyDown(e, idx, code)}
               className={`focus-ring w-full whitespace-nowrap px-4 py-2.5 text-left text-sm transition-colors ${
                 code === currentLang
                   ? 'bg-[rgba(180,60,47,0.12)] font-semibold text-[color:var(--cinnabar-600)]'

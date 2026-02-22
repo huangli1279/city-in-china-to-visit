@@ -185,7 +185,7 @@ export default function HomepageClient({
                 <a
                   key={link.href}
                   href={link.href}
-                  className="focus-ring rounded-full border border-[#83582e]/25 bg-white/70 px-3 py-1.5 text-xs font-semibold text-[color:var(--ink-600)] transition-colors hover:border-[#b43c2f]/40 hover:text-[color:var(--cinnabar-600)]"
+                  className="focus-ring inline-flex min-h-[44px] items-center rounded-full border border-[#83582e]/25 bg-white/70 px-3.5 py-2 text-xs font-semibold text-[color:var(--ink-600)] transition-colors hover:border-[#b43c2f]/40 hover:text-[color:var(--cinnabar-600)]"
                 >
                   {link.label}
                 </a>
@@ -255,7 +255,7 @@ export default function HomepageClient({
             {previewCities.map((city) => (
               <article
                 key={city.id}
-                className="surface-muted cursor-pointer rounded-2xl border-[#826043]/20 p-4 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[#b43c2f]/40 hover:shadow-[0_6px_18px_-8px_rgba(180,60,47,0.25)]"
+                className="surface-muted rounded-2xl border-[#826043]/20 p-4"
               >
                 <div className="mb-2 flex items-center gap-3">
                   <span className="text-4xl leading-none" aria-hidden="true">{city.emoji}</span>
@@ -421,7 +421,7 @@ export default function HomepageClient({
                   <a
                     key={`footer-${link.href}`}
                     href={link.href}
-                    className="focus-ring rounded-xl border border-[#5f6b81] bg-[#27344c] px-3 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-[#e2b35f]/70 hover:text-white"
+                    className="focus-ring inline-flex min-h-[44px] items-center rounded-xl border border-[#5f6b81] bg-[#27344c] px-3.5 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-[#e2b35f]/70 hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -447,16 +447,28 @@ export default function HomepageClient({
             © {currentYear} {t.footer.copyright}
           </span>
           <nav className="flex flex-wrap items-center gap-3">
-            <Link href={`${legalBasePath}/about/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            <Link
+              href={`${legalBasePath}/about/`}
+              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+            >
               {t.footer.legalLinks.about}
             </Link>
-            <Link href={`${legalBasePath}/contact/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            <Link
+              href={`${legalBasePath}/contact/`}
+              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+            >
               {t.footer.legalLinks.contact}
             </Link>
-            <Link href={`${topicClusterGuideBasePath}/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            <Link
+              href={`${topicClusterGuideBasePath}/`}
+              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+            >
               {t.footer.legalLinks.guides}
             </Link>
-            <Link href={`${legalBasePath}/privacy-policy/`} className="text-slate-400 transition-colors hover:text-slate-200">
+            <Link
+              href={`${legalBasePath}/privacy-policy/`}
+              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+            >
               {t.footer.legalLinks.privacy}
             </Link>
           </nav>

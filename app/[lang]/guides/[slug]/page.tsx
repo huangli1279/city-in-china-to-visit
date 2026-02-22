@@ -49,17 +49,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const header = t.raw('home.header') as { brandName?: string } | undefined
   const brandName = header?.brandName ?? 'City Vibe Matcher'
   const title = `${localizedTitle} | ${brandName}`
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/${slug}/`)
+  const isPrimaryIndexableLang = locale === 'en'
+  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
+  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/guides/${slug}/`)
   const lastModified = getGuideLastModified(slug)
 
   return {
     title,
     description: localizedDescription,
-    robots: 'index, follow',
-    alternates: {
-      canonical: canonicalUrl,
-      languages: buildNextAlternates(`guides/${slug}/`),
-    },
+    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
+    alternates: isPrimaryIndexableLang
+      ? {
+          canonical: canonicalUrl,
+          languages: buildNextAlternates(`guides/${slug}/`),
+        }
+      : {
+          canonical: canonicalUrl,
+        },
     openGraph: {
       title,
       description: localizedDescription,
@@ -68,8 +74,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: lastModified,
       modifiedTime: lastModified,
       authors: [AUTHOR_NAME],
-      locale: buildOgLocale(lang),
-      alternateLocale: buildOgLocaleAlternates(lang),
+      locale: buildOgLocale(locale),
+      alternateLocale: buildOgLocaleAlternates(locale),
       images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description: localizedDescription, images: [toAbsoluteUrl('/og-image.svg')] },

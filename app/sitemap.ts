@@ -5,6 +5,7 @@ export const dynamic = 'force-static'
 import { ALL_GUIDES, CONTENT_UPDATE_LOG } from '@/content/guides/index'
 
 const LEGAL_PAGES = ['about', 'contact', 'editorial-policy', 'content-updates', 'privacy-policy'] as const
+const INDEXABLE_CONTENT_LANGS = ['en'] as const
 
 const SITE_LAST_MOD = '2026-02-21'
 
@@ -30,6 +31,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: lang === 'en' ? 1.0 : 0.9,
     })
 
+  }
+
+  // English content pages are currently the only fully localized, indexable versions.
+  for (const lang of INDEXABLE_CONTENT_LANGS) {
     // Legal pages
     for (const page of LEGAL_PAGES) {
       entries.push({

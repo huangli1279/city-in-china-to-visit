@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 
 const LAST_MODIFIED_DATE_ISO = '2026-02-21'
@@ -11,23 +12,30 @@ type Props = { params: Promise<{ lang: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
-  const { title, description } = getPageSeo(lang, 'privacy')
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/privacy-policy/`)
+  const locale = normalizeUrlLocale(lang)
+  const { title, description } = getPageSeo(locale, 'privacy')
+  const isPrimaryIndexableLang = locale === 'en'
+  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
+  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/privacy-policy/`)
 
   return {
     title,
     description,
-    robots: 'index, follow',
-    alternates: {
-      canonical: canonicalUrl,
-      languages: buildNextAlternates('privacy-policy/'),
-    },
+    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
+    alternates: isPrimaryIndexableLang
+      ? {
+          canonical: canonicalUrl,
+          languages: buildNextAlternates('privacy-policy/'),
+        }
+      : {
+          canonical: canonicalUrl,
+        },
     openGraph: {
       title,
       description,
       url: canonicalUrl,
-      locale: buildOgLocale(lang),
-      alternateLocale: buildOgLocaleAlternates(lang),
+      locale: buildOgLocale(locale),
+      alternateLocale: buildOgLocaleAlternates(locale),
       images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description, images: [toAbsoluteUrl('/og-image.svg')] },
@@ -36,7 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PrivacyPolicyPage({ params }: Props) {
   const { lang } = await params
-  const { title, description } = getPageSeo(lang, 'privacy')
+  const locale = normalizeUrlLocale(lang)
+  const { title, description } = getPageSeo(locale, 'privacy')
   const canonicalUrl = toAbsoluteUrl(`/${lang}/privacy-policy/`)
 
   const jsonLd = [
@@ -46,7 +55,7 @@ export default async function PrivacyPolicyPage({ params }: Props) {
       name: title,
       description,
       url: canonicalUrl,
-      inLanguage: lang === 'zh' ? 'zh-CN' : lang,
+      inLanguage: locale === 'zh' ? 'zh-CN' : locale,
       dateModified: LAST_MODIFIED_DATE_ISO,
     },
     {

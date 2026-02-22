@@ -1,16 +1,17 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { SITE_URL } from '@/lib/seo'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://bestcityinchina.site'),
+  metadataBase: new URL(SITE_URL),
   icons: { icon: '/logo.svg', apple: '/logo.svg' },
   other: { 'google-adsense-account': 'ca-pub-8272386212758068' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8272386212758068"

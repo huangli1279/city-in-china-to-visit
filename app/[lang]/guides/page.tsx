@@ -21,22 +21,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     topicCluster?.subtitle ??
     'Explore focused guides that help first-time travelers compare destinations, choose trip length, and plan a confident first stop in China.'
 
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/`)
+  const isPrimaryIndexableLang = locale === 'en'
+  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
+  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/guides/`)
 
   return {
     title,
     description,
-    robots: 'index, follow',
-    alternates: {
-      canonical: canonicalUrl,
-      languages: buildNextAlternates('guides/'),
-    },
+    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
+    alternates: isPrimaryIndexableLang
+      ? {
+          canonical: canonicalUrl,
+          languages: buildNextAlternates('guides/'),
+        }
+      : {
+          canonical: canonicalUrl,
+        },
     openGraph: {
       title,
       description,
       url: canonicalUrl,
-      locale: buildOgLocale(lang),
-      alternateLocale: buildOgLocaleAlternates(lang),
+      locale: buildOgLocale(locale),
+      alternateLocale: buildOgLocaleAlternates(locale),
       images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description, images: [toAbsoluteUrl('/og-image.svg')] },

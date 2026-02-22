@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
@@ -15,23 +16,30 @@ type Props = { params: Promise<{ lang: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
-  const { title, description } = getPageSeo(lang, 'about')
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/about/`)
+  const locale = normalizeUrlLocale(lang)
+  const { title, description } = getPageSeo(locale, 'about')
+  const isPrimaryIndexableLang = locale === 'en'
+  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
+  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/about/`)
 
   return {
     title,
     description,
-    robots: 'index, follow',
-    alternates: {
-      canonical: canonicalUrl,
-      languages: buildNextAlternates('about/'),
-    },
+    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
+    alternates: isPrimaryIndexableLang
+      ? {
+          canonical: canonicalUrl,
+          languages: buildNextAlternates('about/'),
+        }
+      : {
+          canonical: canonicalUrl,
+        },
     openGraph: {
       title,
       description,
       url: canonicalUrl,
-      locale: buildOgLocale(lang),
-      alternateLocale: buildOgLocaleAlternates(lang),
+      locale: buildOgLocale(locale),
+      alternateLocale: buildOgLocaleAlternates(locale),
       images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description, images: [toAbsoluteUrl('/og-image.svg')] },
@@ -40,7 +48,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function AboutPage({ params }: Props) {
   const { lang } = await params
-  const { title, description } = getPageSeo(lang, 'about')
+  const locale = normalizeUrlLocale(lang)
+  const { title, description } = getPageSeo(locale, 'about')
   const canonicalUrl = toAbsoluteUrl(`/${lang}/about/`)
 
   const jsonLd = [
@@ -50,7 +59,7 @@ export default async function AboutPage({ params }: Props) {
       name: title,
       description,
       url: canonicalUrl,
-      inLanguage: lang === 'zh' ? 'zh-CN' : lang,
+      inLanguage: locale === 'zh' ? 'zh-CN' : locale,
       datePublished: PUBLISHED_DATE_ISO,
       dateModified: LAST_MODIFIED_DATE_ISO,
       author: { '@type': 'Organization', name: AUTHOR_NAME },

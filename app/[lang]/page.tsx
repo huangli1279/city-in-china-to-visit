@@ -26,32 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogLocale = buildOgLocale(lang)
   const ogLocaleAlternates = buildOgLocaleAlternates(lang)
 
-  const faqItems = t.raw('home.faq.items') as Array<{ question: string; answer: string }> | undefined
-  const faqSchema =
-    Array.isArray(faqItems) && faqItems.length > 0
-      ? faqItems.map((item) => ({
-          '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: { '@type': 'Answer', text: item.answer },
-        }))
-      : []
-
-  const jsonLd: Record<string, unknown>[] = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebApplication',
-      name: t('home.seo.appName') as string,
-      applicationCategory: 'TravelApplication',
-      operatingSystem: 'Any',
-      inLanguage: toContentLocale(lang),
-      url: canonicalUrl,
-      description,
-    },
-  ]
-  if (faqSchema.length > 0) {
-    jsonLd.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqSchema })
-  }
-
   return {
     title,
     description,
@@ -74,9 +48,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: [toAbsoluteUrl('/og-image.svg')],
     },
-    other: {
-      'script:ld+json': JSON.stringify(jsonLd),
-    },
   }
 }
 
@@ -88,6 +59,7 @@ export default async function HomePage({ params }: Props) {
     getTranslations({ locale: lang, namespace: 'common' }),
     getTranslations({ locale: lang, namespace: 'cities' }),
   ])
+  const seoDescription = t('home.seo.description') as string
 
   // Build city taglines map from cities namespace
   const citiesData = citiesT.raw('cities') as Record<string, { tagline: string }> | undefined
@@ -160,7 +132,7 @@ export default async function HomePage({ params }: Props) {
       operatingSystem: 'Any',
       inLanguage: toContentLocale(lang),
       url: toAbsoluteUrl(`/${lang}/`),
-      description: translations.header.brandEyebrow,
+      description: seoDescription,
     },
   ]
   if (faqSchema.length > 0) {

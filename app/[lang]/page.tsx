@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { cities } from '@/src/data/cities'
+import { cities } from '@/lib/cities'
 import { getTranslation } from '@/lib/i18n'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import HomepageClient, { type HomepageTranslations } from '@/components/HomepageClient'

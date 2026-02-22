@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { calcUserScores, calcMatchPercentage, getRankedCities, type Answers } from "./match";
-import { cities } from "../data/cities";
-import { questions } from "../data/questions";
+import { cities } from "./cities";
+import { questions } from "./questions";
 
 
 describe("calcUserScores", () => {

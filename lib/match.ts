@@ -1,5 +1,5 @@
-import { cities, type City, type CityScores } from "../data/cities";
-import { questions, type Dimension } from "../data/questions";
+import { cities, type City, type CityScores } from "./cities";
+import { questions, type Dimension } from "./questions";
 
 /** Map from question index (0-based) to the selected option index (0-based) */
 export type Answers = Record<number, number>;

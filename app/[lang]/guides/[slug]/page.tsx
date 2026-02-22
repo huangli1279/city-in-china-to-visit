@@ -5,6 +5,9 @@ import { notFound } from 'next/navigation'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import { normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { ALL_GUIDES, GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
+import SiteHeader from '@/components/SiteHeader'
+import SiteFooter from '@/components/SiteFooter'
+import Breadcrumb from '@/components/Breadcrumb'
 
 const VALID_LANGS = ['en', 'zh', 'ja', 'ko'] as const
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
@@ -95,9 +98,17 @@ export default async function GuideDetailPage({ params }: Props) {
   const localizedTitle = localizedItems[guideIndex]?.title ?? guide.title
   const localizedDescription = localizedItems[guideIndex]?.description ?? guide.description
 
-  const home = t.raw('home') as { cta?: string }
-  const header = t.raw('home.header') as { brandName?: string } | undefined
-  const brandName = header?.brandName ?? 'City Vibe Matcher'
+  const home = t.raw('home') as {
+    cta?: string
+    header?: { brandName?: string; brandEyebrow?: string; navPreview?: string; navPain?: string; navModel?: string; cta?: string }
+    footer?: {
+      eyebrow?: string; title?: string; subtitle?: string; jumpTitle?: string; nextTitle?: string
+      cta?: string; disclaimer?: string; copyright?: string
+      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string }
+    }
+  }
+  const language = t.raw('language') as { switcher?: string }
+  const brandName = home?.header?.brandName ?? 'City Vibe Matcher'
 
   const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/${slug}/`)
   const lastModified = getGuideLastModified(slug)
@@ -143,19 +154,51 @@ export default async function GuideDetailPage({ params }: Props) {
     },
   ]
 
+  const navLinks = [
+    { href: `/${lang}/#landing-preview`, label: home?.header?.navPreview ?? 'City Preview' },
+    { href: `/${lang}/#landing-pain`, label: home?.header?.navPain ?? 'Why This Quiz' },
+    { href: `/${lang}/#landing-model`, label: home?.header?.navModel ?? 'How Matching Works' },
+  ]
+
+  const footerData = {
+    eyebrow: home?.footer?.eyebrow ?? 'Plan less. Experience more.',
+    title: home?.footer?.title ?? 'Your first China city should fit who you are.',
+    subtitle: home?.footer?.subtitle ?? 'Take the quiz, lock your first stop, and move from endless research to a real itinerary.',
+    jumpTitle: home?.footer?.jumpTitle ?? 'Explore this page',
+    nextTitle: home?.footer?.nextTitle ?? 'Ready when you are',
+    cta: home?.footer?.cta ?? 'Start the 18-question quiz',
+    disclaimer: home?.footer?.disclaimer ?? 'No signup required. Results in about 2-3 minutes.',
+    copyright: home?.footer?.copyright ?? 'Which Chinese City Matches Your Vibe',
+    legalLinks: {
+      about: home?.footer?.legalLinks?.about ?? 'About',
+      contact: home?.footer?.legalLinks?.contact ?? 'Contact',
+      guides: home?.footer?.legalLinks?.guides ?? 'Guides',
+      privacy: home?.footer?.legalLinks?.privacy ?? 'Privacy Policy',
+    },
+  }
+
   return (
     <main id="main-content" className="min-h-dvh py-4 sm:py-6 lg:py-8">
       {jsonLd.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
 
-      <nav className="mb-5 flex items-center gap-2 text-sm text-[color:var(--ink-600)]" aria-label="Breadcrumb">
-        <Link href={`/${lang}/`} className="hover:text-cinnabar transition-colors">Home</Link>
-        <span>/</span>
-        <Link href={`/${lang}/guides/`} className="hover:text-cinnabar transition-colors">Guides</Link>
-        <span>/</span>
-        <span className="truncate">{localizedTitle}</span>
-      </nav>
+      <SiteHeader
+        lang={lang}
+        brandName={brandName}
+        brandEyebrow={home?.header?.brandEyebrow ?? 'China Trip Planner'}
+        ctaLabel={home?.header?.cta ?? 'Start Quiz'}
+        switcherLabel={language?.switcher ?? 'Language'}
+        navLinks={navLinks}
+      />
+
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: `/${lang}/` },
+          { label: 'Guides', href: `/${lang}/guides/` },
+          { label: localizedTitle },
+        ]}
+      />
 
       <article className="surface-card p-6 sm:p-8 lg:p-10">
         <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">Planning Guide</p>
@@ -271,18 +314,7 @@ export default async function GuideDetailPage({ params }: Props) {
         </section>
       )}
 
-      <section className="surface-card mt-5 p-6 text-center sm:p-8 lg:p-10">
-        <h2 className="ink-title text-2xl font-bold">Ready to pick your city?</h2>
-        <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-600)]">
-          Use the 18-question matcher to rank Chinese cities by your travel style.
-        </p>
-        <Link
-          href={`/${lang}/quiz`}
-          className="btn-cinnabar mt-5 inline-flex px-8 py-4 text-lg"
-        >
-          {home?.cta ?? 'Start the quiz'}
-        </Link>
-      </section>
+      <SiteFooter lang={lang} footer={footerData} navLinks={navLinks} />
     </main>
   )
 }

@@ -22,6 +22,12 @@
 /:lang/privacy-policy /:lang/privacy-policy/ 301
 /:lang/editorial-policy /:lang/editorial-policy/ 301
 /:lang/content-updates /:lang/content-updates/ 301
+# Cloudflare Pages may resolve directory requests to index.txt in Next export output.
+# Normalize those requests before generic slug rules to avoid /index.txt/ 404 URLs.
+/:lang/guides/index.txt /:lang/guides/ 301
+/:lang/guides/index.txt/ /:lang/guides/ 301
+/:lang/guides/:slug/index.txt /:lang/guides/:slug/ 301
+/:lang/guides/:slug/index.txt/ /:lang/guides/:slug/ 301
 /:lang/guides /:lang/guides/ 301
 /:lang/guides/:slug /:lang/guides/:slug/ 301
 

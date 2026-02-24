@@ -31,7 +31,7 @@ function normalizeLang(lang: string): SeoLang {
 }
 
 function normalizeSuffix(suffix?: string): string {
-  if (!suffix || suffix === '/') return ''
+  if (!suffix || suffix === '/') return '/'
   return suffix.startsWith('/') ? suffix : `/${suffix}`
 }
 

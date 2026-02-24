@@ -24,12 +24,19 @@ export default function QuizClient({ lang }: { lang: string }) {
   const [quizState, setQuizState] = useState(() => getInitialQuizState(QUIZ_QUESTION_COUNT))
   const [isSubmitting, setIsSubmitting] = useState(false)
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const optionGroupId = useId()
   const { currentIdx, answers } = quizState
 
   useEffect(() => {
     trackEvent('view_quiz', { lang })
   }, [lang])
+
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current)
+    }
+  }, [])
 
   const translatedQuestions = useMemo(() => {
     const value = tQuestions.raw('questions')
@@ -70,6 +77,11 @@ export default function QuizClient({ lang }: { lang: string }) {
   }, [quizState, total])
 
   function handleSelectOption(optionIdx: number) {
+    if (autoAdvanceTimer.current) {
+      clearTimeout(autoAdvanceTimer.current)
+      autoAdvanceTimer.current = null
+    }
+
     setQuizState((prev) => ({
       ...prev,
       answers: {
@@ -77,6 +89,13 @@ export default function QuizClient({ lang }: { lang: string }) {
         [prev.currentIdx]: optionIdx,
       },
     }))
+
+    if (!isLastQuestion) {
+      autoAdvanceTimer.current = setTimeout(() => {
+        autoAdvanceTimer.current = null
+        handleNext()
+      }, 200)
+    }
   }
 
   function focusOption(optionIdx: number) {

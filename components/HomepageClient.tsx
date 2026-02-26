@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { trackEvent } from '@/lib/analytics'
+import { isIndexableContentLang, PRIMARY_INDEXABLE_CONTENT_LANG } from '@/lib/indexing'
 
 interface CityPreview {
   id: string
@@ -118,7 +119,6 @@ interface HomepageClientProps {
   cityTaglines: Record<string, string>
 }
 
-const GUIDE_CONTENT_LANGS = new Set(['en', 'zh', 'ja', 'ko'])
 const GUIDE_SLUGS = [
   'best-city-to-visit-in-china-first-time/',
   'beijing-vs-shanghai-for-first-trip/',
@@ -134,9 +134,9 @@ export default function HomepageClient({
 }: HomepageClientProps) {
   const currentYear = new Date().getFullYear()
 
-  const topicClusterGuideLang = GUIDE_CONTENT_LANGS.has(lang) ? lang : 'en'
+  const topicClusterGuideLang = isIndexableContentLang(lang) ? lang : PRIMARY_INDEXABLE_CONTENT_LANG
+  const legalBasePath = `/${topicClusterGuideLang}`
   const topicClusterGuideBasePath = `/${topicClusterGuideLang}/guides`
-  const legalBasePath = `/${lang}`
   const quizPath = `/${lang}/quiz/`
 
   const headerLinks = [

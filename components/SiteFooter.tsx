@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { trackEvent } from '@/lib/analytics'
+import { isIndexableContentLang, PRIMARY_INDEXABLE_CONTENT_LANG } from '@/lib/indexing'
 
 interface FooterLegalLinks {
   about: string
@@ -36,8 +37,9 @@ interface SiteFooterProps {
 export default function SiteFooter({ lang, footer, navLinks }: SiteFooterProps) {
   const currentYear = new Date().getFullYear()
   const quizPath = `/${lang}/quiz/`
-  const legalBasePath = `/${lang}`
-  const guidesPath = `/${lang}/guides/`
+  const contentLang = isIndexableContentLang(lang) ? lang : PRIMARY_INDEXABLE_CONTENT_LANG
+  const legalBasePath = `/${contentLang}`
+  const guidesPath = `/${contentLang}/guides/`
 
   return (
     <footer className="surface-card mt-5 overflow-hidden bg-[linear-gradient(145deg,#1b2434,#2a364d)] text-slate-200">
@@ -111,6 +113,20 @@ export default function SiteFooter({ lang, footer, navLinks }: SiteFooterProps) 
             className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
           >
             {footer.legalLinks.privacy}
+          </Link>
+        </nav>
+        <nav className="flex flex-wrap items-center gap-2 text-[11px]" aria-label="Language versions">
+          <Link href="/en/" className="focus-ring rounded px-1 py-0.5 text-slate-300 transition-colors hover:text-white">
+            English
+          </Link>
+          <Link href="/zh/" className="focus-ring rounded px-1 py-0.5 text-slate-300 transition-colors hover:text-white">
+            中文
+          </Link>
+          <Link href="/ja/" className="focus-ring rounded px-1 py-0.5 text-slate-300 transition-colors hover:text-white">
+            日本語
+          </Link>
+          <Link href="/ko/" className="focus-ring rounded px-1 py-0.5 text-slate-300 transition-colors hover:text-white">
+            한국어
           </Link>
         </nav>
       </div>

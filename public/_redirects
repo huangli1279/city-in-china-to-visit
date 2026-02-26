@@ -7,8 +7,59 @@
 /page-sitemap.xml /sitemap.xml 301
 /sitemap-*.xml /sitemap.xml 301
 
+# Canonical host/protocol redirects (single target: https://bestcityinchina.site)
+http://www.bestcityinchina.site/ https://bestcityinchina.site/en/ 301
+https://www.bestcityinchina.site/ https://bestcityinchina.site/en/ 301
+http://bestcityinchina.site/ https://bestcityinchina.site/en/ 301
+http://www.bestcityinchina.site/* https://bestcityinchina.site/:splat 301
+https://www.bestcityinchina.site/* https://bestcityinchina.site/:splat 301
+http://bestcityinchina.site/* https://bestcityinchina.site/:splat 301
+
 # Root → English homepage (server-side 301, faster than client-side Next.js redirect)
 / /en/ 301
+
+# Non-English deep-content routes are consolidated to English canonicals.
+/zh/about /en/about/ 301
+/zh/about/ /en/about/ 301
+/zh/contact /en/contact/ 301
+/zh/contact/ /en/contact/ 301
+/zh/privacy-policy /en/privacy-policy/ 301
+/zh/privacy-policy/ /en/privacy-policy/ 301
+/zh/editorial-policy /en/editorial-policy/ 301
+/zh/editorial-policy/ /en/editorial-policy/ 301
+/zh/content-updates /en/content-updates/ 301
+/zh/content-updates/ /en/content-updates/ 301
+/zh/guides /en/guides/ 301
+/zh/guides/ /en/guides/ 301
+/zh/guides/* /en/guides/:splat 301
+
+/ja/about /en/about/ 301
+/ja/about/ /en/about/ 301
+/ja/contact /en/contact/ 301
+/ja/contact/ /en/contact/ 301
+/ja/privacy-policy /en/privacy-policy/ 301
+/ja/privacy-policy/ /en/privacy-policy/ 301
+/ja/editorial-policy /en/editorial-policy/ 301
+/ja/editorial-policy/ /en/editorial-policy/ 301
+/ja/content-updates /en/content-updates/ 301
+/ja/content-updates/ /en/content-updates/ 301
+/ja/guides /en/guides/ 301
+/ja/guides/ /en/guides/ 301
+/ja/guides/* /en/guides/:splat 301
+
+/ko/about /en/about/ 301
+/ko/about/ /en/about/ 301
+/ko/contact /en/contact/ 301
+/ko/contact/ /en/contact/ 301
+/ko/privacy-policy /en/privacy-policy/ 301
+/ko/privacy-policy/ /en/privacy-policy/ 301
+/ko/editorial-policy /en/editorial-policy/ 301
+/ko/editorial-policy/ /en/editorial-policy/ 301
+/ko/content-updates /en/content-updates/ 301
+/ko/content-updates/ /en/content-updates/ 301
+/ko/guides /en/guides/ 301
+/ko/guides/ /en/guides/ 301
+/ko/guides/* /en/guides/:splat 301
 
 # Language root: enforce trailing slash
 /en /en/ 301

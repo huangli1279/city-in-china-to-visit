@@ -1,13 +1,12 @@
 import type { MetadataRoute } from 'next'
-import { SITE_URL, SEO_LANGS } from '@/lib/seo'
+import { buildNextAlternates, SITE_URL, SEO_LANGS } from '@/lib/seo'
+import { INDEXABLE_CONTENT_LANGS } from '@/lib/indexing'
 
 export const dynamic = 'force-static'
 import { ALL_GUIDES, CONTENT_UPDATE_LOG } from '@/content/guides/index'
 
 const LEGAL_PAGES = ['about', 'contact', 'editorial-policy', 'content-updates', 'privacy-policy'] as const
-const INDEXABLE_CONTENT_LANGS = ['en'] as const
-
-const SITE_LAST_MOD = '2026-02-21'
+const SITE_LAST_MOD = new Date().toISOString().slice(0, 10)
 
 // Map each guide slug to its most recent update date
 const guideLastMod = new Map<string, string>()
@@ -29,6 +28,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: SITE_LAST_MOD,
       changeFrequency: 'weekly',
       priority: lang === 'en' ? 1.0 : 0.9,
+      alternates: {
+        languages: buildNextAlternates(),
+      },
     })
 
   }

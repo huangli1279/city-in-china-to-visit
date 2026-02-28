@@ -16,6 +16,7 @@ dist-ssr
 .agents
 .claude
 .codex
+skills-lock.json
 
 # Next.js
 .next

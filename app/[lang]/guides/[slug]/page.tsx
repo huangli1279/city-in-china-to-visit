@@ -3,13 +3,12 @@ import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
-import { normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
+import { URL_LOCALES, normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { ALL_GUIDES, GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
 
-const VALID_LANGS = ['en', 'zh', 'ja', 'ko'] as const
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
 
 type Props = { params: Promise<{ lang: string; slug: string }> }
@@ -31,7 +30,7 @@ function formatIsoDate(iso: string): string {
 }
 
 export function generateStaticParams() {
-  return VALID_LANGS.flatMap((lang) =>
+  return URL_LOCALES.flatMap((lang) =>
     ALL_GUIDES.map((guide) => ({ lang, slug: guide.slug }))
   )
 }

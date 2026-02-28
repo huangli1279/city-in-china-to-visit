@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
@@ -44,13 +42,13 @@ export default function SiteHeader({
           {navLinks && navLinks.length > 0 && (
             <nav className="hidden items-center gap-2 lg:flex">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
                   className="focus-ring inline-flex min-h-[44px] items-center rounded-full border border-[#83582e]/25 bg-white/70 px-3.5 py-2 text-xs font-semibold text-[color:var(--ink-600)] transition-colors hover:border-[#b43c2f]/40 hover:text-[color:var(--cinnabar-600)]"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
           )}

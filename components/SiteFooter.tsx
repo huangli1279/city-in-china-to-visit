@@ -1,8 +1,6 @@
-'use client'
-
 import Link from 'next/link'
-import { trackEvent } from '@/lib/analytics'
 import { isIndexableContentLang, PRIMARY_INDEXABLE_CONTENT_LANG } from '@/lib/indexing'
+import TrackedQuizLink from '@/components/TrackedQuizLink'
 
 interface FooterLegalLinks {
   about: string
@@ -60,26 +58,27 @@ export default function SiteFooter({ lang, footer, navLinks }: SiteFooterProps) 
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">{footer.jumpTitle}</p>
             <div className="mt-3 grid gap-2">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
                   className="focus-ring inline-flex min-h-[44px] items-center rounded-xl border border-[#5f6b81] bg-[#27344c] px-3.5 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-[#e2b35f]/70 hover:text-white"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
           </section>
 
           <section className="rounded-2xl border border-[#56627a] bg-[#202a3d]/70 p-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">{footer.nextTitle}</p>
-            <Link
+            <TrackedQuizLink
               href={quizPath}
-              onClick={() => trackEvent('click_start_quiz', { lang, section: 'footer' })}
+              lang={lang}
+              section="footer"
               className="btn-cinnabar mt-3 inline-flex w-full justify-center px-4 py-3 text-sm"
             >
               {footer.cta}
-            </Link>
+            </TrackedQuizLink>
             <p className="mt-3 text-xs leading-relaxed text-slate-300">{footer.disclaimer}</p>
           </section>
         </div>

@@ -86,7 +86,7 @@ export default function ResultClient({ lang }: { lang: string }) {
     )
   }
 
-  const { city, matchPercentage } = bestMatch
+  const { city } = bestMatch
   const cityT = cityTranslations[city.id]
   const cityTagKeys = getCityHighlightTagKeys(city.scores)
   const userTagKeys = userScores ? getUserPersonalityTagKeys(userScores) : []

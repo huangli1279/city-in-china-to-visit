@@ -1,6 +1,7 @@
 import {routing, type UrlLocale} from '@/i18n/routing'
 
 export const CONTENT_LOCALES = ['en', 'zh-CN', 'ja', 'ko'] as const
+export const URL_LOCALES = [...routing.locales] as UrlLocale[]
 
 export type ContentLocale = (typeof CONTENT_LOCALES)[number]
 
@@ -12,7 +13,7 @@ export const URL_TO_CONTENT_LOCALE_MAP: Record<UrlLocale, ContentLocale> = {
 }
 
 export function isUrlLocale(value: string): value is UrlLocale {
-  return (routing.locales as readonly string[]).includes(value)
+  return URL_LOCALES.includes(value as UrlLocale)
 }
 
 export function normalizeUrlLocale(value?: string | null): UrlLocale {
@@ -25,4 +26,8 @@ export function normalizeUrlLocale(value?: string | null): UrlLocale {
 
 export function toContentLocale(value?: string | null): ContentLocale {
   return URL_TO_CONTENT_LOCALE_MAP[normalizeUrlLocale(value)]
+}
+
+export function buildLangParams(): Array<{lang: UrlLocale}> {
+  return URL_LOCALES.map((lang) => ({lang}))
 }

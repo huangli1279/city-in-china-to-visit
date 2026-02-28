@@ -2,16 +2,14 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
-import { isUrlLocale } from '@/i18n/locales'
+import { buildLangParams, isUrlLocale } from '@/i18n/locales'
 import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import ResultClient from '@/components/ResultClient'
-
-const VALID_LANGS = ['en', 'zh', 'ja', 'ko'] as const
 
 type Props = { params: Promise<{ lang: string }> }
 
 export function generateStaticParams() {
-  return VALID_LANGS.map((lang) => ({ lang }))
+  return buildLangParams()
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

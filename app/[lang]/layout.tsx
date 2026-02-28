@@ -2,11 +2,10 @@ import { NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { getMessages } from '@/i18n/messages'
-import { isUrlLocale, toContentLocale } from '@/i18n/locales'
-import { routing } from '@/i18n/routing'
+import { buildLangParams, isUrlLocale, toContentLocale } from '@/i18n/locales'
 
 export function generateStaticParams() {
-  return routing.locales.map((lang) => ({ lang }))
+  return buildLangParams()
 }
 
 export default async function LangLayout({

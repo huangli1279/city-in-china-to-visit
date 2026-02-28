@@ -13,9 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="und" suppressHydrationWarning>
       <head>
-        <Script
+        <script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8272386212758068"
-          strategy="lazyOnload"
           crossOrigin="anonymous"
         />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-ZTZTZ5TQMR" strategy="afterInteractive" />

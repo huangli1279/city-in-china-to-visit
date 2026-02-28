@@ -15,6 +15,9 @@
 /styles/*
   Cache-Control: public, max-age=86400, must-revalidate
 
+/ads.txt
+  Cache-Control: public, max-age=300, must-revalidate
+
 /en/*
   Cache-Control: public, max-age=0, must-revalidate
 

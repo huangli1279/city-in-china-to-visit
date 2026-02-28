@@ -18,6 +18,9 @@ http://bestcityinchina.site/* https://bestcityinchina.site/:splat 301
 # Root → English homepage (server-side 301, faster than client-side Next.js redirect)
 / /en/ 301
 
+# Normalize ads.txt trailing slash variants for crawler consistency.
+/ads.txt/ /ads.txt 301
+
 # Non-English deep-content routes are consolidated to English canonicals.
 /zh/about /en/about/ 301
 /zh/about/ /en/about/ 301

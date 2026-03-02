@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 import SiteHeader from '@/components/SiteHeader'
@@ -18,22 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'privacy')
-  const isPrimaryIndexableLang = locale === 'en'
-  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
-  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/privacy-policy/`)
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'privacy-policy/')
 
   return {
     title,
     description,
-    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
-    alternates: isPrimaryIndexableLang
-      ? {
-          canonical: canonicalUrl,
-          languages: buildNextAlternates('privacy-policy/'),
-        }
-      : {
-          canonical: canonicalUrl,
-        },
+    robots,
+    alternates,
     openGraph: {
       title,
       description,
@@ -50,7 +42,7 @@ export default async function PrivacyPolicyPage({ params }: Props) {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'privacy')
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/privacy-policy/`)
+  const { canonicalUrl } = buildLocaleSeoPolicy(locale, 'privacy-policy/')
 
   const t = await getTranslations({ locale, namespace: 'common' })
   const home = t.raw('home') as {
@@ -184,9 +176,40 @@ export default async function PrivacyPolicyPage({ params }: Props) {
         </section>
 
         <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">How data is used</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            Aggregated analytics is used to improve quiz usability, clarify guide structure, and detect pages that need factual refreshes. We do not use analytics data to build personal travel profiles or to make automated decisions about individual users.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            Operational logs are reviewed for reliability, anti-abuse checks, and debugging. These logs are handled as technical telemetry and are not sold or shared for unrelated marketing purposes.
+          </p>
+        </section>
+
+        <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">Ad services and consent context</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            The site may load third-party ad scripts to support monetization and maintenance. Ad requests and delivery behavior can depend on browser settings, regional requirements, and third-party policies. We do not manually build ad-targeting profiles from quiz answers.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            If regional consent prompts are required by platform or legal standards, those controls are handled by the corresponding service provider and browser-level settings.
+          </p>
+        </section>
+
+        <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">Requests and deletion</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            If you contact us by email and want your inquiry removed from working notes after resolution, include a deletion request in the thread. We will remove that correspondence from editorial working records unless retention is required for abuse-prevention or legal compliance.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            Because we do not require user accounts, most requests are handled through service-level controls (browser settings, analytics opt-out tools, and provider privacy portals).
+          </p>
+        </section>
+
+        <section className="mt-8">
           <h2 className="ink-title text-xl font-bold">Contact</h2>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            If you have questions about this policy, email <strong>{CONTACT_EMAIL}</strong> or visit our{' '}
+            If you have questions about this policy, email{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-cinnabar hover:underline">{CONTACT_EMAIL}</a> or visit our{' '}
             <Link href={`/${lang}/contact/`} className="text-cinnabar hover:underline">Contact</Link> page.
           </p>
         </section>

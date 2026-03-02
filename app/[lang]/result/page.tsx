@@ -35,6 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: canonicalUrl,
       locale: buildOgLocale(lang),
       alternateLocale: buildOgLocaleAlternates(lang),
+      images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [toAbsoluteUrl('/og-image.svg')],
     },
   }
 }

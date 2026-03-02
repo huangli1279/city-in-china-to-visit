@@ -2,14 +2,18 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildLocaleSeoPolicy, ensureMinMetaDescription } from '@/lib/seo-policy'
 import { URL_LOCALES, normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { ALL_GUIDES, GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
+import { AUTHORS } from '@/content/authors'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
 
-const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
+const DEFAULT_AUTHOR_ID = 'editorial-team'
+const DEFAULT_REVIEWER_ID = 'research-desk'
+const SITE_LOGO_URL = toAbsoluteUrl('/logo.svg')
 
 type Props = { params: Promise<{ lang: string; slug: string }> }
 
@@ -46,41 +50,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const localizedItems = Array.isArray(topicCluster?.items) ? topicCluster.items : []
   const guideIndex = ALL_GUIDES.findIndex((g) => g.slug === slug)
   const localizedTitle = localizedItems[guideIndex]?.title ?? guide.title
-  const localizedDescription = localizedItems[guideIndex]?.description ?? guide.description
+  const localizedDescription = ensureMinMetaDescription(
+    localizedItems[guideIndex]?.description ?? guide.description
+  )
 
-  const header = t.raw('home.header') as { brandName?: string } | undefined
-  const brandName = header?.brandName ?? 'City Vibe Matcher'
-  const title = `${localizedTitle} | ${brandName}`
-  const isPrimaryIndexableLang = locale === 'en'
-  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
-  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/guides/${slug}/`)
+  const title = localizedTitle
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, `guides/${slug}/`)
   const lastModified = getGuideLastModified(slug)
+  const publishedTime = guide.datePublishedISO ?? lastModified
+  const heroImage = toAbsoluteUrl(guide.heroImage ?? '/og-image.svg')
+  const authorProfile = AUTHORS[guide.authorId ?? DEFAULT_AUTHOR_ID] ?? AUTHORS[DEFAULT_AUTHOR_ID]
 
   return {
     title,
     description: localizedDescription,
-    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
-    alternates: isPrimaryIndexableLang
-      ? {
-          canonical: canonicalUrl,
-          languages: buildNextAlternates(`guides/${slug}/`),
-        }
-      : {
-          canonical: canonicalUrl,
-        },
+    robots,
+    alternates,
     openGraph: {
       title,
       description: localizedDescription,
       url: canonicalUrl,
       type: 'article',
-      publishedTime: lastModified,
+      publishedTime,
       modifiedTime: lastModified,
-      authors: [AUTHOR_NAME],
+      authors: [authorProfile.name],
       locale: buildOgLocale(locale),
       alternateLocale: buildOgLocaleAlternates(locale),
-      images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
+      images: [{ url: heroImage, width: 1200, height: 630 }],
     },
-    twitter: { card: 'summary_large_image', title, description: localizedDescription, images: [toAbsoluteUrl('/og-image.svg')] },
+    twitter: { card: 'summary_large_image', title, description: localizedDescription, images: [heroImage] },
   }
 }
 
@@ -109,9 +107,15 @@ export default async function GuideDetailPage({ params }: Props) {
   const language = t.raw('language') as { switcher?: string }
   const brandName = home?.header?.brandName ?? 'City Vibe Matcher'
 
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/${slug}/`)
+  const { canonicalUrl } = buildLocaleSeoPolicy(locale, `guides/${slug}/`)
   const lastModified = getGuideLastModified(slug)
+  const publishedDate = guide.datePublishedISO ?? lastModified
   const lastModifiedText = formatIsoDate(lastModified)
+  const publishedDateText = formatIsoDate(publishedDate)
+  const authorProfile = AUTHORS[guide.authorId ?? DEFAULT_AUTHOR_ID] ?? AUTHORS[DEFAULT_AUTHOR_ID]
+  const reviewerProfile = AUTHORS[guide.reviewerId ?? DEFAULT_REVIEWER_ID] ?? AUTHORS[DEFAULT_REVIEWER_ID]
+  const heroImage = toAbsoluteUrl(guide.heroImage ?? '/og-image.svg')
+  const evidenceBlocks = guide.evidenceBlocks ?? []
 
   const relatedGuides = guide.internalLinks
     .map((link) => GUIDE_BY_SLUG.get(link.slug))
@@ -126,10 +130,21 @@ export default async function GuideDetailPage({ params }: Props) {
       description: localizedDescription,
       url: canonicalUrl,
       inLanguage: toContentLocale(lang),
+      image: heroImage,
+      datePublished: publishedDate,
       dateModified: lastModified,
-      author: { '@type': 'Organization', name: AUTHOR_NAME },
-      reviewedBy: { '@type': 'Organization', name: guide.reviewer },
-      publisher: { '@type': 'Organization', name: brandName, url: toAbsoluteUrl('/') },
+      author: {
+        '@type': 'Organization',
+        name: authorProfile.name,
+        url: toAbsoluteUrl(authorProfile.profileUrl),
+      },
+      reviewedBy: { '@type': 'Organization', name: reviewerProfile.name },
+      publisher: {
+        '@type': 'Organization',
+        name: brandName,
+        url: toAbsoluteUrl('/'),
+        logo: { '@type': 'ImageObject', url: SITE_LOGO_URL },
+      },
     },
     {
       '@context': 'https://schema.org',
@@ -204,8 +219,9 @@ export default async function GuideDetailPage({ params }: Props) {
         <h1 className="ink-title mt-3 text-balance text-3xl leading-tight sm:text-4xl">{localizedTitle}</h1>
 
         <div className="mt-4 space-y-1 text-sm text-[color:var(--ink-600)]">
-          <p><strong>Author:</strong> {AUTHOR_NAME}</p>
-          <p><strong>Reviewed by:</strong> {guide.reviewer}</p>
+          <p><strong>Author:</strong> {authorProfile.name}</p>
+          <p><strong>Reviewed by:</strong> {reviewerProfile.name}</p>
+          <p><strong>Published:</strong> <time dateTime={publishedDate}>{publishedDateText}</time></p>
           <p><strong>Last updated:</strong> <time dateTime={lastModified}>{lastModifiedText}</time></p>
         </div>
 
@@ -228,6 +244,24 @@ export default async function GuideDetailPage({ params }: Props) {
             ))}
           </section>
         ))}
+
+        {evidenceBlocks.length > 0 && (
+          <section className="mt-8">
+            <h2 className="ink-title text-xl font-bold">Field evidence and execution notes</h2>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              {evidenceBlocks.map((block, i) => (
+                <article key={i} className="surface-muted p-4">
+                  <h3 className="font-display text-base font-semibold text-[color:var(--ink-950)]">{block.title}</h3>
+                  <ul className="mt-2 space-y-1.5">
+                    {block.points.map((point, j) => (
+                      <li key={j} className="text-sm leading-relaxed text-[color:var(--ink-700)]">- {point}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="mt-8">
           <h2 className="ink-title text-xl font-bold">Frequently asked question</h2>

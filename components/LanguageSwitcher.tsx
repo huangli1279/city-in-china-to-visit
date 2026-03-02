@@ -29,6 +29,7 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
 
   const fallbackLang: UrlLang = URL_LANGS.includes(currentLang as UrlLang) ? (currentLang as UrlLang) : 'en'
   const selectedIndex = Math.max(URL_LANGS.indexOf(fallbackLang), 0)
+  const selectedLabel = LANG_LABELS[fallbackLang] ?? LANG_LABELS.en
 
   function focusOption(index: number) {
     const boundedIndex = Math.min(Math.max(index, 0), URL_LANGS.length - 1)
@@ -201,7 +202,6 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
         value={fallbackLang}
         onChange={(e) => handleSelect(e.target.value as UrlLang)}
         className="focus-ring block min-h-[44px] rounded-xl border border-[#8a6447]/20 bg-white/65 px-3 py-2 text-sm font-medium text-[color:var(--ink-800)] sm:hidden"
-        aria-label={switcherLabel}
       >
         {URL_LANGS.map((code) => (
           <option key={code} value={code}>
@@ -219,9 +219,8 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
-        aria-label={switcherLabel}
       >
-        {LANG_LABELS[fallbackLang] ?? LANG_LABELS.en}
+        {selectedLabel}
         <span className={`ml-0.5 text-[10px] transition-transform duration-150 ${open ? 'rotate-180' : ''}`}>
           ▾
         </span>

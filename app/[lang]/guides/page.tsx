@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 import { normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
+import { buildLocaleSeoPolicy, ensureMinMetaDescription } from '@/lib/seo-policy'
 import { ALL_GUIDES } from '@/content/guides'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
@@ -20,26 +21,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = topicCluster?.title
     ? `${topicCluster.title} | ${header?.brandName ?? 'City Vibe Matcher'}`
     : 'City Planning Guides for First-Time China Travelers'
-  const description =
+  const description = ensureMinMetaDescription(
     topicCluster?.subtitle ??
     'Explore focused guides that help first-time travelers compare destinations, choose trip length, and plan a confident first stop in China.'
-
-  const isPrimaryIndexableLang = locale === 'en'
-  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
-  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/guides/`)
+  )
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'guides/')
 
   return {
     title,
     description,
-    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
-    alternates: isPrimaryIndexableLang
-      ? {
-          canonical: canonicalUrl,
-          languages: buildNextAlternates('guides/'),
-        }
-      : {
-          canonical: canonicalUrl,
-        },
+    robots,
+    alternates,
     openGraph: {
       title,
       description,
@@ -74,13 +66,14 @@ export default async function GuidesHubPage({ params }: Props) {
   }
   const language = t.raw('language') as { switcher?: string }
 
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/guides/`)
+  const { canonicalUrl } = buildLocaleSeoPolicy(locale, 'guides/')
   const title = topicCluster?.title
     ? `${topicCluster.title} | ${home?.header?.brandName ?? 'City Vibe Matcher'}`
     : 'City Planning Guides for First-Time China Travelers'
-  const description =
+  const description = ensureMinMetaDescription(
     topicCluster?.subtitle ??
     'Explore focused guides that help first-time travelers compare destinations, choose trip length, and plan a confident first stop in China.'
+  )
 
   // Map guide index to translated titles from topicCluster.items
   const localizedItems = Array.isArray(topicCluster?.items) ? topicCluster.items : []

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 import SiteHeader from '@/components/SiteHeader'
@@ -21,22 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'about')
-  const isPrimaryIndexableLang = locale === 'en'
-  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
-  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/about/`)
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'about/')
 
   return {
     title,
     description,
-    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
-    alternates: isPrimaryIndexableLang
-      ? {
-          canonical: canonicalUrl,
-          languages: buildNextAlternates('about/'),
-        }
-      : {
-          canonical: canonicalUrl,
-        },
+    robots,
+    alternates,
     openGraph: {
       title,
       description,
@@ -53,7 +45,7 @@ export default async function AboutPage({ params }: Props) {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'about')
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/about/`)
+  const { canonicalUrl } = buildLocaleSeoPolicy(locale, 'about/')
 
   const t = await getTranslations({ locale, namespace: 'common' })
   const home = t.raw('home') as {
@@ -195,7 +187,8 @@ export default async function AboutPage({ params }: Props) {
         <section className="mt-8">
           <h2 className="ink-title text-xl font-bold">Contact and feedback</h2>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            Questions, corrections, and feedback are welcome. Reach us at <strong>{CONTACT_EMAIL}</strong> or visit the{' '}
+            Questions, corrections, and feedback are welcome. Reach us at{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-cinnabar hover:underline">{CONTACT_EMAIL}</a> or visit the{' '}
             <Link href={`/${lang}/contact/`} className="text-cinnabar hover:underline">Contact</Link> page.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">

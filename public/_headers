@@ -23,12 +23,15 @@
 
 /zh/*
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
 /ja/*
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
 /ko/*
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate

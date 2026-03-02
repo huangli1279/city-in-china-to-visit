@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { buildNextAlternates, SITE_URL, SEO_LANGS } from '@/lib/seo'
+import { buildNextAlternates, SITE_URL } from '@/lib/seo'
 import { INDEXABLE_CONTENT_LANGS } from '@/lib/indexing'
 
 export const dynamic = 'force-static'
@@ -21,18 +21,17 @@ for (const entry of CONTENT_UPDATE_LOG) {
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
 
-  for (const lang of SEO_LANGS) {
+  for (const lang of INDEXABLE_CONTENT_LANGS) {
     // Homepage
     entries.push({
       url: `${SITE_URL}/${lang}/`,
       lastModified: SITE_LAST_MOD,
       changeFrequency: 'weekly',
-      priority: lang === 'en' ? 1.0 : 0.9,
+      priority: 1.0,
       alternates: {
         languages: buildNextAlternates(),
       },
     })
-
   }
 
   // English content pages are currently the only fully localized, indexable versions.

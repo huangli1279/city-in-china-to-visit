@@ -164,6 +164,7 @@ export default function QuizClient({ lang }: { lang: string }) {
 
   return (
     <main id="main-content" className="no-scroll-x min-h-dvh py-4 sm:py-6 lg:py-8">
+      <h1 className="sr-only">{t('quiz.seo.title')}</h1>
       <p className="sr-only" aria-live="polite">
         {liveStatus}
       </p>
@@ -172,7 +173,7 @@ export default function QuizClient({ lang }: { lang: string }) {
           <div className="motif-divider pointer-events-none absolute inset-x-0 top-0" />
           <div className="flex flex-wrap items-center gap-3">
             <Link href={`/${lang}/`} className="brand-link">
-              <Image src="/logo.svg" alt="" aria-hidden="true" width={36} height={36} className="brand-logo" />
+              <Image src="/logo.svg" alt="City Vibe Matcher logo" width={36} height={36} className="brand-logo" />
               <div className="brand-copy">
                 <div className="header-brand-row">
                   <p className="ink-title min-w-0 truncate text-base sm:text-lg">{t('home.header.brandName')}</p>
@@ -250,6 +251,7 @@ export default function QuizClient({ lang }: { lang: string }) {
                   onKeyDown={(e) => handleOptionKeyDown(e, idx)}
                   role="radio"
                   aria-checked={isSelected}
+                  aria-label={optionText}
                   tabIndex={canTabToOption ? 0 : -1}
                   className={`focus-ring min-h-[64px] rounded-2xl border-2 px-4 py-4 text-left transition-colors ${
                     isSelected

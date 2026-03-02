@@ -1,29 +1,29 @@
 export const PAGE_SEO_COPY = {
   en: {
     about: {
-      title: 'About City Vibe Matcher | Methodology, Editorial Standards, and First-Trip Scope',
+      title: 'About City Vibe Matcher | Method, Team, and Scope',
       description:
-        'Learn how City Vibe Matcher uses an 18-question model, manually reviewed city profiles, and editorial standards to help first-time China travelers choose a practical first stop.',
+        'Learn how City Vibe Matcher uses an 18-question model, reviewed city profiles, and editorial QA standards to help first-time China travelers choose a confident first stop.',
     },
     contact: {
-      title: 'Contact City Vibe Matcher | Feedback, Corrections, and Media Inquiries',
+      title: 'Contact City Vibe Matcher | Feedback and Corrections',
       description:
-        'Contact City Vibe Matcher for quiz feedback, guide corrections, partnership opportunities, and media requests, and include relevant page URLs for faster editorial review.',
+        'Contact City Vibe Matcher for quiz feedback, guide corrections, partnership inquiries, and media requests. Include relevant page URLs for faster editorial review.',
     },
     privacy: {
-      title: 'Privacy Policy | City Vibe Matcher Data, Cookies, and Retention Practices',
+      title: 'Privacy Policy | Data, Cookies, and Retention',
       description:
-        'Read how bestcityinchina.site handles analytics data, cookies, third-party services, and retention practices, and how to contact us with privacy-related questions.',
+        'Read how bestcityinchina.site handles analytics data, cookies, third-party services, and retention periods, and how to contact us for privacy-related questions.',
     },
     editorial: {
-      title: 'Editorial Policy | Who Wrote, Reviewed, and Updated City Vibe Matcher Guides',
+      title: 'Editorial Policy | Writing, Review, and Updates',
       description:
-        'See who writes, reviews, and updates our China city guides, plus the correction workflow and evidence standards used across each article revision.',
+        'See who writes, reviews, and updates our China city guides, plus the correction workflow and evidence standards used across each revision.',
     },
     updates: {
-      title: 'Content Updates | City Vibe Matcher Publishing Rhythm and Changelog',
+      title: 'Content Updates | Publishing Log and Changelog',
       description:
-        'Track weekly guide releases, bi-weekly refresh cycles, and detailed update logs across our first-time China city planning content.',
+        'Track weekly guide releases, bi-weekly refresh cycles, and detailed changelog entries across our first-time China city planning content.',
     },
   },
   zh: {

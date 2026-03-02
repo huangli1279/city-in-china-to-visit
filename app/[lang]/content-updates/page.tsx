@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 import { GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
@@ -17,22 +18,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'updates')
-  const isPrimaryIndexableLang = locale === 'en'
-  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
-  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/content-updates/`)
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'content-updates/')
 
   return {
     title,
     description,
-    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
-    alternates: isPrimaryIndexableLang
-      ? {
-          canonical: canonicalUrl,
-          languages: buildNextAlternates('content-updates/'),
-        }
-      : {
-          canonical: canonicalUrl,
-        },
+    robots,
+    alternates,
     openGraph: {
       title,
       description,
@@ -49,7 +41,7 @@ export default async function ContentUpdatesPage({ params }: Props) {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'updates')
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/content-updates/`)
+  const { canonicalUrl } = buildLocaleSeoPolicy(locale, 'content-updates/')
 
   const t = await getTranslations({ locale, namespace: 'common' })
   const home = t.raw('home') as {
@@ -155,6 +147,16 @@ export default async function ContentUpdatesPage({ params }: Props) {
           </p>
         </section>
 
+        <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">How updates are prioritized</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            We prioritize changes that directly affect traveler decisions: entry or payment readiness, season-window tradeoffs, and itinerary-friction guidance. Pages with the highest first-trip decision impact are refreshed first, followed by internal-link consistency and supporting references.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            Each update batch includes a source check, metadata review, and internal-link pass so that published changes remain discoverable and operationally useful instead of becoming isolated text edits.
+          </p>
+        </section>
+
         {CONTENT_UPDATE_LOG.map((entry, i) => (
           <section key={i} className="mt-6 border-t border-[#ddd6c4] pt-6">
             <h2 className="ink-title text-lg font-bold">
@@ -179,6 +181,22 @@ export default async function ContentUpdatesPage({ params }: Props) {
             </ul>
           </section>
         ))}
+
+        <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">What we track in each revision</h2>
+          <ul className="mt-3 space-y-2">
+            {[
+              'Whether city-choice conclusions changed and which user profile is affected',
+              'Whether source freshness changed for policy-sensitive statements',
+              'Whether related guide pathways and canonical planning flows were updated',
+            ].map((item, i) => (
+              <li key={i} className="surface-muted p-3 text-sm text-[color:var(--ink-700)]">{item}</li>
+            ))}
+          </ul>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            This revision log is designed to show maintenance continuity, not only publication activity. It helps readers evaluate whether guidance is current enough to support an actual booking decision.
+          </p>
+        </section>
       </article>
 
       <SiteFooter lang={lang} footer={footerData} navLinks={navLinks} />

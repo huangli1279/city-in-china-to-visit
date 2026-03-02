@@ -3,7 +3,8 @@ import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { cities } from '@/lib/cities'
 import { isUrlLocale, toContentLocale } from '@/i18n/locales'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import HomepageClient, { type HomepageTranslations } from '@/components/HomepageClient'
 
 const PREVIEW_CITY_IDS = ['shanghai', 'xian', 'chengdu', 'guilin', 'chongqing', 'sanya'] as const
@@ -22,18 +23,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale: lang, namespace: 'common' })
   const title = t('home.seo.title') as string
   const description = t('home.seo.description') as string
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/`)
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(lang)
   const ogLocale = buildOgLocale(lang)
   const ogLocaleAlternates = buildOgLocaleAlternates(lang)
 
   return {
     title,
     description,
-    robots: 'index, follow',
-    alternates: {
-      canonical: canonicalUrl,
-      languages: buildNextAlternates(),
-    },
+    robots,
+    alternates,
     openGraph: {
       title,
       description,

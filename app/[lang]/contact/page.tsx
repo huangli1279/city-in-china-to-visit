@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 import SiteHeader from '@/components/SiteHeader'
@@ -18,22 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'contact')
-  const isPrimaryIndexableLang = locale === 'en'
-  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
-  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/contact/`)
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'contact/')
 
   return {
     title,
     description,
-    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
-    alternates: isPrimaryIndexableLang
-      ? {
-          canonical: canonicalUrl,
-          languages: buildNextAlternates('contact/'),
-        }
-      : {
-          canonical: canonicalUrl,
-        },
+    robots,
+    alternates,
     openGraph: {
       title,
       description,
@@ -50,7 +42,7 @@ export default async function ContactPage({ params }: Props) {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'contact')
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/contact/`)
+  const { canonicalUrl } = buildLocaleSeoPolicy(locale, 'contact/')
 
   const t = await getTranslations({ locale, namespace: 'common' })
   const home = t.raw('home') as {
@@ -151,7 +143,8 @@ export default async function ContactPage({ params }: Props) {
         <section className="mt-8">
           <h2 className="ink-title text-xl font-bold">Email</h2>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            General inquiries: <strong>{CONTACT_EMAIL}</strong>
+            General inquiries:{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-cinnabar hover:underline">{CONTACT_EMAIL}</a>
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
             Include your trip goal, expected travel month, and the page URL if your question is about a specific guide.

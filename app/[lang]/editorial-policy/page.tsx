@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 import SiteHeader from '@/components/SiteHeader'
@@ -19,22 +20,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'editorial')
-  const isPrimaryIndexableLang = locale === 'en'
-  const canonicalLang = isPrimaryIndexableLang ? locale : 'en'
-  const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}/editorial-policy/`)
+  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'editorial-policy/')
 
   return {
     title,
     description,
-    robots: isPrimaryIndexableLang ? 'index, follow' : 'noindex, follow',
-    alternates: isPrimaryIndexableLang
-      ? {
-          canonical: canonicalUrl,
-          languages: buildNextAlternates('editorial-policy/'),
-        }
-      : {
-          canonical: canonicalUrl,
-        },
+    robots,
+    alternates,
     openGraph: {
       title,
       description,
@@ -51,7 +43,7 @@ export default async function EditorialPolicyPage({ params }: Props) {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'editorial')
-  const canonicalUrl = toAbsoluteUrl(`/${lang}/editorial-policy/`)
+  const { canonicalUrl } = buildLocaleSeoPolicy(locale, 'editorial-policy/')
 
   const t = await getTranslations({ locale, namespace: 'common' })
   const home = t.raw('home') as {
@@ -180,6 +172,16 @@ export default async function EditorialPolicyPage({ params }: Props) {
         </section>
 
         <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">Evidence standards and source tiers</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            We prioritize primary sources for policy-sensitive guidance: official government portals, national transport operators, and internationally recognized standards organizations. Secondary sources are used for context only and are never treated as final authority for entry, payment, or regulatory claims.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            When two sources conflict, our default is to mark the claim as provisional and route readers to the official source for final confirmation. We also annotate updates in the changelog when source priority or interpretation changes.
+          </p>
+        </section>
+
+        <section className="mt-8">
           <h2 className="ink-title text-xl font-bold">Publishing rhythm</h2>
           <ul className="mt-3 space-y-2">
             {[
@@ -193,6 +195,16 @@ export default async function EditorialPolicyPage({ params }: Props) {
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-600)]">
             See the full log on the{' '}
             <Link href={`/${lang}/content-updates/`} className="text-cinnabar hover:underline">Content Updates</Link> page.
+          </p>
+        </section>
+
+        <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">Conflict and monetization safeguards</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            We do not publish destination recommendations based on paid placement. Advertising and editorial updates are handled in separate workflows, and monetization does not override correction or source-verification requirements.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            If a recommendation cannot meet evidence standards after review, the section is revised or removed. This safeguard keeps planning guidance useful for first-time travelers and reduces the risk of outdated or promotional content dominating decision-critical pages.
           </p>
         </section>
       </article>

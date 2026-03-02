@@ -14,6 +14,11 @@ export interface GuideInternalLink {
   anchor: string
 }
 
+export interface GuideEvidenceBlock {
+  title: string
+  points: string[]
+}
+
 export interface Guide {
   slug: string
   title: string
@@ -27,11 +32,23 @@ export interface Guide {
   updateSummary: string[]
   sources: GuideSource[]
   reviewer: string
+  authorId: string
+  reviewerId: string
+  datePublishedISO: string
+  heroImage: string
+  evidenceBlocks: GuideEvidenceBlock[]
 }
 
 const REVIEWER_TEAM_NAME = 'City Vibe Matcher Research Desk'
+const DEFAULT_AUTHOR_ID = 'editorial-team'
+const DEFAULT_REVIEWER_ID = 'research-desk'
 
-export const ALL_GUIDES: Guide[] = [
+type RawGuide = Omit<
+  Guide,
+  'authorId' | 'reviewerId' | 'datePublishedISO' | 'heroImage' | 'evidenceBlocks'
+>
+
+const RAW_GUIDES: RawGuide[] = [
   {
     slug: 'best-city-to-visit-in-china-first-time',
     title: 'Best City to Visit in China for First-Time Travelers',
@@ -618,8 +635,6 @@ export const ALL_GUIDES: Guide[] = [
   },
 ]
 
-export const GUIDE_BY_SLUG = new Map(ALL_GUIDES.map((guide) => [guide.slug, guide]))
-
 export const CONTENT_UPDATE_LOG = [
   {
     dateISO: '2026-02-21',
@@ -645,3 +660,45 @@ export const CONTENT_UPDATE_LOG = [
     guideSlugs: ['best-city-to-visit-in-china-first-time', 'best-china-cities-by-travel-style'],
   },
 ]
+
+function inferGuidePublishedDateISO(slug: string): string {
+  for (let i = CONTENT_UPDATE_LOG.length - 1; i >= 0; i -= 1) {
+    const entry = CONTENT_UPDATE_LOG[i]
+    if (entry.guideSlugs.includes(slug)) return entry.dateISO
+  }
+  return CONTENT_UPDATE_LOG[CONTENT_UPDATE_LOG.length - 1]?.dateISO ?? '2026-02-14'
+}
+
+function buildEvidenceBlocks(guide: RawGuide): GuideEvidenceBlock[] {
+  const decisionPoints = guide.keyPoints.slice(0, 2)
+  const firstSection = guide.sections[0]?.paragraphs[0]
+  const secondSection = guide.sections[1]?.paragraphs[0]
+
+  return [
+    {
+      title: 'Decision checkpoints',
+      points: [
+        ...decisionPoints,
+        firstSection ?? 'Validate your city fit against itinerary friction before payment.',
+      ],
+    },
+    {
+      title: 'Execution safeguards',
+      points: [
+        secondSection ?? 'Prepare one fallback city to protect your first-trip schedule.',
+        'Re-check entry, payment, weather, and transfer assumptions within seven days of departure.',
+      ],
+    },
+  ]
+}
+
+export const ALL_GUIDES: Guide[] = RAW_GUIDES.map((guide) => ({
+  ...guide,
+  authorId: DEFAULT_AUTHOR_ID,
+  reviewerId: DEFAULT_REVIEWER_ID,
+  datePublishedISO: inferGuidePublishedDateISO(guide.slug),
+  heroImage: '/og-image.svg',
+  evidenceBlocks: buildEvidenceBlocks(guide),
+}))
+
+export const GUIDE_BY_SLUG = new Map(ALL_GUIDES.map((guide) => [guide.slug, guide]))

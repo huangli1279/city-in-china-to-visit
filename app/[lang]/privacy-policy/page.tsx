@@ -5,6 +5,7 @@ import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
+import { contentHref } from '@/lib/indexing'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
@@ -211,7 +212,7 @@ export default async function PrivacyPolicyPage({ params }: Props) {
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
             If you have questions about this policy, email{' '}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-cinnabar hover:underline">{CONTACT_EMAIL}</a> or visit our{' '}
-            <Link href={`/${lang}/contact/`} className="text-cinnabar hover:underline">Contact</Link> page.
+            <Link href={contentHref(lang, 'contact')} className="text-cinnabar hover:underline">Contact</Link> page.
           </p>
         </section>
       </article>

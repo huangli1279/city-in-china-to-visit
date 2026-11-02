@@ -5,6 +5,7 @@ import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
+import { contentHref } from '@/lib/indexing'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
@@ -12,8 +13,8 @@ import Breadcrumb from '@/components/Breadcrumb'
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
 const PUBLISHED_DATE_ISO = '2026-01-15'
 const PUBLISHED_DATE_TEXT = 'January 15, 2026'
-const LAST_MODIFIED_DATE_ISO = '2026-02-21'
-const LAST_MODIFIED_DATE_TEXT = 'February 21, 2026'
+const LAST_MODIFIED_DATE_ISO = '2026-11-02'
+const LAST_MODIFIED_DATE_TEXT = 'November 2, 2026'
 const CONTACT_EMAIL = 'team@bestcityinchina.site'
 
 type Props = { params: Promise<{ lang: string }> }
@@ -131,7 +132,7 @@ export default async function AboutPage({ params }: Props) {
       <article className="surface-card p-6 sm:p-8 lg:p-10">
         <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">About</p>
         <h1 className="ink-title mt-3 text-balance text-3xl leading-tight sm:text-4xl">
-          How this project helps first-time China travelers
+          An independent guide for your first city in China
         </h1>
         <div className="mt-4 space-y-1 text-sm text-[color:var(--ink-600)]">
           <p><strong>Author:</strong> {AUTHOR_NAME}</p>
@@ -139,49 +140,49 @@ export default async function AboutPage({ params }: Props) {
           <p><strong>Last updated:</strong> <time dateTime={LAST_MODIFIED_DATE_ISO}>{LAST_MODIFIED_DATE_TEXT}</time></p>
         </div>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--ink-700)]">
-          City Vibe Matcher is a planning-first project for travelers who already decided to visit China but still need confidence about where to start.
+          City Vibe Matcher is an independent China travel guide for first-time foreign visitors. It is not a tour operator, a booking site, or a government office. The people who run it research and write the guides, maintain the city-matching quiz, and publish corrections when official rules change.
         </p>
 
         <section className="mt-8">
-          <h2 className="ink-title text-xl font-bold">Our mission</h2>
+          <h2 className="ink-title text-xl font-bold">Who this is for</h2>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            We reduce first-city decision fatigue by turning broad travel preferences into a practical shortlist. Instead of sending users through endless listicles, we guide them to a specific starting option in minutes.
+            The site is for travelers who have decided to visit China and still need a first city. The quiz turns preferences about pace, food, history, and comfort into a shortlist. The guides then explain how to spend the first days in that place: when to go, how to arrive, where to sleep, what to eat, and what usually goes wrong.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            The goal is not to crown one universal best city. The goal is to help each traveler pick a first stop that matches pace, interests, and comfort level.
-          </p>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="ink-title text-xl font-bold">How the matching model works</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            The quiz uses 18 scenario-based questions and maps responses into six dimensions: history appetite, nature versus urban preference, cultural comfort, activity level, social vibe, and adventure appetite.
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            Each city profile is manually reviewed and scored on the same dimensions. We then compare user scores against city scores and rank the closest matches.
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            This process is designed for directional planning, not for perfect prediction. Users should still validate seasonality, flight availability, and current policy updates.
+            There is no single best city. A first stop that matches how you like to travel is more useful than a generic ranking.
           </p>
         </section>
 
         <section className="mt-8">
-          <h2 className="ink-title text-xl font-bold">Editorial standards</h2>
+          <h2 className="ink-title text-xl font-bold">How guides are made</h2>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            Guide pages are written and updated by the {AUTHOR_NAME} team. We prioritize clarity, practical tradeoffs, and first-time traveler constraints over trend-driven content.
+            Each city guide is written for this site. We do not copy articles from other publishers. A guide starts with the official record: immigration notices, UNESCO inscriptions, scenic-area committees, railway and border operators, and the venue&apos;s own ticket pages. We read those pages, then write the practical version in our own words.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            When recommendations include policy-sensitive topics such as visa or entry requirements, we direct readers to official sources for final confirmation.
+            The published shape is deliberate. A first-visit guide covers why the place is worth the trip, the best season, getting there and around, where to stay, a three-day plan, food, a budget in CNY and an approximate USD equivalent, and the mistakes that waste a day. Prices and entry rules are marked as approximate and dated, because both move.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            Before a guide goes live, the editorial desk checks that every factual claim can be traced to a source listed on the page, that internal links point at related guides, and that the update log records the publication date. Later corrections are batched and noted on the content-updates page rather than edited in silence.
+          </p>
+        </section>
+
+        <section className="mt-8">
+          <h2 className="ink-title text-xl font-bold">Editorial approach</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            Original research, official sources, and regular updates are the standard. Policy-sensitive lines, especially visas, visa-free transit, and park reservations, always point back to the government or operator page so you can confirm them before you book.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
+            The 18-question quiz is a separate tool. It scores answers on history, nature versus city, cultural comfort, activity, social pace, and adventure, then compares those scores with city profiles the desk maintains by hand. The result is a planning suggestion, not a prediction. Season, flights, and entry rules still have to be checked.
           </p>
         </section>
 
         <section className="mt-8">
           <h2 className="ink-title text-xl font-bold">What we do not do</h2>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            We do not sell tours, visas, or priority access services. The site is built as an independent planning utility to help travelers make earlier, clearer city decisions.
+            We do not sell tours, visas, tickets, or hotel inventory, and a guide is not an advertisement for a particular hotel. Advertising on the site, when it appears, does not change quiz scores or which facts a guide includes.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            We also do not claim real-time policy authority. All time-sensitive details should be confirmed with official channels before payment or departure.
+            We also do not claim to be the authority on entry rules. If a guide and an official notice disagree, follow the official notice.
           </p>
         </section>
 
@@ -190,13 +191,13 @@ export default async function AboutPage({ params }: Props) {
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
             Questions, corrections, and feedback are welcome. Reach us at{' '}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-cinnabar hover:underline">{CONTACT_EMAIL}</a> or visit the{' '}
-            <Link href={`/${lang}/contact/`} className="text-cinnabar hover:underline">Contact</Link> page.
+            <Link href={contentHref(lang, 'contact')} className="text-cinnabar hover:underline">Contact</Link> page.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
-            For transparency on editorial workflow, see{' '}
-            <Link href={`/${lang}/editorial-policy/`} className="text-cinnabar hover:underline">Editorial Policy</Link>{' '}
-            and{' '}
-            <Link href={`/${lang}/content-updates/`} className="text-cinnabar hover:underline">Content Updates</Link>.
+            For the editorial workflow, see the{' '}
+            <Link href={contentHref(lang, 'editorial-policy')} className="text-cinnabar hover:underline">Editorial Policy</Link>
+            {' '}and{' '}
+            <Link href={contentHref(lang, 'content-updates')} className="text-cinnabar hover:underline">Content Updates</Link>.
           </p>
         </section>
       </article>

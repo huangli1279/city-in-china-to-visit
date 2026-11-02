@@ -9,6 +9,7 @@ import { calcUserScores, getRankedCities, getCityHighlightTagKeys, getUserPerson
 import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
 import { clearQuizState, clearResultAnswers, decodeAnswers, loadResultAnswers } from '@/lib/quiz-session'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import LegalFooterNav from '@/components/LegalFooterNav'
 
 interface CityTranslation {
   name?: string
@@ -271,6 +272,19 @@ export default function ResultClient({ lang }: { lang: string }) {
           {t('result.retake')}
         </Link>
       </div>
+
+      <LegalFooterNav
+        lang={lang}
+        labels={{
+          about: t('home.footer.legalLinks.about'),
+          contact: t('home.footer.legalLinks.contact'),
+          guides: t('home.footer.legalLinks.guides'),
+          privacy: t('home.footer.legalLinks.privacy'),
+          terms: t('home.footer.legalLinks.terms'),
+        }}
+        className="mt-5 flex flex-wrap items-center justify-center gap-3 text-xs text-[color:var(--ink-600)]"
+        linkClassName="focus-ring rounded-lg px-1 py-0.5 hover:text-cinnabar"
+      />
     </main>
   )
 }

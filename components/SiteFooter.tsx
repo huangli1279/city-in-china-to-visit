@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { isIndexableContentLang, PRIMARY_INDEXABLE_CONTENT_LANG } from '@/lib/indexing'
 import TrackedQuizLink from '@/components/TrackedQuizLink'
+import LegalFooterNav from '@/components/LegalFooterNav'
 
 interface FooterLegalLinks {
   about: string
@@ -36,9 +36,6 @@ interface SiteFooterProps {
 export default function SiteFooter({ lang, footer, navLinks }: SiteFooterProps) {
   const currentYear = new Date().getFullYear()
   const quizPath = `/${lang}/quiz/`
-  const contentLang = isIndexableContentLang(lang) ? lang : PRIMARY_INDEXABLE_CONTENT_LANG
-  const legalBasePath = `/${contentLang}`
-  const guidesPath = `/${contentLang}/guides/`
 
   return (
     <footer className="surface-card mt-5 overflow-hidden bg-[linear-gradient(145deg,#1b2434,#2a364d)] text-slate-200">
@@ -89,38 +86,12 @@ export default function SiteFooter({ lang, footer, navLinks }: SiteFooterProps) 
         <span>
           © {currentYear} {footer.copyright}
         </span>
-        <nav className="flex flex-wrap items-center gap-3">
-          <Link
-            href={`${legalBasePath}/about/`}
-            className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-          >
-            {footer.legalLinks.about}
-          </Link>
-          <Link
-            href={`${legalBasePath}/contact/`}
-            className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-          >
-            {footer.legalLinks.contact}
-          </Link>
-          <Link
-            href={guidesPath}
-            className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-          >
-            {footer.legalLinks.guides}
-          </Link>
-          <Link
-            href={`${legalBasePath}/privacy-policy/`}
-            className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-          >
-            {footer.legalLinks.privacy}
-          </Link>
-          <Link
-            href={`${legalBasePath}/terms/`}
-            className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-          >
-            {footer.legalLinks.terms ?? 'Terms'}
-          </Link>
-        </nav>
+        <LegalFooterNav
+          lang={lang}
+          labels={footer.legalLinks}
+          className="flex flex-wrap items-center gap-3"
+          linkClassName="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+        />
         <nav className="flex flex-wrap items-center gap-2 text-[11px]" aria-label="Language versions">
           <Link href="/en/" className="focus-ring rounded px-1 py-0.5 text-slate-300 transition-colors hover:text-white">
             English

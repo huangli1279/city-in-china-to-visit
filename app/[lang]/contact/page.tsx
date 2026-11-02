@@ -9,8 +9,8 @@ import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
 
 const AUTHOR_NAME = 'City Vibe Matcher Editorial Team'
-const LAST_MODIFIED_DATE_ISO = '2026-02-21'
-const LAST_MODIFIED_DATE_TEXT = 'February 21, 2026'
+const LAST_MODIFIED_DATE_ISO = '2026-11-02'
+const LAST_MODIFIED_DATE_TEXT = 'November 2, 2026'
 const CONTACT_EMAIL = 'team@bestcityinchina.site'
 
 type Props = { params: Promise<{ lang: string }> }
@@ -138,7 +138,7 @@ export default async function ContactPage({ params }: Props) {
           <p><strong>Response target:</strong> within 3 business days</p>
         </div>
         <p className="mt-5 text-base leading-relaxed text-[color:var(--ink-700)]">
-          Use this page for feedback about matching results, content corrections, partnerships, or media inquiries.
+          Email is the way to reach the people who run this site. Use it for quiz feedback, a correction to a guide, or a press question. There is no phone line and no contact form.
         </p>
 
         <section className="mt-8">

@@ -6,6 +6,7 @@ import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
 import { GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
+import { listingHref } from '@/lib/indexing'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
@@ -167,13 +168,11 @@ export default async function ContentUpdatesPage({ params }: Props) {
             <ul className="mt-3 space-y-1">
               {entry.guideSlugs.map((slug) => {
                 const guide = GUIDE_BY_SLUG.get(slug)
-                if (!guide) return null
+                const href = listingHref(lang, 'guide', slug)
+                if (!guide || !href) return null
                 return (
                   <li key={slug}>
-                    <Link
-                      href={`/${lang}/guides/${slug}/`}
-                      className="text-sm text-cinnabar hover:underline"
-                    >
+                    <Link href={href} className="text-sm text-cinnabar hover:underline">
                       {guide.title}
                     </Link>
                   </li>

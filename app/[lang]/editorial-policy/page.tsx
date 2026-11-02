@@ -5,6 +5,7 @@ import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
+import { contentHref } from '@/lib/indexing'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
@@ -167,7 +168,7 @@ export default async function EditorialPolicyPage({ params }: Props) {
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
             Use the{' '}
-            <Link href={`/${lang}/contact/`} className="text-cinnabar hover:underline">Contact</Link>{' '}
+            <Link href={contentHref(lang, 'contact')} className="text-cinnabar hover:underline">Contact</Link>{' '}
             page and include URL, current statement, proposed correction, and source link.
           </p>
         </section>
@@ -195,7 +196,7 @@ export default async function EditorialPolicyPage({ params }: Props) {
           </ul>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-600)]">
             See the full log on the{' '}
-            <Link href={`/${lang}/content-updates/`} className="text-cinnabar hover:underline">Content Updates</Link> page.
+            <Link href={contentHref(lang, 'content-updates')} className="text-cinnabar hover:underline">Content Updates</Link> page.
           </p>
         </section>
 

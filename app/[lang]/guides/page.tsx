@@ -5,6 +5,7 @@ import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { buildLocaleSeoPolicy, ensureMinMetaDescription } from '@/lib/seo-policy'
 import { ALL_GUIDES } from '@/content/guides'
+import { listingHref } from '@/lib/indexing'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
@@ -99,12 +100,16 @@ export default async function GuidesHubPage({ params }: Props) {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
       name: title,
-      itemListElement: ALL_GUIDES.map((guide, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: localizedItems[index]?.title ?? guide.title,
-        url: toAbsoluteUrl(`/${lang}/guides/${guide.slug}/`),
-      })),
+      itemListElement: ALL_GUIDES.flatMap((guide, index) => {
+        const href = listingHref(lang, 'guide', guide.slug)
+        if (!href) return []
+        return [{
+          '@type': 'ListItem',
+          position: index + 1,
+          name: localizedItems[index]?.title ?? guide.title,
+          url: toAbsoluteUrl(href),
+        }]
+      }),
     },
   ]
 
@@ -164,25 +169,31 @@ export default async function GuidesHubPage({ params }: Props) {
           Instead of generic rankings, each guide is written as a decision framework. You can move from uncertainty to a practical shortlist in one reading session.
         </p>
 
-        <h2 className="ink-title mt-8 text-xl font-bold">Available guides</h2>
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          {ALL_GUIDES.map((guide, index) => {
-            const localizedTitle = localizedItems[index]?.title ?? guide.title
-            const localizedDescription = localizedItems[index]?.description ?? guide.description
-            return (
-              <Link
-                key={guide.slug}
-                href={`/${lang}/guides/${guide.slug}/`}
-                className="focus-ring surface-muted block p-5 transition-colors hover:border-[#b43c2f]/35"
-              >
-                <h3 className="font-display text-base font-semibold leading-snug text-[color:var(--ink-950)]">
-                  {localizedTitle}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-600)]">{localizedDescription}</p>
-              </Link>
-            )
-          })}
-        </div>
+        {listingHref(lang, 'guides') && (
+          <>
+            <h2 className="ink-title mt-8 text-xl font-bold">Available guides</h2>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              {ALL_GUIDES.map((guide, index) => {
+                const href = listingHref(lang, 'guide', guide.slug)
+                if (!href) return null
+                const localizedTitle = localizedItems[index]?.title ?? guide.title
+                const localizedDescription = localizedItems[index]?.description ?? guide.description
+                return (
+                  <Link
+                    key={guide.slug}
+                    href={href}
+                    className="focus-ring surface-muted block p-5 transition-colors hover:border-[#b43c2f]/35"
+                  >
+                    <h3 className="font-display text-base font-semibold leading-snug text-[color:var(--ink-950)]">
+                      {localizedTitle}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-600)]">{localizedDescription}</p>
+                  </Link>
+                )
+              })}
+            </div>
+          </>
+        )}
 
         <h2 className="ink-title mt-8 text-xl font-bold">How to use this guide cluster</h2>
         <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-600)]">

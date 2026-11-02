@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { languageSwitchPath } from '@/lib/indexing'
 
 const LANG_LABELS: Record<string, string> = {
   en: '🇬🇧 English',
@@ -95,14 +96,7 @@ export default function LanguageSwitcher({ currentLang, switcherLabel }: Languag
       return
     }
 
-    const segments = (pathname ?? '/').split('/').filter(Boolean)
-    if (segments.length === 0) {
-      segments.push(targetLang)
-    } else {
-      segments[0] = targetLang
-    }
-
-    const nextPath = `/${segments.join('/')}/`
+    const nextPath = languageSwitchPath(targetLang, pathname ?? '/')
     const normalizedPathname = pathname
       ? (pathname.endsWith('/') ? pathname : `${pathname}/`)
       : '/'

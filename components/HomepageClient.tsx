@@ -5,7 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { trackEvent } from '@/lib/analytics'
-import { isIndexableContentLang, PRIMARY_INDEXABLE_CONTENT_LANG } from '@/lib/indexing'
+import { listingHref } from '@/lib/indexing'
+import LegalFooterNav from '@/components/LegalFooterNav'
 
 interface CityPreview {
   id: string
@@ -135,9 +136,7 @@ export default function HomepageClient({
 }: HomepageClientProps) {
   const currentYear = new Date().getFullYear()
 
-  const topicClusterGuideLang = isIndexableContentLang(lang) ? lang : PRIMARY_INDEXABLE_CONTENT_LANG
-  const legalBasePath = `/${topicClusterGuideLang}`
-  const topicClusterGuideBasePath = `/${topicClusterGuideLang}/guides`
+  const guidesListingHref = listingHref(lang, 'guides')
   const quizPath = `/${lang}/quiz/`
 
   const headerLinks = [
@@ -149,9 +148,10 @@ export default function HomepageClient({
   const topicClusterLinks: GuideLink[] = t.topicCluster.items
     .map((item, index) => {
       const slug = GUIDE_SLUGS[index]
-      if (!slug) return null
+      const href = slug ? listingHref(lang, 'guide', slug.replace(/\/$/, '')) : null
+      if (!href) return null
       return {
-        href: `${topicClusterGuideBasePath}/${slug}`,
+        href,
         title: item.title,
         desc: item.description,
       }
@@ -349,7 +349,7 @@ export default function HomepageClient({
         <p className="mt-5 text-sm leading-relaxed text-[color:var(--ink-600)] sm:text-base">{t.seoGuide.conclusion}</p>
       </section>
 
-      {topicClusterLinks.length > 0 && (
+      {guidesListingHref && topicClusterLinks.length > 0 && (
         <section className="surface-card mt-5 p-6 sm:p-8 lg:p-10">
           <p className="font-accent text-xs font-semibold uppercase tracking-[0.2em] text-cinnabar">{t.topicCluster.eyebrow}</p>
           <h2 className="ink-title mt-3 text-balance text-2xl leading-tight sm:text-3xl">{t.topicCluster.title}</h2>
@@ -369,7 +369,7 @@ export default function HomepageClient({
             ))}
           </div>
           <Link
-            href={`${topicClusterGuideBasePath}/`}
+            href={guidesListingHref}
             className="focus-ring mt-5 inline-flex rounded-xl border border-[#8a6447]/28 bg-white/70 px-4 py-2 text-sm font-semibold text-cinnabar transition-colors hover:border-[#b43c2f]/45"
           >
             {t.topicCluster.cta}
@@ -448,38 +448,12 @@ export default function HomepageClient({
           <span>
             © {currentYear} {t.footer.copyright}
           </span>
-          <nav className="flex flex-wrap items-center gap-3">
-            <Link
-              href={`${legalBasePath}/about/`}
-              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-            >
-              {t.footer.legalLinks.about}
-            </Link>
-            <Link
-              href={`${legalBasePath}/contact/`}
-              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-            >
-              {t.footer.legalLinks.contact}
-            </Link>
-            <Link
-              href={`${topicClusterGuideBasePath}/`}
-              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-            >
-              {t.footer.legalLinks.guides}
-            </Link>
-            <Link
-              href={`${legalBasePath}/privacy-policy/`}
-              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-            >
-              {t.footer.legalLinks.privacy}
-            </Link>
-            <Link
-              href={`${legalBasePath}/terms/`}
-              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
-            >
-              {t.footer.legalLinks.terms ?? 'Terms'}
-            </Link>
-          </nav>
+          <LegalFooterNav
+            lang={lang}
+            labels={t.footer.legalLinks}
+            className="flex flex-wrap items-center gap-3"
+            linkClassName="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+          />
         </div>
       </footer>
     </main>

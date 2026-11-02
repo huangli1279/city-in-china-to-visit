@@ -10,6 +10,7 @@ import { QUIZ_QUESTION_COUNT } from '@/lib/quiz-config'
 import { clearQuizState, encodeAnswers, getInitialQuizState, saveQuizState, saveResultAnswers } from '@/lib/quiz-session'
 import ProgressBar from '@/components/ProgressBar'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import LegalFooterNav from '@/components/LegalFooterNav'
 
 interface TranslatedQuestion {
   id: number
@@ -278,6 +279,19 @@ export default function QuizClient({ lang }: { lang: string }) {
           </div>
         </section>
       </div>
+
+      <LegalFooterNav
+        lang={lang}
+        labels={{
+          about: t('home.footer.legalLinks.about'),
+          contact: t('home.footer.legalLinks.contact'),
+          guides: t('home.footer.legalLinks.guides'),
+          privacy: t('home.footer.legalLinks.privacy'),
+          terms: t('home.footer.legalLinks.terms'),
+        }}
+        className="mt-4 flex flex-wrap items-center justify-center gap-3 px-2 text-xs text-[color:var(--ink-600)]"
+        linkClassName="focus-ring rounded-lg px-1 py-0.5 hover:text-cinnabar"
+      />
 
       <footer className="sticky bottom-0 z-10 mt-4 pb-[max(0.9rem,env(safe-area-inset-bottom))]">
         <div className="surface-card rounded-2xl bg-white/95 p-3 backdrop-blur sm:p-4">

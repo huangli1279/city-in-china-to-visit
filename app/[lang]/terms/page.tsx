@@ -5,6 +5,7 @@ import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
+import { contentHref } from '@/lib/indexing'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
@@ -133,7 +134,7 @@ export default async function TermsPage({ params }: Props) {
           <h2 className="ink-title text-xl font-bold">Agreement</h2>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
             These terms govern your use of bestcityinchina.site (the &quot;site&quot;), including the City Vibe Matcher quiz, city results, and planning guides. By using the site, you agree to these terms and to the{' '}
-            <Link href={`/${lang}/privacy-policy/`} className="text-cinnabar hover:underline">Privacy Policy</Link>.
+            <Link href={contentHref(lang, 'privacy-policy')} className="text-cinnabar hover:underline">Privacy Policy</Link>.
             If you do not agree, please do not use the site.
           </p>
         </section>
@@ -183,7 +184,7 @@ export default async function TermsPage({ params }: Props) {
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
             Advertising does not change quiz scores or guide conclusions. We do not sell quiz answers to advertisers or build ad profiles from them. Details on analytics, cookies, and ad services are in the{' '}
-            <Link href={`/${lang}/privacy-policy/`} className="text-cinnabar hover:underline">Privacy Policy</Link>.
+            <Link href={contentHref(lang, 'privacy-policy')} className="text-cinnabar hover:underline">Privacy Policy</Link>.
           </p>
         </section>
 
@@ -220,7 +221,7 @@ export default async function TermsPage({ params }: Props) {
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-700)]">
             Questions about these terms can be sent to{' '}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-cinnabar hover:underline">{CONTACT_EMAIL}</a> or through the{' '}
-            <Link href={`/${lang}/contact/`} className="text-cinnabar hover:underline">Contact</Link> page.
+            <Link href={contentHref(lang, 'contact')} className="text-cinnabar hover:underline">Contact</Link> page.
           </p>
         </section>
       </article>

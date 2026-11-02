@@ -10,6 +10,7 @@ import { AUTHORS } from '@/content/authors'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import Breadcrumb from '@/components/Breadcrumb'
+import { listingHref } from '@/lib/indexing'
 
 const DEFAULT_AUTHOR_ID = 'editorial-team'
 const DEFAULT_REVIEWER_ID = 'research-desk'
@@ -119,7 +120,7 @@ export default async function GuideDetailPage({ params }: Props) {
 
   const relatedGuides = guide.internalLinks
     .map((link) => GUIDE_BY_SLUG.get(link.slug))
-    .filter((g): g is NonNullable<typeof g> => g !== undefined)
+    .filter((g): g is NonNullable<typeof g> => g !== undefined && listingHref(lang, 'guide', g.slug) !== null)
     .slice(0, 4)
 
   const jsonLd = [
@@ -150,10 +151,12 @@ export default async function GuideDetailPage({ params }: Props) {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: toAbsoluteUrl(`/${lang}/`) },
-        { '@type': 'ListItem', position: 2, name: 'Guides', item: toAbsoluteUrl(`/${lang}/guides/`) },
-        { '@type': 'ListItem', position: 3, name: guide.title, item: canonicalUrl },
-      ],
+        { name: 'Home', item: toAbsoluteUrl(`/${lang}/`) },
+        ...(listingHref(lang, 'guides')
+          ? [{ name: 'Guides', item: toAbsoluteUrl(listingHref(lang, 'guides') ?? '') }]
+          : []),
+        { name: guide.title, item: canonicalUrl },
+      ].map((item, index) => ({ '@type': 'ListItem', position: index + 1, ...item })),
     },
     {
       '@context': 'https://schema.org',
@@ -210,7 +213,9 @@ export default async function GuideDetailPage({ params }: Props) {
       <Breadcrumb
         items={[
           { label: 'Home', href: `/${lang}/` },
-          { label: 'Guides', href: `/${lang}/guides/` },
+          ...(listingHref(lang, 'guides')
+            ? [{ label: 'Guides', href: listingHref(lang, 'guides') ?? undefined }]
+            : []),
           { label: localizedTitle },
         ]}
       />
@@ -283,20 +288,21 @@ export default async function GuideDetailPage({ params }: Props) {
           </section>
         )}
 
-        {guide.internalLinks.length > 0 && (
+        {guide.internalLinks.some((link) => listingHref(lang, 'guide', link.slug)) && (
           <section className="mt-8">
             <h2 className="ink-title text-xl font-bold">Continue planning</h2>
             <ul className="mt-3 space-y-2">
-              {guide.internalLinks.map((link) => (
-                <li key={link.slug}>
-                  <Link
-                    href={`/${lang}/guides/${link.slug}/`}
-                    className="text-sm text-cinnabar hover:underline"
-                  >
-                    {link.anchor}
-                  </Link>
-                </li>
-              ))}
+              {guide.internalLinks.map((link) => {
+                const href = listingHref(lang, 'guide', link.slug)
+                if (!href) return null
+                return (
+                  <li key={link.slug}>
+                    <Link href={href} className="text-sm text-cinnabar hover:underline">
+                      {link.anchor}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </section>
         )}
@@ -334,7 +340,7 @@ export default async function GuideDetailPage({ params }: Props) {
               return (
                 <Link
                   key={related.slug}
-                  href={`/${lang}/guides/${related.slug}/`}
+                  href={listingHref(lang, 'guide', related.slug) ?? `/${lang}/`}
                   className="focus-ring surface-muted block p-5 transition-colors hover:border-[#b43c2f]/35"
                 >
                   <h3 className="font-display text-base font-semibold leading-snug text-[color:var(--ink-950)]">

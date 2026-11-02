@@ -75,3 +75,40 @@ export function isPageIndexable(lang: string, page: IndexablePageId): boolean {
 export function isIndexableContentLang(lang: string): lang is IndexableContentLang {
   return (INDEXABLE_CONTENT_LANGS as readonly string[]).includes(lang)
 }
+
+const STATIC_PAGE_PATH: Record<Exclude<IndexablePageId, 'home' | 'guide'>, string> = {
+  guides: 'guides',
+  about: 'about',
+  contact: 'contact',
+  'editorial-policy': 'editorial-policy',
+  'content-updates': 'content-updates',
+  'privacy-policy': 'privacy-policy',
+  terms: 'terms',
+}
+
+/** Public path for a page. Untranslated locales resolve to the indexable English URL. */
+export function contentHref(lang: string, page: IndexablePageId, slug?: string): string {
+  const useLang = isPageIndexable(lang, page) ? lang : PRIMARY_INDEXABLE_CONTENT_LANG
+  if (page === 'home') return `/${useLang}/`
+  if (page === 'guide') return `/${useLang}/guides/${slug ?? ''}/`.replace(/\/{2,}/g, '/')
+  return `/${useLang}/${STATIC_PAGE_PATH[page]}/`
+}
+
+/**
+ * Path to show in localized navigation and listings.
+ * Returns null when that locale's copy is untranslated and therefore noindexed.
+ */
+export function listingHref(lang: string, page: IndexablePageId, slug?: string): string | null {
+  if (!isPageIndexable(lang, page)) return null
+  return contentHref(lang, page, slug)
+}
+
+/** Language switch target. Untranslated pages send the reader to that locale's homepage. */
+export function languageSwitchPath(targetLang: string, pathname: string): string {
+  const segments = (pathname || '/').split('/').filter(Boolean)
+  const suffix = segments.slice(1).join('/')
+  if (!suffix) return `/${targetLang}/`
+  if (suffix === 'quiz' || suffix === 'result') return `/${targetLang}/${suffix}/`
+  if (!isPageIndexable(targetLang, pageIdFromSuffix(suffix))) return `/${targetLang}/`
+  return `/${targetLang}/${suffix}/`
+}

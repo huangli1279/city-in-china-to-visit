@@ -633,9 +633,369 @@ const RAW_GUIDES: RawGuide[] = [
     ],
     reviewer: REVIEWER_TEAM_NAME,
   },
+  {
+    slug: 'chengdu-travel-guide-first-trip',
+    title: 'Chengdu Travel Guide for First-Time Visitors: Pandas, Food, and a 3-Day Plan',
+    titleVariants: {
+      A: 'Chengdu Travel Guide for First-Time Visitors',
+      B: 'Chengdu in 3 Days: Pandas, Hot Pot, and Teahouses for First-Timers',
+    },
+    description:
+      'A practical Chengdu guide for foreign travelers: when to go, visa-free transit, mobile payments, where to stay, what to eat, a 3-day itinerary, budget ranges in CNY and USD, and common mistakes.',
+    intro:
+      'Chengdu is the city most travelers describe as the easiest place in China to slow down. It is big and modern, yet daily life still runs at teahouse speed, and the food scene alone justifies the trip. This guide turns that reputation into a concrete plan you can actually follow on a first visit.',
+    keyPoints: [
+      'Arrive at the Giant Panda Base at opening time; by late morning the pandas are mostly asleep and the paths are crowded.',
+      'Spring (March to May) and autumn (September to November) are the most comfortable months; summer is humid and hot, winter is grey but mild.',
+      'Base yourself near Chunxi Road, Taikoo Li, or Kuanzhai Alley for walkable food and good metro access.',
+      'Set up Alipay or WeChat Pay with a foreign card before you land, and carry a small amount of cash as backup.',
+    ],
+    sections: [
+      {
+        heading: '1. Why Chengdu deserves a place on a first China trip',
+        paragraphs: [
+          'Many first itineraries are built around Beijing and Shanghai, which deliver history and skyline but can feel intense. Chengdu offers a different kind of China: relaxed, food-obsessed, and surprisingly easy to navigate. It is the capital of Sichuan Province and a gateway to some of the country\'s best day trips, including the Leshan Giant Buddha and the mountain of Qingcheng.',
+          'The headline attraction is the giant panda. Chengdu runs the best-known panda breeding and research facility in the world, and seeing pandas eat bamboo a few metres away is a highlight even for travelers who do not usually visit zoos. But visitors who stay more than a day tend to remember the rhythm of the city more than any single sight: people playing mahjong in parks, ear-cleaners walking between teahouse tables, and late-night queues for skewers.',
+          'Chengdu is also one of the strongest food cities in Asia. It has been recognised by UNESCO as a City of Gastronomy, and the local cuisine goes far beyond "spicy". The characteristic flavour is mala: the numbing tingle of Sichuan pepper combined with chili heat. Once you learn to order around it, you can eat extremely well at almost any budget.',
+        ],
+      },
+      {
+        heading: '2. Best time to visit Chengdu',
+        paragraphs: [
+          'Spring, roughly March to May, brings mild temperatures and blossoms in parks and at the panda base. Autumn, September to November, is similarly comfortable and usually a little drier. These two windows are the best choice for walking-heavy itineraries.',
+          'Summer, June to August, is hot and very humid, with frequent thunderstorms. Pandas spend more time indoors in air-conditioned enclosures, so morning visits matter even more. Winter, December to February, is rarely freezing, but the sky is often overcast and buildings are not always well heated, so pack layers.',
+          'Avoid the Chinese national holidays if you can, especially the first week of October (Golden Week) and the Spring Festival period. Domestic travel peaks then, the panda base becomes extremely crowded, and hotel prices can double. Check the holiday calendar for your year before booking.',
+        ],
+      },
+      {
+        heading: '3. Getting there: flights, trains, and visa-free entry',
+        paragraphs: [
+          'Chengdu has two international airports. Tianfu International (TFU) is newer and handles most international flights; it is far from the centre, around one hour by metro Line 18 or 60 to 90 minutes by taxi. Shuangliu International (CTU) is closer, roughly 30 to 40 minutes from downtown by metro or taxi. Check which airport your ticket uses, because transferring between them takes well over an hour.',
+          'High-speed trains connect Chengdu with Chongqing in about 1 to 1.5 hours, with Xi\'an in about 3.5 to 4.5 hours, and with Beijing or Shanghai in roughly 7 to 12 hours depending on the service. Foreigners can book on the official 12306 site or app using a passport, or through international agencies that charge a small fee.',
+          'Entry rules have become much easier for many nationalities. China currently offers 30-day unilateral visa-free entry to citizens of a long list of countries (extended to 31 December 2026), and 240-hour (10-day) visa-free transit to citizens of 57 countries who enter at an eligible port and fly onward to a third country or region. Both Chengdu airports are eligible ports for visa-free transit, and the permitted area covers Chengdu plus ten other Sichuan cities, including Leshan. Rules change, so confirm your eligibility with the National Immigration Administration or your nearest Chinese embassy before booking.',
+        ],
+      },
+      {
+        heading: '4. Getting around: metro, taxis, and payments',
+        paragraphs: [
+          'The metro is clean, cheap, and well signed in English, and most single rides cost a few yuan. You can buy tokens at machines, but the simplest option is the transit QR code inside Alipay or WeChat (search for "Chengdu metro" in the app\'s mini-programs). Taxis and ride-hailing through the DiDi function inside Alipay are affordable for short trips; a typical inner-city ride is often 15 to 40 CNY.',
+          'China is now heavily cashless. Foreign visitors can link an international Visa or Mastercard to Alipay or WeChat Pay and pay by scanning QR codes almost everywhere. At the time of writing, small transactions are usually free and larger ones may carry a fee of about 3%, so check the in-app terms. Carry a few hundred yuan in cash for the rare stall that cannot accept foreign-linked wallets.',
+          'Install an offline translation app and a map that works in China. Many travelers use Amap (Gaode) or Apple Maps, since Google Maps data is often inaccurate there. A local eSIM or a roaming plan solves most connectivity issues; check in advance how your plan handles access to the services you rely on.',
+        ],
+      },
+      {
+        heading: '5. Where to stay in Chengdu',
+        paragraphs: [
+          'Chunxi Road and Taikoo Li are the commercial heart of the city. You get shopping, food courts, nightlife, and the Daci Temple within walking distance, plus several metro lines. This is the best choice if you want convenience and do not mind busy streets.',
+          'Kuanzhai Alley and the People\'s Park area feel more traditional, with restored lanes, teahouses, and quieter side streets. It is a good base for travelers who want atmosphere and easy morning walks. Wenshu Monastery to the north offers a calm, local feel with cheaper guesthouses.',
+          'Typical nightly rates (approximate, standard season): hostels and simple guesthouses 80 to 200 CNY (about 11 to 28 USD); comfortable mid-range hotels 300 to 600 CNY (about 42 to 85 USD); international upscale hotels 900 CNY and above (about 125 USD+). Confirm that your hotel accepts foreign guests; most mid-range and international chains do.',
+        ],
+      },
+      {
+        heading: '6. A practical 3-day Chengdu itinerary',
+        paragraphs: [
+          'Day 1 — Pandas and the old city. Take an early taxi or the metro to the Chengdu Research Base of Giant Panda Breeding and aim to be at the gate at opening time (usually around 7:30 am; check the official announcements). Tickets are roughly 55 CNY and must be booked online with your passport, often several days ahead during holidays. Spend two to three hours there, then return to the city for lunch. In the afternoon, visit People\'s Park and drink tea at the Heming teahouse, then walk through Kuanzhai Alley in the early evening and finish with hot pot.',
+          'Day 2 — Temples, tea, and the city at night. Start at Wenshu Monastery, an active Buddhist temple with a well-known vegetarian restaurant. Next, visit the Wuhou Shrine and the adjacent Jinli Street, then the nearby Tibetan quarter for a contrasting neighbourhood. After dark, Taikoo Li and Chunxi Road are lively, and the Anshun Bridge area along the Jin River is lit up for evening walks. A Sichuan Opera show with face-changing is a popular, if touristy, evening option.',
+          'Day 3 — Day trip. Choose one: the Leshan Giant Buddha (about 1 hour by high-speed train each way, plus local bus or taxi), the Dujiangyan irrigation system and Mount Qingcheng (about 1 hour by train), or, for a short trip, Huanglongxi ancient town. Leshan is the most dramatic; arrive early, because the descending stairway beside the Buddha can involve a long queue. Return to Chengdu for a final dinner of skewers (chuan chuan) or dan dan noodles.',
+        ],
+      },
+      {
+        heading: '7. What to eat and how to order',
+        paragraphs: [
+          'Hot pot is the signature meal. You choose a broth (spicy, mild, or a split "yuanyang" pot with both), then order raw ingredients to cook at the table. If spice is a concern, ask for "wei la" (slightly spicy) or the split pot. Expect roughly 80 to 150 CNY per person at a popular chain.',
+          'Other essentials include mapo tofu, twice-cooked pork, kung pao chicken in its original form, dan dan noodles, zhong dumplings in chili oil, and rabbit dishes, which are a local specialty. Chuan chuan xiang, skewers cooked in a communal broth and charged by the stick, is one of the most fun and affordable meals in the city.',
+          'For breakfast, look for steamed buns and bowls of noodles near any metro station; 10 to 20 CNY is enough. Many restaurants use QR-code ordering at the table, which works through Alipay or WeChat, and often has photos even if the text is in Chinese. A translation app with camera mode makes paper menus easy.',
+        ],
+      },
+      {
+        heading: '8. Budget: what three days in Chengdu really cost',
+        paragraphs: [
+          'All figures are approximate per person per day, excluding international flights, and assume 1 USD ≈ 7.1 CNY. Exchange rates and prices change, so treat these as planning ranges.',
+          'Budget traveler: 250 to 400 CNY (about 35 to 55 USD) — hostel bed or simple room, street food and noodle shops, metro only, one paid attraction.',
+          'Mid-range traveler: 600 to 1,000 CNY (about 85 to 140 USD) — comfortable hotel, sit-down meals including hot pot, a mix of metro and ride-hailing, the panda base and a day trip.',
+          'Comfort traveler: 1,500 CNY and up (about 210 USD+) — international hotel, private driver for the day trip, and upscale dining.',
+        ],
+      },
+      {
+        heading: '9. Practical tips and common mistakes',
+        paragraphs: [
+          'Book the panda base online in advance using your passport, and bring the same passport on the day; tickets are tied to the document.',
+          'Do not plan the panda base for the afternoon. Pandas are most active around feeding time in the morning, and many visitors leave disappointed after a midday visit.',
+          'Check which airport you fly into and leave plenty of time to reach Tianfu, which is far from the centre.',
+          'Mala heat builds over a meal. Start mild, order rice or a cold drink to balance it, and ask for less oil if you have a sensitive stomach.',
+          'Keep your passport on you: train stations, some attractions, and hotels require it, and police registration is handled by your hotel.',
+        ],
+      },
+    ],
+    faq: {
+      question: 'How many days do I need in Chengdu?',
+      answer:
+        'Three days is ideal for a first visit: one day for the pandas and the old city, one for temples, teahouses, and nightlife, and one for a day trip to Leshan or Dujiangyan. Two days is enough if you skip the day trip.',
+    },
+    internalLinks: [
+      { slug: 'beijing-shanghai-chengdu-first-trip-comparison', anchor: 'See how Chengdu compares with Beijing and Shanghai' },
+      { slug: 'china-visa-payment-checklist-first-timers', anchor: 'Finish your visa and payment setup before you fly' },
+      { slug: 'best-time-to-visit-china-first-trip', anchor: 'Check seasonal windows across China' },
+    ],
+    updateSummary: [
+      'New guide: complete first-visit plan for Chengdu with a 3-day itinerary and budget bands.',
+      'Visa-free transit and payment details checked against official sources in November 2026.',
+    ],
+    sources: [
+      { name: 'National Immigration Administration of China', url: 'https://en.nia.gov.cn/n147418/n147463/c183412/content.html', note: '240-hour visa-free transit countries, ports, and permitted areas.' },
+      { name: 'Gov.cn: visa-free access extension', url: 'https://english.www.gov.cn/news/202511/04/content_WS69094ae0c6d00ca5f9a07472.html', note: 'Unilateral visa-exemption extended to 31 December 2026.' },
+      { name: 'Chengdu Research Base of Giant Panda Breeding', url: 'https://www.panda.org.cn/', note: 'Official opening hours and ticket reservations.' },
+      { name: 'UNESCO Creative Cities Network', url: 'https://en.unesco.org/creative-cities/chengdu', note: 'Chengdu City of Gastronomy designation.' },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
+  {
+    slug: 'xian-travel-guide-first-trip',
+    title: "Xi'an Travel Guide for First-Time Visitors: Terracotta Army, City Wall, and a 3-Day Plan",
+    titleVariants: {
+      A: "Xi'an Travel Guide for First-Time Visitors",
+      B: "Xi'an in 3 Days: Terracotta Warriors, Muslim Quarter Food, and the Ancient Wall",
+    },
+    description:
+      "Plan a first trip to Xi'an: best season, visa-free transit, getting to the Terracotta Army without a tour, where to stay inside or outside the wall, food to try, a 3-day itinerary, and realistic budgets.",
+    intro:
+      "Xi'an was the capital of China for more than a thousand years and the eastern starting point of the Silk Road. Today it is one of the few places where you can cycle on a complete Ming-dynasty city wall in the morning and stand in front of a 2,200-year-old clay army in the afternoon. This guide shows how to see the essentials without rushing or overpaying.",
+    keyPoints: [
+      'Reserve Terracotta Army tickets online with your passport, and go early on a weekday.',
+      'Stay inside or just outside the city wall so most sights are walkable.',
+      "Spring and autumn are the best seasons; summer is hot and winter can be cold with occasional smog.",
+      'The Muslim Quarter is the food highlight, but the best stalls are often on the side streets rather than the main lane.',
+    ],
+    sections: [
+      {
+        heading: "1. Why Xi'an belongs on a first China trip",
+        paragraphs: [
+          "If Beijing shows you imperial China, Xi'an shows you where it began. Thirteen dynasties ruled from here, including the Qin, which first unified the country, and the Tang, often seen as a golden age of Chinese culture. The result is a city layered with history at a very walkable scale.",
+          "The Terracotta Army is the famous draw: thousands of life-size soldiers, horses, and chariots buried to guard the tomb of the first emperor, Qin Shi Huang. Seeing the first pit for the first time is one of the most memorable moments in Chinese travel. But Xi'an also rewards travelers who stay longer than the obligatory day trip, with its intact city wall, a lively Hui Muslim food district, and some of the country's best history museums.",
+          "Compared with Beijing and Shanghai, Xi'an is cheaper, more compact, and easier to combine with other destinations by high-speed rail. It works well as a second stop after Beijing or as a link between Beijing and Chengdu.",
+        ],
+      },
+      {
+        heading: "2. Best time to visit Xi'an",
+        paragraphs: [
+          'April to May and September to October offer mild temperatures and generally clear skies, ideal for cycling the wall and long walking days.',
+          'June to August is hot, often above 35°C, so schedule outdoor sights for early morning and evening and spend the middle of the day in museums. December to February is cold and dry, sometimes with poor air quality, but crowds at the Terracotta Army are much smaller, and the Spring Festival lantern displays on the wall can be spectacular.',
+          'As elsewhere in China, avoid the October Golden Week and the main Spring Festival travel days if you dislike crowds; the Terracotta Army museum can reach its daily visitor cap.',
+        ],
+      },
+      {
+        heading: '3. Getting there and entry rules',
+        paragraphs: [
+          "Xi'an Xianyang International Airport (XIY) has direct flights from several Asian and European cities and good domestic connections. Metro Line 14 links the airport to the city; plan on about an hour to the centre. A taxi takes roughly 45 to 60 minutes depending on traffic.",
+          "High-speed rail is often more convenient than flying. Beijing to Xi'an North takes about 4.5 to 6 hours, Chengdu about 3.5 to 4.5 hours, and Luoyang (for the Longmen Grottoes) about 1.5 hours. Xi'an North station is outside the wall but connected by metro Lines 2 and 4.",
+          "Many travelers can now visit without a visa. China grants 30-day visa-free entry to citizens of a long list of countries (currently extended to 31 December 2026) and 240-hour visa-free transit to citizens of 57 countries who continue to a third country or region. Xianyang airport is an eligible transit port, and the permitted area covers the whole of Shaanxi Province. Always confirm the latest rules with official sources before you travel.",
+        ],
+      },
+      {
+        heading: '4. Getting around and paying',
+        paragraphs: [
+          'Inside the wall, most sights are within walking distance or a short metro ride. Metro Lines 2 and 6 cross the old city, and rides cost a few yuan. Public bike-share is convenient for short hops and can be unlocked through Alipay.',
+          "To reach the Terracotta Army, take a high-speed train from Xi'an North to Lintong South, then a local bus or taxi; or take the public tourist bus from the east square of Xi'an Railway Station, which takes about an hour. Ignore people at the station who claim the official bus is full and offer private transport; this is a well-known tout tactic.",
+          'Set up Alipay or WeChat Pay with an international card before arriving, since most vendors in the Muslim Quarter and at museums expect QR payments. Keep some cash for small stalls just in case.',
+        ],
+      },
+      {
+        heading: "5. Where to stay in Xi'an",
+        paragraphs: [
+          'Around the Bell Tower and Drum Tower: the most central option, steps from the Muslim Quarter, with many hotels in every price class. It is busy at night but very convenient.',
+          'Near the South Gate (Yongningmen) and the Forest of Stone Steles: slightly quieter, with an artsy, traditional feel and easy access to the wall. A good choice for couples and repeat visitors.',
+          'Qujiang and the Big Wild Goose Pagoda area: outside the wall to the south, modern and well-lit, with the Tang-themed Datang Everbright City walking street. Hotels here are newer, but you will rely more on the metro.',
+          'Approximate nightly rates: hostels 60 to 150 CNY (about 8 to 21 USD), mid-range hotels 250 to 500 CNY (about 35 to 70 USD), upscale 700 CNY and up (about 100 USD+).',
+        ],
+      },
+      {
+        heading: "6. A practical 3-day Xi'an itinerary",
+        paragraphs: [
+          "Day 1 — The old city. Begin with the city wall in the morning: walk or rent a bike for the 13.7 km loop (about 2 to 3 hours by bike). Entry is roughly 54 CNY. After lunch, visit the Forest of Stone Steles museum near the South Gate, then the Bell and Drum Towers. In the evening, eat your way through the Muslim Quarter and the Great Mosque area.",
+          'Day 2 — Terracotta Army. Leave early to reach the museum near opening time. Admission is roughly 120 CNY in the main season and includes the Qin Shi Huang mausoleum site; book online with your passport. Visit Pit 1 last if you want to end on the most impressive view, or first if you want to beat the crowds. Allow at least three to four hours. On the way back, stop at Huaqing Palace if you still have energy, then rest in the evening.',
+          'Day 3 — Museums and the Tang city. Book the Shaanxi History Museum in advance; free tickets for the main exhibition sell out quickly, and the special treasure galleries charge extra. Afterwards, walk to the Big Wild Goose Pagoda. Stay into the evening for the fountain show (schedule varies) and the illuminated Datang Everbright City.',
+        ],
+      },
+      {
+        heading: "7. What to eat in Xi'an",
+        paragraphs: [
+          "Xi'an is a noodle city. Biangbiang noodles are wide, hand-pulled ribbons topped with chili oil and garlic. Roujiamo, sometimes called the Chinese burger, is shredded braised meat in a crisp flatbread; in the Muslim Quarter, it is usually beef or lamb.",
+          'Yangrou paomo is a lamb soup into which you tear flatbread yourself; ask the staff how small to break it. Liangpi, cold wheat or rice noodles in a sour and spicy sauce, is perfect in summer. Persimmon cakes and lamb skewers round out a street-food evening.',
+          'A satisfying meal at a local noodle shop costs 15 to 35 CNY. A full evening of grazing in the Muslim Quarter is usually 60 to 120 CNY per person. Prices on the main tourist lane are higher than on the side streets.',
+        ],
+      },
+      {
+        heading: "8. Budget for three days in Xi'an",
+        paragraphs: [
+          'Approximate per person per day, excluding flights, at about 7.1 CNY per USD:',
+          'Budget: 200 to 350 CNY (about 28 to 50 USD) — hostel, street food, public bus to the Terracotta Army.',
+          'Mid-range: 500 to 900 CNY (about 70 to 125 USD) — central hotel, sit-down meals, high-speed train or taxi to Lintong, audio guides.',
+          'Comfort: 1,300 CNY and up (about 180 USD+) — upscale hotel, private driver and licensed guide for the Terracotta Army, show tickets.',
+        ],
+      },
+      {
+        heading: '9. Practical tips and common mistakes',
+        paragraphs: [
+          'Hire guides only at the official counter inside the Terracotta Army site or through your hotel. Unlicensed guides and drivers outside often add shopping stops.',
+          'Book the Shaanxi History Museum the moment reservations open, typically several days ahead.',
+          'Drink plenty of water while cycling the wall; there is little shade.',
+          'Muslim Quarter restaurants are halal; do not bring pork or alcohol into them.',
+          'If you continue to Chengdu or Beijing, book the high-speed train ahead of holidays, when seats sell out.',
+        ],
+      },
+    ],
+    faq: {
+      question: "Is one day enough for Xi'an?",
+      answer:
+        "One day is enough only for the Terracotta Army. Two days lets you add the city wall and the Muslim Quarter, and three days is ideal for including the Shaanxi History Museum and the Big Wild Goose Pagoda without rushing.",
+    },
+    internalLinks: [
+      { slug: 'best-city-to-visit-in-china-first-time', anchor: "See where Xi'an fits among first-trip cities" },
+      { slug: 'how-many-days-in-first-china-city', anchor: 'Choose a 3-, 4-, or 5-day structure' },
+      { slug: 'china-visa-payment-checklist-first-timers', anchor: 'Prepare visa and mobile payments before travel' },
+    ],
+    updateSummary: [
+      "New guide: complete first-visit plan for Xi'an with a 3-day itinerary and budget bands.",
+      'Entry rules checked against official sources in November 2026.',
+    ],
+    sources: [
+      { name: 'National Immigration Administration of China', url: 'https://en.nia.gov.cn/n147418/n147463/c183412/content.html', note: 'Visa-free transit ports and permitted areas.' },
+      { name: 'Emperor Qinshihuang\'s Mausoleum Site Museum', url: 'http://www.bmy.com.cn/', note: 'Official tickets and opening hours.' },
+      { name: 'Shaanxi History Museum', url: 'https://www.sxhm.com/', note: 'Reservation rules for free and paid galleries.' },
+      { name: 'UNESCO World Heritage: Mausoleum of the First Qin Emperor', url: 'https://whc.unesco.org/en/list/441', note: 'Historical background.' },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
+  {
+    slug: 'guilin-yangshuo-travel-guide-first-trip',
+    title: 'Guilin and Yangshuo Travel Guide: Li River, Karst Peaks, and a 3-Day Plan',
+    titleVariants: {
+      A: 'Guilin and Yangshuo Travel Guide for First-Time Visitors',
+      B: 'Guilin vs Yangshuo: Where to Stay, How to Cruise the Li River, and a 3-Day Plan',
+    },
+    description:
+      'A first-timer guide to Guilin and Yangshuo: when to go, visa-free entry, Li River cruise versus bamboo raft, where to stay, cycling routes, local food, a 3-day itinerary, budgets in CNY and USD, and scams to avoid.',
+    intro:
+      "The limestone peaks around Guilin are the landscape printed on China's 20-yuan note, and in person they look even less real. This region is the best antidote to big-city fatigue on a first China trip: river cruises, cycling between rice fields, and evenings in a lively small town. Here is how to plan it well.",
+    keyPoints: [
+      'Use Guilin as the transport hub and Yangshuo as the base for scenery and outdoor activities.',
+      'April to October is green and lush but rainy at times; September to November is often the sweet spot.',
+      'Choose between a Li River cruise (relaxing, longer stretch) and a Yulong River bamboo raft (quiet, closer to the water).',
+      'Book river trips through official channels or your hotel to avoid inflated "discount" offers.',
+    ],
+    sections: [
+      {
+        heading: '1. Why Guilin and Yangshuo are worth the detour',
+        paragraphs: [
+          'Most of China\'s headline cities are about history or urban energy. Guilin and Yangshuo are about landscape. Thousands of steep, rounded karst peaks rise from flat farmland and rivers, creating scenery that has inspired Chinese painters and poets for centuries.',
+          'The two places complement each other. Guilin is a mid-size city with the airport and high-speed rail station, a few pleasant parks, and good food. Yangshuo, about 60 km downstream, is a small town surrounded by the most photogenic countryside, with cycling, hiking, rock climbing, and river rafting right outside the door.',
+          'For first-time visitors, the region also offers a gentler pace. After several days in Beijing or Shanghai, two or three days of fresh air and open views can make the whole trip feel more balanced.',
+        ],
+      },
+      {
+        heading: '2. Best time to visit',
+        paragraphs: [
+          'The region is subtropical. April to June is green but rainy, and river levels can be high. July and August are hot and humid with heavy showers, though the landscape is at its most lush. September to November is usually the best balance of clear skies, comfortable temperatures, and good river levels, though water can drop late in the season.',
+          'Winter, December to February, is cool and often misty. The mist can make the peaks look like an ink painting, but some days are grey and cold, and boats may run on shortened routes when the water is low.',
+          'Domestic tourism peaks during the October Golden Week, the May Day holiday, and summer school holidays. Book accommodation and cruises early for those dates.',
+        ],
+      },
+      {
+        heading: '3. Getting there and entry rules',
+        paragraphs: [
+          'Guilin Liangjiang International Airport (KWL) has domestic flights from most major cities and some international routes in Asia. An airport shuttle bus or taxi reaches central Guilin in 40 to 60 minutes. Direct buses also go to Yangshuo.',
+          'High-speed trains reach Guilin from Guangzhou in about 2.5 to 3 hours, from Shenzhen or Hong Kong West Kowloon in about 3 to 3.5 hours, and from Shanghai or Beijing in a long day of travel. Yangshuo has its own high-speed station about 30 minutes from town, which is convenient if you skip Guilin entirely.',
+          'Guilin airport is an eligible port for 240-hour visa-free transit, and the permitted area includes Guilin and eleven other cities in Guangxi. Many travelers can also use China\'s 30-day unilateral visa-free entry, currently extended to 31 December 2026. Confirm your eligibility with official sources before booking.',
+        ],
+      },
+      {
+        heading: '4. Getting around: rivers, bikes, and payments',
+        paragraphs: [
+          'The classic Li River cruise runs from piers south of Guilin to Yangshuo and takes about four to five hours. Ticket prices vary widely by boat class, from roughly 215 to 450 CNY or more per person including the bus back. The alternative is a shorter bamboo-style raft on the Xingping to Nine Horses stretch, which covers the 20-yuan note view.',
+          'In Yangshuo, rent a bicycle or electric scooter and ride along the Yulong River countryside. Bike rental is roughly 20 to 50 CNY a day; e-bikes cost more. Ride-hailing through DiDi in Alipay works in both Guilin and Yangshuo for longer distances.',
+          'As in the rest of China, link a foreign card to Alipay or WeChat Pay before arrival. Small rural vendors and raft operators sometimes prefer cash, so carry a few hundred yuan.',
+        ],
+      },
+      {
+        heading: '5. Where to stay: Guilin or Yangshuo?',
+        paragraphs: [
+          'If you have only one night, stay in Yangshuo. It puts you next to the countryside, and West Street offers plenty of restaurants and nightlife, though it can be loud and touristy.',
+          'For quieter nights, choose a guesthouse in the countryside along the Yulong River or near Xingping, many of which have terraces facing the peaks. They are often the most memorable stays of a China trip, but you will need a taxi or bike to reach town.',
+          'Stay in Guilin if you arrive late or leave early by plane, or if you want a city base with more hotel choice. The Two Rivers and Four Lakes area in the centre is pleasant in the evening.',
+          'Approximate nightly rates: guesthouses 150 to 350 CNY (about 21 to 50 USD), boutique countryside hotels 400 to 900 CNY (about 55 to 125 USD), upscale resorts 1,200 CNY and up (about 170 USD+).',
+        ],
+      },
+      {
+        heading: '6. A practical 3-day itinerary',
+        paragraphs: [
+          'Day 1 — Guilin city. Arrive in Guilin and visit Elephant Trunk Hill, the city\'s emblem, then Reed Flute Cave with its illuminated rock formations. In the evening, walk around the lakes in the centre and try Guilin rice noodles.',
+          'Day 2 — Li River to Yangshuo. Take the morning cruise from Guilin to Yangshuo, enjoying the most famous stretch of scenery from the deck. Check into your hotel, then walk West Street or watch the outdoor performance "Impression Liu Sanjie", staged on the river with the peaks lit up as a backdrop.',
+          'Day 3 — Countryside and viewpoints. Cycle along the Yulong River in the morning, and take a bamboo raft for part of the way. In the late afternoon, climb Moon Hill or the Xianggong Hill viewpoint for sunset over the peaks (Xianggong is best at sunrise). Alternatively, go to Xingping for the 20-yuan note view and an old riverside village.',
+          'Optional fourth day: the Longji (Dragon\'s Backbone) rice terraces, about two hours from Guilin, are spectacular in late spring and early autumn.',
+        ],
+      },
+      {
+        heading: '7. What to eat',
+        paragraphs: [
+          'Guilin rice noodles are the breakfast of choice: soft round noodles in a savoury broth with braised meat, pickles, and peanuts. A bowl costs about 8 to 15 CNY.',
+          'In Yangshuo, the signature dish is beer fish: river fish cooked in a sauce made with local beer, tomato, and chili. Ask for the price per jin (500 g) before choosing your fish, because this is a common place for surprise bills. Stuffed river snails and stuffed vegetables (niang) are also local specialties.',
+          'Expect 50 to 120 CNY per person for a sit-down dinner in Yangshuo, less in Guilin.',
+        ],
+      },
+      {
+        heading: '8. Budget for three days',
+        paragraphs: [
+          'Approximate per person per day, excluding long-distance transport, at about 7.1 CNY per USD:',
+          'Budget: 250 to 400 CNY (about 35 to 55 USD) — guesthouse, noodles and simple meals, bike rental, raft instead of a full cruise.',
+          'Mid-range: 600 to 1,000 CNY (about 85 to 140 USD) — boutique countryside hotel, Li River cruise, an evening show.',
+          'Comfort: 1,500 CNY and up (about 210 USD+) — resort hotel, private driver, upper-class cruise.',
+        ],
+      },
+      {
+        heading: '9. Practical tips and common mistakes',
+        paragraphs: [
+          'Buy cruise tickets through the official platform, a trusted agency, or your hotel, and check exactly which stretch of river and boat type you are paying for.',
+          'Check river levels before your trip in late autumn and winter; low water can shorten routes.',
+          'Bring sun protection and rain gear year-round, and waterproof bags for raft trips.',
+          'Confirm prices before ordering food or hiring a raft, and agree on the end point in advance.',
+          'Do not try to fit Guilin, Yangshuo, and the rice terraces into two days; three to four days is a much better pace.',
+        ],
+      },
+    ],
+    faq: {
+      question: 'Should I stay in Guilin or Yangshuo?',
+      answer:
+        'Stay in Yangshuo for most of your time, because the best scenery and outdoor activities are right outside town. Use Guilin mainly as an arrival and departure point, or for one night if your flight times require it.',
+    },
+    internalLinks: [
+      { slug: 'best-china-cities-by-travel-style', anchor: 'See which travel styles suit landscape destinations' },
+      { slug: 'best-time-to-visit-china-first-trip', anchor: 'Compare seasons across China' },
+      { slug: 'china-first-trip-budget-by-city', anchor: 'Compare budgets with other first-trip cities' },
+    ],
+    updateSummary: [
+      'New guide: Guilin and Yangshuo plan with cruise options, 3-day itinerary, and budget bands.',
+      'Entry rules checked against official sources in November 2026.',
+    ],
+    sources: [
+      { name: 'National Immigration Administration of China', url: 'https://en.nia.gov.cn/n147418/n147463/c183412/content.html', note: 'Visa-free transit ports, including Guilin Liangjiang.' },
+      { name: 'Gov.cn: visa-free access extension', url: 'https://english.www.gov.cn/news/202511/04/content_WS69094ae0c6d00ca5f9a07472.html', note: 'Unilateral visa-exemption through 2026.' },
+      { name: 'UNESCO World Heritage: South China Karst', url: 'https://whc.unesco.org/en/list/1248', note: 'Guilin karst inscription background.' },
+    ],
+    reviewer: REVIEWER_TEAM_NAME,
+  },
 ]
 
 export const CONTENT_UPDATE_LOG = [
+  {
+    dateISO: '2026-11-02',
+    dateText: 'November 2, 2026',
+    summary: 'Published first-visit guides for Chengdu, Xi\'an, and Guilin with Yangshuo.',
+    guideSlugs: [
+      'chengdu-travel-guide-first-trip',
+      'xian-travel-guide-first-trip',
+      'guilin-yangshuo-travel-guide-first-trip',
+    ],
+  },
   {
     dateISO: '2026-02-21',
     dateText: 'February 21, 2026',

@@ -104,9 +104,9 @@ npm test
 
 Pages are served under `/{lang}/` (e.g., `/en/`, `/zh/`, `/ja/`, `/ko/`).
 
-- Only English pages are indexed (`robots: index, follow`)
-- ZH / JA / KO pages use `noindex, follow` with canonical pointing to the English equivalent
-- Sitemap only includes English URLs
+- Homepages are indexed in en, zh, ja, and ko (body copy is translated)
+- Guide and legal pages are indexed in English only. zh/ja/ko copies of those pages use `noindex, follow` and canonical to the English URL, because the article body is still English
+- Sitemap lists only indexable URLs. hreflang is emitted only when more than one locale of that URL is indexable
 
 ---
 
@@ -125,7 +125,7 @@ The site deploys automatically to **Cloudflare Pages** on push to `main`.
 ## SEO Notes
 
 - Canonical URLs always include a trailing slash
-- `hreflang` alternates cover all 4 locales
+- `hreflang` alternates are limited to indexable locales of the same page (all four on the homepage; English only is omitted rather than pointing at noindexed URLs)
 - OG images served from `/og-image.svg`
 - Guides are the primary indexable content beyond the homepage
 

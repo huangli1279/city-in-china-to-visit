@@ -23,14 +23,67 @@
 
 /zh/*
   Cache-Control: public, max-age=0, must-revalidate
-  X-Robots-Tag: noindex, follow
 
 /ja/*
   Cache-Control: public, max-age=0, must-revalidate
-  X-Robots-Tag: noindex, follow
 
 /ko/*
   Cache-Control: public, max-age=0, must-revalidate
+
+# Untranslated locale URLs (English body copy). Homepages stay indexable.
+/zh/guides/
+  X-Robots-Tag: noindex, follow
+/zh/guides/*
+  X-Robots-Tag: noindex, follow
+/ja/guides/
+  X-Robots-Tag: noindex, follow
+/ja/guides/*
+  X-Robots-Tag: noindex, follow
+/ko/guides/
+  X-Robots-Tag: noindex, follow
+/ko/guides/*
+  X-Robots-Tag: noindex, follow
+
+/zh/about/
+  X-Robots-Tag: noindex, follow
+/ja/about/
+  X-Robots-Tag: noindex, follow
+/ko/about/
+  X-Robots-Tag: noindex, follow
+
+/zh/contact/
+  X-Robots-Tag: noindex, follow
+/ja/contact/
+  X-Robots-Tag: noindex, follow
+/ko/contact/
+  X-Robots-Tag: noindex, follow
+
+/zh/editorial-policy/
+  X-Robots-Tag: noindex, follow
+/ja/editorial-policy/
+  X-Robots-Tag: noindex, follow
+/ko/editorial-policy/
+  X-Robots-Tag: noindex, follow
+
+/zh/content-updates/
+  X-Robots-Tag: noindex, follow
+/ja/content-updates/
+  X-Robots-Tag: noindex, follow
+/ko/content-updates/
+  X-Robots-Tag: noindex, follow
+
+/zh/privacy-policy/
+  X-Robots-Tag: noindex, follow
+/ja/privacy-policy/
+  X-Robots-Tag: noindex, follow
+/ko/privacy-policy/
+  X-Robots-Tag: noindex, follow
+
+/zh/terms/
+  X-Robots-Tag: noindex, follow
+/ja/terms/
+  X-Robots-Tag: noindex, follow
+/ko/terms/
   X-Robots-Tag: noindex, follow
 
 /index.html

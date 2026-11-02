@@ -7,6 +7,7 @@ interface FooterLegalLinks {
   contact: string
   guides: string
   privacy: string
+  terms?: string
 }
 
 interface FooterTranslations {
@@ -112,6 +113,12 @@ export default function SiteFooter({ lang, footer, navLinks }: SiteFooterProps) 
             className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
           >
             {footer.legalLinks.privacy}
+          </Link>
+          <Link
+            href={`${legalBasePath}/terms/`}
+            className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+          >
+            {footer.legalLinks.terms ?? 'Terms'}
           </Link>
         </nav>
         <nav className="flex flex-wrap items-center gap-2 text-[11px]" aria-label="Language versions">

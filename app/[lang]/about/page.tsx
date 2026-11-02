@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import { normalizeUrlLocale } from '@/i18n/locales'
 import { getPageSeo } from '@/content/pages/seo-copy'
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const locale = normalizeUrlLocale(lang)
   const { title, description } = getPageSeo(locale, 'about')
-  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'about/')
+  const { robots, canonicalUrl, alternates, ogLocaleAlternates } = buildLocaleSeoPolicy(locale, 'about/')
 
   return {
     title,
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: canonicalUrl,
       locale: buildOgLocale(locale),
-      alternateLocale: buildOgLocaleAlternates(locale),
+      alternateLocale: ogLocaleAlternates,
       images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description, images: [toAbsoluteUrl('/og-image.svg')] },
@@ -53,7 +53,7 @@ export default async function AboutPage({ params }: Props) {
     footer?: {
       eyebrow?: string; title?: string; subtitle?: string; jumpTitle?: string; nextTitle?: string
       cta?: string; disclaimer?: string; copyright?: string
-      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string }
+      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string; terms?: string }
     }
   }
   const language = t.raw('language') as { switcher?: string }
@@ -79,6 +79,7 @@ export default async function AboutPage({ params }: Props) {
       contact: home?.footer?.legalLinks?.contact ?? 'Contact',
       guides: home?.footer?.legalLinks?.guides ?? 'Guides',
       privacy: home?.footer?.legalLinks?.privacy ?? 'Privacy Policy',
+      terms: home?.footer?.legalLinks?.terms ?? 'Terms',
     },
   }
 

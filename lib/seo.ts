@@ -44,27 +44,35 @@ export function toAbsoluteUrl(path: string): string {
   return `${SITE_URL}${normalizedPath}`
 }
 
-/** For Next.js Metadata API `alternates.languages` field */
-export function buildNextAlternates(suffix?: string): Record<string, string> {
+/** For Next.js Metadata API `alternates.languages`. Only pass indexable locales. */
+export function buildNextAlternates(
+  suffix?: string,
+  langs: readonly string[] = SEO_LANGS,
+): Record<string, string> {
   const normalizedSuffix = normalizeSuffix(suffix)
-  return {
-    en: toAbsoluteUrl(`/en${normalizedSuffix}`),
-    'zh-CN': toAbsoluteUrl(`/zh${normalizedSuffix}`),
-    ja: toAbsoluteUrl(`/ja${normalizedSuffix}`),
-    ko: toAbsoluteUrl(`/ko${normalizedSuffix}`),
-    'x-default': toAbsoluteUrl(`/en${normalizedSuffix}`),
+  const languages: Record<string, string> = {}
+  for (const lang of langs) {
+    if (!(SEO_LANGS as readonly string[]).includes(lang)) continue
+    const seoLang = lang as SeoLang
+    languages[HREFLANG_MAP[seoLang]] = toAbsoluteUrl(`/${seoLang}${normalizedSuffix}`)
   }
+  const defaultLang = langs.includes('en') ? 'en' : langs.find((lang) => (SEO_LANGS as readonly string[]).includes(lang))
+  if (defaultLang) {
+    languages['x-default'] = toAbsoluteUrl(`/${defaultLang}${normalizedSuffix}`)
+  }
+  return languages
 }
 
 export function buildOgLocale(lang: string): string {
   return OG_LOCALE_MAP[normalizeLang(lang)]
 }
 
-export function buildOgLocaleAlternates(lang: string): string[] {
+export function buildOgLocaleAlternates(lang: string, langs: readonly string[] = SEO_LANGS): string[] {
+  const allowed = new Set(langs)
   const currentOgLocale = buildOgLocale(lang)
-  return SEO_LANGS.map((localeLang) => OG_LOCALE_MAP[localeLang]).filter(
-    (locale) => locale !== currentOgLocale
-  )
+  return SEO_LANGS.filter((localeLang) => allowed.has(localeLang))
+    .map((localeLang) => OG_LOCALE_MAP[localeLang])
+    .filter((locale) => locale !== currentOgLocale)
 }
 
 export interface AlternateLink {
@@ -72,15 +80,19 @@ export interface AlternateLink {
   href: string
 }
 
-export function buildAlternates(suffix?: string): AlternateLink[] {
+export function buildAlternates(suffix?: string, langs: readonly string[] = SEO_LANGS): AlternateLink[] {
   const normalizedSuffix = normalizeSuffix(suffix)
-  const links = SEO_LANGS.map((lang) => ({
+  const selected = SEO_LANGS.filter((lang) => langs.includes(lang))
+  const links: AlternateLink[] = selected.map((lang) => ({
     hreflang: HREFLANG_MAP[lang],
     href: toAbsoluteUrl(`/${lang}${normalizedSuffix}`),
   }))
-  links.push({
-    hreflang: 'x-default',
-    href: toAbsoluteUrl(`/en${normalizedSuffix}`),
-  })
+  const defaultLang = selected.includes('en') ? 'en' : selected[0]
+  if (defaultLang) {
+    links.push({
+      hreflang: 'x-default',
+      href: toAbsoluteUrl(`/${defaultLang}${normalizedSuffix}`),
+    })
+  }
   return links
 }

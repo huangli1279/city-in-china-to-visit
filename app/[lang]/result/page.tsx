@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { buildLangParams, isUrlLocale } from '@/i18n/locales'
-import { buildNextAlternates, buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import ResultClient from '@/components/ResultClient'
 
 type Props = { params: Promise<{ lang: string }> }
@@ -27,14 +27,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     robots: 'noindex, follow',
     alternates: {
       canonical: canonicalUrl,
-      languages: buildNextAlternates('result/'),
     },
     openGraph: {
       title,
       description,
       url: canonicalUrl,
       locale: buildOgLocale(lang),
-      alternateLocale: buildOgLocaleAlternates(lang),
       images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
     },
     twitter: {

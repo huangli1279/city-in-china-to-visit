@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { buildLocaleSeoPolicy, ensureMinMetaDescription } from '@/lib/seo-policy'
 import { ALL_GUIDES } from '@/content/guides'
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     topicCluster?.subtitle ??
     'Explore focused guides that help first-time travelers compare destinations, choose trip length, and plan a confident first stop in China.'
   )
-  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, 'guides/')
+  const { robots, canonicalUrl, alternates, ogLocaleAlternates } = buildLocaleSeoPolicy(locale, 'guides/')
 
   return {
     title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: canonicalUrl,
       locale: buildOgLocale(locale),
-      alternateLocale: buildOgLocaleAlternates(locale),
+      alternateLocale: ogLocaleAlternates,
       images: [{ url: toAbsoluteUrl('/og-image.svg'), width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description, images: [toAbsoluteUrl('/og-image.svg')] },
@@ -61,7 +61,7 @@ export default async function GuidesHubPage({ params }: Props) {
     footer?: {
       eyebrow?: string; title?: string; subtitle?: string; jumpTitle?: string; nextTitle?: string
       cta?: string; disclaimer?: string; copyright?: string
-      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string }
+      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string; terms?: string }
     }
   }
   const language = t.raw('language') as { switcher?: string }
@@ -128,6 +128,7 @@ export default async function GuidesHubPage({ params }: Props) {
       contact: home?.footer?.legalLinks?.contact ?? 'Contact',
       guides: home?.footer?.legalLinks?.guides ?? 'Guides',
       privacy: home?.footer?.legalLinks?.privacy ?? 'Privacy Policy',
+      terms: home?.footer?.legalLinks?.terms ?? 'Terms',
     },
   }
 

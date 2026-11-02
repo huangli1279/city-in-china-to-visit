@@ -1,11 +1,19 @@
 import type { MetadataRoute } from 'next'
+import { ALL_GUIDES, CONTENT_UPDATE_LOG } from '@/content/guides/index'
+import { getIndexableLangs, type IndexablePageId } from '@/lib/indexing'
 import { buildNextAlternates, SITE_URL } from '@/lib/seo'
-import { INDEXABLE_CONTENT_LANGS } from '@/lib/indexing'
 
 export const dynamic = 'force-static'
-import { ALL_GUIDES, CONTENT_UPDATE_LOG } from '@/content/guides/index'
 
-const LEGAL_PAGES = ['about', 'contact', 'editorial-policy', 'content-updates', 'privacy-policy'] as const
+const STATIC_PAGES = [
+  'about',
+  'contact',
+  'editorial-policy',
+  'content-updates',
+  'privacy-policy',
+  'terms',
+] as const satisfies readonly IndexablePageId[]
+
 const SITE_LAST_MOD = new Date().toISOString().slice(0, 10)
 
 // Map each guide slug to its most recent update date
@@ -18,49 +26,53 @@ for (const entry of CONTENT_UPDATE_LOG) {
   }
 }
 
+function withLanguageAlternates(page: IndexablePageId, suffix?: string): Pick<MetadataRoute.Sitemap[number], 'alternates'> {
+  const langs = getIndexableLangs(page)
+  if (langs.length < 2) return {}
+  return { alternates: { languages: buildNextAlternates(suffix, langs) } }
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
 
-  for (const lang of INDEXABLE_CONTENT_LANGS) {
-    // Homepage
+  for (const lang of getIndexableLangs('home')) {
     entries.push({
       url: `${SITE_URL}/${lang}/`,
       lastModified: SITE_LAST_MOD,
       changeFrequency: 'weekly',
       priority: 1.0,
-      alternates: {
-        languages: buildNextAlternates(),
-      },
+      ...withLanguageAlternates('home'),
     })
   }
 
-  // English content pages are currently the only fully localized, indexable versions.
-  for (const lang of INDEXABLE_CONTENT_LANGS) {
-    // Legal pages
-    for (const page of LEGAL_PAGES) {
+  for (const page of STATIC_PAGES) {
+    for (const lang of getIndexableLangs(page)) {
       entries.push({
         url: `${SITE_URL}/${lang}/${page}/`,
         lastModified: SITE_LAST_MOD,
         changeFrequency: 'weekly',
         priority: 0.7,
+        ...withLanguageAlternates(page, `${page}/`),
       })
     }
+  }
 
-    // Guides hub
+  for (const lang of getIndexableLangs('guides')) {
     entries.push({
       url: `${SITE_URL}/${lang}/guides/`,
       lastModified: SITE_LAST_MOD,
       changeFrequency: 'weekly',
       priority: 0.8,
+      ...withLanguageAlternates('guides', 'guides/'),
     })
 
-    // Guide detail pages
     for (const guide of ALL_GUIDES) {
       entries.push({
         url: `${SITE_URL}/${lang}/guides/${guide.slug}/`,
         lastModified: guideLastMod.get(guide.slug) ?? SITE_LAST_MOD,
         changeFrequency: 'weekly',
         priority: 0.8,
+        ...withLanguageAlternates('guide', `guides/${guide.slug}/`),
       })
     }
   }

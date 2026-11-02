@@ -88,6 +88,7 @@ export interface HomepageTranslations {
       contact: string
       guides: string
       privacy: string
+      terms?: string
     }
   }
   seoGuide: {
@@ -471,6 +472,12 @@ export default function HomepageClient({
               className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
             >
               {t.footer.legalLinks.privacy}
+            </Link>
+            <Link
+              href={`${legalBasePath}/terms/`}
+              className="focus-ring rounded-lg px-1 py-0.5 text-slate-200 transition-colors hover:text-white"
+            >
+              {t.footer.legalLinks.terms ?? 'Terms'}
             </Link>
           </nav>
         </div>

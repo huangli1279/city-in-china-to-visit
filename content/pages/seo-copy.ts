@@ -25,6 +25,11 @@ export const PAGE_SEO_COPY = {
       description:
         'Track weekly guide releases, bi-weekly refresh cycles, and detailed changelog entries across our first-time China city planning content.',
     },
+    terms: {
+      title: 'Terms of Service | Using City Vibe Matcher',
+      description:
+        'Read the terms for using bestcityinchina.site, an informational China travel quiz and planning guide, including ads, disclaimers, and how to contact us.',
+    },
   },
   zh: {
     about: {
@@ -109,9 +114,13 @@ export const PAGE_SEO_COPY = {
   },
 }
 
-export type PageKey = 'about' | 'contact' | 'privacy' | 'editorial' | 'updates'
+export type PageKey = 'about' | 'contact' | 'privacy' | 'editorial' | 'updates' | 'terms'
 
-export function getPageSeo(lang: string, pageKey: PageKey) {
-  const langCopy = PAGE_SEO_COPY[lang as keyof typeof PAGE_SEO_COPY] ?? PAGE_SEO_COPY.en
+type PageSeo = { title: string; description: string }
+
+export function getPageSeo(lang: string, pageKey: PageKey): PageSeo {
+  const langCopy = (PAGE_SEO_COPY[lang as keyof typeof PAGE_SEO_COPY] ?? PAGE_SEO_COPY.en) as Partial<
+    Record<PageKey, PageSeo>
+  >
   return langCopy[pageKey] ?? PAGE_SEO_COPY.en[pageKey]
 }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { buildLocaleSeoPolicy, ensureMinMetaDescription } from '@/lib/seo-policy'
 import { URL_LOCALES, normalizeUrlLocale, toContentLocale } from '@/i18n/locales'
 import { ALL_GUIDES, GUIDE_BY_SLUG, CONTENT_UPDATE_LOG } from '@/content/guides'
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   )
 
   const title = localizedTitle
-  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(locale, `guides/${slug}/`)
+  const { robots, canonicalUrl, alternates, ogLocaleAlternates } = buildLocaleSeoPolicy(locale, `guides/${slug}/`)
   const lastModified = getGuideLastModified(slug)
   const publishedTime = guide.datePublishedISO ?? lastModified
   const heroImage = toAbsoluteUrl(guide.heroImage ?? '/og-image.svg')
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: lastModified,
       authors: [authorProfile.name],
       locale: buildOgLocale(locale),
-      alternateLocale: buildOgLocaleAlternates(locale),
+      alternateLocale: ogLocaleAlternates,
       images: [{ url: heroImage, width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description: localizedDescription, images: [heroImage] },
@@ -101,7 +101,7 @@ export default async function GuideDetailPage({ params }: Props) {
     footer?: {
       eyebrow?: string; title?: string; subtitle?: string; jumpTitle?: string; nextTitle?: string
       cta?: string; disclaimer?: string; copyright?: string
-      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string }
+      legalLinks?: { about?: string; contact?: string; guides?: string; privacy?: string; terms?: string }
     }
   }
   const language = t.raw('language') as { switcher?: string }
@@ -188,6 +188,7 @@ export default async function GuideDetailPage({ params }: Props) {
       contact: home?.footer?.legalLinks?.contact ?? 'Contact',
       guides: home?.footer?.legalLinks?.guides ?? 'Guides',
       privacy: home?.footer?.legalLinks?.privacy ?? 'Privacy Policy',
+      terms: home?.footer?.legalLinks?.terms ?? 'Terms',
     },
   }
 

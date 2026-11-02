@@ -1,5 +1,5 @@
-import { isIndexableContentLang, PRIMARY_INDEXABLE_CONTENT_LANG } from '@/lib/indexing'
-import { buildNextAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { getIndexableLangs, isPageIndexable, pageIdFromSuffix, type IndexablePageId } from '@/lib/indexing'
+import { buildNextAlternates, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
 
 function normalizePathSuffix(suffix?: string): string {
   if (!suffix || suffix === '/') return '/'
@@ -11,33 +11,41 @@ function normalizeAlternatesSuffix(suffix?: string): string | undefined {
   return suffix.startsWith('/') ? suffix.slice(1) : suffix
 }
 
-export function getCanonicalContentLang(lang: string): string {
-  return isIndexableContentLang(lang) ? lang : PRIMARY_INDEXABLE_CONTENT_LANG
+export function getCanonicalContentLang(lang: string, page: IndexablePageId): string {
+  return isPageIndexable(lang, page) ? lang : getIndexableLangs(page)[0]
 }
 
-export function getLocaleRobots(lang: string): 'index, follow' | 'noindex, follow' {
-  return isIndexableContentLang(lang) ? 'index, follow' : 'noindex, follow'
+export function getLocaleRobots(lang: string, page: IndexablePageId): 'index, follow' | 'noindex, follow' {
+  return isPageIndexable(lang, page) ? 'index, follow' : 'noindex, follow'
 }
 
 export function buildLocaleSeoPolicy(lang: string, suffix?: string) {
-  const canonicalLang = getCanonicalContentLang(lang)
+  const page = pageIdFromSuffix(suffix)
+  const indexableLangs = getIndexableLangs(page)
+  const canonicalLang = getCanonicalContentLang(lang, page)
   const canonicalUrl = toAbsoluteUrl(`/${canonicalLang}${normalizePathSuffix(suffix)}`)
-  const robots = getLocaleRobots(lang)
-  const isIndexable = isIndexableContentLang(lang)
+  const robots = getLocaleRobots(lang, page)
+  const isIndexable = isPageIndexable(lang, page)
+  const languages =
+    isIndexable && indexableLangs.length > 1
+      ? buildNextAlternates(normalizeAlternatesSuffix(suffix), indexableLangs)
+      : undefined
 
   return {
     isIndexable,
+    page,
     canonicalLang,
     canonicalUrl,
     robots,
-    alternates: isIndexable
+    alternates: languages
       ? {
           canonical: canonicalUrl,
-          languages: buildNextAlternates(normalizeAlternatesSuffix(suffix)),
+          languages,
         }
       : {
           canonical: canonicalUrl,
         },
+    ogLocaleAlternates: isIndexable ? buildOgLocaleAlternates(lang, indexableLangs) : [],
   }
 }
 

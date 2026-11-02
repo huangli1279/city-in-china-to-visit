@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { cities } from '@/lib/cities'
 import { isUrlLocale, toContentLocale } from '@/i18n/locales'
-import { buildOgLocale, buildOgLocaleAlternates, toAbsoluteUrl } from '@/lib/seo'
+import { buildOgLocale, toAbsoluteUrl } from '@/lib/seo'
 import { buildLocaleSeoPolicy } from '@/lib/seo-policy'
 import HomepageClient, { type HomepageTranslations } from '@/components/HomepageClient'
 
@@ -23,9 +23,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale: lang, namespace: 'common' })
   const title = t('home.seo.title') as string
   const description = t('home.seo.description') as string
-  const { robots, canonicalUrl, alternates } = buildLocaleSeoPolicy(lang)
+  const { robots, canonicalUrl, alternates, ogLocaleAlternates } = buildLocaleSeoPolicy(lang)
   const ogLocale = buildOgLocale(lang)
-  const ogLocaleAlternates = buildOgLocaleAlternates(lang)
 
   return {
     title,
